@@ -16,20 +16,24 @@ object HomePage : Iterable<Tag<HTMLElement>> {
                 pfContent {
                     pfTitle("PatternFly Fritz2")
                     p {
-                        +"PatternFly Fritz2 is a "
+                        a {
+                            +"PatternFly Fritz2"
+                            href = const("https://github.com/patternfly-kotlin/patternfly-fritz2")
+                        }
+                        +" is a "
                         a {
                             +"Kotlin / JS"
-                            href = const("https://kotlinlang.org/docs/reference/js-overview.html")
+                            href = const("https://kotl.in/js")
                         }
                         +" implementation of "
                         a {
                             +"PatternFly"
-                            href = const("https://www.patternfly.org/")
+                            href = const("https://www.patternfly.org//")
                         }
                         +" based on "
                         a {
                             +"fritz2"
-                            href = const("https://docs.fritz2.dev/")
+                            href = const("https://www.fritz2.dev/")
                         }
                         +"."
                     }
