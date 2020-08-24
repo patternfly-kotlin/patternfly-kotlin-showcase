@@ -33,7 +33,7 @@ class Skeleton(private val router: Router<String>) : Iterable<Tag<HTMLElement>> 
                     pfBrand {
                         pfBrandLink("#${Places.HOME}") {
                             img {
-                                src = const("/header-logo.svg")
+                                src = const("./header-logo.svg")
                             }
                         }
                     }
