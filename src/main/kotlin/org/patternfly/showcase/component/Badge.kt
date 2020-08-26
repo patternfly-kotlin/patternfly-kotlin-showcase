@@ -15,12 +15,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Size
+import org.patternfly.Switch
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfBadge
 import org.patternfly.pfContent
 import org.patternfly.pfSection
+import org.patternfly.pfSwitch
 import org.patternfly.pfTitle
+import org.patternfly.plusAssign
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
@@ -70,7 +73,7 @@ object BadgeComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Limit", BadgeCode.LIMIT) {
                     lateinit var range: Input
-                    lateinit var state: Input
+                    lateinit var state: Switch
                     div {
                         classList = flowOf(listOf("flex".layout(), "align-items-center".modifier(), "mb-md".util()))
                         label(`for` = "range") {
@@ -82,16 +85,15 @@ object BadgeComponent : Iterable<Tag<HTMLElement>> {
                             max = const("500")
                             value = const("240")
                         }
-                        label(`for` = "state", baseClass = "ml-md".util()) {
-                            +"Read: "
-                        }
-                        state = input(id = "state") {
-                            type = const("checkbox")
-                            checked = const(true)
+                        state = pfSwitch {
+                            domNode.classList += "ml-md".util()
+                            label = const("Read")
+                            labelOff = const("Unread")
+                            input.checked = const(true)
                         }
                     }
                     pfBadge(min = 100, max = 400) {
-                        read = state.changes.states()
+                        read = state.input.changes.states()
                         range.changes.valuesAsNumber().map { it.toInt() }.bind()
                     }
                     MainScope().launch {
@@ -155,12 +157,10 @@ internal object BadgeCode {
                 max = const("500")
                 value = const("240")
             }
-            label(`for` = "state") {
-                +"Read: "
-            }
-            state = input(id = "state") {
-                type = const("checkbox")
-                checked = const(true)
+            state = pfSwitch {
+                label = const("Read")
+                labelOff = const("Unread")
+                input.checked = const(true)
             }
         }
         pfBadge(min = 100, max = 400) {
