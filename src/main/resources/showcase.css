@@ -20,10 +20,15 @@
     font-size: var(--pf-global--FontSize--xl);
     margin-top: var(--pf-global--spacer--lg);
     padding: var(--pf-global--spacer--md);
+    padding-bottom: 0;
 }
 
 .sc-snippet__content {
-    padding: 1rem;
+    padding: var(--pf-global--spacer--md);
+}
+
+.sc-snippet__content .pf-c-badge {
+    margin-right: var(--pf-global--spacer--sm);
 }
 
 .sc-snippet__copied {
