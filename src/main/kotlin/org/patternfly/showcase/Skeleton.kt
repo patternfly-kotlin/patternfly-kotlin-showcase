@@ -1,6 +1,5 @@
 package org.patternfly.showcase
 
-import dev.fritz2.binding.const
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
 import dev.fritz2.routing.Router
@@ -8,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import org.patternfly.layout
 import org.patternfly.pfAlertGroup
 import org.patternfly.pfBrand
+import org.patternfly.pfBrandContainer
 import org.patternfly.pfBrandLink
 import org.patternfly.pfHeader
 import org.patternfly.pfHeaderTools
@@ -30,17 +30,15 @@ class Skeleton(private val router: Router<String>) : Iterable<Tag<HTMLElement>> 
         yield(render {
             pfPage {
                 pfHeader {
-                    pfBrand {
+                    pfBrandContainer {
                         pfBrandLink("#${Places.HOME}") {
-                            img {
-                                src = const("./header-logo.svg")
-                            }
+                            pfBrand("./header-logo.svg")
                         }
                     }
                     pfHorizontalNavigation(router) {
                         pfNavigationItems {
                             pfNavigationItem(Places.GET_STARTED, "Get Started")
-                            pfNavigationItem(Places.component("alert"), "Documentation") {
+                            pfNavigationItem(Places.component("alert"), text = "Documentation") {
                                 it.startsWith(Places.DOCUMENTATION)
                             }
                             pfNavigationItem(Places.CONTRIBUTE, "Contribute")

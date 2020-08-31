@@ -15,39 +15,28 @@ import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
-import org.patternfly.Size
 import org.patternfly.pfAlert
 import org.patternfly.pfAlertDescription
 import org.patternfly.pfAlertGroup
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfSection
-import org.patternfly.pfTitle
-import org.patternfly.showcase.Places.behaviour
-import org.patternfly.util
 import org.w3c.dom.HTMLElement
 
 object AlertGroupComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
-            pfSection("pb-0".util()) {
-                pfContent {
-                    pfTitle("Alert group", size = Size.XL_3)
-                    p {
-                        +"An "
-                        strong { +"alert group" }
-                        +" is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts. Related design guidelines: "
-                        a {
-                            href = const(behaviour("alerts-and-notifications"))
-                            target = const("pf4")
-                            +"Alerts and notifications"
-                        }
-                    }
-                }
-            }
+            intro(
+                title = "Alert group",
+                prefix = "An ",
+                key = "alert group",
+                text = " is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts. Related design guidelines: ",
+                link = ("alerts-and-notifications" to "Alerts and notifications")
+            )
         })
         yield(render {
-            pfSection("sc-component__buttons") {
+            pfSection {
+                className = const("sc-component__buttons")
                 pfContent {
                     h2 { +"Examples" }
                 }
@@ -147,19 +136,19 @@ internal object AlertGroupCode {
     //language=kotlin
     const val TOAST_ALERT_GROUP: String = """fun main() {
     render {
-        pfButton(tertiary) {
+        pfButton(secondary) {
             +"Add toast success alert"
             clicks
                 .map { Notification(SUCCESS, "Toast Success Alert") }
                 .handledBy(Notification.store.add)
         }
-        pfButton(tertiary) {
+        pfButton(secondary) {
             +"Add toast danger alert"
             clicks
                 .map { Notification(DANGER, "Toast Danger Alert") }
                 .handledBy(Notification.store.add)
         }
-        pfButton(tertiary) {
+        pfButton(secondary) {
             +"Add toast info alert"
             clicks
                 .map { Notification(INFO, "Toast Info Alert") }

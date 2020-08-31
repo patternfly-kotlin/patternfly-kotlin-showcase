@@ -12,35 +12,24 @@ import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
 import org.patternfly.Severity.WARNING
-import org.patternfly.Size
+import org.patternfly.classes
 import org.patternfly.pfAlert
 import org.patternfly.pfAlertActionGroup
 import org.patternfly.pfAlertDescription
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfSection
-import org.patternfly.pfTitle
-import org.patternfly.showcase.Places.behaviour
-import org.patternfly.util
 import org.w3c.dom.HTMLElement
 
 object AlertComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
-            pfSection("pb-0".util()) {
-                pfContent {
-                    pfTitle("Alert", size = Size.XL_3)
-                    p {
-                        strong { +"Alerts" }
-                        +" are used to notify the user about a change in status or other event. Related design guidelines: "
-                        a {
-                            href = const(behaviour("alerts-and-notifications"))
-                            target = const("pf4")
-                            +"Alerts and notifications"
-                        }
-                    }
-                }
-            }
+            intro(
+                title = "Alert",
+                key = "Alerts",
+                text = " are used to notify the user about a change in status or other event. Related design guidelines: ",
+                link = ("alerts-and-notifications" to "Alerts and notifications")
+            )
         })
         yield(render {
             pfSection {
@@ -64,8 +53,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                             p { +"Success alert description. This should tell the user more information about the alert." }
                         }
                         pfAlertActionGroup {
-                            pfButton(link, inline) { +"View details" }
-                            pfButton(link, inline) { +"Ignore" }
+                            pfButton(classes(link, inline)) { +"View details" }
+                            pfButton(classes(link, inline)) { +"Ignore" }
                         }
                     }
                     br {}
@@ -83,8 +72,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfAlert(SUCCESS, "Success alert title", closable = true) {
                         pfAlertActionGroup {
-                            pfButton(link, inline) { +"View details" }
-                            pfButton(link, inline) { +"Ignore" }
+                            pfButton(classes(link, inline)) { +"View details" }
+                            pfButton(classes(link, inline)) { +"Ignore" }
                         }
                     }
                     br {}
@@ -109,8 +98,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                             p { +"Success alert description. This should tell the user more information about the alert." }
                         }
                         pfAlertActionGroup {
-                            pfButton(link, inline) { +"View details" }
-                            pfButton(link, inline) { +"Ignore" }
+                            pfButton(classes(link, inline)) { +"View details" }
+                            pfButton(classes(link, inline)) { +"Ignore" }
                         }
                     }
                     br {}
@@ -128,8 +117,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
                         pfAlertActionGroup {
-                            pfButton(link, inline) { +"View details" }
-                            pfButton(link, inline) { +"Ignore" }
+                            pfButton(classes(link, inline)) { +"View details" }
+                            pfButton(classes(link, inline)) { +"Ignore" }
                         }
                     }
                     br {}
@@ -164,8 +153,8 @@ internal object AlertCode {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
             pfAlertActionGroup {
-                pfButton(link, inline) { +"View details" }
-                pfButton(link, inline) { +"Ignore" }
+                pfButton(classes(link, inline)) { +"View details" }
+                pfButton(classes(link, inline)) { +"Ignore" }
             }
         }
         pfAlert(SUCCESS, "Success alert title", closable = true) {
@@ -178,11 +167,11 @@ internal object AlertCode {
                     }
                 }
             }
-        } 
+        }
         pfAlert(SUCCESS, "Success alert title", closable = true) {
             pfAlertActionGroup {
-                pfButton(link, inline) { +"View details" }
-                pfButton(link, inline) { +"Ignore" }
+                pfButton(classes(link, inline)) { +"View details" }
+                pfButton(classes(link, inline)) { +"Ignore" }
             }
         }
         pfAlert(SUCCESS, "Success alert title", closable = true)
@@ -211,8 +200,8 @@ internal object AlertCode {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
             pfAlertActionGroup {
-                pfButton(link, inline) { +"View details" }
-                pfButton(link, inline) { +"Ignore" }
+                pfButton(classes(link, inline)) { +"View details" }
+                pfButton(classes(link, inline)) { +"Ignore" }
             }
         }
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
@@ -225,11 +214,11 @@ internal object AlertCode {
                     }
                 }
             }
-        } 
+        }
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
             pfAlertActionGroup {
-                pfButton(link, inline) { +"View details" }
-                pfButton(link, inline) { +"Ignore" }
+                pfButton(classes(link, inline)) { +"View details" }
+                pfButton(classes(link, inline)) { +"Ignore" }
             }
         }
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true)

@@ -2,7 +2,6 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
@@ -13,9 +12,11 @@ import org.patternfly.DataListDisplay
 import org.patternfly.DataListStore
 import org.patternfly.DropdownStore
 import org.patternfly.Id
+import org.patternfly.Modifier.alignRight
+import org.patternfly.Modifier.noFill
 import org.patternfly.Modifier.primary
 import org.patternfly.Modifier.secondary
-import org.patternfly.Size
+import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.modifier
 import org.patternfly.pfButton
@@ -31,30 +32,19 @@ import org.patternfly.pfDropdownItem
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownKebab
 import org.patternfly.pfSection
-import org.patternfly.pfTitle
 import org.patternfly.plusAssign
-import org.patternfly.showcase.Places.behaviour
-import org.patternfly.util
 import org.w3c.dom.HTMLElement
 
 object DataListComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
-            pfSection("pb-0".util()) {
-                pfContent {
-                    pfTitle("Data list", size = Size.XL_3)
-                    p {
-                        +"A "
-                        strong { +"content" }
-                        +" is used to display large data sets when you need a flexible layout or need to include interactive content like charts. Related design guidelines: "
-                        a {
-                            href = const(behaviour("lists-and-tables"))
-                            target = const("pf4")
-                            +"Lists and tables"
-                        }
-                    }
-                }
-            }
+            intro(
+                title = "Data list",
+                prefix = "A ",
+                key = "data list",
+                text = " is used to display large data sets when you need a flexible layout or need to include interactive content like charts. Related design guidelines: ",
+                link = ("lists-and-tables" to "Lists and tables")
+            )
         })
         yield(render {
             pfSection {
@@ -82,10 +72,10 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             {
                                 pfDataListRow {
                                     pfDataListContent {
-                                        pfDataListCell("no-fill".modifier()) {
+                                        pfDataListCell(noFill) {
                                             span(id = it.id) { +"Secondary content (pf-m-no-fill)" }
                                         }
-                                        pfDataListCell("no-fill".modifier(), "align-right".modifier()) {
+                                        pfDataListCell(classes(noFill, alignRight)) {
                                             +"Secondary content (pf-m-align-right pf-m-no-fill)"
                                         }
                                     }
@@ -124,10 +114,10 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             {
                                 pfDataListRow {
                                     pfDataListContent {
-                                        pfDataListCell("no-fill".modifier()) {
+                                        pfDataListCell(noFill) {
                                             span(id = it.id) { +"Secondary content (pf-m-no-fill)" }
                                         }
-                                        pfDataListCell("no-fill".modifier(), "align-right".modifier()) {
+                                        pfDataListCell(classes(noFill, alignRight)) {
                                             +"Secondary content (pf-m-align-right pf-m-no-fill)"
                                         }
                                     }
@@ -207,7 +197,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             }
                                         }
                                     }
-                                    pfDataListAction("hidden".modifier(), "visible-on-lg".modifier()) {
+                                    pfDataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
                                         pfButton(primary) { +"Primary" }
                                         pfButton(secondary) { +"Secondary" }
                                     }
@@ -239,7 +229,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             }
                                         }
                                     }
-                                    pfDataListAction("hidden".modifier(), "visible-on-xl".modifier()) {
+                                    pfDataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
                                         pfButton(primary) { +"Primary" }
                                         pfButton(secondary) { +"Secondary" }
                                         pfButton(secondary) { +"Secondary" }

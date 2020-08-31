@@ -5,26 +5,19 @@ package org.patternfly.showcase.component
 import dev.fritz2.binding.const
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
-import org.patternfly.Size
 import org.patternfly.pfContent
 import org.patternfly.pfSection
-import org.patternfly.pfTitle
-import org.patternfly.util
 import org.w3c.dom.HTMLElement
 
 object ContentComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
-            pfSection("pb-0".util()) {
-                pfContent {
-                    pfTitle("Content", size = Size.XL_3)
-                    p {
-                        +"The "
-                        strong { +"content" }
-                        +" component can wrap any static HTML content you want to place on your page to provide correct formatting when using standard HTML tags."
-                    }
-                }
-            }
+            intro(
+                title = "Content",
+                prefix = "The ",
+                key = "content",
+                text = " component can wrap any static HTML content you want to place on your page to provide correct formatting when using standard HTML tags."
+            )
         })
         yield(render {
             pfSection {

@@ -2,6 +2,7 @@ package org.patternfly.showcase.component
 
 import ClipboardJS
 import dev.fritz2.binding.RootStore
+import dev.fritz2.binding.const
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.HtmlElements
 import hljs.highlightBlock
@@ -11,16 +12,43 @@ import org.patternfly.By
 import org.patternfly.ComponentType
 import org.patternfly.Dataset
 import org.patternfly.Modifier.plain
+import org.patternfly.Section
+import org.patternfly.Size
 import org.patternfly.fas
 import org.patternfly.minusAssign
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfIcon
+import org.patternfly.pfSection
+import org.patternfly.pfTitle
 import org.patternfly.plusAssign
 import org.patternfly.querySelector
+import org.patternfly.showcase.Places
 import org.patternfly.util
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
+
+fun HtmlElements.intro(
+    title: String,
+    prefix: String? = null,
+    key: String,
+    text: String,
+    link: Pair<String, String>? = null
+): Section = pfSection("pb-0".util()) {
+    pfTitle(size = Size.XL_3, classes = "mb-md".util()) { +title }
+    p {
+        prefix?.let { +it }
+        strong { +key }
+        +text
+        link?.let {
+            a {
+                href = const(Places.behaviour(it.first))
+                target = const("pf4")
+                +it.second
+            }
+        }
+    }
+}
 
 fun HtmlElements.snippet(header: String, code: String, content: HtmlElements.() -> Unit): Snippet =
     register(Snippet(header, code, content), {})
@@ -35,7 +63,10 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
     private val codeStore = CodeStore()
 
     init {
-        h3("sc-snippet__heading") { +header }
+        pfTitle(level = 3, size = Size.LG) {
+            domNode.classList += "sc-snippet__title"
+            +header
+        }
         div("sc-snippet__content") {
             this@Snippet.content(this)
         }

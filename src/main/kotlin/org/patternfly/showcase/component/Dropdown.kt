@@ -2,6 +2,7 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
@@ -17,25 +18,21 @@ import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownSeparator
 import org.patternfly.pfSection
 import org.patternfly.pfTitle
-import org.patternfly.util
 import org.w3c.dom.HTMLElement
 
 object DropdownComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
-            pfSection("pb-0".util()) {
-                pfContent {
-                    pfTitle("Dropdown", size = Size.XL_3)
-                    p {
-                        +"Use a "
-                        strong { +"dropdown" }
-                        +" when you want to present a list of actions in a limited space."
-                    }
-                }
-            }
+            intro(
+                title = "Dropdown",
+                prefix = "Use a ",
+                key = "dropdown",
+                text = " when you want to present a list of actions in a limited space."
+            )
         })
         yield(render {
-            pfSection("sc-component__buttons") {
+            pfSection {
+                className = const("sc-component__buttons")
                 pfContent {
                     h2 { +"Examples" }
                 }

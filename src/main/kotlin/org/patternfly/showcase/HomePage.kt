@@ -14,7 +14,7 @@ object HomePage : Iterable<Tag<HTMLElement>> {
         yield(render {
             pfSection(light) {
                 pfContent {
-                    pfTitle("PatternFly Fritz2")
+                    pfTitle { +"PatternFly Fritz2" }
                     p {
                         a {
                             +"PatternFly Fritz2"
