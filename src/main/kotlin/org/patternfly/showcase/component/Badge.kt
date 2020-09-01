@@ -35,8 +35,7 @@ object BadgeComponent : Iterable<Tag<HTMLElement>> {
             )
         })
         yield(render {
-            pfSection {
-                className = const("sc-component__badges")
+            pfSection("sc-component__badges") {
                 pfContent {
                     h2 { +"Examples" }
                 }

@@ -41,8 +41,7 @@ object ButtonComponent : Iterable<Tag<HTMLElement>> {
             )
         })
         yield(render {
-            pfSection {
-                className = const("sc-component__buttons")
+            pfSection("sc-component__buttons") {
                 pfContent {
                     h2 { +"Examples" }
                 }

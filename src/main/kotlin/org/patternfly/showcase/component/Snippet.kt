@@ -40,11 +40,11 @@ fun HtmlElements.intro(
         prefix?.let { +it }
         strong { +key }
         +text
-        link?.let {
+        link?.let { (url, text) ->
             a {
-                href = const(Places.behaviour(it.first))
+                href = const(Places.behaviour(url))
                 target = const("pf4")
-                +it.second
+                +text
             }
         }
     }
@@ -63,10 +63,7 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
     private val codeStore = CodeStore()
 
     init {
-        pfTitle(level = 3, size = Size.LG) {
-            domNode.classList += "sc-snippet__title"
-            +header
-        }
+        pfTitle(level = 3, size = Size.LG, classes = "sc-snippet__title") { +header }
         div("sc-snippet__content") {
             this@Snippet.content(this)
         }
@@ -84,11 +81,8 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
                     this@Snippet.showCopied()
                 }
             }
-            pfContent {
-                domNode.classList += "display-none".util()
-                span("sc-snippet__copied") {
-                    +"Copied to clipboard"
-                }
+            pfContent("display-none".util()) {
+                span("sc-snippet__copied") { +"Copied to clipboard" }
             }
         }
         div("sc-snippet__code") {

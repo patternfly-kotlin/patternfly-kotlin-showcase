@@ -12,6 +12,8 @@ import org.patternfly.showcase.component.BadgeComponent
 import org.patternfly.showcase.component.BrandComponent
 import org.patternfly.showcase.component.ButtonComponent
 import org.patternfly.showcase.component.CardComponent
+import org.patternfly.showcase.component.ChipComponent
+import org.patternfly.showcase.component.ChipGroupComponent
 import org.patternfly.showcase.component.ContentComponent
 import org.patternfly.showcase.component.DataListComponent
 import org.patternfly.showcase.component.DropdownComponent
@@ -35,6 +37,8 @@ object Places {
         put(component("brand"), BrandComponent)
         put(component("button"), ButtonComponent)
         put(component("card"), CardComponent)
+        put(component("chip"), ChipComponent)
+        put(component("chip-group"), ChipGroupComponent)
         put(component("content"), ContentComponent)
         put(component("data-list"), DataListComponent)
         put(component("dropdown"), DropdownComponent)

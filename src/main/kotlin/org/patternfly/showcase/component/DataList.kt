@@ -2,11 +2,11 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.action
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
 import dev.fritz2.lenses.IdProvider
-import kotlinx.coroutines.flow.flowOf
 import org.patternfly.Align
 import org.patternfly.DataListDisplay
 import org.patternfly.DataListStore
@@ -52,7 +52,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", DataListCode.BASIC) {
-                    // Just a fake item data w/ a display function
+                    // Just a fake item w/ a display function
                     data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
 
                     val data = listOf(
@@ -83,18 +83,18 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             }
                         }
                     )
+
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
                     val store: DataListStore<DisplayData> = DataListStore(identifier)
-
                     pfDataList(identifier, store) {
                         display = {
                             it.display(it)
                         }
                     }
-                    flowOf(data) handledBy store.update
+                    action(data) handledBy store.update
                 }
                 snippet("Compact", DataListCode.COMPACT) {
-                    // Just a fake item data w/ a display function
+                    // Just a fake item w/ a display function
                     data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
 
                     val data = listOf(
@@ -125,19 +125,19 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             }
                         }
                     )
+
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
                     val store: DataListStore<DisplayData> = DataListStore(identifier)
-
                     pfDataList(identifier, store) {
                         domNode.classList += "compact".modifier()
                         display = {
                             it.display(it)
                         }
                     }
-                    flowOf(data) handledBy store.update
+                    action(data) handledBy store.update
                 }
                 snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
-                    // Just a fake item data w/ a display function
+                    // Just a fake item w/ a display function
                     data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
 
                     val data = listOf(
@@ -239,15 +239,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             }
                         }
                     )
+
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
                     val store: DataListStore<DisplayData> = DataListStore(identifier)
-
                     pfDataList(identifier, store) {
                         display = {
                             it.display(it)
                         }
                     }
-                    flowOf(data) handledBy store.update
+                    action(data) handledBy store.update
                 }
             }
         })
@@ -259,7 +259,7 @@ internal object DataListCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        // Just a fake item data w/ a display function
+        // Just a fake item w/ a display function
         data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
 
         val data = listOf(
@@ -290,15 +290,15 @@ internal object DataListCode {
                 }
             }
         )
+        
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
         val store: DataListStore<DisplayData> = DataListStore(identifier)
-
         pfDataList(identifier, store) {
             display = {
                 it.display(it)
             }
         }
-        flowOf(data) handledBy store.update
+        action(data) handledBy store.update
     }
 }
 """
@@ -306,7 +306,7 @@ internal object DataListCode {
     //language=kotlin
     const val COMPACT: String = """fun main() {
     render {
-        // Just a fake item data w/ a display function
+        // Just a fake item w/ a display function
         data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
 
         val data = listOf(
@@ -337,16 +337,16 @@ internal object DataListCode {
                 }
             }
         )
+        
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
         val store: DataListStore<DisplayData> = DataListStore(identifier)
-
         pfDataList(identifier, store) {
             domNode.classList += "compact".modifier()
             display = {
                 it.display(it)
             }
         }
-        flowOf(data) handledBy store.update
+        action(data) handledBy store.update
     }
 }
 """
@@ -354,7 +354,7 @@ internal object DataListCode {
     //language=kotlin
     const val CHECKBOXES: String = """fun main() {
     render {
-        // Just a fake item data w/ a display function
+        // Just a fake item w/ a display function
         data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
 
         val data = listOf(
@@ -456,15 +456,15 @@ internal object DataListCode {
                 }
             }
         )
+        
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
         val store: DataListStore<DisplayData> = DataListStore(identifier)
-
         pfDataList(identifier, store) {
             display = {
                 it.display(it)
             }
         }
-        flowOf(data) handledBy store.update
+        action(data) handledBy store.update
     }
 }
 """

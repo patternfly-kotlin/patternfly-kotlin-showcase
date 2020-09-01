@@ -2,7 +2,6 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
 import org.patternfly.Align
@@ -11,7 +10,6 @@ import org.patternfly.Modifier.compact
 import org.patternfly.Modifier.flat
 import org.patternfly.Modifier.hoverable
 import org.patternfly.Modifier.noFill
-import org.patternfly.Modifier.selectable
 import org.patternfly.pfBrand
 import org.patternfly.pfCard
 import org.patternfly.pfCardActions
@@ -490,5 +488,4 @@ internal object CardCode {
     }
 }
 """
-
 }
