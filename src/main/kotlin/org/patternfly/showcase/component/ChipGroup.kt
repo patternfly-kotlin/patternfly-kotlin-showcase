@@ -104,7 +104,9 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     ) handledBy store.update
                 }
                 snippet("Add / Remove", ChipGroupCode.ADD_REMOVE) {
-                    fun randomString(length: Int) = (3..length).map { ('a'..'z').random() }.joinToString("")
+                    fun randomString(length: Int) =
+                        (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")
+
                     val stores: Array<ChipGroupStore<String>> = arrayOf(
                         ChipGroupStore(),
                         ChipGroupStore(),
@@ -228,7 +230,9 @@ internal object ChipGroupCode {
     //language=kotlin
     const val ADD_REMOVE: String = """fun main() {
     render {
-        fun randomString(length: Int) = (3..length).map { ('a'..'z').random() }.joinToString("")
+        fun randomString(length: Int) = 
+            (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")
+
         val stores: Array<ChipGroupStore<String>> = arrayOf(
             ChipGroupStore(),
             ChipGroupStore(),
