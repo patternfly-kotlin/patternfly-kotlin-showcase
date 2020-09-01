@@ -20,6 +20,7 @@ import org.patternfly.pfContent
 import org.patternfly.pfIcon
 import org.patternfly.pfSection
 import org.w3c.dom.HTMLElement
+import kotlin.random.Random
 
 object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
@@ -80,6 +81,7 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     data class Word(val text: String) {
                         val letters = text.length
                     }
+
                     val store = ChipGroupStore<Word>()
                     pfChipGroup(store, "Letters") {
                         asText = { it.text }
@@ -102,6 +104,8 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     ) handledBy store.update
                 }
                 snippet("Add / Remove", ChipGroupCode.ADD_REMOVE) {
+                    fun randomString(length: Int) = (1..length).map { ('a'..'z').random() }.joinToString("")
+
                     val stores: Array<ChipGroupStore<String>> = arrayOf(
                         ChipGroupStore(),
                         ChipGroupStore(),
@@ -110,21 +114,21 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     pfButton(classes(link, small)) {
                         pfIcon(START, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { (1..7).map { ('a'..'z').random() }.joinToString("") } handledBy stores[0].add
+                        clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[0].add
                     }
                     pfChipGroup(stores[0], text = "Max 3", limit = 3)
                     br {}
                     pfButton(classes(link, small)) {
                         pfIcon(START, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { (1..7).map { ('a'..'z').random() }.joinToString("") } handledBy stores[1].add
+                        clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[1].add
                     }
                     pfChipGroup(stores[1], text = "Max 4", limit = 4)
                     br {}
                     pfButton(classes(link, small)) {
                         pfIcon(START, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { (1..7).map { ('a'..'z').random() }.joinToString("") } handledBy stores[2].add
+                        clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[2].add
                     }
                     pfChipGroup(stores[2], text = "Unlimited", limit = Int.MAX_VALUE)
                 }
@@ -222,6 +226,8 @@ internal object ChipGroupCode {
     //language=kotlin
     const val ADD_REMOVE: String = """fun main() {
     render {
+        fun randomString(length: Int) = (1..length).map { ('a'..'z').random() }.joinToString("")
+
         val stores: Array<ChipGroupStore<String>> = arrayOf(
             ChipGroupStore(),
             ChipGroupStore(),
@@ -230,21 +236,21 @@ internal object ChipGroupCode {
         pfButton(classes(link, small)) {
             pfIcon(START, "plus-circle".fas())
             +"Add chip"
-            clicks.map { (1..7).map { ('a'..'z').random() }.joinToString("") } handledBy stores[0].add
+            clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[0].add
         }
         pfChipGroup(stores[0], text = "Max 3", limit = 3)
         br {}
         pfButton(classes(link, small)) {
             pfIcon(START, "plus-circle".fas())
             +"Add chip"
-            clicks.map { (1..7).map { ('a'..'z').random() }.joinToString("") } handledBy stores[1].add
+            clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[1].add
         }
         pfChipGroup(stores[1], text = "Max 4", limit = 4)
         br {}
         pfButton(classes(link, small)) {
             pfIcon(START, "plus-circle".fas())
             +"Add chip"
-            clicks.map { (1..7).map { ('a'..'z').random() }.joinToString("") } handledBy stores[2].add
+            clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[2].add
         }
         pfChipGroup(stores[2], text = "Unlimited", limit = Int.MAX_VALUE)
     }
