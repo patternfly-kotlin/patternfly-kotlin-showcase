@@ -104,33 +104,35 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     ) handledBy store.update
                 }
                 snippet("Add / Remove", ChipGroupCode.ADD_REMOVE) {
-                    fun randomString(length: Int) = (1..length).map { ('a'..'z').random() }.joinToString("")
-
+                    fun randomString(length: Int) = (3..length).map { ('a'..'z').random() }.joinToString("")
                     val stores: Array<ChipGroupStore<String>> = arrayOf(
                         ChipGroupStore(),
                         ChipGroupStore(),
                         ChipGroupStore()
                     )
+
                     pfButton(classes(link, small)) {
                         pfIcon(START, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[0].add
+                        clicks.map { randomString(Random.nextInt(10)) } handledBy stores[0].add
                     }
-                    pfChipGroup(stores[0], text = "Max 3", limit = 3)
+                    pfChipGroup(stores[0], "Max 3", 3)
                     br {}
+
                     pfButton(classes(link, small)) {
                         pfIcon(START, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[1].add
+                        clicks.map { randomString(Random.nextInt(10)) } handledBy stores[1].add
                     }
-                    pfChipGroup(stores[1], text = "Max 4", limit = 4)
+                    pfChipGroup(stores[1], "Max 4", 4)
                     br {}
+
                     pfButton(classes(link, small)) {
                         pfIcon(START, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[2].add
+                        clicks.map { randomString(Random.nextInt(10)) } handledBy stores[2].add
                     }
-                    pfChipGroup(stores[2], text = "Unlimited", limit = Int.MAX_VALUE)
+                    pfChipGroup(stores[2], "Unlimited", Int.MAX_VALUE)
                 }
             }
         })
@@ -226,33 +228,33 @@ internal object ChipGroupCode {
     //language=kotlin
     const val ADD_REMOVE: String = """fun main() {
     render {
-        fun randomString(length: Int) = (1..length).map { ('a'..'z').random() }.joinToString("")
-
+        fun randomString(length: Int) = (3..length).map { ('a'..'z').random() }.joinToString("")
         val stores: Array<ChipGroupStore<String>> = arrayOf(
             ChipGroupStore(),
             ChipGroupStore(),
             ChipGroupStore()
         )
+        
         pfButton(classes(link, small)) {
             pfIcon(START, "plus-circle".fas())
             +"Add chip"
-            clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[0].add
+            clicks.map { randomString(Random.nextInt(10)) } handledBy stores[0].add
         }
-        pfChipGroup(stores[0], text = "Max 3", limit = 3)
-        br {}
+        pfChipGroup(stores[0], "Max 3", 3)
+        
         pfButton(classes(link, small)) {
             pfIcon(START, "plus-circle".fas())
             +"Add chip"
-            clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[1].add
+            clicks.map { randomString(Random.nextInt(10)) } handledBy stores[1].add
         }
-        pfChipGroup(stores[1], text = "Max 4", limit = 4)
-        br {}
+        pfChipGroup(stores[1], "Max 4", 4)
+        
         pfButton(classes(link, small)) {
             pfIcon(START, "plus-circle".fas())
             +"Add chip"
-            clicks.map { randomString(3 + Random.nextInt(10)) } handledBy stores[2].add
+            clicks.map { randomString(Random.nextInt(10)) } handledBy stores[2].add
         }
-        pfChipGroup(stores[2], text = "Unlimited", limit = Int.MAX_VALUE)
+        pfChipGroup(stores[2], "Unlimited", Int.MAX_VALUE)
     }
 }
 """
