@@ -84,9 +84,9 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
 
                     val store = ChipGroupStore<Word>()
                     pfChipGroup(store, "Letters") {
-                        asText = { it.text }
                         display = {
                             {
+                                +it.text
                                 pfBadge {
                                     +it.letters.toString()
                                 }
@@ -107,34 +107,21 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     fun randomString(length: Int) =
                         (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")
 
-                    val stores: Array<ChipGroupStore<String>> = arrayOf(
-                        ChipGroupStore(),
-                        ChipGroupStore(),
-                        ChipGroupStore()
+                    val stores: Array<Pair<Int, ChipGroupStore<String>>> = arrayOf(
+                        3 to ChipGroupStore(),
+                        4 to ChipGroupStore(),
+                        20 to ChipGroupStore()
                     )
 
-                    pfButton(classes(link, small)) {
-                        pfIcon(START, "plus-circle".fas())
-                        +"Add chip"
-                        clicks.map { randomString(Random.nextInt(10)) } handledBy stores[0].add
+                    stores.forEach { (limit, store) ->
+                        pfButton(classes(link, small)) {
+                            pfIcon(START, "plus-circle".fas())
+                            +"Add chip"
+                            clicks.map { randomString(Random.nextInt(10)) } handledBy store.add
+                        }
+                        pfChipGroup(store, "Max $limit", limit)
+                        br {}
                     }
-                    pfChipGroup(stores[0], "Max 3", 3)
-                    br {}
-
-                    pfButton(classes(link, small)) {
-                        pfIcon(START, "plus-circle".fas())
-                        +"Add chip"
-                        clicks.map { randomString(Random.nextInt(10)) } handledBy stores[1].add
-                    }
-                    pfChipGroup(stores[1], "Max 4", 4)
-                    br {}
-
-                    pfButton(classes(link, small)) {
-                        pfIcon(START, "plus-circle".fas())
-                        +"Add chip"
-                        clicks.map { randomString(Random.nextInt(10)) } handledBy stores[2].add
-                    }
-                    pfChipGroup(stores[2], "Unlimited", Int.MAX_VALUE)
                 }
             }
         })
@@ -205,9 +192,9 @@ internal object ChipGroupCode {
         }
         val store = ChipGroupStore<Word>()
         pfChipGroup(store, "Letters") {
-            asText = { it.text }
-            display = {
-                {
+            display = { // it: Word
+                { // this: Chip
+                    +it.text
                     pfBadge {
                         +it.letters.toString()
                     }
@@ -230,35 +217,24 @@ internal object ChipGroupCode {
     //language=kotlin
     const val ADD_REMOVE: String = """fun main() {
     render {
-        fun randomString(length: Int) = 
+        fun randomString(length: Int) =
             (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")
 
-        val stores: Array<ChipGroupStore<String>> = arrayOf(
-            ChipGroupStore(),
-            ChipGroupStore(),
-            ChipGroupStore()
+        val stores: Array<Pair<Int, ChipGroupStore<String>>> = arrayOf(
+            3 to ChipGroupStore(),
+            4 to ChipGroupStore(),
+            20 to ChipGroupStore()
         )
-        
-        pfButton(classes(link, small)) {
-            pfIcon(START, "plus-circle".fas())
-            +"Add chip"
-            clicks.map { randomString(Random.nextInt(10)) } handledBy stores[0].add
+
+        stores.forEach { (limit, store) ->
+            pfButton(classes(link, small)) {
+                pfIcon(START, "plus-circle".fas())
+                +"Add chip"
+                clicks.map { randomString(Random.nextInt(10)) } handledBy store.add
+            }
+            pfChipGroup(store, "Max ${'$'}limit", limit)
+            br {}
         }
-        pfChipGroup(stores[0], "Max 3", 3)
-        
-        pfButton(classes(link, small)) {
-            pfIcon(START, "plus-circle".fas())
-            +"Add chip"
-            clicks.map { randomString(Random.nextInt(10)) } handledBy stores[1].add
-        }
-        pfChipGroup(stores[1], "Max 4", 4)
-        
-        pfButton(classes(link, small)) {
-            pfIcon(START, "plus-circle".fas())
-            +"Add chip"
-            clicks.map { randomString(Random.nextInt(10)) } handledBy stores[2].add
-        }
-        pfChipGroup(stores[2], "Unlimited", Int.MAX_VALUE)
     }
 }
 """

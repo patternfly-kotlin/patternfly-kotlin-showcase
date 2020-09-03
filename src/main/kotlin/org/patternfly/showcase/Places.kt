@@ -16,7 +16,9 @@ import org.patternfly.showcase.component.ChipComponent
 import org.patternfly.showcase.component.ChipGroupComponent
 import org.patternfly.showcase.component.ContentComponent
 import org.patternfly.showcase.component.DataListComponent
+import org.patternfly.showcase.component.DrawerComponent
 import org.patternfly.showcase.component.DropdownComponent
+import org.patternfly.showcase.component.EmptyStateComponent
 import org.patternfly.showcase.component.SwitchComponent
 import org.w3c.dom.HTMLElement
 
@@ -40,8 +42,10 @@ object Places {
         put(component("chip"), ChipComponent)
         put(component("chip-group"), ChipGroupComponent)
         put(component("content"), ContentComponent)
+        put(component("drawer"), DrawerComponent)
         put(component("data-list"), DataListComponent)
         put(component("dropdown"), DropdownComponent)
+        put(component("empty-state"), EmptyStateComponent)
         put(component("switch"), SwitchComponent)
     }
 

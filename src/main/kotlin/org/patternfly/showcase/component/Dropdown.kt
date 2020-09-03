@@ -7,17 +7,14 @@ import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
 import kotlinx.coroutines.flow.map
-import org.patternfly.DropdownStore
 import org.patternfly.Notification
 import org.patternfly.Severity.INFO
-import org.patternfly.Size
 import org.patternfly.pfContent
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItem
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownSeparator
 import org.patternfly.pfSection
-import org.patternfly.pfTitle
 import org.w3c.dom.HTMLElement
 
 object DropdownComponent : Iterable<Tag<HTMLElement>> {
@@ -37,7 +34,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", DropdownCode.BASIC) {
-                    pfDropdown(DropdownStore<String>(), "Dropdown") {
+                    pfDropdown<String>(text = "Dropdown") {
                         pfDropdownItems {
                             pfDropdownItem("Item 1")
                             pfDropdownItem("Disabled Item") {
@@ -49,7 +46,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("With initial selection", DropdownCode.SELECTED) {
-                    pfDropdown(DropdownStore<String>(), "Dropdown") {
+                    pfDropdown<String>(text = "Dropdown") {
                         pfDropdownItems {
                             pfDropdownItem("Item 1")
                             pfDropdownItem("Item 2") {
@@ -64,7 +61,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Dropdown events", DropdownCode.EVENTS) {
-                    val dropdown = pfDropdown(DropdownStore<String>(), "Dropdown") {
+                    val dropdown = pfDropdown<String>(text = "Dropdown") {
                         pfDropdownItems {
                             pfDropdownItem("Item 1")
                             pfDropdownItem("Disabled Item") {
@@ -94,7 +91,7 @@ internal object DropdownCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfDropdown(DropdownStore<String>(), "Dropdown") {
+        pfDropdown<String>(text = "Dropdown") {
             pfDropdownItems {
                 pfDropdownItem("Item 1")
                 pfDropdownItem("Disabled Item") {
@@ -110,7 +107,7 @@ internal object DropdownCode {
     //language=kotlin
     const val SELECTED: String = """fun main() {
     render {
-        pfDropdown(DropdownStore<String>(), "Dropdown") {
+        pfDropdown<String>(text = "Dropdown") {
             pfDropdownItems {
                 pfDropdownItem("Item 1")
                 pfDropdownItem("Item 2") {
@@ -129,7 +126,7 @@ internal object DropdownCode {
     //language=kotlin
     const val EVENTS: String = """fun main() {
     render {
-        val dropdown = pfDropdown(DropdownStore<String>(), "Dropdown") {
+        val dropdown = pfDropdown<String>(text = "Dropdown") {
             pfDropdownItems {
                 pfDropdownItem("Item 1")
                 pfDropdownItem("Disabled Item") {

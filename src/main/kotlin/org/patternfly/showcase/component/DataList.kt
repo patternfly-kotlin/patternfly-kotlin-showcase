@@ -9,9 +9,9 @@ import dev.fritz2.dom.html.render
 import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.DataListDisplay
-import org.patternfly.DataListStore
 import org.patternfly.DropdownStore
 import org.patternfly.Id
+import org.patternfly.ItemStore
 import org.patternfly.Modifier.alignRight
 import org.patternfly.Modifier.noFill
 import org.patternfly.Modifier.primary
@@ -85,13 +85,13 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                     )
 
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
-                    val store: DataListStore<DisplayData> = DataListStore(identifier)
+                    val store: ItemStore<DisplayData> = ItemStore(identifier)
                     pfDataList(identifier, store) {
                         display = {
                             it.display(it)
                         }
                     }
-                    action(data) handledBy store.update
+                    action(data) handledBy store.addAll
                 }
                 snippet("Compact", DataListCode.COMPACT) {
                     // Just a fake item w/ a display function
@@ -127,14 +127,14 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                     )
 
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
-                    val store: DataListStore<DisplayData> = DataListStore(identifier)
+                    val store: ItemStore<DisplayData> = ItemStore(identifier)
                     pfDataList(identifier, store) {
                         domNode.classList += "compact".modifier()
                         display = {
                             it.display(it)
                         }
                     }
-                    action(data) handledBy store.update
+                    action(data) handledBy store.addAll
                 }
                 snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
                     // Just a fake item w/ a display function
@@ -241,13 +241,13 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                     )
 
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
-                    val store: DataListStore<DisplayData> = DataListStore(identifier)
+                    val store: ItemStore<DisplayData> = ItemStore(identifier)
                     pfDataList(identifier, store) {
                         display = {
                             it.display(it)
                         }
                     }
-                    action(data) handledBy store.update
+                    action(data) handledBy store.addAll
                 }
             }
         })
@@ -292,13 +292,13 @@ internal object DataListCode {
         )
         
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
-        val store: DataListStore<DisplayData> = DataListStore(identifier)
+        val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(identifier, store) {
             display = {
                 it.display(it)
             }
         }
-        action(data) handledBy store.update
+        action(data) handledBy store.addAll
     }
 }
 """
@@ -339,14 +339,14 @@ internal object DataListCode {
         )
         
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
-        val store: DataListStore<DisplayData> = DataListStore(identifier)
+        val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(identifier, store) {
             domNode.classList += "compact".modifier()
             display = {
                 it.display(it)
             }
         }
-        action(data) handledBy store.update
+        action(data) handledBy store.addAll
     }
 }
 """
@@ -458,13 +458,13 @@ internal object DataListCode {
         )
         
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
-        val store: DataListStore<DisplayData> = DataListStore(identifier)
+        val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(identifier, store) {
             display = {
                 it.display(it)
             }
         }
-        action(data) handledBy store.update
+        action(data) handledBy store.addAll
     }
 }
 """

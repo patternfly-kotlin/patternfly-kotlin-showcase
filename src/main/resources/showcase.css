@@ -50,3 +50,18 @@
     padding: 10px;
     font-weight: 400
 }
+
+.sc-user-photo-75 {
+    position: relative;
+    background: #fff;
+    padding: 3px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.sc-user-photo-75 img {
+    width: 75px;
+    border-radius: 50%;
+}
