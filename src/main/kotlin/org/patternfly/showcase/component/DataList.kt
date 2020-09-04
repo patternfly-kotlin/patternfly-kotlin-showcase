@@ -9,7 +9,6 @@ import dev.fritz2.dom.html.render
 import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.DataListDisplay
-import org.patternfly.DropdownStore
 import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.Modifier.alignRight
@@ -18,6 +17,7 @@ import org.patternfly.Modifier.primary
 import org.patternfly.Modifier.secondary
 import org.patternfly.classes
 import org.patternfly.component
+import org.patternfly.fas
 import org.patternfly.modifier
 import org.patternfly.pfButton
 import org.patternfly.pfContent
@@ -27,10 +27,14 @@ import org.patternfly.pfDataListCell
 import org.patternfly.pfDataListCheck
 import org.patternfly.pfDataListContent
 import org.patternfly.pfDataListControl
+import org.patternfly.pfDataListExpandableContent
+import org.patternfly.pfDataListExpandableContentBody
 import org.patternfly.pfDataListRow
+import org.patternfly.pfDataListToggle
 import org.patternfly.pfDropdownItem
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownKebab
+import org.patternfly.pfIcon
 import org.patternfly.pfSection
 import org.patternfly.plusAssign
 import org.w3c.dom.HTMLElement
@@ -86,7 +90,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
 
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
                     val store: ItemStore<DisplayData> = ItemStore(identifier)
-                    pfDataList(identifier, store) {
+                    pfDataList(store) {
                         display = {
                             it.display(it)
                         }
@@ -128,7 +132,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
 
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
                     val store: ItemStore<DisplayData> = ItemStore(identifier)
-                    pfDataList(identifier, store) {
+                    pfDataList(store) {
                         domNode.classList += "compact".modifier()
                         display = {
                             it.display(it)
@@ -158,7 +162,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab(DropdownStore<String>(), Align.RIGHT) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
                                                 pfDropdownItems {
                                                     pfDropdownItem("Link")
                                                     pfDropdownItem("Action")
@@ -186,7 +190,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction("hidden-on-lg".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab(DropdownStore<String>(), Align.RIGHT) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
                                                 pfDropdownItems {
                                                     pfDropdownItem("Link")
                                                     pfDropdownItem("Action")
@@ -218,7 +222,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction("hidden-on-xl".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab(DropdownStore<String>(), Align.RIGHT) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
                                                 pfDropdownItems {
                                                     pfDropdownItem("Link")
                                                     pfDropdownItem("Action")
@@ -242,7 +246,205 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
 
                     val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
                     val store: ItemStore<DisplayData> = ItemStore(identifier)
-                    pfDataList(identifier, store) {
+                    pfDataList(store) {
+                        display = {
+                            it.display(it)
+                        }
+                    }
+                    action(data) handledBy store.addAll
+                }
+                snippet("Actions: single and multiple", DataListCode.ACTIONS) {
+                    // Just a fake item w/ a display function
+                    data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
+
+                    val data = listOf(
+                        DisplayData {
+                            {
+                                pfDataListRow {
+                                    pfDataListContent {
+                                        pfDataListCell {
+                                            span(id = it.id) { +"Single actionable Primary content" }
+                                        }
+                                        pfDataListCell { +"Single actionable Secondary content" }
+                                    }
+                                    pfDataListAction {
+                                        pfButton(primary) { +"Delete" }
+                                    }
+                                }
+                            }
+                        },
+                        DisplayData {
+                            {
+                                pfDataListRow {
+                                    pfDataListContent {
+                                        pfDataListCell {
+                                            span(id = it.id) { +"Multi actions Primary content" }
+                                        }
+                                        pfDataListCell { +"Multi actions Secondary content" }
+                                    }
+                                    pfDataListAction {
+                                        div(baseClass = "data-list".component("action")) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
+                                                pfDropdownItems {
+                                                    pfDropdownItem("Link")
+                                                    pfDropdownItem("Action")
+                                                    pfDropdownItem("Disabled Link") {
+                                                        disabled = true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+
+                    val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                    val store: ItemStore<DisplayData> = ItemStore(identifier)
+                    pfDataList(store) {
+                        display = {
+                            it.display(it)
+                        }
+                    }
+                    action(data) handledBy store.addAll
+                }
+                snippet("Expandable", DataListCode.EXPANDABLE) {
+                    // Just a fake item w/ a display function
+                    data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
+
+                    val data = listOf(
+                        DisplayData {
+                            {
+                                pfDataListRow {
+                                    pfDataListControl {
+                                        pfDataListToggle()
+                                    }
+                                    pfDataListContent {
+                                        pfDataListCell("icon".modifier()) {
+                                            pfIcon("code-branch".fas())
+                                        }
+                                        pfDataListCell {
+                                            div(id = it.id) { +"Primary content" }
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                        pfDataListCell {
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                        pfDataListCell {
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                    }
+                                    pfDataListAction {
+                                        div(baseClass = "data-list".component("action")) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
+                                                pfDropdownItems {
+                                                    pfDropdownItem("Link")
+                                                    pfDropdownItem("Action")
+                                                    pfDropdownItem("Disabled Link") {
+                                                        disabled = true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                pfDataListExpandableContent {
+                                    pfDataListExpandableContentBody {
+                                        +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    }
+                                }
+                            }
+                        },
+                        DisplayData {
+                            {
+                                pfDataListRow {
+                                    pfDataListControl {
+                                        pfDataListToggle()
+                                    }
+                                    pfDataListContent {
+                                        pfDataListCell("icon".modifier()) {
+                                            pfIcon("code-branch".fas())
+                                        }
+                                        pfDataListCell {
+                                            div(id = it.id) { +"Secondary content" }
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                        pfDataListCell {
+                                            span { +"Lorem ipsum dolor sit amet." }
+                                        }
+                                        pfDataListCell {
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                    }
+                                    pfDataListAction {
+                                        div(baseClass = "data-list".component("action")) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
+                                                pfDropdownItems {
+                                                    pfDropdownItem("Link")
+                                                    pfDropdownItem("Action")
+                                                    pfDropdownItem("Disabled Link") {
+                                                        disabled = true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                pfDataListExpandableContent {
+                                    pfDataListExpandableContentBody {
+                                        +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    }
+                                }
+                            }
+                        },
+                        DisplayData {
+                            {
+                                pfDataListRow {
+                                    pfDataListControl {
+                                        pfDataListToggle()
+                                    }
+                                    pfDataListContent {
+                                        pfDataListCell("icon".modifier()) {
+                                            pfIcon("code-branch".fas())
+                                        }
+                                        pfDataListCell {
+                                            div(id = it.id) { +"Tertiary content" }
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                        pfDataListCell {
+                                            span { +"Lorem ipsum dolor sit amet." }
+                                        }
+                                        pfDataListCell {
+                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                                        }
+                                    }
+                                    pfDataListAction {
+                                        div(baseClass = "data-list".component("action")) {
+                                            pfDropdownKebab<String>(align = Align.RIGHT) {
+                                                pfDropdownItems {
+                                                    pfDropdownItem("Link")
+                                                    pfDropdownItem("Action")
+                                                    pfDropdownItem("Disabled Link") {
+                                                        disabled = true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                pfDataListExpandableContent {
+                                    pfDataListExpandableContentBody {
+                                        +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                    }
+                                }
+                            }
+                        }
+                    )
+
+                    val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                    val store: ItemStore<DisplayData> = ItemStore(identifier)
+                    pfDataList(store) {
                         display = {
                             it.display(it)
                         }
@@ -293,7 +495,7 @@ internal object DataListCode {
         
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(identifier, store) {
+        pfDataList(store) {
             display = {
                 it.display(it)
             }
@@ -340,7 +542,7 @@ internal object DataListCode {
         
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(identifier, store) {
+        pfDataList(store) {
             domNode.classList += "compact".modifier()
             display = {
                 it.display(it)
@@ -375,7 +577,7 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab(DropdownStore<String>(), Align.RIGHT) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
                                     pfDropdownItems {
                                         pfDropdownItem("Link")
                                         pfDropdownItem("Action")
@@ -403,7 +605,7 @@ internal object DataListCode {
                         }
                         pfDataListAction("hidden-on-lg".modifier()) {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab(DropdownStore<String>(), Align.RIGHT) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
                                     pfDropdownItems {
                                         pfDropdownItem("Link")
                                         pfDropdownItem("Action")
@@ -435,7 +637,7 @@ internal object DataListCode {
                         }
                         pfDataListAction("hidden-on-xl".modifier()) {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab(DropdownStore<String>(), Align.RIGHT) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
                                     pfDropdownItems {
                                         pfDropdownItem("Link")
                                         pfDropdownItem("Action")
@@ -459,7 +661,215 @@ internal object DataListCode {
         
         val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(identifier, store) {
+        pfDataList(store) {
+            display = {
+                it.display(it)
+            }
+        }
+        action(data) handledBy store.addAll
+    }
+}
+"""
+
+    //language=kotlin
+    const val ACTIONS: String = """fun main() {
+    render {
+        // Just a fake item w/ a display function
+        data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
+
+        val data = listOf(
+            DisplayData {
+                {
+                    pfDataListRow {
+                        pfDataListContent {
+                            pfDataListCell {
+                                span(id = it.id) { +"Single actionable Primary content" }
+                            }
+                            pfDataListCell { +"Single actionable Secondary content" }
+                        }
+                        pfDataListAction {
+                            pfButton(primary) { +"Delete" }
+                        }
+                    }
+                }
+            },
+            DisplayData {
+                {
+                    pfDataListRow {
+                        pfDataListContent {
+                            pfDataListCell {
+                                span(id = it.id) { +"Multi actions Primary content" }
+                            }
+                            pfDataListCell { +"Multi actions Secondary content" }
+                        }
+                        pfDataListAction {
+                            div(baseClass = "data-list".component("action")) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
+                                    pfDropdownItems {
+                                        pfDropdownItem("Link")
+                                        pfDropdownItem("Action")
+                                        pfDropdownItem("Disabled Link") {
+                                            disabled = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        )
+
+        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val store: ItemStore<DisplayData> = ItemStore(identifier)
+        pfDataList(store) {
+            display = {
+                it.display(it)
+            }
+        }
+        action(data) handledBy store.addAll
+    }
+}
+"""
+
+    //language=kotlin
+    const val EXPANDABLE: String = """fun main() {
+    render {
+        // Just a fake item w/ a display function
+        data class DisplayData(val id: String = Id.unique(), val display: DataListDisplay<DisplayData>)
+
+        val data = listOf(
+            DisplayData {
+                {
+                    pfDataListRow {
+                        pfDataListControl {
+                            pfDataListToggle()
+                        }
+                        pfDataListContent {
+                            pfDataListCell("icon".modifier()) {
+                                pfIcon("code-branch".fas())
+                            }
+                            pfDataListCell {
+                                div(id = it.id) { +"Primary content" }
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                            pfDataListCell {
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                            pfDataListCell {
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                        }
+                        pfDataListAction {
+                            div(baseClass = "data-list".component("action")) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
+                                    pfDropdownItems {
+                                        pfDropdownItem("Link")
+                                        pfDropdownItem("Action")
+                                        pfDropdownItem("Disabled Link") {
+                                            disabled = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    pfDataListExpandableContent {
+                        pfDataListExpandableContentBody {
+                            +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        }
+                    }
+                }
+            },
+            DisplayData {
+                {
+                    pfDataListRow {
+                        pfDataListControl {
+                            pfDataListToggle()
+                        }
+                        pfDataListContent {
+                            pfDataListCell("icon".modifier()) {
+                                pfIcon("code-branch".fas())
+                            }
+                            pfDataListCell {
+                                div(id = it.id) { +"Secondary content" }
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                            pfDataListCell {
+                                span { +"Lorem ipsum dolor sit amet." }
+                            }
+                            pfDataListCell {
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                        }
+                        pfDataListAction {
+                            div(baseClass = "data-list".component("action")) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
+                                    pfDropdownItems {
+                                        pfDropdownItem("Link")
+                                        pfDropdownItem("Action")
+                                        pfDropdownItem("Disabled Link") {
+                                            disabled = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    pfDataListExpandableContent {
+                        pfDataListExpandableContentBody {
+                            +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        }
+                    }
+                }
+            },
+            DisplayData {
+                {
+                    pfDataListRow {
+                        pfDataListControl {
+                            pfDataListToggle()
+                        }
+                        pfDataListContent {
+                            pfDataListCell("icon".modifier()) {
+                                pfIcon("code-branch".fas())
+                            }
+                            pfDataListCell {
+                                div(id = it.id) { +"Tertiary content" }
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                            pfDataListCell {
+                                span { +"Lorem ipsum dolor sit amet." }
+                            }
+                            pfDataListCell {
+                                span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
+                            }
+                        }
+                        pfDataListAction {
+                            div(baseClass = "data-list".component("action")) {
+                                pfDropdownKebab<String>(align = Align.RIGHT) {
+                                    pfDropdownItems {
+                                        pfDropdownItem("Link")
+                                        pfDropdownItem("Action")
+                                        pfDropdownItem("Disabled Link") {
+                                            disabled = true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    pfDataListExpandableContent {
+                        pfDataListExpandableContentBody {
+                            +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                        }
+                    }
+                }
+            }
+        )
+
+        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val store: ItemStore<DisplayData> = ItemStore(identifier)
+        pfDataList(store) {
             display = {
                 it.display(it)
             }

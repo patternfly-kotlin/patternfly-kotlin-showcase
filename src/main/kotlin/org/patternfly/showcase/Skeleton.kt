@@ -89,8 +89,8 @@ class Skeleton(private val router: Router<String>) : Iterable<Tag<HTMLElement>> 
                                     pfNavigationItem(Places.component("toolbar"), "Toolbar")
                                 }
                                 pfNavigationExpandableGroup("Demos") {
-                                    pfNavigationItem(Places.component("server-demo"), "Servers")
-                                    pfNavigationItem(Places.component("user-demo"), "Users")
+                                    pfNavigationItem(Places.demo("server"), "Servers")
+                                    pfNavigationItem(Places.demo("user"), "Users")
                                 }
                             }
                         }

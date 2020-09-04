@@ -20,6 +20,7 @@ import org.patternfly.showcase.component.DrawerComponent
 import org.patternfly.showcase.component.DropdownComponent
 import org.patternfly.showcase.component.EmptyStateComponent
 import org.patternfly.showcase.component.SwitchComponent
+import org.patternfly.showcase.demo.UserDemo
 import org.w3c.dom.HTMLElement
 
 @OptIn(ExperimentalStdlibApi::class)
@@ -47,6 +48,7 @@ object Places {
         put(component("dropdown"), DropdownComponent)
         put(component("empty-state"), EmptyStateComponent)
         put(component("switch"), SwitchComponent)
+        put(demo("user"), UserDemo)
     }
 
     fun behaviour(name: String) = "https://www.patternfly.org/v4/design-guidelines/usage-and-behavior/$name"
