@@ -20,11 +20,11 @@ import org.patternfly.pfCardHeader
 import org.patternfly.pfCardHeaderMain
 import org.patternfly.pfCardTitle
 import org.patternfly.pfContent
-import org.patternfly.pfDropdownItem
-import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownKebab
-import org.patternfly.pfDropdownSeparator
+import org.patternfly.pfEntries
+import org.patternfly.pfItem
 import org.patternfly.pfSection
+import org.patternfly.pfSeparator
 import org.w3c.dom.HTMLElement
 
 object CardComponent : Iterable<Tag<HTMLElement>> {
@@ -59,13 +59,13 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                             }
                             pfCardActions {
                                 pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownItems {
-                                        pfDropdownItem("Item 1")
-                                        pfDropdownItem("Disabled Item") {
+                                    pfEntries {
+                                        pfItem("Item 1")
+                                        pfItem("Disabled Item") {
                                             disabled = true
                                         }
-                                        pfDropdownSeparator()
-                                        pfDropdownItem("Separated Item")
+                                        pfSeparator()
+                                        pfItem("Separated Item")
                                     }
                                 }
                                 pfCardCheckbox()
@@ -81,13 +81,13 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                         pfCardHeader {
                             pfCardActions {
                                 pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownItems {
-                                        pfDropdownItem("Item 1")
-                                        pfDropdownItem("Disabled Item") {
+                                    pfEntries {
+                                        pfItem("Item 1")
+                                        pfItem("Disabled Item") {
                                             disabled = true
                                         }
-                                        pfDropdownSeparator()
-                                        pfDropdownItem("Separated Item")
+                                        pfSeparator()
+                                        pfItem("Separated Item")
                                     }
                                 }
                                 pfCardCheckbox()
@@ -105,13 +105,13 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                         pfCardHeader {
                             pfCardActions {
                                 pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownItems {
-                                        pfDropdownItem("Item 1")
-                                        pfDropdownItem("Disabled Item") {
+                                    pfEntries {
+                                        pfItem("Item 1")
+                                        pfItem("Disabled Item") {
                                             disabled = true
                                         }
-                                        pfDropdownSeparator()
-                                        pfDropdownItem("Separated Item")
+                                        pfSeparator()
+                                        pfItem("Separated Item")
                                     }
                                 }
                                 pfCardCheckbox()
@@ -191,13 +191,13 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                         pfCardHeader {
                             pfCardActions {
                                 pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownItems {
-                                        pfDropdownItem("Item 1")
-                                        pfDropdownItem("Disabled Item") {
+                                    pfEntries {
+                                        pfItem("Item 1")
+                                        pfItem("Disabled Item") {
                                             disabled = true
                                         }
-                                        pfDropdownSeparator()
-                                        pfDropdownItem("Separated Item")
+                                        pfSeparator()
+                                        pfItem("Separated Item")
                                     }
                                 }
                             }
@@ -259,13 +259,13 @@ internal object CardCode {
                 }
                 pfCardActions {
                     pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Disabled Item") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                     pfCardCheckbox()
@@ -286,13 +286,13 @@ internal object CardCode {
             pfCardHeader {
                 pfCardActions {
                     pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Disabled Item") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                     pfCardCheckbox()
@@ -315,13 +315,13 @@ internal object CardCode {
             pfCardHeader {
                 pfCardActions {
                     pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Disabled Item") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                     pfCardCheckbox()
@@ -446,13 +446,13 @@ internal object CardCode {
             pfCardHeader {
                 pfCardActions {
                     pfDropdownKebab(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Disabled Item") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                 }

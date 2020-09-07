@@ -9,8 +9,8 @@ import hljs.highlightBlock
 import kotlinx.browser.window
 import kotlinx.coroutines.flow.map
 import org.patternfly.By
-import org.patternfly.ComponentType
-import org.patternfly.Dataset
+import org.patternfly.COMPONENT_TYPE
+import org.patternfly.ComponentType.Content
 import org.patternfly.Modifier.plain
 import org.patternfly.Section
 import org.patternfly.Size
@@ -100,7 +100,7 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
 
     private fun showCopied() {
         window.clearTimeout(timeoutHandle)
-        domNode.querySelector(By.data(Dataset.COMPONENT_TYPE.short, ComponentType.Content.id))?.let {
+        domNode.querySelector(By.data(COMPONENT_TYPE, Content.id))?.let {
             it.classList -= "display-none".util()
             timeoutHandle = window.setTimeout({
                 it.classList += "display-none".util()

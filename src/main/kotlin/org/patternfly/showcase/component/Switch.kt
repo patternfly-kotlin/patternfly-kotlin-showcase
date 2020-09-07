@@ -10,12 +10,9 @@ import dev.fritz2.dom.states
 import kotlinx.coroutines.flow.map
 import org.patternfly.Notification
 import org.patternfly.Severity
-import org.patternfly.Size
 import org.patternfly.pfContent
 import org.patternfly.pfSection
 import org.patternfly.pfSwitch
-import org.patternfly.pfTitle
-import org.patternfly.showcase.Places
 import org.w3c.dom.HTMLElement
 
 object SwitchComponent : Iterable<Tag<HTMLElement>> {

@@ -2,7 +2,6 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
@@ -11,10 +10,10 @@ import org.patternfly.Notification
 import org.patternfly.Severity.INFO
 import org.patternfly.pfContent
 import org.patternfly.pfDropdown
-import org.patternfly.pfDropdownItem
-import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownSeparator
+import org.patternfly.pfEntries
+import org.patternfly.pfItem
 import org.patternfly.pfSection
+import org.patternfly.pfSeparator
 import org.w3c.dom.HTMLElement
 
 object DropdownComponent : Iterable<Tag<HTMLElement>> {
@@ -28,47 +27,46 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
             )
         })
         yield(render {
-            pfSection {
-                className = const("sc-component__buttons")
+            pfSection("sc-component__buttons") {
                 pfContent {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", DropdownCode.BASIC) {
                     pfDropdown<String>(text = "Dropdown") {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Disabled Item") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                 }
                 snippet("With initial selection", DropdownCode.SELECTED) {
                     pfDropdown<String>(text = "Dropdown") {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Item 2") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Item 2") {
                                 selected = true
                             }
-                            pfDropdownItem("Disabled Item") {
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                 }
                 snippet("Dropdown events", DropdownCode.EVENTS) {
                     val dropdown = pfDropdown<String>(text = "Dropdown") {
-                        pfDropdownItems {
-                            pfDropdownItem("Item 1")
-                            pfDropdownItem("Disabled Item") {
+                        pfEntries {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
-                            pfDropdownSeparator()
-                            pfDropdownItem("Separated Item")
+                            pfSeparator()
+                            pfItem("Separated Item")
                         }
                     }
                     dropdown.store.clicks
@@ -92,13 +90,13 @@ internal object DropdownCode {
     const val BASIC: String = """fun main() {
     render {
         pfDropdown<String>(text = "Dropdown") {
-            pfDropdownItems {
-                pfDropdownItem("Item 1")
-                pfDropdownItem("Disabled Item") {
+            pfEntries {
+                pfItem("Item 1")
+                pfItem("Disabled Item") {
                     disabled = true
                 }
-                pfDropdownSeparator()
-                pfDropdownItem("Separated Item")
+                pfSeparator()
+                pfItem("Separated Item")
             }
         }
     }
@@ -108,16 +106,16 @@ internal object DropdownCode {
     const val SELECTED: String = """fun main() {
     render {
         pfDropdown<String>(text = "Dropdown") {
-            pfDropdownItems {
-                pfDropdownItem("Item 1")
-                pfDropdownItem("Item 2") {
+            pfEntries {
+                pfItem("Item 1")
+                pfItem("Item 2") {
                     selected = true
                 }
-                pfDropdownItem("Disabled Item") {
+                pfItem("Disabled Item") {
                     disabled = true
                 }
-                pfDropdownSeparator()
-                pfDropdownItem("Separated Item")
+                pfSeparator()
+                pfItem("Separated Item")
             }
         }
     }
@@ -127,13 +125,13 @@ internal object DropdownCode {
     const val EVENTS: String = """fun main() {
     render {
         val dropdown = pfDropdown<String>(text = "Dropdown") {
-            pfDropdownItems {
-                pfDropdownItem("Item 1")
-                pfDropdownItem("Disabled Item") {
+            pfEntries {
+                pfItem("Item 1")
+                pfItem("Disabled Item") {
                     disabled = true
                 }
-                pfDropdownSeparator()
-                pfDropdownItem("Separated Item")
+                pfSeparator()
+                pfItem("Separated Item")
             }
         }
         dropdown.store.clicks.map { Notification(INFO, "Clicked on ${'$'}it") } handledBy Notification.store.add
