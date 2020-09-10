@@ -10,7 +10,10 @@ import org.patternfly.Notification
 import org.patternfly.Severity.INFO
 import org.patternfly.pfContent
 import org.patternfly.pfDropdown
-import org.patternfly.pfEntries
+import org.patternfly.pfDropdownGroups
+import org.patternfly.pfDropdownItems
+import org.patternfly.pfDropdownToggle
+import org.patternfly.pfGroup
 import org.patternfly.pfItem
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
@@ -27,13 +30,14 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
             )
         })
         yield(render {
-            pfSection("sc-component__buttons") {
+            pfSection {
                 pfContent {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", DropdownCode.BASIC) {
-                    pfDropdown<String>(text = "Dropdown") {
-                        pfEntries {
+                    pfDropdown<String> {
+                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownItems {
                             pfItem("Item 1")
                             pfItem("Disabled Item") {
                                 disabled = true
@@ -43,24 +47,55 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                         }
                     }
                 }
-                snippet("With initial selection", DropdownCode.SELECTED) {
-                    pfDropdown<String>(text = "Dropdown") {
-                        pfEntries {
+                snippet("Disabled", DropdownCode.DISABLED) {
+                    pfDropdown<String> {
+                        pfDropdownToggle {
+                            +"Dropdown"
+                        }
+                        pfDropdownItems {
                             pfItem("Item 1")
-                            pfItem("Item 2") {
-                                selected = true
-                            }
-                            pfItem("Disabled Item") {
-                                disabled = true
+                            pfItem("Item 2")
+                            pfItem("Item 3")
+                        }
+                    }
+                }
+                snippet("Dropdown", DropdownCode.PRIMARY) {
+                    pfDropdown<String> {
+                        pfDropdownToggle {
+                            +"Dropdown"
+                        }
+                        pfDropdownItems {
+                            pfItem("Item 1")
+                            pfItem("Item 2")
+                            pfItem("Item 3")
+                        }
+                    }
+                }
+                snippet("Basic", DropdownCode.GROUPS) {
+                    pfDropdown<String> {
+                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownGroups {
+                            pfGroup {
+                                pfItem("Item 1")
+                                pfItem("Item 2")
                             }
                             pfSeparator()
-                            pfItem("Separated Item")
+                            pfGroup("Group 1") {
+                                pfItem("Item 1")
+                                pfItem("Item 2")
+                            }
+                            pfSeparator()
+                            pfGroup("Group 2") {
+                                pfItem("Item 1")
+                                pfItem("Item 2")
+                            }
                         }
                     }
                 }
                 snippet("Dropdown events", DropdownCode.EVENTS) {
-                    val dropdown = pfDropdown<String>(text = "Dropdown") {
-                        pfEntries {
+                    val dropdown = pfDropdown<String> {
+                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownItems {
                             pfItem("Item 1")
                             pfItem("Disabled Item") {
                                 disabled = true
@@ -89,58 +124,30 @@ internal object DropdownCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfDropdown<String>(text = "Dropdown") {
-            pfEntries {
-                pfItem("Item 1")
-                pfItem("Disabled Item") {
-                    disabled = true
-                }
-                pfSeparator()
-                pfItem("Separated Item")
-            }
-        }
     }
 }"""
 
     //language=kotlin
-    const val SELECTED: String = """fun main() {
+    const val DISABLED: String = """fun main() {
     render {
-        pfDropdown<String>(text = "Dropdown") {
-            pfEntries {
-                pfItem("Item 1")
-                pfItem("Item 2") {
-                    selected = true
-                }
-                pfItem("Disabled Item") {
-                    disabled = true
-                }
-                pfSeparator()
-                pfItem("Separated Item")
-            }
-        }
+    }
+}"""
+
+    //language=kotlin
+    const val PRIMARY: String = """fun main() {
+    render {
+    }
+}"""
+
+    //language=kotlin
+    const val GROUPS: String = """fun main() {
+    render {
     }
 }"""
 
     //language=kotlin
     const val EVENTS: String = """fun main() {
     render {
-        val dropdown = pfDropdown<String>(text = "Dropdown") {
-            pfEntries {
-                pfItem("Item 1")
-                pfItem("Disabled Item") {
-                    disabled = true
-                }
-                pfSeparator()
-                pfItem("Separated Item")
-            }
-        }
-        dropdown.store.clicks.map { Notification(INFO, "Clicked on ${'$'}it") } handledBy Notification.store.add
-        dropdown.ces.collapsed
-            .map { Notification(INFO, "Dropdown collapsed") }
-            .handledBy(Notification.store.add)
-        dropdown.ces.expanded
-            .map { Notification(INFO, "Dropdown expanded") }
-            .handledBy(Notification.store.add)
     }
 }"""
 }

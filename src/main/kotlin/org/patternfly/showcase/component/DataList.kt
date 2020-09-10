@@ -10,6 +10,7 @@ import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.ComponentDisplay
 import org.patternfly.DataListItem
+import org.patternfly.DropdownStore
 import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.Modifier.alignRight
@@ -32,11 +33,13 @@ import org.patternfly.pfDataListExpandableContent
 import org.patternfly.pfDataListExpandableContentBody
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
+import org.patternfly.pfDropdown
+import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownKebab
-import org.patternfly.pfEntries
 import org.patternfly.pfIcon
 import org.patternfly.pfItem
 import org.patternfly.pfSection
+import org.patternfly.pfSeparator
 import org.patternfly.plusAssign
 import org.w3c.dom.HTMLElement
 
@@ -172,13 +175,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -200,13 +205,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction("hidden-on-lg".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -232,13 +239,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction("hidden-on-xl".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -297,13 +306,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -353,13 +364,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -395,13 +408,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -437,13 +452,15 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdownKebab<String>(align = Align.RIGHT) {
-                                                pfEntries {
-                                                    pfItem("Link")
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Link") {
+                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                                pfDropdownKebab()
+                                                pfDropdownItems {
+                                                    pfItem("Action 1")
+                                                    pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
+                                                    pfSeparator()
+                                                    pfItem("Separated Action")
                                                 }
                                             }
                                         }
@@ -593,13 +610,15 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
@@ -621,13 +640,15 @@ internal object DataListCode {
                         }
                         pfDataListAction("hidden-on-lg".modifier()) {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
@@ -653,13 +674,15 @@ internal object DataListCode {
                         }
                         pfDataListAction("hidden-on-xl".modifier()) {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
@@ -720,13 +743,15 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
@@ -778,13 +803,15 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
@@ -820,13 +847,15 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
@@ -862,13 +891,15 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdownKebab<String>(align = Align.RIGHT) {
-                                    pfEntries {
-                                        pfItem("Link")
-                                        pfItem("Action")
-                                        pfItem("Disabled Link") {
+                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
+                                    pfDropdownKebab()
+                                    pfDropdownItems {
+                                        pfItem("Action 1")
+                                        pfItem("Disabled Action") {
                                             disabled = true
                                         }
+                                        pfSeparator()
+                                        pfItem("Separated Action")
                                     }
                                 }
                             }
