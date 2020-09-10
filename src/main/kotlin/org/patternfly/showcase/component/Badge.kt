@@ -4,10 +4,10 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.const
 import dev.fritz2.dom.Tag
+import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.render
 import dev.fritz2.dom.states
-import dev.fritz2.dom.valuesAsNumber
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -22,6 +22,7 @@ import org.patternfly.pfSection
 import org.patternfly.pfSwitch
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 
 object BadgeComponent : Iterable<Tag<HTMLElement>> {
@@ -63,7 +64,7 @@ object BadgeComponent : Iterable<Tag<HTMLElement>> {
                         read = const(false)
                     }
                 }
-                snippet("Limit", BadgeCode.LIMIT) {
+                snippet("Reactive", BadgeCode.REACTIVE) {
                     lateinit var range: Input
                     lateinit var state: Switch
                     div(baseClass = classes {
@@ -72,7 +73,7 @@ object BadgeComponent : Iterable<Tag<HTMLElement>> {
                         +"mb-md".util()
                     }) {
                         label(`for` = "range") { +"Value: " }
-                        range = input(id = "range", baseClass = "w-25".util()) {
+                        range = input(id = "range", baseClass = "w-50".util()) {
                             type = const("range")
                             min = const("0")
                             max = const("500")
@@ -86,11 +87,13 @@ object BadgeComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfBadge(min = 100, max = 400) {
                         read = state.input.changes.states()
-                        range.changes.valuesAsNumber().map { it.toInt() }.bind()
+                        range.inputs.events
+                            .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+                            .bind()
                     }
                     MainScope().launch {
                         delay(333)
-                        range.domNode.dispatchEvent(Event("change"))
+                        range.domNode.dispatchEvent(Event(Events.input.name))
                     }
                 }
             }
@@ -135,7 +138,7 @@ internal object BadgeCode {
 """
 
     //language=kotlin
-    const val LIMIT: String = """fun main() {
+    const val REACTIVE: String = """fun main() {
     render {
         lateinit var range: Input
         lateinit var state: Switch

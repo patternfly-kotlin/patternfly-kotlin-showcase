@@ -10,7 +10,6 @@ import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.ComponentDisplay
 import org.patternfly.DataListItem
-import org.patternfly.DropdownStore
 import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.Modifier.alignRight
@@ -35,7 +34,7 @@ import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownKebab
+import org.patternfly.pfDropdownToggle
 import org.patternfly.pfIcon
 import org.patternfly.pfItem
 import org.patternfly.pfSection
@@ -175,8 +174,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -205,8 +204,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction("hidden-on-lg".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -239,8 +238,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction("hidden-on-xl".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -306,8 +305,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -364,8 +363,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -408,8 +407,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -452,8 +451,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     }
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                                pfDropdownKebab()
+                                            pfDropdown<String>(align = Align.RIGHT) {
+                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -610,8 +609,8 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {
@@ -640,8 +639,8 @@ internal object DataListCode {
                         }
                         pfDataListAction("hidden-on-lg".modifier()) {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {
@@ -674,8 +673,8 @@ internal object DataListCode {
                         }
                         pfDataListAction("hidden-on-xl".modifier()) {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {
@@ -743,8 +742,8 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {
@@ -803,8 +802,8 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {
@@ -847,8 +846,8 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {
@@ -891,8 +890,8 @@ internal object DataListCode {
                         }
                         pfDataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Action 1")
                                         pfItem("Disabled Action") {

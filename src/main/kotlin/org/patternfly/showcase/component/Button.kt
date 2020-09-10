@@ -3,8 +3,16 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.const
+import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
+import dev.fritz2.dom.html.Events
+import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.render
+import dev.fritz2.dom.states
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.patternfly.Modifier.ariaDisabled
 import org.patternfly.Modifier.block
 import org.patternfly.Modifier.control
@@ -18,17 +26,27 @@ import org.patternfly.Modifier.primary
 import org.patternfly.Modifier.secondary
 import org.patternfly.Modifier.small
 import org.patternfly.Modifier.tertiary
+import org.patternfly.Notification
 import org.patternfly.Position.END
 import org.patternfly.Position.START
+import org.patternfly.Severity
+import org.patternfly.Switch
 import org.patternfly.aria
 import org.patternfly.classes
+import org.patternfly.component
 import org.patternfly.fas
+import org.patternfly.layout
+import org.patternfly.modifier
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfIcon
 import org.patternfly.pfLinkButton
 import org.patternfly.pfSection
+import org.patternfly.pfSwitch
+import org.patternfly.util
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.events.Event
 
 object ButtonComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
@@ -197,6 +215,40 @@ object ButtonComponent : Iterable<Tag<HTMLElement>> {
                     pfButton(classes(link, inline, displayLg)) {
                         +"Call to action"
                         pfIcon(END, "arrow-right".fas())
+                    }
+                }
+                snippet("Reactive", ButtonCode.REACTIVE) {
+                    fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+
+                    lateinit var text: Input
+                    lateinit var enabled: Switch
+                    div(baseClass = classes {
+                        +"flex".layout()
+                        +"align-items-center".modifier()
+                        +"mb-md".util()
+                    }) {
+                        text = input(baseClass = classes("form-control".component(), "w-50".util())) {
+                            type = const("text")
+                            value = const("Click me")
+                            placeholder = const("Button text")
+                        }
+                        enabled = pfSwitch("ml-md".util()) {
+                            label = const("Enabled")
+                            labelOff = const("Disabled")
+                            input.checked = const(true)
+                        }
+                    }
+                    br {}
+                    pfButton(primary) {
+                        disabled = enabled.input.changes.states().map { !it }
+                        text.keyups.map { currentValue(it) }.bind()
+                        clicks.map {
+                            Notification(Severity.INFO, "Button clicked")
+                        } handledBy Notification.store.add
+                    }
+                    MainScope().launch {
+                        delay(333)
+                        text.domNode.dispatchEvent(Event(Events.keyup.name))
                     }
                 }
             }
@@ -384,4 +436,9 @@ internal object ButtonCode {
     } 
 }"""
 
+    //language=kotlin
+    const val REACTIVE: String = """fun main() {
+    render {
+    } 
+}"""
 }

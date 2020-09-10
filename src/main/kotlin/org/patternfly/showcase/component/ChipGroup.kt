@@ -9,7 +9,9 @@ import dev.fritz2.dom.html.render
 import org.patternfly.ChipGroupStore
 import org.patternfly.Modifier.link
 import org.patternfly.Modifier.small
+import org.patternfly.Notification
 import org.patternfly.Position.START
+import org.patternfly.Severity
 import org.patternfly.classes
 import org.patternfly.fas
 import org.patternfly.pfBadge
@@ -66,6 +68,9 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Closable", ChipGroupCode.CLOSABLE) {
                     pfChipGroup<String>(text = "Category", closable = true) {
+                        closes.map {
+                            Notification(Severity.INFO, "Chip group closed")
+                        } handledBy Notification.store.add
                         pfChips {
                             +"Chip one"
                             +listOf(
@@ -78,9 +83,7 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Custom Type", ChipGroupCode.CUSTOM_TYPE) {
-                    data class Word(val text: String) {
-                        val letters = text.length
-                    }
+                    data class Word(val text: String, val letters: Int = text.length)
 
                     val store = ChipGroupStore<Word>()
                     pfChipGroup(store, "Letters") {
@@ -103,7 +106,7 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                         )
                     ) handledBy store.update
                 }
-                snippet("Add / Remove", ChipGroupCode.ADD_REMOVE) {
+                snippet("Reactive", ChipGroupCode.REACTIVE) {
                     fun randomString(length: Int) =
                         (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")
 
@@ -215,7 +218,7 @@ internal object ChipGroupCode {
 """
 
     //language=kotlin
-    const val ADD_REMOVE: String = """fun main() {
+    const val REACTIVE: String = """fun main() {
     render {
         fun randomString(length: Int) =
             (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")

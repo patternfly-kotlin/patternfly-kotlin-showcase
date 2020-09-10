@@ -3,10 +3,12 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.const
+import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
 import org.patternfly.Modifier.inline
 import org.patternfly.Modifier.link
+import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
@@ -126,6 +128,13 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfAlert(SUCCESS, "Success alert title", inline = true)
                 }
+                snippet("Reactive", AlertCode.REACTIVE) {
+                    pfAlert(DEFAULT, "Close me", closable = true) {
+                        closes.map {
+                            Notification(DEFAULT, "Notification closed")
+                        } handledBy Notification.store.add
+                    }
+                }
             }
         })
     }
@@ -223,6 +232,13 @@ internal object AlertCode {
         }
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true)
         pfAlert(SUCCESS, "Success alert title", inline = true)
+    }
+}
+"""
+
+    //language=kotlin
+    const val REACTIVE: String = """fun main() {
+    render {
     }
 }
 """

@@ -47,7 +47,7 @@ object SwitchComponent : Iterable<Tag<HTMLElement>> {
                         disabled = const(true)
                     }
                 }
-                snippet("Event", SwitchCode.EVENT) {
+                snippet("Reactive", SwitchCode.REACTIVE) {
                     pfSwitch {
                         label = const("Message when on")
                         labelOff = const("Message when off")
@@ -95,7 +95,7 @@ internal object SwitchCode {
 """
 
     //language=kotlin
-    const val EVENT: String = """fun main() {
+    const val REACTIVE: String = """fun main() {
     render {
         pfSwitch {
             label = const("Message when on")

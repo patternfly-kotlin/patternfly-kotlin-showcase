@@ -2,13 +2,18 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.RootStore
+import dev.fritz2.binding.action
 import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Modifier.secondary
 import org.patternfly.Notification
@@ -24,6 +29,7 @@ import org.patternfly.pfSection
 import org.w3c.dom.HTMLElement
 
 object AlertGroupComponent : Iterable<Tag<HTMLElement>> {
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
             intro(
@@ -77,16 +83,20 @@ object AlertGroupComponent : Iterable<Tag<HTMLElement>> {
                             .handledBy(Notification.store.add)
                     }
                 }
-                snippet("Async alert group", AlertGroupCode.ASYNC_ALERT_GROUP) {
-                    var counter = 1
+                snippet("Reactive", AlertGroupCode.REACTIVE) {
                     var job: Job? = null
+                    val counter = object : RootStore<Int>(0, dropInitialData = true) {
+                        val inc = handle { it + 1 }
+                    }
+                    counter.data
+                        .map { Notification(INFO, "Async notification $it") }
+                        .handledBy(Notification.store.add)
 
                     fun startSending() {
                         job = MainScope().launch {
                             while (true) {
-                                Notification.info("Async notification $counter was added to the queue.")
-                                counter++
-                                delay(750)
+                                action() handledBy counter.inc
+                                delay(1000)
                             }
                         }
                     }
@@ -97,11 +107,15 @@ object AlertGroupComponent : Iterable<Tag<HTMLElement>> {
 
                     pfButton(secondary) {
                         +"Start async alerts"
-                        domNode.onclick = { startSending() }
+                        MainScope().launch {
+                            clicks.events.collect { startSending() }
+                        }
                     }
                     pfButton(secondary) {
                         +"Stop async alerts"
-                        domNode.onclick = { stopSending() }
+                        MainScope().launch {
+                            clicks.events.collect { stopSending() }
+                        }
                     }
                 }
             }
@@ -159,7 +173,7 @@ internal object AlertGroupCode {
 """
 
     //language=kotlin
-    const val ASYNC_ALERT_GROUP: String = """fun main() {
+    const val REACTIVE: String = """fun main() {
     render {
         var counter = 1
         var job: Job? = null

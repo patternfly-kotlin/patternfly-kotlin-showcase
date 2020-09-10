@@ -2,14 +2,19 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.map
 import org.patternfly.Align
-import org.patternfly.DropdownStore
 import org.patternfly.Modifier.compact
 import org.patternfly.Modifier.flat
 import org.patternfly.Modifier.hoverable
 import org.patternfly.Modifier.noFill
+import org.patternfly.Notification
+import org.patternfly.Severity
+import org.patternfly.fas
 import org.patternfly.pfBrand
 import org.patternfly.pfCard
 import org.patternfly.pfCardActions
@@ -22,7 +27,8 @@ import org.patternfly.pfCardTitle
 import org.patternfly.pfContent
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownKebab
+import org.patternfly.pfDropdownToggle
+import org.patternfly.pfIcon
 import org.patternfly.pfItem
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
@@ -59,8 +65,8 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                                 }
                             }
                             pfCardActions {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
                                         pfItem("Item 1")
                                         pfItem("Disabled Item") {
@@ -82,10 +88,10 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     pfCard {
                         pfCardHeader {
                             pfCardActions {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
-                                        pfItem("Action 1")
+                                        pfItem("Action")
                                         pfItem("Disabled Action") {
                                             disabled = true
                                         }
@@ -107,10 +113,10 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     pfCard {
                         pfCardHeader {
                             pfCardActions {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
-                                        pfItem("Action 1")
+                                        pfItem("Action")
                                         pfItem("Disabled Action") {
                                             disabled = true
                                         }
@@ -192,12 +198,16 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Selectable and selected", CardCode.SELECTABLE) {
                     pfCard(selectable = true) {
+                        selected.data.drop(1).map {
+                            Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
+                        } handledBy Notification.store.add
+
                         pfCardHeader {
                             pfCardActions {
-                                pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                                    pfDropdownKebab()
+                                pfDropdown<String>(align = Align.RIGHT) {
+                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                                     pfDropdownItems {
-                                        pfItem("Action 1")
+                                        pfItem("Action")
                                         pfItem("Disabled Action") {
                                             disabled = true
                                         }
@@ -212,11 +222,19 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     }
                     br {}
                     pfCard(selectable = true) {
+                        selected.data.drop(1).map {
+                            Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
+                        } handledBy Notification.store.add
+
                         pfCardTitle { +"Second card" }
                         pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                     }
                     br {}
                     pfCard(selectable = true) {
+                        selected.data.drop(1).map {
+                            Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
+                        } handledBy Notification.store.add
+
                         pfCardHeader {
                             pfCardActions {
                                 pfCardCheckbox()
@@ -263,10 +281,10 @@ internal object CardCode {
                     }
                 }
                 pfCardActions {
-                    pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownKebab()
+                    pfDropdown<String>( align = Align.RIGHT) {
+                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                         pfDropdownItems {
-                            pfItem("Action 1")
+                            pfItem("Action")
                             pfItem("Disabled Action") {
                                 disabled = true
                             }
@@ -291,10 +309,10 @@ internal object CardCode {
         pfCard {
             pfCardHeader {
                 pfCardActions {
-                    pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownKebab()
+                    pfDropdown<String>( align = Align.RIGHT) {
+                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                         pfDropdownItems {
-                            pfItem("Action 1")
+                            pfItem("Action")
                             pfItem("Disabled Action") {
                                 disabled = true
                             }
@@ -321,10 +339,10 @@ internal object CardCode {
         pfCard {
             pfCardHeader {
                 pfCardActions {
-                    pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownKebab()
+                    pfDropdown<String>( align = Align.RIGHT) {
+                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                         pfDropdownItems {
-                            pfItem("Action 1")
+                            pfItem("Action")
                             pfItem("Disabled Action") {
                                 disabled = true
                             }
@@ -453,10 +471,10 @@ internal object CardCode {
         pfCard(selectable = true) {
             pfCardHeader {
                 pfCardActions {
-                    pfDropdown(DropdownStore<String>(), align = Align.RIGHT) {
-                        pfDropdownKebab()
+                    pfDropdown<String>( align = Align.RIGHT) {
+                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                         pfDropdownItems {
-                            pfItem("Action 1")
+                            pfItem("Action")
                             pfItem("Disabled Action") {
                                 disabled = true
                             }

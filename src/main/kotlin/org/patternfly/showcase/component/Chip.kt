@@ -37,10 +37,7 @@ object ChipComponent : Iterable<Tag<HTMLElement>> {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", ChipCode.BASIC) {
-                    pfChip {
-                        +"Chip"
-                        closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
-                    }
+                    pfChip { +"Chip" }
                     br {}
                     pfChip { +"Really long chip that goes on and on" }
                     br {}
@@ -55,11 +52,15 @@ object ChipComponent : Iterable<Tag<HTMLElement>> {
                         +"Read-only chip"
                         pfBadge { +"42" }
                     }
+                    pfChip {
+                        +"Cloe me"
+                        closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
+                    }
                 }
                 snippet("Reactive", ChipCode.REACTIVE) {
-                    fun currentValue(event: Event) = (event.target as HTMLInputElement).value
+                    fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
-                    val input = input(baseClass = "form-control".component()) {
+                    val text = input(baseClass = "form-control".component()) {
                         type = const("text")
                         value = const("Chip")
                         placeholder = const("Chip text")
@@ -67,29 +68,29 @@ object ChipComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     br {}
                     pfChip(readOnly = true) {
-                        input.keyups.map { currentValue(it) }.bind()
+                        text.keyups.map { currentValue(it) }.bind()
                     }
                     br {}
                     pfChip {
-                        input.keyups.map { currentValue(it) }.bind()
+                        text.keyups.map { currentValue(it) }.bind()
                     }
                     br {}
                     pfChip(readOnly = true) {
-                        input.keyups.map { currentValue(it) }.bind()
+                        text.keyups.map { currentValue(it) }.bind()
                         pfBadge {
-                            input.keyups.map { currentValue(it).length }.bind()
+                            text.keyups.map { currentValue(it).length }.bind()
                         }
                     }
                     br {}
                     pfChip {
-                        input.keyups.map { currentValue(it) }.bind()
+                        text.keyups.map { currentValue(it) }.bind()
                         pfBadge {
-                            input.keyups.map { currentValue(it).length }.bind()
+                            text.keyups.map { currentValue(it).length }.bind()
                         }
                     }
                     MainScope().launch {
                         delay(333)
-                        input.domNode.dispatchEvent(Event(Events.keyup.name))
+                        text.domNode.dispatchEvent(Event(Events.keyup.name))
                     }
                 }
             }
