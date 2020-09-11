@@ -24,7 +24,7 @@ object BrandComponent : Iterable<Tag<HTMLElement>> {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", BrandCode.BASIC) {
-                    pfBrand("./pf_logo.svg")
+                    pfBrand("./pf-logo.svg")
                 }
             }
         })
@@ -36,7 +36,7 @@ internal object BrandCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfBrand("./pf_logo.svg")
+        pfBrand("./pf-logo.svg")
     }
 }
 """

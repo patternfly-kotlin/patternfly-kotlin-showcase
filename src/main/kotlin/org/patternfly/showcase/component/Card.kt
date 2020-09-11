@@ -60,7 +60,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     pfCard {
                         pfCardHeader {
                             pfCardHeaderMain {
-                                pfBrand("./pf_logo.svg") {
+                                pfBrand("./pf-logo.svg") {
                                     domNode.style.width = "300px"
                                 }
                             }
@@ -136,7 +136,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     pfCard {
                         pfCardHeader {
                             pfCardHeaderMain {
-                                pfBrand("./pf_logo.svg") {
+                                pfBrand("./pf-logo.svg") {
                                     domNode.style.width = "300px"
                                 }
                             }
@@ -276,7 +276,7 @@ internal object CardCode {
         pfCard {
             pfCardHeader {
                 pfCardHeaderMain {
-                    pfBrand("./pf_logo.svg") {
+                    pfBrand("./pf-logo.svg") {
                         domNode.style.width = "300px"
                     }
                 }
@@ -367,7 +367,7 @@ internal object CardCode {
         pfCard {
             pfCardHeader {
                 pfCardHeaderMain {
-                    pfBrand("./pf_logo.svg") {
+                    pfBrand("./pf-logo.svg") {
                         domNode.style.width = "300px"
                     }
                 }

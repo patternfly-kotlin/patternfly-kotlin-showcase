@@ -25,6 +25,8 @@ import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfContent
 import org.patternfly.pfDropdown
+import org.patternfly.pfDropdownActionToggle
+import org.patternfly.pfDropdownCheckboxToggle
 import org.patternfly.pfDropdownGroups
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownToggle
@@ -124,20 +126,6 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("With kebab", DropdownCode.KEBAB) {
                     pfDropdown<String> {
-                        pfDropdownToggle {
-                            disabled = const(false)
-                            pfIcon("ellipsis-v".fas())
-                        }
-                        pfDropdownItems {
-                            pfItem("Action")
-                            pfItem("Disabled Action") {
-                                disabled = true
-                            }
-                            pfSeparator()
-                            pfItem("Separated Action")
-                        }
-                    }
-                    pfDropdown<String> {
                         pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
                         pfDropdownItems {
                             pfItem("Action")
@@ -151,10 +139,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Icon only", DropdownCode.ICON) {
                     pfDropdown<String> {
-                        pfDropdownToggle {
-                            disabled = const(false)
-                            pfIcon("th".fas())
-                        }
+                        pfDropdownToggle { pfIcon("th".fas()) }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -164,8 +149,41 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                             pfItem("Separated Action")
                         }
                     }
+                }
+                snippet("Dropdown with icons and descriptions", DropdownCode.DESCRIPTION) {
                     pfDropdown<String> {
-                        pfDropdownToggle { pfIcon("th".fas()) }
+                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownItems {
+                            pfItem("Action 1") {
+                                icon = { pfIcon("cog".fas()) }
+                            }
+                            pfItem("Action 2") {
+                                description = "This is a description"
+                            }
+                            pfItem("Action 3") {
+                                icon = { img { src = const("./pf-logo-small.svg") } }
+                                description = "This is a description"
+                            }
+                            pfSeparator()
+                            pfItem("Disabled action 1") {
+                                disabled = true
+                                icon = { pfIcon("cog".fas()) }
+                            }
+                            pfItem("Disabled action 2") {
+                                disabled = true
+                                description = "This is a description"
+                            }
+                            pfItem("Disabled action 3") {
+                                disabled = true
+                                icon = { pfIcon("cog".fas()) }
+                                description = "This is a description"
+                            }
+                        }
+                    }
+                }
+                snippet("Split button", DropdownCode.CHECKBOX_TOGGLE) {
+                    pfDropdown<String> {
+                        pfDropdownCheckboxToggle()
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -173,6 +191,48 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                             }
                             pfSeparator()
                             pfItem("Separated Action")
+                        }
+                    }
+                }
+                snippet("Split button (with text)", DropdownCode.CHECKBOX_TOGGLE_TEXT) {
+                    pfDropdown<String> {
+                        pfDropdownCheckboxToggle { +"10 selected" }
+                        pfDropdownItems {
+                            pfItem("Action")
+                            pfItem("Disabled Action") {
+                                disabled = true
+                            }
+                            pfSeparator()
+                            pfItem("Separated Action")
+                        }
+                    }
+                }
+                snippet("Split button action", DropdownCode.ACTION_TOGGLE) {
+                    pfDropdown<String> {
+                        pfDropdownActionToggle { +"Action" }
+                        pfDropdownItems {
+                            pfItem("Action")
+                            pfItem("Disabled Action") {
+                                disabled = true
+                            }
+                            pfSeparator()
+                            pfItem("Separated Action")
+                        }
+                    }
+                    pfDropdown<String>(classes = "ml-sm".util()) {
+                        pfDropdownActionToggle { pfIcon("cog".fas()) }
+                        pfDropdownItems {
+                            pfItem("Action") {
+                                icon = { pfIcon("cog".fas()) }
+                            }
+                            pfItem("Disabled Action") {
+                                disabled = true
+                                icon = { pfIcon("bell".fas()) }
+                            }
+                            pfSeparator()
+                            pfItem("Separated Action") {
+                                icon = { pfIcon("cubes".fas()) }
+                            }
                         }
                     }
                 }
@@ -290,6 +350,30 @@ internal object DropdownCode {
 
     //language=kotlin
     const val ICON: String = """fun main() {
+    render {
+    }
+}"""
+
+    //language=kotlin
+    const val DESCRIPTION: String = """fun main() {
+    render {
+    }
+}"""
+
+    //language=kotlin
+    const val CHECKBOX_TOGGLE: String = """fun main() {
+    render {
+    }
+}"""
+
+    //language=kotlin
+    const val CHECKBOX_TOGGLE_TEXT: String = """fun main() {
+    render {
+    }
+}"""
+
+    //language=kotlin
+    const val ACTION_TOGGLE: String = """fun main() {
     render {
     }
 }"""
