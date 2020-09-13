@@ -12,10 +12,6 @@ import org.patternfly.ComponentDisplay
 import org.patternfly.DataListItem
 import org.patternfly.Id
 import org.patternfly.ItemStore
-import org.patternfly.Modifier.alignRight
-import org.patternfly.Modifier.noFill
-import org.patternfly.Modifier.primary
-import org.patternfly.Modifier.secondary
 import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.fas
@@ -82,10 +78,10 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             {
                                 pfDataListRow {
                                     pfDataListContent {
-                                        pfDataListCell(noFill) {
+                                        pfDataListCell("no-fill".modifier()) {
                                             span(id = it.id) { +"Secondary content (pf-m-no-fill)" }
                                         }
-                                        pfDataListCell(classes(noFill, alignRight)) {
+                                        pfDataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
                                             +"Secondary content (pf-m-align-right pf-m-no-fill)"
                                         }
                                     }
@@ -127,10 +123,10 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                             {
                                 pfDataListRow {
                                     pfDataListContent {
-                                        pfDataListCell(noFill) {
+                                        pfDataListCell("no-fill".modifier()) {
                                             span(id = it.id) { +"Secondary content (pf-m-no-fill)" }
                                         }
-                                        pfDataListCell(classes(noFill, alignRight)) {
+                                        pfDataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
                                             +"Secondary content (pf-m-align-right pf-m-no-fill)"
                                         }
                                     }
@@ -218,8 +214,8 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                         }
                                     }
                                     pfDataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
-                                        pfButton(primary) { +"Primary" }
-                                        pfButton(secondary) { +"Secondary" }
+                                        pfButton("primary".modifier()) { +"Primary" }
+                                        pfButton("secondary".modifier()) { +"Secondary" }
                                     }
                                 }
                             }
@@ -252,10 +248,10 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                         }
                                     }
                                     pfDataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
-                                        pfButton(primary) { +"Primary" }
-                                        pfButton(secondary) { +"Secondary" }
-                                        pfButton(secondary) { +"Secondary" }
-                                        pfButton(secondary) { +"Secondary" }
+                                        pfButton("primary".modifier()) { +"Primary" }
+                                        pfButton("secondary".modifier()) { +"Secondary" }
+                                        pfButton("secondary".modifier()) { +"Secondary" }
+                                        pfButton("secondary".modifier()) { +"Secondary" }
                                     }
                                 }
                             }
@@ -289,7 +285,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                         pfDataListCell { +"Single actionable Secondary content" }
                                     }
                                     pfDataListAction {
-                                        pfButton(primary) { +"Delete" }
+                                        pfButton("primary".modifier()) { +"Delete" }
                                     }
                                 }
                             }

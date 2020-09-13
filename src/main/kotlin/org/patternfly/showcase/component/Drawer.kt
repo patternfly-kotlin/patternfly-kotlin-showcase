@@ -4,7 +4,6 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
-import org.patternfly.Modifier.primary
 import org.patternfly.classes
 import org.patternfly.modifier
 import org.patternfly.pfButton
@@ -43,7 +42,7 @@ object DrawerComponent : Iterable<Tag<HTMLElement>> {
                     h2 { +"Examples" }
                 }
                 snippet("Basic", DrawerCode.BASIC) {
-                    val button = pfButton(classes { +primary; +"mb-md".util() }) {
+                    val button = pfButton(classes { +"primary".modifier(); +"mb-md".util() }) {
                         +"Toggle drawer"
                     }
                     br {}
@@ -70,7 +69,7 @@ object DrawerComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Left", DrawerCode.LEFT) {
-                    val button = pfButton(classes { +primary; +"mb-md".util() }) {
+                    val button = pfButton(classes { +"primary".modifier(); +"mb-md".util() }) {
                         +"Toggle drawer"
                     }
                     br {}
@@ -97,7 +96,7 @@ object DrawerComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Inline", DrawerCode.INLINE) {
-                    val button = pfButton(classes { +primary; +"mb-md".util() }) {
+                    val button = pfButton(classes { +"primary".modifier(); +"mb-md".util() }) {
                         +"Toggle drawer"
                     }
                     br {}
@@ -124,7 +123,7 @@ object DrawerComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Inline left", DrawerCode.INLINE_LEFT) {
-                    val button = pfButton(classes { +primary; +"mb-md".util() }) {
+                    val button = pfButton(classes { +"primary".modifier(); +"mb-md".util() }) {
                         +"Toggle drawer"
                     }
                     br {}
@@ -151,7 +150,7 @@ object DrawerComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Additional section above drawer content", DrawerCode.SECTION) {
-                    val button = pfButton(classes { +primary; +"mb-md".util() }) {
+                    val button = pfButton(classes { +"primary".modifier(); +"mb-md".util() }) {
                         +"Toggle drawer"
                     }
                     br {}

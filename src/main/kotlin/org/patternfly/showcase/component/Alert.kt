@@ -6,8 +6,6 @@ import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
-import org.patternfly.Modifier.inline
-import org.patternfly.Modifier.link
 import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
@@ -15,6 +13,7 @@ import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
 import org.patternfly.Severity.WARNING
 import org.patternfly.classes
+import org.patternfly.modifier
 import org.patternfly.pfAlert
 import org.patternfly.pfAlertActionGroup
 import org.patternfly.pfAlertDescription
@@ -55,8 +54,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                             p { +"Success alert description. This should tell the user more information about the alert." }
                         }
                         pfAlertActionGroup {
-                            pfButton(classes(link, inline)) { +"View details" }
-                            pfButton(classes(link, inline)) { +"Ignore" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                         }
                     }
                     br {}
@@ -74,8 +73,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfAlert(SUCCESS, "Success alert title", closable = true) {
                         pfAlertActionGroup {
-                            pfButton(classes(link, inline)) { +"View details" }
-                            pfButton(classes(link, inline)) { +"Ignore" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                         }
                     }
                     br {}
@@ -100,8 +99,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                             p { +"Success alert description. This should tell the user more information about the alert." }
                         }
                         pfAlertActionGroup {
-                            pfButton(classes(link, inline)) { +"View details" }
-                            pfButton(classes(link, inline)) { +"Ignore" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                         }
                     }
                     br {}
@@ -119,8 +118,8 @@ object AlertComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
                         pfAlertActionGroup {
-                            pfButton(classes(link, inline)) { +"View details" }
-                            pfButton(classes(link, inline)) { +"Ignore" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
+                            pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                         }
                     }
                     br {}

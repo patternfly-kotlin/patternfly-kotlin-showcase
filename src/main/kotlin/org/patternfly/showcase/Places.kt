@@ -2,7 +2,7 @@ package org.patternfly.showcase
 
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
-import org.patternfly.Modifier.light
+import org.patternfly.modifier
 import org.patternfly.pfContent
 import org.patternfly.pfSection
 import org.patternfly.pfTitle
@@ -63,7 +63,7 @@ object Places {
 
     private fun notFound(place: String) = listOf(
         render {
-            pfSection(light) {
+            pfSection("light".modifier()) {
                 pfContent {
                     pfTitle { +"Not Found" }
                     p {

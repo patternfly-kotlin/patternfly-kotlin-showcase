@@ -7,13 +7,12 @@ import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.render
 import org.patternfly.ChipGroupStore
-import org.patternfly.Modifier.link
-import org.patternfly.Modifier.small
 import org.patternfly.Notification
 import org.patternfly.Position.START
 import org.patternfly.Severity
 import org.patternfly.classes
 import org.patternfly.fas
+import org.patternfly.modifier
 import org.patternfly.pfBadge
 import org.patternfly.pfButton
 import org.patternfly.pfChipGroup
@@ -117,7 +116,7 @@ object ChipGroupComponent : Iterable<Tag<HTMLElement>> {
                     )
 
                     stores.forEach { (limit, store) ->
-                        pfButton(classes(link, small)) {
+                        pfButton(classes("link".modifier(), "small".modifier())) {
                             pfIcon(START, "plus-circle".fas())
                             +"Add chip"
                             clicks.map { randomString(Random.nextInt(10)) } handledBy store.add

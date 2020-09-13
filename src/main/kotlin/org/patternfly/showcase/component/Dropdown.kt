@@ -14,7 +14,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Align
-import org.patternfly.Modifier.primary
 import org.patternfly.Notification
 import org.patternfly.Severity.INFO
 import org.patternfly.Switch
@@ -87,7 +86,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Primary toggle", DropdownCode.PRIMARY) {
                     pfDropdown<String> {
-                        pfDropdownToggle(primary) { +"Dropdown" }
+                        pfDropdownToggle("primary".modifier()) { +"Dropdown" }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {

@@ -8,13 +8,10 @@ import dev.fritz2.dom.html.render
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import org.patternfly.Align
-import org.patternfly.Modifier.compact
-import org.patternfly.Modifier.flat
-import org.patternfly.Modifier.hoverable
-import org.patternfly.Modifier.noFill
 import org.patternfly.Notification
 import org.patternfly.Severity
 import org.patternfly.fas
+import org.patternfly.modifier
 import org.patternfly.pfBrand
 import org.patternfly.pfCard
 import org.patternfly.pfCardActions
@@ -176,21 +173,21 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     pfCard {
                         domNode.style.minHeight = "30em"
                         pfCardTitle { +"Title" }
-                        pfCardBody(noFill) { +"Body pf-m-no-fill" }
-                        pfCardBody(noFill) { +"Body pf-m-no-fill" }
+                        pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+                        pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
                         pfCardBody { +"Body" }
                         pfCardFooter { +"Footer" }
                     }
                 }
                 snippet("Hover", CardCode.HOVER) {
-                    pfCard(modifier = hoverable) {
+                    pfCard(classes = "hoverable".modifier()) {
                         pfCardTitle { +"Title" }
                         pfCardBody { +"Body" }
                         pfCardFooter { +"Footer" }
                     }
                 }
                 snippet("Compact", CardCode.COMPACT) {
-                    pfCard(modifier = compact) {
+                    pfCard(classes = "compact".modifier()) {
                         pfCardTitle { +"Title" }
                         pfCardBody { +"Body" }
                         pfCardFooter { +"Footer" }
@@ -245,7 +242,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Flat", CardCode.FLAT) {
-                    pfCard(modifier = flat) {
+                    pfCard(classes = "flat".modifier()) {
                         pfCardTitle { +"Title" }
                         pfCardBody { +"Body" }
                         pfCardFooter { +"Footer" }

@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.patternfly.ItemStore
-import org.patternfly.Modifier.secondary
 import org.patternfly.classes
 import org.patternfly.fas
 import org.patternfly.layout
@@ -245,8 +244,8 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                     }
                                 }
                                 pfDataListAction {
-                                    pfButton(secondary) { +"Edit" }
-                                    pfButton(secondary) { +"Remove" }
+                                    pfButton("secondary".modifier()) { +"Edit" }
+                                    pfButton("secondary".modifier()) { +"Remove" }
                                 }
                             }
                             pfDataListExpandableContent {

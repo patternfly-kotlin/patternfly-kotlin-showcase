@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.map
 import org.patternfly.By
 import org.patternfly.COMPONENT_TYPE
 import org.patternfly.ComponentType.Content
-import org.patternfly.Modifier.plain
 import org.patternfly.Section
 import org.patternfly.Size
 import org.patternfly.fas
 import org.patternfly.minusAssign
+import org.patternfly.modifier
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfIcon
@@ -68,11 +68,11 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
             this@Snippet.content(this)
         }
         div("sc-snippet__toolbar") {
-            pfButton(plain) {
+            pfButton("plain".modifier()) {
                 pfIcon("code".fas())
                 clicks handledBy this@Snippet.codeStore.toggle
             }
-            pfButton(plain) {
+            pfButton("plain".modifier()) {
                 pfIcon("copy".fas())
                 val clipboard = ClipboardJS(domNode, object : ClipboardJS.Options {
                     override val text: ((Element) -> String)? = { code }

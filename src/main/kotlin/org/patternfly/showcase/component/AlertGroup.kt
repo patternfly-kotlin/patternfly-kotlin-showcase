@@ -15,11 +15,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.Modifier.secondary
 import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
+import org.patternfly.modifier
 import org.patternfly.pfAlert
 import org.patternfly.pfAlertDescription
 import org.patternfly.pfAlertGroup
@@ -64,19 +64,19 @@ object AlertGroupComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Toast alert group", AlertGroupCode.TOAST_ALERT_GROUP) {
-                    pfButton(secondary) {
+                    pfButton("secondary".modifier()) {
                         +"Add toast success alert"
                         clicks
                             .map { Notification(SUCCESS, "Toast Success Alert") }
                             .handledBy(Notification.store.add)
                     }
-                    pfButton(secondary) {
+                    pfButton("secondary".modifier()) {
                         +"Add toast danger alert"
                         clicks
                             .map { Notification(DANGER, "Toast Danger Alert") }
                             .handledBy(Notification.store.add)
                     }
-                    pfButton(secondary) {
+                    pfButton("secondary".modifier()) {
                         +"Add toast info alert"
                         clicks
                             .map { Notification(INFO, "Toast Info Alert") }
@@ -105,13 +105,13 @@ object AlertGroupComponent : Iterable<Tag<HTMLElement>> {
                         job?.cancel()
                     }
 
-                    pfButton(secondary) {
+                    pfButton("secondary".modifier()) {
                         +"Start async alerts"
                         MainScope().launch {
                             clicks.events.collect { startSending() }
                         }
                     }
-                    pfButton(secondary) {
+                    pfButton("secondary".modifier()) {
                         +"Stop async alerts"
                         MainScope().launch {
                             clicks.events.collect { stopSending() }
