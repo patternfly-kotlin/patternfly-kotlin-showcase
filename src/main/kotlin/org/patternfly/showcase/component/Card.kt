@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.map
 import org.patternfly.Align
 import org.patternfly.Notification
 import org.patternfly.Severity
-import org.patternfly.fas
 import org.patternfly.modifier
 import org.patternfly.pfBrand
 import org.patternfly.pfCard
@@ -24,8 +23,7 @@ import org.patternfly.pfCardTitle
 import org.patternfly.pfContent
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownToggle
-import org.patternfly.pfIcon
+import org.patternfly.pfDropdownToggleKebab
 import org.patternfly.pfItem
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
@@ -63,7 +61,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                             }
                             pfCardActions {
                                 pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                    pfDropdownToggleKebab()
                                     pfDropdownItems {
                                         pfItem("Item 1")
                                         pfItem("Disabled Item") {
@@ -86,7 +84,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                         pfCardHeader {
                             pfCardActions {
                                 pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                    pfDropdownToggleKebab()
                                     pfDropdownItems {
                                         pfItem("Action")
                                         pfItem("Disabled Action") {
@@ -111,7 +109,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                         pfCardHeader {
                             pfCardActions {
                                 pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                    pfDropdownToggleKebab()
                                     pfDropdownItems {
                                         pfItem("Action")
                                         pfItem("Disabled Action") {
@@ -202,7 +200,7 @@ object CardComponent : Iterable<Tag<HTMLElement>> {
                         pfCardHeader {
                             pfCardActions {
                                 pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                    pfDropdownToggleKebab()
                                     pfDropdownItems {
                                         pfItem("Action")
                                         pfItem("Disabled Action") {

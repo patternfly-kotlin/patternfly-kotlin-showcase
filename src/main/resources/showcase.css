@@ -1,17 +1,17 @@
-.sc-component__badges .pf-c-badge {
+.sc-component__badges .sc-snippet__content .pf-c-badge {
     margin-right: var(--pf-global--spacer--sm);
 }
 
-.sc-component__buttons .pf-c-button {
+.sc-component__buttons .sc-snippet__content .pf-c-button {
     margin-bottom: var(--pf-global--spacer--sm);
     margin-right: var(--pf-global--spacer--sm);
 }
 
-.sc-component__chips .pf-c-chip {
+.sc-component__chips .sc-snippet__content .pf-c-chip {
     margin-bottom: var(--pf-global--spacer--md);
 }
 
-.sc-component__chip-groups .pf-c-chip-group {
+.sc-component__chip-groups .sc-snippet__content .pf-c-chip-group {
     margin-bottom: var(--pf-global--spacer--sm);
 }
 

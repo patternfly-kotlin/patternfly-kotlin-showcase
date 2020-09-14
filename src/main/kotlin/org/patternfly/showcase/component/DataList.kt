@@ -30,7 +30,7 @@ import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownToggle
+import org.patternfly.pfDropdownToggleKebab
 import org.patternfly.pfIcon
 import org.patternfly.pfItem
 import org.patternfly.pfSection
@@ -171,7 +171,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -201,7 +201,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction("hidden-on-lg".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -235,7 +235,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction("hidden-on-xl".modifier()) {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -302,7 +302,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -360,7 +360,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -404,7 +404,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
@@ -448,7 +448,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                     pfDataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                                                pfDropdownToggleKebab()
                                                 pfDropdownItems {
                                                     pfItem("Action 1")
                                                     pfItem("Disabled Action") {
