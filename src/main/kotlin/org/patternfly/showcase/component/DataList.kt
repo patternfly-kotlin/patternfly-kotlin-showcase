@@ -173,7 +173,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
@@ -203,7 +203,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
@@ -237,7 +237,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
@@ -304,7 +304,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
@@ -362,7 +362,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
@@ -406,7 +406,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
@@ -450,7 +450,7 @@ object DataListComponent : Iterable<Tag<HTMLElement>> {
                                             pfDropdown<String>(align = Align.RIGHT) {
                                                 pfDropdownToggleKebab()
                                                 pfDropdownItems {
-                                                    pfItem("Action 1")
+                                                    pfItem("Action")
                                                     pfItem("Disabled Action") {
                                                         disabled = true
                                                     }
