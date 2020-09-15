@@ -134,119 +134,48 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val SINGLE_OPTION: String = """fun main() {
     render {
-        pfOptionsMenu<String>(text = "Options menu") {
-            pfEntries {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
-            }
-        }
     }
 }"""
 
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pfOptionsMenu<String>(text = "Disabled options menu") {
-            disabled = const(true)
-            pfEntries {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
-            }
-        }
     }
 }"""
 
     //language=kotlin
     const val MULTIPLE_OPTIONS: String = """fun main() {
     render {
-        pfOptionsMenu<String>(text = "Sort by", grouped = true) {
-            pfEntries {
-                pfGroup {
-                    pfItem("Name")
-                    pfItem("Date") { selected = true }
-                    pfItem("Disabled") { disabled = true }
-                    pfItem("Size")
-                }
-                pfSeparator()
-                pfGroup {
-                    pfItem("Ascending") { selected = true }
-                    pfItem("Descending")
-                }
-            }
-        }
     }
 }"""
 
     //language=kotlin
     const val PLAIN: String = """fun main() {
     render {
-        pfOptionsMenu<String>(icon = pfIcon("sort-amount-down".fas())) {
-            disabled = const(true)
-            pfEntries {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
-            }
-        }
-        pfOptionsMenu<String>(icon = pfIcon("sort-amount-down".fas())) {
-            pfEntries {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
-            }
-        }
     }
 }"""
 
     //language=kotlin
     const val TOP: String = """fun main() {
     render {
-        pfOptionsMenu<String>(text = "Align top", up = true) {
-            pfEntries {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
-            }
-        }
     }
 }"""
 
     //language=kotlin
     const val RIGHT: String = """fun main() {
     render {
-        pfOptionsMenu<String>(text = "Align right", align = RIGHT) {
-            pfEntries {
-                pfItem("Right option 1") { selected = true }
-                pfItem("Right option 2")
-                pfItem("Right option 3")
-            }
-        }
     }
 }"""
 
     //language=kotlin
     const val GROUPED: String = """fun main() {
     render {
-        pfOptionsMenu<String>(text = "Options menu", grouped = true) {
-            pfEntries {
-                pfGroup {
-                    pfItem("Option 1"){ selected = true }
-                    pfItem("Option 2")
-                }
-                pfSeparator()
-                pfGroup("Group 1") {
-                    pfItem("Option 1")
-                    pfItem("Option 2")
-                }
-                pfSeparator()
-                pfGroup("Group 2") {
-                    pfItem("Option 1")
-                    pfItem("Option 2")
-                }
-            }
-        }
+    }
+}"""
+
+    //language=kotlin
+    const val REACTIVE: String = """fun main() {
+    render {
     }
 }"""
 }

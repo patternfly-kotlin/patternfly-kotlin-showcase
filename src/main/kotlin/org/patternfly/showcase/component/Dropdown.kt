@@ -148,7 +148,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Icon only", DropdownCode.ICON) {
                     pfDropdown<String> {
-                        pfDropdownToggle { icon = pfIcon("th".fas()) }
+                        pfDropdownToggle { icon = { pfIcon("th".fas()) } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -227,7 +227,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                         }
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
-                        pfDropdownToggleAction { icon = pfIcon("cog".fas()) }
+                        pfDropdownToggleAction { icon = { pfIcon("cog".fas()) } }
                         pfDropdownItems {
                             pfItem("Action") {
                                 icon = { pfIcon("cog".fas()) }
@@ -327,7 +327,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
                         pfDropdownToggle {
-                            icon = pfIcon("cog".fas())
+                            icon = { pfIcon("cog".fas()) }
                             disabled = enabled.input.changes.states().map { !it }
                         }
                         pfDropdownItems()
@@ -381,7 +381,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
                         pfDropdownToggleAction {
-                            icon = pfIcon("cog".fas())
+                            icon = { pfIcon("cog".fas()) }
                             disabled = enabled.input.changes.states().map { !it }
                             action.clicks
                                 .map { Notification(INFO, "Action clicked") }
@@ -513,7 +513,7 @@ internal object DropdownCode {
     const val ICON: String = """fun main() {
     render {
         pfDropdown<String> {
-            pfDropdownToggle { icon = pfIcon("th".fas()) }
+            pfDropdownToggle { icon = { pfIcon("th".fas()) } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -533,7 +533,7 @@ internal object DropdownCode {
             pfDropdownToggle { +"Dropdown" }
             pfDropdownItems {
                 pfItem("Action 1") {
-                    icon = { pfIcon("cog".fas()) }
+                    icon = { { pfIcon("cog".fas()) } }
                 }
                 pfItem("Action 2") {
                     description = "This is a description"
@@ -604,7 +604,7 @@ internal object DropdownCode {
             }
         }
         pfDropdown<String>(classes = "ml-sm".util()) {
-            pfDropdownToggleAction { icon = pfIcon("cog".fas()) }
+            pfDropdownToggleAction { icon = { pfIcon("cog".fas()) } }
             pfDropdownItems {
                 pfItem("Action") {
                     icon = { pfIcon("cog".fas()) }
@@ -712,7 +712,7 @@ internal object DropdownCode {
         }
         pfDropdown<String>(classes = "ml-sm".util()) {
             pfDropdownToggle {
-                icon = pfIcon("cog".fas())
+                icon = { pfIcon("cog".fas()) }
                 disabled = enabled.input.changes.states().map { !it }
             }
             pfDropdownItems()
@@ -766,7 +766,7 @@ internal object DropdownCode {
         }
         pfDropdown<String>(classes = "ml-sm".util()) {
             pfDropdownToggleAction {
-                icon = pfIcon("cog".fas())
+                icon = { pfIcon("cog".fas()) }
                 disabled = enabled.input.changes.states().map { !it }
                 action.clicks
                     .map { Notification(INFO, "Action clicked") }
