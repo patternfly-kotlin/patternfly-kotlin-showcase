@@ -39,6 +39,7 @@ import org.patternfly.pfOptionsMenuTogglePlain
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
 import org.patternfly.pfSwitch
+import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -166,7 +167,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
 
                     fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
                         with(optionsMenu) {
-                            store.selection
+                            store.selection.unwrap()
                                 .drop(1)
                                 .map { Notification(Severity.INFO, "$name: Selection $it") }
                                 .handledBy(Notification.store.add)
@@ -398,7 +399,7 @@ internal object OptionsMenuCode {
 
         fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
             with(optionsMenu) {
-                store.selection
+                store.selection.unwrap()
                     .drop(1)
                     .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
                     .handledBy(Notification.store.add)

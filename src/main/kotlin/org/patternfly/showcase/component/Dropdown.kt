@@ -44,6 +44,7 @@ import org.patternfly.pfItems
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
 import org.patternfly.pfSwitch
+import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
@@ -269,7 +270,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
 
                     fun registerEvents(dropdown: Dropdown<String>, name: String) {
                         with(dropdown) {
-                            store.clicked
+                            store.clicked.unwrap()
                                 .map { Notification(INFO, "$name: Clicked on $it") }
                                 .handledBy(Notification.store.add)
                             ces.collapsed
@@ -338,7 +339,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     pfDropdown<String>(classes = "mt-sm".util()) {
                         pfDropdownToggleCheckbox {
                             disabled = enabled.input.changes.states().map { !it }
-                            triState = this@pfDropdown.store.clicked.map {
+                            triState = this@pfDropdown.store.clicked.unwrap().map {
                                 when (it) {
                                     "Select none" -> TriState.OFF
                                     "Select visible" -> TriState.INDETERMINATE
@@ -346,7 +347,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                                     else -> TriState.OFF
                                 }
                             }
-                            merge(this@pfDropdown.store.clicked, input.changes.states())
+                            merge(this@pfDropdown.store.clicked.unwrap(), input.changes.states())
                                 .map {
                                     when (it) {
                                         is String -> {
@@ -654,7 +655,7 @@ internal object DropdownCode {
 
         fun registerEvents(dropdown: Dropdown<String>, name: String) {
             with(dropdown) {
-                store.clicks
+                store.clicks.unwrap()
                     .map { Notification(INFO, "${'$'}name: Clicked on ${'$'}it") }
                     .handledBy(Notification.store.add)
                 ces.collapsed
@@ -723,7 +724,7 @@ internal object DropdownCode {
         pfDropdown<String>(classes = "mt-sm".util()) {
             pfDropdownToggleCheckbox {
                 disabled = enabled.input.changes.states().map { !it }
-                triState = this@pfDropdown.store.clicks.map {
+                triState = this@pfDropdown.store.clicks.unwrap().map {
                     when (it) {
                         "Select none" -> TriState.OFF
                         "Select visible" -> TriState.INDETERMINATE
@@ -731,7 +732,7 @@ internal object DropdownCode {
                         else -> TriState.OFF
                     }
                 }
-                merge(this@pfDropdown.store.clicks, input.changes.states())
+                merge(this@pfDropdown.store.clicks.unwrap(), input.changes.states())
                     .map {
                         when (it) {
                             is String -> {
