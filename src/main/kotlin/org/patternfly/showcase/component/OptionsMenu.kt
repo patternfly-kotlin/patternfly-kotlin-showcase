@@ -2,21 +2,47 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.action
 import dev.fritz2.binding.const
+import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.Tag
+import dev.fritz2.dom.html.Events
+import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.render
+import dev.fritz2.dom.states
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
+import org.patternfly.Entry
+import org.patternfly.Notification
+import org.patternfly.OptionsMenu
+import org.patternfly.Severity
+import org.patternfly.Switch
+import org.patternfly.classes
+import org.patternfly.component
 import org.patternfly.fas
+import org.patternfly.layout
+import org.patternfly.modifier
 import org.patternfly.pfContent
-import org.patternfly.pfEntries
 import org.patternfly.pfGroup
 import org.patternfly.pfIcon
 import org.patternfly.pfItem
+import org.patternfly.pfItems
 import org.patternfly.pfOptionsMenu
+import org.patternfly.pfOptionsMenuGroups
+import org.patternfly.pfOptionsMenuItems
+import org.patternfly.pfOptionsMenuToggle
+import org.patternfly.pfOptionsMenuTogglePlain
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
+import org.patternfly.pfSwitch
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.events.Event
 
 object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
@@ -33,9 +59,10 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 pfContent {
                     h2 { +"Examples" }
                 }
-                snippet("Single option", OptionsMenuCode.SINGLE_OPTION) {
-                    pfOptionsMenu<String>(text = "Options menu") {
-                        pfEntries {
+                snippet("Basic", OptionsMenuCode.BASIC) {
+                    pfOptionsMenu<String> {
+                        pfOptionsMenuToggle { +"Options menu" }
+                        pfOptionsMenuItems {
                             pfItem("Option 1") { selected = true }
                             pfItem("Option 2")
                             pfItem("Option 3")
@@ -43,9 +70,52 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Disabled", OptionsMenuCode.DISABLED) {
-                    pfOptionsMenu<String>(text = "Disabled options menu") {
-                        disabled = const(true)
-                        pfEntries {
+                    pfOptionsMenu<String> {
+                        pfOptionsMenuToggle {
+                            disabled = const(true)
+                            +"Options menu"
+                        }
+                        pfOptionsMenuItems {
+                            pfItem("Option 1") { selected = true }
+                            pfItem("Option 2")
+                            pfItem("Option 3")
+                        }
+                    }
+                }
+                snippet("Position right", OptionsMenuCode.RIGHT) {
+                    pfOptionsMenu<String>(align = RIGHT) {
+                        pfOptionsMenuToggle { +"Options menu" }
+                        pfOptionsMenuItems {
+                            pfItem("Right option 1") { selected = true }
+                            pfItem("Right option 2")
+                            pfItem("Right option 3")
+                        }
+                    }
+                }
+                snippet("Direction up", OptionsMenuCode.UP) {
+                    pfOptionsMenu<String>(up = true) {
+                        pfOptionsMenuToggle { +"Options menu" }
+                        pfOptionsMenuItems {
+                            pfItem("Option 1") { selected = true }
+                            pfItem("Option 2")
+                            pfItem("Option 3")
+                        }
+                    }
+                }
+                snippet("Plain", OptionsMenuCode.ICON) {
+                    pfOptionsMenu<String> {
+                        pfOptionsMenuToggle { icon = { pfIcon("sort-amount-down".fas()) } }
+                        pfOptionsMenuItems {
+                            pfItem("Option 1") { selected = true }
+                            pfItem("Option 2")
+                            pfItem("Option 3")
+                        }
+                    }
+                }
+                snippet("Plain with text", OptionsMenuCode.PLAIN) {
+                    pfOptionsMenu<String> {
+                        pfOptionsMenuTogglePlain { +"Options menu" }
+                        pfOptionsMenuItems {
                             pfItem("Option 1") { selected = true }
                             pfItem("Option 2")
                             pfItem("Option 3")
@@ -53,8 +123,9 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Multiple options", OptionsMenuCode.MULTIPLE_OPTIONS) {
-                    pfOptionsMenu<String>(text = "Sort by", grouped = true) {
-                        pfEntries {
+                    pfOptionsMenu<String> {
+                        pfOptionsMenuToggle { +"Sort by" }
+                        pfOptionsMenuGroups {
                             pfGroup {
                                 pfItem("Name")
                                 pfItem("Date") { selected = true }
@@ -69,44 +140,10 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                         }
                     }
                 }
-                snippet("Plain", OptionsMenuCode.PLAIN) {
-                    pfOptionsMenu<String>(icon = pfIcon("sort-amount-down".fas()), classes = "mr-sm".util()) {
-                        disabled = const(true)
-                        pfEntries {
-                            pfItem("Option 1") { selected = true }
-                            pfItem("Option 2")
-                            pfItem("Option 3")
-                        }
-                    }
-                    pfOptionsMenu<String>(icon = pfIcon("sort-amount-down".fas())) {
-                        pfEntries {
-                            pfItem("Option 1") { selected = true }
-                            pfItem("Option 2")
-                            pfItem("Option 3")
-                        }
-                    }
-                }
-                snippet("Align top", OptionsMenuCode.TOP) {
-                    pfOptionsMenu<String>(text = "Align top", up = true) {
-                        pfEntries {
-                            pfItem("Option 1") { selected = true }
-                            pfItem("Option 2")
-                            pfItem("Option 3")
-                        }
-                    }
-                }
-                snippet("Align right", OptionsMenuCode.RIGHT) {
-                    pfOptionsMenu<String>(text = "Align right", align = RIGHT) {
-                        pfEntries {
-                            pfItem("Right option 1") { selected = true }
-                            pfItem("Right option 2")
-                            pfItem("Right option 3")
-                        }
-                    }
-                }
                 snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
-                    pfOptionsMenu<String>(text = "Options menu", grouped = true) {
-                        pfEntries {
+                    pfOptionsMenu<String> {
+                        pfOptionsMenuToggle { +"Options" }
+                        pfOptionsMenuGroups {
                             pfGroup {
                                 pfItem("Option 1") { selected = true }
                                 pfItem("Option 2")
@@ -124,6 +161,95 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                         }
                     }
                 }
+                snippet("Reactive", OptionsMenuCode.REACTIVE) {
+                    fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+
+                    fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
+                        with(optionsMenu) {
+                            store.selection
+                                .drop(1)
+                                .map { Notification(Severity.INFO, "$name: Selection $it") }
+                                .handledBy(Notification.store.add)
+                            ces.collapsed
+                                .map { Notification(Severity.INFO, "$name: Options menu collapsed") }
+                                .handledBy(Notification.store.add)
+                            ces.expanded
+                                .map { Notification(Severity.INFO, "$name: Options menu expanded") }
+                                .handledBy(Notification.store.add)
+                        }
+                    }
+
+                    fun items(): List<Entry<String>> = pfItems {
+                        pfItem("Option 1") { selected = true }
+                        pfItem("Option 2")
+                        pfItem("Option 3")
+                    }
+
+                    lateinit var text: Input
+                    lateinit var enabled: Switch
+                    div(baseClass = classes {
+                        +"flex".layout()
+                        +"align-items-center".modifier()
+                        +"mb-sm".util()
+                    }) {
+                        text = input(baseClass = classes("form-control".component(), "w-50".util())) {
+                            type = const("text")
+                            value = const("Options")
+                            placeholder = const("Options menu text")
+                        }
+                        enabled = pfSwitch("ml-md".util()) {
+                            label = const("Enabled")
+                            labelOff = const("Disabled")
+                            input.checked = const(true)
+                        }
+                    }
+                    pfOptionsMenu<String>(classes = "mt-sm".util()) {
+                        pfOptionsMenuToggle {
+                            disabled = enabled.input.changes.states().map { !it }
+                            text.keyups.map { currentValue(it) }.bind()
+                        }
+                        pfOptionsMenuItems()
+                        action(items()) handledBy store.update
+                        registerEvents(this, "Text")
+                    }
+                    pfOptionsMenu<String>(classes = "ml-sm".util()) {
+                        pfOptionsMenuToggle {
+                            disabled = enabled.input.changes.states().map { !it }
+                            icon = { pfIcon("sort-amount-down".fas()) }
+                        }
+                        pfOptionsMenuGroups {
+                            pfGroup {
+                                pfItem("Option 1") { selected = true }
+                                pfItem("Option 2")
+                            }
+                            pfSeparator()
+                            pfGroup("Group 1") {
+                                pfItem("Option 1")
+                                pfItem("Option 2")
+                            }
+                            pfSeparator()
+                            pfGroup("Group 2") {
+                                pfItem("Option 1")
+                                pfItem("Option 2")
+                            }
+                        }
+                        registerEvents(this, "Plain")
+                    }
+                    pfOptionsMenu<String>(classes = "ml-sm".util()) {
+                        pfOptionsMenuTogglePlain {
+                            disabled = enabled.input.changes.states().map { !it }
+                            text.keyups.map { currentValue(it) }.bind()
+                        }
+                        pfOptionsMenuItems()
+                        action(items()) handledBy store.update
+                        registerEvents(this, "Plain with text")
+                    }
+
+                    MainScope().launch {
+                        delay(333)
+                        text.domNode.dispatchEvent(Event(Events.keyup.name))
+                    }
+                }
             }
         })
     }
@@ -132,50 +258,224 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
 internal object OptionsMenuCode {
 
     //language=kotlin
-    const val SINGLE_OPTION: String = """fun main() {
+    const val BASIC: String = """fun main() {
     render {
+        pfOptionsMenu<String> {
+            pfOptionsMenuToggle { +"Options menu" }
+            pfOptionsMenuItems {
+                pfItem("Option 1") { selected = true }
+                pfItem("Option 2")
+                pfItem("Option 3")
+            }
+        }
     }
 }"""
 
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-    }
-}"""
-
-    //language=kotlin
-    const val MULTIPLE_OPTIONS: String = """fun main() {
-    render {
-    }
-}"""
-
-    //language=kotlin
-    const val PLAIN: String = """fun main() {
-    render {
-    }
-}"""
-
-    //language=kotlin
-    const val TOP: String = """fun main() {
-    render {
+        pfOptionsMenu<String> {
+            pfOptionsMenuToggle {
+                disabled = const(true)
+                +"Options menu"
+            }
+            pfOptionsMenuItems {
+                pfItem("Option 1") { selected = true }
+                pfItem("Option 2")
+                pfItem("Option 3")
+            }
+        }
     }
 }"""
 
     //language=kotlin
     const val RIGHT: String = """fun main() {
     render {
+        pfOptionsMenu<String>(align = RIGHT) {
+            pfOptionsMenuToggle { +"Options menu" }
+            pfOptionsMenuItems {
+                pfItem("Right option 1") { selected = true }
+                pfItem("Right option 2")
+                pfItem("Right option 3")
+            }
+        }
+    }
+}"""
+
+    //language=kotlin
+    const val UP: String = """fun main() {
+    render {
+        pfOptionsMenu<String>(up = true) {
+            pfOptionsMenuToggle { +"Options menu" }
+            pfOptionsMenuItems {
+                pfItem("Option 1") { selected = true }
+                pfItem("Option 2")
+                pfItem("Option 3")
+            }
+        }
+    }
+}"""
+
+    //language=kotlin
+    const val ICON: String = """fun main() {
+    render {
+        pfOptionsMenu<String> {
+            pfOptionsMenuToggle { icon = { pfIcon("sort-amount-down".fas()) } }
+            pfOptionsMenuItems {
+                pfItem("Option 1") { selected = true }
+                pfItem("Option 2")
+                pfItem("Option 3")
+            }
+        }
+    }
+}"""
+
+    //language=kotlin
+    const val PLAIN: String = """fun main() {
+    render {
+        pfOptionsMenu<String> {
+            pfOptionsMenuTogglePlain { +"Options menu" }
+            pfOptionsMenuItems {
+                pfItem("Option 1") { selected = true }
+                pfItem("Option 2")
+                pfItem("Option 3")
+            }
+        }
+    }
+}"""
+
+    //language=kotlin
+    const val MULTIPLE_OPTIONS: String = """fun main() {
+    render {
+        pfOptionsMenu<String> {
+            pfOptionsMenuToggle { +"Sort by" }
+            pfOptionsMenuGroups {
+                pfGroup {
+                    pfItem("Name")
+                    pfItem("Date") { selected = true }
+                    pfItem("Disabled") { disabled = true }
+                    pfItem("Size")
+                }
+                pfSeparator()
+                pfGroup {
+                    pfItem("Ascending") { selected = true }
+                    pfItem("Descending")
+                }
+            }
+        }
     }
 }"""
 
     //language=kotlin
     const val GROUPED: String = """fun main() {
     render {
+        pfOptionsMenu<String> {
+            pfOptionsMenuToggle { +"Options" }
+            pfOptionsMenuGroups {
+                pfGroup {
+                    pfItem("Option 1") { selected = true }
+                    pfItem("Option 2")
+                }
+                pfSeparator()
+                pfGroup("Group 1") {
+                    pfItem("Option 1")
+                    pfItem("Option 2")
+                }
+                pfSeparator()
+                pfGroup("Group 2") {
+                    pfItem("Option 1")
+                    pfItem("Option 2")
+                }
+            }
+        }
     }
 }"""
 
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
+        fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+
+        fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
+            with(optionsMenu) {
+                store.selection
+                    .drop(1)
+                    .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
+                    .handledBy(Notification.store.add)
+                ces.collapsed
+                    .map { Notification(Severity.INFO, "${'$'}name: Options menu collapsed") }
+                    .handledBy(Notification.store.add)
+                ces.expanded
+                    .map { Notification(Severity.INFO, "${'$'}name: Options menu expanded") }
+                    .handledBy(Notification.store.add)
+            }
+        }
+
+        fun items(): List<Entry<String>> = pfItems {
+            pfItem("Option 1") { selected = true }
+            pfItem("Option 2")
+            pfItem("Option 3")
+        }
+
+        lateinit var text: Input
+        lateinit var enabled: Switch
+        div(baseClass = classes {
+            +"flex".layout()
+            +"align-items-center".modifier()
+            +"mb-sm".util()
+        }) {
+            text = input(baseClass = classes("form-control".component(), "w-50".util())) {
+                type = const("text")
+                value = const("Options")
+                placeholder = const("Options menu text")
+            }
+            enabled = pfSwitch("ml-md".util()) {
+                label = const("Enabled")
+                labelOff = const("Disabled")
+                input.checked = const(true)
+            }
+        }
+        pfOptionsMenu<String>(classes = "mt-sm".util()) {
+            pfOptionsMenuToggle {
+                disabled = enabled.input.changes.states().map { !it }
+                text.keyups.map { currentValue(it) }.bind()
+            }
+            pfOptionsMenuItems()
+            action(items()) handledBy store.update
+            registerEvents(this, "Text")
+        }
+        pfOptionsMenu<String>(classes = "ml-sm".util()) {
+            pfOptionsMenuToggle {
+                disabled = enabled.input.changes.states().map { !it }
+                icon = { pfIcon("sort-amount-down".fas()) }
+            }
+            pfOptionsMenuGroups {
+                pfGroup {
+                    pfItem("Option 1") { selected = true }
+                    pfItem("Option 2")
+                }
+                pfSeparator()
+                pfGroup("Group 1") {
+                    pfItem("Option 1")
+                    pfItem("Option 2")
+                }
+                pfSeparator()
+                pfGroup("Group 2") {
+                    pfItem("Option 1")
+                    pfItem("Option 2")
+                }
+            }
+            registerEvents(this, "Plain")
+        }
+        pfOptionsMenu<String>(classes = "ml-sm".util()) {
+            pfOptionsMenuTogglePlain {
+                disabled = enabled.input.changes.states().map { !it }
+                text.keyups.map { currentValue(it) }.bind()
+            }
+            pfOptionsMenuItems()
+            action(items()) handledBy store.update
+            registerEvents(this, "Plain with text")
+        }
     }
 }"""
 }

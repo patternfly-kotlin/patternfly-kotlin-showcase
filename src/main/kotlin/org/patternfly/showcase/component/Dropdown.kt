@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
-import org.patternfly.Align
+import org.patternfly.Align.RIGHT
 import org.patternfly.Dropdown
 import org.patternfly.Entry
 import org.patternfly.Notification
@@ -108,7 +108,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                 }
                 snippet("Position right", DropdownCode.RIGHT) {
-                    pfDropdown<String>(align = Align.RIGHT) {
+                    pfDropdown<String>(align = RIGHT) {
                         pfDropdownToggle { +"Dropdown" }
                         pfDropdownItems {
                             pfItem("Action")
@@ -269,7 +269,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
 
                     fun registerEvents(dropdown: Dropdown<String>, name: String) {
                         with(dropdown) {
-                            store.clicks
+                            store.clicked
                                 .map { Notification(INFO, "$name: Clicked on $it") }
                                 .handledBy(Notification.store.add)
                             ces.collapsed
@@ -327,8 +327,8 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
                         pfDropdownToggle {
-                            icon = { pfIcon("cog".fas()) }
                             disabled = enabled.input.changes.states().map { !it }
+                            icon = { pfIcon("cog".fas()) }
                         }
                         pfDropdownItems()
                         registerEvents(this, "Icon")
@@ -338,7 +338,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     pfDropdown<String>(classes = "mt-sm".util()) {
                         pfDropdownToggleCheckbox {
                             disabled = enabled.input.changes.states().map { !it }
-                            triState = this@pfDropdown.store.clicks.map {
+                            triState = this@pfDropdown.store.clicked.map {
                                 when (it) {
                                     "Select none" -> TriState.OFF
                                     "Select visible" -> TriState.INDETERMINATE
@@ -346,7 +346,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                                     else -> TriState.OFF
                                 }
                             }
-                            merge(this@pfDropdown.store.clicks, input.changes.states())
+                            merge(this@pfDropdown.store.clicked, input.changes.states())
                                 .map {
                                     when (it) {
                                         is String -> {
@@ -381,8 +381,8 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
                         pfDropdownToggleAction {
-                            icon = { pfIcon("cog".fas()) }
                             disabled = enabled.input.changes.states().map { !it }
+                            icon = { pfIcon("cog".fas()) }
                             action.clicks
                                 .map { Notification(INFO, "Action clicked") }
                                 .handledBy(Notification.store.add)
