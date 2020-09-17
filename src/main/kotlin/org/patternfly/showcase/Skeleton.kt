@@ -82,6 +82,7 @@ class Skeleton(private val router: Router<String>) : Iterable<Tag<HTMLElement>> 
                                     pfNavigationItem(Places.component("expandable"), "Expandable")
                                     pfNavigationItem(Places.component("label"), "Label")
                                     pfNavigationItem(Places.component("options-menu"), "Options menu")
+                                    pfNavigationItem(Places.component("pagination"), "Pagination")
                                     pfNavigationItem(Places.component("select"), "Select")
                                     pfNavigationItem(Places.component("switch"), "Switch")
                                     pfNavigationItem(Places.component("tabs"), "Tabs")

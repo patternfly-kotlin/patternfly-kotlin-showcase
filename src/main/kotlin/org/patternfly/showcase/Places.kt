@@ -20,6 +20,7 @@ import org.patternfly.showcase.component.DrawerComponent
 import org.patternfly.showcase.component.DropdownComponent
 import org.patternfly.showcase.component.EmptyStateComponent
 import org.patternfly.showcase.component.OptionsMenuComponent
+import org.patternfly.showcase.component.PaginationComponent
 import org.patternfly.showcase.component.SwitchComponent
 import org.patternfly.showcase.demo.UserDemo
 import org.w3c.dom.HTMLElement
@@ -49,6 +50,7 @@ object Places {
         put(component("dropdown"), DropdownComponent)
         put(component("empty-state"), EmptyStateComponent)
         put(component("options-menu"), OptionsMenuComponent)
+        put(component("pagination"), PaginationComponent)
         put(component("switch"), SwitchComponent)
         put(demo("user"), UserDemo)
     }

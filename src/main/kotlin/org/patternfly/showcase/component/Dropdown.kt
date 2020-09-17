@@ -44,6 +44,7 @@ import org.patternfly.pfItems
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
 import org.patternfly.pfSwitch
+import org.patternfly.styleHidden
 import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
@@ -68,7 +69,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Basic", DropdownCode.BASIC) {
                     pfDropdown<String> {
-                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownToggle { content = { +"Dropdown" } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -82,8 +83,8 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 snippet("Disabled", DropdownCode.DISABLED) {
                     pfDropdown<String> {
                         pfDropdownToggle {
+                            content = { +"Dropdown" }
                             disabled = const(true)
-                            +"Dropdown"
                         }
                         pfDropdownItems {
                             pfItem("Action")
@@ -97,7 +98,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Primary toggle", DropdownCode.PRIMARY) {
                     pfDropdown<String> {
-                        pfDropdownToggle("primary".modifier()) { +"Dropdown" }
+                        pfDropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -110,7 +111,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Position right", DropdownCode.RIGHT) {
                     pfDropdown<String>(align = RIGHT) {
-                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownToggle { content = { +"Dropdown" } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -123,7 +124,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Direction up", DropdownCode.UP) {
                     pfDropdown<String>(up = true) {
-                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownToggle { content = { +"Dropdown" } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -162,7 +163,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Icons and descriptions", DropdownCode.DESCRIPTION) {
                     pfDropdown<String> {
-                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownToggle { content = { +"Dropdown" } }
                         pfDropdownItems {
                             pfItem("Action 1") {
                                 icon = { pfIcon("cog".fas()) }
@@ -204,7 +205,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                         }
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
-                        pfDropdownToggleCheckbox { +"10 selected" }
+                        pfDropdownToggleCheckbox { content = { +"10 selected" } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -217,7 +218,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Split button action", DropdownCode.ACTION_TOGGLE) {
                     pfDropdown<String> {
-                        pfDropdownToggleAction { +"Action" }
+                        pfDropdownToggleAction { action = { +"Action" } }
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -228,7 +229,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                         }
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
-                        pfDropdownToggleAction { icon = { pfIcon("cog".fas()) } }
+                        pfDropdownToggleAction { action = { pfIcon("cog".fas()) } }
                         pfDropdownItems {
                             pfItem("Action") {
                                 icon = { pfIcon("cog".fas()) }
@@ -246,7 +247,7 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Groups", DropdownCode.GROUPS) {
                     pfDropdown<String> {
-                        pfDropdownToggle { +"Dropdown" }
+                        pfDropdownToggle { content = { +"Dropdown" } }
                         pfDropdownGroups {
                             pfGroup {
                                 pfItem("Action 1")
@@ -311,8 +312,8 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfDropdown<String>(classes = "mt-sm".util()) {
                         pfDropdownToggle {
+                            content = { text.keyups.map { currentValue(it) }.bind() }
                             disabled = enabled.input.changes.states().map { !it }
-                            text.keyups.map { currentValue(it) }.bind()
                         }
                         pfDropdownItems()
                         registerEvents(this, "Text")
@@ -338,6 +339,28 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfDropdown<String>(classes = "mt-sm".util()) {
                         pfDropdownToggleCheckbox {
+                            content = {
+                                domNode.styleHidden = true
+                                merge(
+                                    this@pfDropdown.store.clicked.unwrap(),
+                                    this@pfDropdownToggleCheckbox.input.changes.states()
+                                )
+                                    .map {
+                                        val text = when (it) {
+                                            is String -> {
+                                                if (it == "Select none") {
+                                                    ""
+                                                } else it
+                                            }
+                                            is Boolean -> {
+                                                if (it) "Select all" else ""
+                                            }
+                                            else -> ""
+                                        }
+                                        domNode.styleHidden = text.isEmpty()
+                                        text
+                                    }.bind()
+                            }
                             disabled = enabled.input.changes.states().map { !it }
                             triState = this@pfDropdown.store.clicked.unwrap().map {
                                 when (it) {
@@ -347,18 +370,6 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                                     else -> TriState.OFF
                                 }
                             }
-                            merge(this@pfDropdown.store.clicked.unwrap(), input.changes.states())
-                                .map {
-                                    when (it) {
-                                        is String -> {
-                                            if (it == "Select none") "" else it
-                                        }
-                                        is Boolean -> {
-                                            if (it) "Select all" else ""
-                                        }
-                                        else -> ""
-                                    }
-                                }.bind()
                         }
                         pfDropdownItems {
                             pfItem("Select none")
@@ -370,11 +381,13 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     br {}
                     pfDropdown<String>(classes = "mt-sm".util()) {
                         pfDropdownToggleAction {
+                            action = {
+                                text.keyups.map { currentValue(it) }.bind()
+                                clicks
+                                    .map { Notification(INFO, "Action clicked") }
+                                    .handledBy(Notification.store.add)
+                            }
                             disabled = enabled.input.changes.states().map { !it }
-                            action.clicks
-                                .map { Notification(INFO, "Action clicked") }
-                                .handledBy(Notification.store.add)
-                            text.keyups.map { currentValue(it) }.bind()
                         }
                         pfDropdownItems()
                         registerEvents(this, "Action text")
@@ -382,11 +395,13 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfDropdown<String>(classes = "ml-sm".util()) {
                         pfDropdownToggleAction {
+                            action = {
+                                pfIcon("cog".fas())
+                                clicks
+                                    .map { Notification(INFO, "Action clicked") }
+                                    .handledBy(Notification.store.add)
+                            }
                             disabled = enabled.input.changes.states().map { !it }
-                            icon = { pfIcon("cog".fas()) }
-                            action.clicks
-                                .map { Notification(INFO, "Action clicked") }
-                                .handledBy(Notification.store.add)
                         }
                         pfDropdownItems()
                         registerEvents(this, "Action icon")

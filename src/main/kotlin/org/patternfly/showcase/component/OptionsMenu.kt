@@ -62,7 +62,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Basic", OptionsMenuCode.BASIC) {
                     pfOptionsMenu<String> {
-                        pfOptionsMenuToggle { +"Options menu" }
+                        pfOptionsMenuToggle { content = { +"Options menu" } }
                         pfOptionsMenuItems {
                             pfItem("Option 1") { selected = true }
                             pfItem("Option 2")
@@ -73,8 +73,8 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 snippet("Disabled", OptionsMenuCode.DISABLED) {
                     pfOptionsMenu<String> {
                         pfOptionsMenuToggle {
+                            content = { +"Options menu" }
                             disabled = const(true)
-                            +"Options menu"
                         }
                         pfOptionsMenuItems {
                             pfItem("Option 1") { selected = true }
@@ -85,7 +85,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Position right", OptionsMenuCode.RIGHT) {
                     pfOptionsMenu<String>(align = RIGHT) {
-                        pfOptionsMenuToggle { +"Options menu" }
+                        pfOptionsMenuToggle { content = { +"Options menu" } }
                         pfOptionsMenuItems {
                             pfItem("Right option 1") { selected = true }
                             pfItem("Right option 2")
@@ -95,7 +95,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Direction up", OptionsMenuCode.UP) {
                     pfOptionsMenu<String>(up = true) {
-                        pfOptionsMenuToggle { +"Options menu" }
+                        pfOptionsMenuToggle { content = { +"Options menu" } }
                         pfOptionsMenuItems {
                             pfItem("Option 1") { selected = true }
                             pfItem("Option 2")
@@ -115,7 +115,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Plain with text", OptionsMenuCode.PLAIN) {
                     pfOptionsMenu<String> {
-                        pfOptionsMenuTogglePlain { +"Options menu" }
+                        pfOptionsMenuTogglePlain { content = { +"Options menu" } }
                         pfOptionsMenuItems {
                             pfItem("Option 1") { selected = true }
                             pfItem("Option 2")
@@ -125,7 +125,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Multiple options", OptionsMenuCode.MULTIPLE_OPTIONS) {
                     pfOptionsMenu<String> {
-                        pfOptionsMenuToggle { +"Sort by" }
+                        pfOptionsMenuToggle { content = { +"Sort by" } }
                         pfOptionsMenuGroups {
                             pfGroup {
                                 pfItem("Name")
@@ -143,7 +143,7 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                 }
                 snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
                     pfOptionsMenu<String> {
-                        pfOptionsMenuToggle { +"Options" }
+                        pfOptionsMenuToggle { content = { +"Options" } }
                         pfOptionsMenuGroups {
                             pfGroup {
                                 pfItem("Option 1") { selected = true }
@@ -206,8 +206,8 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfOptionsMenu<String>(classes = "mt-sm".util()) {
                         pfOptionsMenuToggle {
+                            content = { text.keyups.map { currentValue(it) }.bind() }
                             disabled = enabled.input.changes.states().map { !it }
-                            text.keyups.map { currentValue(it) }.bind()
                         }
                         pfOptionsMenuItems()
                         action(items()) handledBy store.update
@@ -238,8 +238,8 @@ object OptionsMenuComponent : Iterable<Tag<HTMLElement>> {
                     }
                     pfOptionsMenu<String>(classes = "ml-sm".util()) {
                         pfOptionsMenuTogglePlain {
+                            content = { text.keyups.map { currentValue(it) }.bind() }
                             disabled = enabled.input.changes.states().map { !it }
-                            text.keyups.map { currentValue(it) }.bind()
                         }
                         pfOptionsMenuItems()
                         action(items()) handledBy store.update
