@@ -344,22 +344,21 @@ object DropdownComponent : Iterable<Tag<HTMLElement>> {
                                 merge(
                                     this@pfDropdown.store.clicked.unwrap(),
                                     this@pfDropdownToggleCheckbox.input.changes.states()
-                                )
-                                    .map {
-                                        val text = when (it) {
-                                            is String -> {
-                                                if (it == "Select none") {
-                                                    ""
-                                                } else it
-                                            }
-                                            is Boolean -> {
-                                                if (it) "Select all" else ""
-                                            }
-                                            else -> ""
+                                ).map {
+                                    val value = when (it) {
+                                        is String -> {
+                                            if (it == "Select none") {
+                                                ""
+                                            } else it
                                         }
-                                        domNode.styleHidden = text.isEmpty()
-                                        text
-                                    }.bind()
+                                        is Boolean -> {
+                                            if (it) "Select all" else ""
+                                        }
+                                        else -> ""
+                                    }
+                                    domNode.styleHidden = value.isEmpty()
+                                    value
+                                }.bind()
                             }
                             disabled = enabled.input.changes.states().map { !it }
                             triState = this@pfDropdown.store.clicked.unwrap().map {

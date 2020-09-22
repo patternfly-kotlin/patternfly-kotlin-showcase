@@ -10,18 +10,24 @@ import dev.fritz2.dom.html.Img
 import dev.fritz2.dom.html.TextElement
 import dev.fritz2.dom.html.Ul
 import dev.fritz2.dom.html.render
-import dev.fritz2.lenses.IdProvider
+import dev.fritz2.dom.values
 import dev.fritz2.remote.getBody
 import dev.fritz2.remote.remote
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import org.patternfly.Id
 import org.patternfly.ItemStore
+import org.patternfly.aria
 import org.patternfly.classes
+import org.patternfly.component
 import org.patternfly.fas
 import org.patternfly.layout
 import org.patternfly.modifier
+import org.patternfly.pfBulkSelect
 import org.patternfly.pfButton
 import org.patternfly.pfDataList
 import org.patternfly.pfDataListAction
@@ -34,8 +40,13 @@ import org.patternfly.pfDataListExpandableContentBody
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
 import org.patternfly.pfIcon
+import org.patternfly.pfPagination
 import org.patternfly.pfSection
 import org.patternfly.pfTitle
+import org.patternfly.pfToolbar
+import org.patternfly.pfToolbarContent
+import org.patternfly.pfToolbarContentSection
+import org.patternfly.pfToolbarItem
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
 import kotlin.js.Date
@@ -56,8 +67,8 @@ data class User(
     val picture: Picture,
     val nat: String
 ) {
-    fun match(query: String): Boolean {
-        return name.first.toLowerCase().contains(query.toLowerCase()) ||
+    fun match(query: String): Boolean = if (query.isEmpty()) true else {
+        name.first.toLowerCase().contains(query.toLowerCase()) ||
                 name.last.toLowerCase().contains(query.toLowerCase()) ||
                 email.toLowerCase().contains(query.toLowerCase()) ||
                 login.username.toLowerCase().contains(query.toLowerCase())
@@ -183,6 +194,8 @@ private fun googleMaps(location: Location): String =
 // ------------------------------------------------------ UI
 
 object UserDemo : Iterable<Tag<HTMLElement>> {
+    private val userStore = ItemStore<User> { it.login.uuid }
+
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
             pfSection {
@@ -205,9 +218,42 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
             }
         })
         yield(render {
-            val identifier: IdProvider<User, String> = { it.login.uuid }
             pfSection {
-                pfDataList(ItemStore(identifier)) {
+                pfToolbar {
+                    pfToolbarContent {
+                        pfToolbarContentSection {
+                            pfToolbarItem {
+                                pfBulkSelect(userStore)
+                            }
+                            pfToolbarItem {
+                                div(baseClass = "input-group".component()) {
+                                    input(
+                                        id = Id.unique("usr", "flt"),
+                                        baseClass = "form-control".component()
+                                    ) {
+                                        type = const("search")
+                                        aria["invalid"] = false
+                                        changes.values()
+                                            .filter { it.isEmpty() }
+                                            .map { domNode.id }
+                                            .handledBy(userStore.removeFilter)
+                                        changes.values()
+                                            .filter { it.isNotEmpty() }
+                                            .map { Pair(domNode.id, { user: User -> user.match(it) }) }
+                                            .handledBy(userStore.addFilter)
+                                    }
+                                    pfButton("control".modifier()) {
+                                        pfIcon("search".fas())
+                                    }
+                                }
+                            }
+                            pfToolbarItem {
+                                pfPagination(userStore)
+                            }
+                        }
+                    }
+                }
+                pfDataList(userStore) {
                     display = { user ->
                         {
                             pfDataListRow {
@@ -255,16 +301,14 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                         +"align-items-center".modifier()
                                         +"space-items-2xl".modifier()
                                     }) {
-                                        photo(user)
-                                        address(user)
-                                        contact(user)
+                                        photo(user); address(user); contact(user)
                                     }
                                 }
                             }
                         }
                     }
                     MainScope().launch {
-                        action(randomUsers(8)) handledBy store.addAll
+                        action(randomUsers(73)) handledBy store.addAll
                     }
                 }
             }

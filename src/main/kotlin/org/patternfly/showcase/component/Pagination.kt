@@ -85,13 +85,13 @@ object PaginationComponent : Iterable<Tag<HTMLElement>> {
                         disabled = enabled.input.changes.states().map { !it }
                         range.inputs.events
                             .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                            .handledBy(store.total)
+                            .handledBy(pageInfoHandler.total)
                     }
                     pfPagination(compact = true, classes = "mt-sm".util()) {
                         disabled = enabled.input.changes.states().map { !it }
                         range.inputs.events
                             .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                            .handledBy(store.total)
+                            .handledBy(pageInfoHandler.total)
                     }
                     MainScope().launch {
                         delay(333)
