@@ -201,7 +201,7 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
             pfSection {
                 pfTitle { +"User Demo" }
                 p {
-                    +"A list of 123 random users provided by "
+                    +"A list of 73 random users provided by "
                     a {
                         +"https://randomuser.me"
                         href = const("https://randomuser.me")
