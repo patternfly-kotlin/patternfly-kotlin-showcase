@@ -42,6 +42,7 @@ import org.patternfly.pfDataListToggle
 import org.patternfly.pfIcon
 import org.patternfly.pfPagination
 import org.patternfly.pfSection
+import org.patternfly.pfSortOptions
 import org.patternfly.pfTitle
 import org.patternfly.pfToolbar
 import org.patternfly.pfToolbarContent
@@ -246,6 +247,17 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                         pfIcon("search".fas())
                                     }
                                 }
+                            }
+                            pfToolbarItem {
+                                pfSortOptions(
+                                    userStore, mapOf(
+                                        "Last name" to compareBy { it.name.last },
+                                        "First name" to compareBy { it.name.first },
+                                        "User name" to compareBy { it.login.username },
+                                        "Age" to compareBy { it.dob.age },
+                                        "Nationality" to compareBy { it.nat },
+                                    )
+                                )
                             }
                             pfToolbarItem {
                                 pfPagination(userStore)
