@@ -10,6 +10,7 @@ import dev.fritz2.dom.html.Img
 import dev.fritz2.dom.html.TextElement
 import dev.fritz2.dom.html.Ul
 import dev.fritz2.dom.html.render
+import dev.fritz2.dom.states
 import dev.fritz2.dom.values
 import dev.fritz2.remote.getBody
 import dev.fritz2.remote.remote
@@ -19,16 +20,25 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import org.patternfly.Align
 import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.aria
+import org.patternfly.bind
 import org.patternfly.classes
-import org.patternfly.component
 import org.patternfly.fas
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfBulkSelect
 import org.patternfly.pfButton
+import org.patternfly.pfCardActions
+import org.patternfly.pfCardBody
+import org.patternfly.pfCardCheckbox
+import org.patternfly.pfCardFooter
+import org.patternfly.pfCardHeader
+import org.patternfly.pfCardHeaderMain
+import org.patternfly.pfCardTitle
+import org.patternfly.pfCardView
 import org.patternfly.pfDataList
 import org.patternfly.pfDataListAction
 import org.patternfly.pfDataListCell
@@ -39,15 +49,23 @@ import org.patternfly.pfDataListExpandableContent
 import org.patternfly.pfDataListExpandableContentBody
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
+import org.patternfly.pfDropdown
+import org.patternfly.pfDropdownItems
+import org.patternfly.pfDropdownToggleKebab
 import org.patternfly.pfIcon
+import org.patternfly.pfInputFormControl
+import org.patternfly.pfInputGroup
+import org.patternfly.pfItem
 import org.patternfly.pfPagination
 import org.patternfly.pfSection
+import org.patternfly.pfSeparator
 import org.patternfly.pfSortOptions
 import org.patternfly.pfTitle
 import org.patternfly.pfToolbar
 import org.patternfly.pfToolbarContent
 import org.patternfly.pfToolbarContentSection
 import org.patternfly.pfToolbarItem
+import org.patternfly.plusAssign
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
 import kotlin.js.Date
@@ -227,11 +245,8 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                 pfBulkSelect(userStore)
                             }
                             pfToolbarItem {
-                                div(baseClass = "input-group".component()) {
-                                    input(
-                                        id = Id.unique("usr", "flt"),
-                                        baseClass = "form-control".component()
-                                    ) {
+                                pfInputGroup {
+                                    pfInputFormControl(id = Id.unique("usr", "flt")) {
                                         type = const("search")
                                         aria["invalid"] = false
                                         changes.values()
@@ -265,6 +280,7 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                         }
                     }
                 }
+/*
                 pfDataList(userStore) {
                     display = { user ->
                         {
@@ -278,27 +294,15 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                         nat(user)
                                     }
                                     pfDataListCell {
-                                        p(id = this@pfDataList.store.identifier(user)) {
-                                            +user.name.toString()
-                                        }
+                                        p(id = this@pfDataList.store.identifier(user)) { +user.name.toString() }
                                     }
                                     pfDataListCell("flex-4".modifier()) {
                                         p {
                                             pfIcon("user-alt".fas(), "mr-sm".util())
                                             +user.login.username
                                         }
-                                        p {
-                                            small {
-                                                +"MD5: "
-                                                code { +user.login.md5 }
-                                            }
-                                        }
-                                        p {
-                                            small {
-                                                +"SHA-1: "
-                                                code { +user.login.sha1 }
-                                            }
-                                        }
+                                        p { small { +"MD5: "; code { +user.login.md5 } } }
+                                        p { small { +"SHA-1: "; code { +user.login.sha1 } } }
                                     }
                                 }
                                 pfDataListAction {
@@ -319,11 +323,48 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                             }
                         }
                     }
-                    MainScope().launch {
-                        action(randomUsers(73)) handledBy store.addAll
+                }
+*/
+                pfCardView(userStore, "mt-md".util()) {
+                    display = { user ->
+                        {
+                            domNode.classList += "hoverable".modifier()
+                            domNode.classList += "compact".modifier()
+                            pfCardHeader {
+                                nat(user)
+                                span(baseClass = "ml-sm".util()) { +user.name.toString() }
+                                pfCardActions {
+                                    pfDropdown<String>(align = Align.RIGHT) {
+                                        pfDropdownToggleKebab()
+                                        pfDropdownItems {
+                                            pfItem("Edit")
+                                            pfItem("Remove")
+                                        }
+                                    }
+                                    pfCardCheckbox {
+                                        bind(userStore, user)
+                                    }
+                                }
+                            }
+                            pfCardBody(classes {
+                                +"flex".layout()
+                                +"inline-flex".modifier()
+                                +"align-items-center".modifier()
+                            }) {
+                                photo(user); address(user);
+                            }
+                            pfCardFooter {
+                                pfIcon("user-alt".fas(), "mr-sm".util())
+                                +user.login.username
+                            }
+                        }
                     }
                 }
             }
         })
+        MainScope().launch {
+            action(randomUsers(73)) handledBy userStore.addAll
+        }
+
     }
 }
