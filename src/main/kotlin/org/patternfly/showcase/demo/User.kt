@@ -1,5 +1,6 @@
 package org.patternfly.showcase.demo
 
+import dev.fritz2.binding.RootStore
 import dev.fritz2.binding.action
 import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
@@ -10,10 +11,10 @@ import dev.fritz2.dom.html.Img
 import dev.fritz2.dom.html.TextElement
 import dev.fritz2.dom.html.Ul
 import dev.fritz2.dom.html.render
-import dev.fritz2.dom.states
 import dev.fritz2.dom.values
 import dev.fritz2.remote.getBody
 import dev.fritz2.remote.remote
+import kotlinx.browser.document
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -21,23 +22,23 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.patternfly.Align
+import org.patternfly.ComponentType
 import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.aria
-import org.patternfly.bind
 import org.patternfly.classes
 import org.patternfly.fas
+import org.patternfly.hide
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfBulkSelect
 import org.patternfly.pfButton
+import org.patternfly.pfCard
 import org.patternfly.pfCardActions
 import org.patternfly.pfCardBody
 import org.patternfly.pfCardCheckbox
 import org.patternfly.pfCardFooter
 import org.patternfly.pfCardHeader
-import org.patternfly.pfCardHeaderMain
-import org.patternfly.pfCardTitle
 import org.patternfly.pfCardView
 import org.patternfly.pfDataList
 import org.patternfly.pfDataListAction
@@ -47,6 +48,7 @@ import org.patternfly.pfDataListContent
 import org.patternfly.pfDataListControl
 import org.patternfly.pfDataListExpandableContent
 import org.patternfly.pfDataListExpandableContentBody
+import org.patternfly.pfDataListItem
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
 import org.patternfly.pfDropdown
@@ -58,14 +60,15 @@ import org.patternfly.pfInputGroup
 import org.patternfly.pfItem
 import org.patternfly.pfPagination
 import org.patternfly.pfSection
-import org.patternfly.pfSeparator
 import org.patternfly.pfSortOptions
 import org.patternfly.pfTitle
 import org.patternfly.pfToolbar
 import org.patternfly.pfToolbarContent
 import org.patternfly.pfToolbarContentSection
+import org.patternfly.pfToolbarGroup
 import org.patternfly.pfToolbarItem
 import org.patternfly.plusAssign
+import org.patternfly.show
 import org.patternfly.util
 import org.w3c.dom.HTMLElement
 import kotlin.js.Date
@@ -156,7 +159,7 @@ suspend fun randomUsers(size: Int = 123): List<User> {
 
 // ------------------------------------------------------ components
 
-fun HtmlElements.address(user: User): TextElement = address {
+fun HtmlElements.address(user: User, content: TextElement.() -> Unit = {}): TextElement = address {
     +"${user.location.street.name} ${user.location.street.number}"
     br { }
     +"${user.location.postcode} ${user.location.city}"
@@ -197,7 +200,6 @@ fun HtmlElements.nat(user: User): Img = img {
     src = const("https://www.countryflags.io/${user.nat}/flat/32.png")
     with(domNode) {
         title = user.nat
-        style.minWidth = "32px"
     }
 }
 
@@ -212,8 +214,24 @@ private fun googleMaps(location: Location): String =
 
 // ------------------------------------------------------ UI
 
+class UIStore(private val dataViewIds: Set<String>) : RootStore<String>("") {
+
+    val show = handle<String> { currentId, id ->
+        console.log("About to hide $currentId and show $id from $dataViewIds")
+        dataViewIds
+            .filterNot { it == id }
+            .forEach { document.getElementById(it)?.hide() }
+        document.getElementById(id)?.show()
+        id
+    }
+}
+
 object UserDemo : Iterable<Tag<HTMLElement>> {
+    private val cardViewId = Id.unique(ComponentType.CardView.id)
+    private val dataListId = Id.unique(ComponentType.DataList.id)
+    private val dataTableId = Id.unique(ComponentType.DataTable.id)
     private val userStore = ItemStore<User> { it.login.uuid }
+    private val uiStore = UIStore(setOf(cardViewId, dataListId, dataTableId))
 
     override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
         yield(render {
@@ -237,7 +255,7 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
             }
         })
         yield(render {
-            pfSection {
+            pfSection("light".modifier()) {
                 pfToolbar {
                     pfToolbarContent {
                         pfToolbarContentSection {
@@ -255,7 +273,7 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                             .handledBy(userStore.removeFilter)
                                         changes.values()
                                             .filter { it.isNotEmpty() }
-                                            .map { Pair(domNode.id, { user: User -> user.match(it) }) }
+                                            .map { domNode.id to { user: User -> user.match(it) } }
                                             .handledBy(userStore.addFilter)
                                     }
                                     pfButton("control".modifier()) {
@@ -274,16 +292,79 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                     )
                                 )
                             }
+                            pfToolbarGroup("icon-button-group".modifier()) {
+                                pfToolbarItem {
+                                    pfButton("plain".modifier()) {
+                                        pfIcon("address-card".fas())
+                                        clicks.map { cardViewId } handledBy uiStore.show
+                                    }
+                                }
+                                pfToolbarItem {
+                                    pfButton("plain".modifier()) {
+                                        pfIcon("list".fas())
+                                        clicks.map { dataListId } handledBy uiStore.show
+                                    }
+                                }
+                                pfToolbarItem {
+                                    pfButton("plain".modifier()) {
+                                        pfIcon("table".fas())
+                                        clicks.map { dataTableId } handledBy uiStore.show
+                                    }
+                                }
+                            }
                             pfToolbarItem {
-                                pfPagination(userStore)
+                                pfPagination(itemStore = userStore, compact = true)
                             }
                         }
                     }
                 }
-/*
-                pfDataList(userStore) {
+                pfCardView(userStore) {
+                    domNode.id = cardViewId
                     display = { user ->
-                        {
+                        pfCard(user, classes = classes {
+                            +"hoverable".modifier()
+                            +"compact".modifier()
+                            +"flat".modifier()
+                            +"sc-user-card"
+                        }) {
+                            pfCardHeader {
+                                nat(user)
+                                span(baseClass = classes("ml-sm".util(), "sc-user-card__title")) {
+                                    +user.name.toString()
+                                }
+                                pfCardActions {
+                                    pfDropdown<String>(align = Align.RIGHT) {
+                                        pfDropdownToggleKebab()
+                                        pfDropdownItems {
+                                            pfItem("Edit")
+                                            pfItem("Remove")
+                                        }
+                                    }
+                                    pfCardCheckbox()
+                                }
+                            }
+                            pfCardBody(classes {
+                                +"flex".layout()
+                                +"inline-flex".modifier()
+                                +"align-items-center".modifier()
+                            }) {
+                                photo(user)
+                                address(user) {
+                                    domNode.classList += "sc-user-card__address"
+                                }
+                            }
+                            pfCardFooter {
+                                pfIcon("user-alt".fas(), "mr-sm".util())
+                                +user.login.username
+                            }
+                        }
+                    }
+                }
+                pfDataList(userStore) {
+                    domNode.id = dataListId
+                    domNode.hide()
+                    display = { user ->
+                        pfDataListItem(user) {
                             pfDataListRow {
                                 pfDataListControl {
                                     pfDataListToggle()
@@ -294,7 +375,7 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                                         nat(user)
                                     }
                                     pfDataListCell {
-                                        p(id = this@pfDataList.store.identifier(user)) { +user.name.toString() }
+                                        p(id = userStore.identifier(user)) { +user.name.toString() }
                                     }
                                     pfDataListCell("flex-4".modifier()) {
                                         p {
@@ -324,47 +405,11 @@ object UserDemo : Iterable<Tag<HTMLElement>> {
                         }
                     }
                 }
-*/
-                pfCardView(userStore, "mt-md".util()) {
-                    display = { user ->
-                        {
-                            domNode.classList += "hoverable".modifier()
-                            domNode.classList += "compact".modifier()
-                            pfCardHeader {
-                                nat(user)
-                                span(baseClass = "ml-sm".util()) { +user.name.toString() }
-                                pfCardActions {
-                                    pfDropdown<String>(align = Align.RIGHT) {
-                                        pfDropdownToggleKebab()
-                                        pfDropdownItems {
-                                            pfItem("Edit")
-                                            pfItem("Remove")
-                                        }
-                                    }
-                                    pfCardCheckbox {
-                                        bind(userStore, user)
-                                    }
-                                }
-                            }
-                            pfCardBody(classes {
-                                +"flex".layout()
-                                +"inline-flex".modifier()
-                                +"align-items-center".modifier()
-                            }) {
-                                photo(user); address(user);
-                            }
-                            pfCardFooter {
-                                pfIcon("user-alt".fas(), "mr-sm".util())
-                                +user.login.username
-                            }
-                        }
-                    }
-                }
             }
         })
         MainScope().launch {
+            action(cardViewId) handledBy uiStore.show
             action(randomUsers(73)) handledBy userStore.addAll
         }
-
     }
 }

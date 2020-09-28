@@ -51,6 +51,21 @@
     font-weight: 400
 }
 
+.sc-user-card {
+    min-height: 220px;
+}
+
+.sc-user-card__title {
+    max-width: 140px;
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sc-user-card__address {
+    max-width: 160px;
+}
+
 .sc-user-photo-75 {
     position: relative;
     background: #fff;
