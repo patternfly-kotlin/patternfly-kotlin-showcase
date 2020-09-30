@@ -40,7 +40,7 @@ fun HtmlElements.intro(
     text: String,
     link: Pair<String, String>? = null
 ): Section = pfSection("pb-0".util()) {
-    pfTitle(size = Size.XL_3, classes = "mb-md".util()) { +title }
+    pfTitle(size = Size.XL_3, baseClass = "mb-md".util()) { +title }
     p {
         prefix?.let { +it }
         strong { +key }
@@ -68,16 +68,16 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
     private val codeStore = CodeStore()
 
     init {
-        pfTitle(level = 3, size = Size.LG, classes = "sc-snippet__title") { +header }
+        pfTitle(level = 3, size = Size.LG, baseClass = "sc-snippet__title") { +header }
         div("sc-snippet__content") {
             this@Snippet.content(this)
         }
         div("sc-snippet__toolbar") {
-            pfButton(classes = "plain".modifier()) {
+            pfButton(baseClass = "plain".modifier()) {
                 pfIcon("code".fas())
                 clicks handledBy this@Snippet.codeStore.toggle
             }
-            pfButton(classes = "plain".modifier()) {
+            pfButton(baseClass = "plain".modifier()) {
                 pfIcon("copy".fas())
                 val clipboard = ClipboardJS(domNode, object : ClipboardJS.Options {
                     override val text: ((Element) -> String)? = { code }
@@ -86,7 +86,7 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
                     this@Snippet.showCopied()
                 }
             }
-            pfContent(classes = "display-none".util()) {
+            pfContent(baseClass = "display-none".util()) {
                 span("sc-snippet__copied") { +"Copied to clipboard" }
             }
         }

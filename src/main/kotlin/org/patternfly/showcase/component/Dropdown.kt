@@ -204,7 +204,7 @@ class DropdownComponent : Elements {
                         pfItem("Separated Action")
                     }
                 }
-                pfDropdown<String>(classes = "ml-sm".util()) {
+                pfDropdown<String>(baseClass = "ml-sm".util()) {
                     pfDropdownToggleCheckbox { content = { +"10 selected" } }
                     pfDropdownItems {
                         pfItem("Action")
@@ -228,7 +228,7 @@ class DropdownComponent : Elements {
                         pfItem("Separated Action")
                     }
                 }
-                pfDropdown<String>(classes = "ml-sm".util()) {
+                pfDropdown<String>(baseClass = "ml-sm".util()) {
                     pfDropdownToggleAction { action = { pfIcon("cog".fas()) } }
                     pfDropdownItems {
                         pfItem("Action") {
@@ -308,7 +308,7 @@ class DropdownComponent : Elements {
                         input.checked = const(true)
                     }
                 }
-                pfDropdown<String>(classes = "mt-sm".util()) {
+                pfDropdown<String>(baseClass = "mt-sm".util()) {
                     pfDropdownToggle {
                         content = { text.keyups.map { currentValue(it) }.bind() }
                         disabled = enabled.input.changes.states().map { !it }
@@ -317,7 +317,7 @@ class DropdownComponent : Elements {
                     registerEvents(this, "Text")
                     action(items()) handledBy store.update
                 }
-                pfDropdown<String>(classes = "ml-sm".util()) {
+                pfDropdown<String>(baseClass = "ml-sm".util()) {
                     pfDropdownToggleKebab {
                         disabled = enabled.input.changes.states().map { !it }
                     }
@@ -325,7 +325,7 @@ class DropdownComponent : Elements {
                     registerEvents(this, "Kebab")
                     action(items()) handledBy store.update
                 }
-                pfDropdown<String>(classes = "ml-sm".util()) {
+                pfDropdown<String>(baseClass = "ml-sm".util()) {
                     pfDropdownToggle {
                         disabled = enabled.input.changes.states().map { !it }
                         icon = { pfIcon("cog".fas()) }
@@ -335,7 +335,7 @@ class DropdownComponent : Elements {
                     action(items()) handledBy store.update
                 }
                 br {}
-                pfDropdown<String>(classes = "mt-sm".util()) {
+                pfDropdown<String>(baseClass = "mt-sm".util()) {
                     pfDropdownToggleCheckbox {
                         content = {
                             domNode.styleHidden = true
@@ -376,7 +376,7 @@ class DropdownComponent : Elements {
                     registerEvents(this, "Split button")
                 }
                 br {}
-                pfDropdown<String>(classes = "mt-sm".util()) {
+                pfDropdown<String>(baseClass = "mt-sm".util()) {
                     pfDropdownToggleAction {
                         action = {
                             text.keyups.map { currentValue(it) }.bind()
@@ -390,7 +390,7 @@ class DropdownComponent : Elements {
                     registerEvents(this, "Action text")
                     action(items()) handledBy store.update
                 }
-                pfDropdown<String>(classes = "ml-sm".util()) {
+                pfDropdown<String>(baseClass = "ml-sm".util()) {
                     pfDropdownToggleAction {
                         action = {
                             pfIcon("cog".fas())

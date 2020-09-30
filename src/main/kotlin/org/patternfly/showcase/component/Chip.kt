@@ -33,7 +33,7 @@ class ChipComponent : Elements {
             text = " are used to communicate a value, a tag, or a set of attribute-value pairs within workflows that involve filtering or tagging a set of objects. Related design guidelines: ",
             link = ("filters" to "Filters")
         )
-        pfSection(classes = "sc-component__chips") {
+        pfSection(baseClass = "sc-component__chips") {
             pfContent {
                 h2 { +"Examples" }
             }

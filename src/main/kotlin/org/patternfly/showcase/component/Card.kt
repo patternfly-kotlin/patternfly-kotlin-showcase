@@ -179,14 +179,14 @@ class CardComponent : Elements {
                 }
             }
             snippet("Hover", CardCode.HOVER) {
-                pfCard(classes = "hoverable".modifier()) {
+                pfCard(baseClass = "hoverable".modifier()) {
                     pfCardTitle { +"Title" }
                     pfCardBody { +"Body" }
                     pfCardFooter { +"Footer" }
                 }
             }
             snippet("Compact", CardCode.COMPACT) {
-                pfCard(classes = "compact".modifier()) {
+                pfCard(baseClass = "compact".modifier()) {
                     pfCardTitle { +"Title" }
                     pfCardBody { +"Body" }
                     pfCardFooter { +"Footer" }
@@ -241,7 +241,7 @@ class CardComponent : Elements {
                 }
             }
             snippet("Flat", CardCode.FLAT) {
-                pfCard(classes = "flat".modifier()) {
+                pfCard(baseClass = "flat".modifier()) {
                     pfCardTitle { +"Title" }
                     pfCardBody { +"Body" }
                     pfCardFooter { +"Footer" }

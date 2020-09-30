@@ -35,7 +35,7 @@ class ChipGroupComponent : Elements {
             text = " is used to represent an attribute that has been assigned one or more values. An OR relationship is implied between values in the group. Chip groups are useful to express complex filters to a data set, for example. Related design guidelines: ",
             link = ("filters" to "Filters")
         )
-        pfSection(classes = "sc-component__chip-groups") {
+        pfSection(baseClass = "sc-component__chip-groups") {
             pfContent {
                 h2 { +"Examples" }
             }

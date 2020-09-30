@@ -86,7 +86,7 @@ class PaginationComponent : Elements {
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                         .handledBy(pageInfoHandler.total)
                 }
-                pfPagination(compact = true, classes = "mt-sm".util()) {
+                pfPagination(compact = true, baseClass = "mt-sm".util()) {
                     disabled = enabled.input.changes.states().map { !it }
                     range.inputs.events
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }

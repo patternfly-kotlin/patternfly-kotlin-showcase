@@ -205,7 +205,7 @@ class OptionsMenuComponent : Elements {
                         input.checked = const(true)
                     }
                 }
-                pfOptionsMenu<String>(classes = "mt-sm".util()) {
+                pfOptionsMenu<String>(baseClass = "mt-sm".util()) {
                     pfOptionsMenuToggle {
                         content = { text.keyups.map { currentValue(it) }.bind() }
                         disabled = enabled.input.changes.states().map { !it }
@@ -214,7 +214,7 @@ class OptionsMenuComponent : Elements {
                     action(items()) handledBy store.update
                     registerEvents(this, "Text")
                 }
-                pfOptionsMenu<String>(classes = "ml-sm".util()) {
+                pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
                     pfOptionsMenuToggle {
                         disabled = enabled.input.changes.states().map { !it }
                         icon = { pfIcon("sort-amount-down".fas()) }
@@ -237,7 +237,7 @@ class OptionsMenuComponent : Elements {
                     }
                     registerEvents(this, "Plain")
                 }
-                pfOptionsMenu<String>(classes = "ml-sm".util()) {
+                pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
                     pfOptionsMenuTogglePlain {
                         content = { text.keyups.map { currentValue(it) }.bind() }
                         disabled = enabled.input.changes.states().map { !it }

@@ -47,112 +47,112 @@ class ButtonComponent : Elements {
             text = " communicate and trigger actions a user can take in an application or website. Related design guidelines: ",
             link = ("buttons-and-links" to "Buttons and links")
         )
-        pfSection(classes = "sc-component__buttons") {
+        pfSection(baseClass = "sc-component__buttons") {
             pfContent {
                 h2 { +"Examples" }
             }
             snippet("Variations", ButtonCode.VARIATIONS) {
-                pfButton(classes = "primary".modifier()) { +"Primary" }
-                pfButton(classes = "secondary".modifier()) { +"Secondary" }
-                pfButton(classes = "tertiary".modifier()) { +"Tertiary" }
-                pfButton(classes = "danger".modifier()) { +"Danger" }
+                pfButton(baseClass = "primary".modifier()) { +"Primary" }
+                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                pfButton(baseClass = "tertiary".modifier()) { +"Tertiary" }
+                pfButton(baseClass = "danger".modifier()) { +"Danger" }
                 br {}
                 br {}
-                pfButton(classes = "link".modifier()) {
+                pfButton(baseClass = "link".modifier()) {
                     pfIcon(START, "plus-circle".fas())
                     +"Link"
                 }
-                pfButton(classes = "link".modifier()) {
+                pfButton(baseClass = "link".modifier()) {
                     +"Link"
                     pfIcon(END, "plus-circle".fas())
                 }
-                pfButton(classes = classes("link".modifier(), "inline".modifier())) { +"Inline link" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Inline link" }
                 br {}
                 br {}
-                pfButton(classes = "plain".modifier()) { pfIcon("times".fas()) }
+                pfButton(baseClass = "plain".modifier()) { pfIcon("times".fas()) }
                 br {}
                 br {}
-                pfButton(classes = "control".modifier()) { +"Control" }
-                pfButton(classes = "control".modifier()) { pfIcon("copy".fas()) }
+                pfButton(baseClass = "control".modifier()) { +"Control" }
+                pfButton(baseClass = "control".modifier()) { pfIcon("copy".fas()) }
                 br {}
                 br {}
-                pfButton(classes = classes("primary".modifier(), "small".modifier())) { +"Primary" }
-                pfButton(classes = classes("secondary".modifier(), "small".modifier())) { +"Secondary" }
-                pfButton(classes = classes("tertiary".modifier(), "small".modifier())) { +"Tertiary" }
-                pfButton(classes = classes("danger".modifier(), "small".modifier())) { +"Danger" }
-                pfButton(classes = classes("link".modifier(), "small".modifier())) {
+                pfButton(baseClass = classes("primary".modifier(), "small".modifier())) { +"Primary" }
+                pfButton(baseClass = classes("secondary".modifier(), "small".modifier())) { +"Secondary" }
+                pfButton(baseClass = classes("tertiary".modifier(), "small".modifier())) { +"Tertiary" }
+                pfButton(baseClass = classes("danger".modifier(), "small".modifier())) { +"Danger" }
+                pfButton(baseClass = classes("link".modifier(), "small".modifier())) {
                     pfIcon(START, "plus-circle".fas())
                     +"Link"
                 }
-                pfButton(classes = classes("link".modifier(), "inline".modifier(), "small".modifier())) { +"Inline link" }
-                pfButton(classes = classes("control".modifier(), "small".modifier())) { +"Control" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier(), "small".modifier())) { +"Inline link" }
+                pfButton(baseClass = classes("control".modifier(), "small".modifier())) { +"Control" }
             }
             snippet("Disabled", ButtonCode.DISABLED) {
-                pfButton(classes = "primary".modifier()) {
+                pfButton(baseClass = "primary".modifier()) {
                     disabled = const(false)
                     +"Primary disabled"
                 }
-                pfButton(classes = "secondary".modifier()) {
+                pfButton(baseClass = "secondary".modifier()) {
                     disabled = const(false)
                     +"Secondary disabled"
                 }
-                pfButton(classes = "tertiary".modifier()) {
+                pfButton(baseClass = "tertiary".modifier()) {
                     disabled = const(false)
                     +"Tertiary disabled"
                 }
-                pfButton(classes = "danger".modifier()) {
+                pfButton(baseClass = "danger".modifier()) {
                     disabled = const(false)
                     +"Danger disabled"
                 }
-                pfButton(classes = "link".modifier()) {
+                pfButton(baseClass = "link".modifier()) {
                     disabled = const(false)
                     pfIcon(START, "plus-circle".fas())
                     +"Link disabled"
                 }
-                pfButton(classes = classes("link".modifier(), "inline".modifier())) {
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) {
                     disabled = const(false)
                     +"Inline link disabled"
                 }
-                pfButton(classes = "plain".modifier()) {
+                pfButton(baseClass = "plain".modifier()) {
                     disabled = const(false)
                     pfIcon("times".fas())
                 }
-                pfButton(classes = "control".modifier()) {
+                pfButton(baseClass = "control".modifier()) {
                     disabled = const(false)
                     +"Control disabled"
                 }
             }
             snippet("Aria-disabled", ButtonCode.ARIA_DISABLED) {
-                pfButton(classes = classes("primary".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("primary".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     +"Primary disabled"
                 }
-                pfButton(classes = classes("secondary".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("secondary".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     +"Secondary disabled"
                 }
-                pfButton(classes = classes("tertiary".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("tertiary".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     +"Tertiary disabled"
                 }
-                pfButton(classes = classes("danger".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("danger".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     +"Danger disabled"
                 }
-                pfButton(classes = classes("link".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("link".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     pfIcon(START, "plus-circle".fas())
                     +"Link disabled"
                 }
-                pfButton(classes = classes("link".modifier(), "aria-disabled".modifier(), "inline".modifier())) {
+                pfButton(baseClass = classes("link".modifier(), "aria-disabled".modifier(), "inline".modifier())) {
                     aria["disabled"] = true
                     +"Inline link disabled"
                 }
-                pfButton(classes = classes("plain".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("plain".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     pfIcon("times".fas())
                 }
-                pfButton(classes = classes("control".modifier(), "aria-disabled".modifier())) {
+                pfButton(baseClass = classes("control".modifier(), "aria-disabled".modifier())) {
                     aria["disabled"] = true
                     +"Control disabled"
                 }
@@ -177,30 +177,30 @@ class ButtonComponent : Elements {
                 }
             }
             snippet("Block level", ButtonCode.BLOCK_LEVEL) {
-                pfButton(classes = classes("primary".modifier(), "block".modifier())) { +"Block level button" }
+                pfButton(baseClass = classes("primary".modifier(), "block".modifier())) { +"Block level button" }
             }
             snippet("Types", ButtonCode.TYPES) {
-                pfButton(classes = "primary".modifier()) {
+                pfButton(baseClass = "primary".modifier()) {
                     type = const("submit")
                     +"Submit"
                 }
-                pfButton(classes = "primary".modifier()) {
+                pfButton(baseClass = "primary".modifier()) {
                     type = const("reset")
                     +"Reset"
                 }
-                pfButton(classes = "primary".modifier()) {
+                pfButton(baseClass = "primary".modifier()) {
                     +"Default"
                 }
             }
             snippet("Call to action", ButtonCode.CALL_TO_ACTION) {
-                pfButton(classes = classes("primary".modifier(), "display-lg".modifier())) { +"Call to action" }
-                pfButton(classes = classes("secondary".modifier(), "display-lg".modifier())) { +"Call to action" }
-                pfButton(classes = classes("tertiary".modifier(), "display-lg".modifier())) { +"Call to action" }
-                pfButton(classes = classes("link".modifier(), "display-lg".modifier())) {
+                pfButton(baseClass = classes("primary".modifier(), "display-lg".modifier())) { +"Call to action" }
+                pfButton(baseClass = classes("secondary".modifier(), "display-lg".modifier())) { +"Call to action" }
+                pfButton(baseClass = classes("tertiary".modifier(), "display-lg".modifier())) { +"Call to action" }
+                pfButton(baseClass = classes("link".modifier(), "display-lg".modifier())) {
                     +"Call to action"
                     pfIcon(END, "arrow-right".fas())
                 }
-                pfButton(classes = classes("link".modifier(), "inline".modifier(), "display-lg".modifier())) {
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier(), "display-lg".modifier())) {
                     +"Call to action"
                     pfIcon(END, "arrow-right".fas())
                 }
@@ -225,7 +225,7 @@ class ButtonComponent : Elements {
                     }
                 }
                 br {}
-                pfButton(classes = "primary".modifier()) {
+                pfButton(baseClass = "primary".modifier()) {
                     disabled = enabled.input.changes.states().map { !it }
                     text.keyups.map { currentValue(it) }.bind()
                     clicks.map {

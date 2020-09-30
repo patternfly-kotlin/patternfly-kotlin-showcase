@@ -43,7 +43,7 @@ class DrawerComponent : Elements {
                 h2 { +"Examples" }
             }
             snippet("Basic", DrawerCode.BASIC) {
-                val button = pfButton(classes = classes { +"primary".modifier(); +"mb-md".util() }) {
+                val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
                     +"Toggle drawer"
                 }
                 br {}
@@ -70,7 +70,7 @@ class DrawerComponent : Elements {
                 }
             }
             snippet("Left", DrawerCode.LEFT) {
-                val button = pfButton(classes = classes { +"primary".modifier(); +"mb-md".util() }) {
+                val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
                     +"Toggle drawer"
                 }
                 br {}
@@ -97,7 +97,7 @@ class DrawerComponent : Elements {
                 }
             }
             snippet("Inline", DrawerCode.INLINE) {
-                val button = pfButton(classes = classes { +"primary".modifier(); +"mb-md".util() }) {
+                val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
                     +"Toggle drawer"
                 }
                 br {}
@@ -124,7 +124,7 @@ class DrawerComponent : Elements {
                 }
             }
             snippet("Inline left", DrawerCode.INLINE_LEFT) {
-                val button = pfButton(classes = classes { +"primary".modifier(); +"mb-md".util() }) {
+                val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
                     +"Toggle drawer"
                 }
                 br {}
@@ -151,7 +151,7 @@ class DrawerComponent : Elements {
                 }
             }
             snippet("Additional section above drawer content", DrawerCode.SECTION) {
-                val button = pfButton(classes = classes { +"primary".modifier(); +"mb-md".util() }) {
+                val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
                     +"Toggle drawer"
                 }
                 br {}
@@ -161,7 +161,7 @@ class DrawerComponent : Elements {
                         pfContent {
                             pfTitle { +"Title" }
                             p { +"${LOREM_IPSUM.take(15)}..." }
-                            pfDivider(classes = "mb-md".util())
+                            pfDivider(baseClass = "mb-md".util())
                         }
                     }
                     pfDrawerMain {

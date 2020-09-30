@@ -70,7 +70,6 @@ import org.patternfly.pfToolbarGroup
 import org.patternfly.pfToolbarItem
 import org.patternfly.plusAssign
 import org.patternfly.show
-import org.patternfly.styleHidden
 import org.patternfly.util
 import kotlin.js.Date
 
@@ -178,21 +177,21 @@ fun HtmlElements.contact(user: User): Ul = ul {
     li {
         a {
             href = const("mailto:${user.email}")
-            pfIcon("envelope".fas(), classes = "mr-sm".util())
+            pfIcon("envelope".fas(), baseClass = "mr-sm".util())
             +user.email
         }
     }
     li {
         a {
             href = const("tel:${user.phone}")
-            pfIcon("phone".fas(), classes = "mr-sm".util())
+            pfIcon("phone".fas(), baseClass = "mr-sm".util())
             +user.phone
         }
     }
     li {
         a {
             href = const("tel:${user.cell}")
-            pfIcon("mobile-alt".fas(), classes = "mr-sm".util())
+            pfIcon("mobile-alt".fas(), baseClass = "mr-sm".util())
             +user.cell
         }
     }
@@ -249,7 +248,7 @@ class UserDemo : Elements {
                 +" for the code."
             }
         }
-        pfSection(classes = "light".modifier()) {
+        pfSection(baseClass = "light".modifier()) {
             pfToolbar {
                 pfToolbarContent {
                     pfToolbarContentSection {
@@ -314,7 +313,7 @@ class UserDemo : Elements {
             }
             pfCardView(userStore, id = cardViewId) {
                 display = { user ->
-                    pfCard(user, classes = classes {
+                    pfCard(user, baseClass = classes {
                         +"hoverable".modifier()
                         +"compact".modifier()
                         +"flat".modifier()
@@ -336,7 +335,7 @@ class UserDemo : Elements {
                                 pfCardCheckbox()
                             }
                         }
-                        pfCardBody(classes = classes {
+                        pfCardBody(baseClass = classes {
                             +"flex".layout()
                             +"inline-flex".modifier()
                             +"align-items-center".modifier()
@@ -347,7 +346,7 @@ class UserDemo : Elements {
                             }
                         }
                         pfCardFooter {
-                            pfIcon(iconClass = "user-alt".fas(), classes = "mr-sm".util())
+                            pfIcon(iconClass = "user-alt".fas(), baseClass = "mr-sm".util())
                             +user.login.username
                         }
                     }
