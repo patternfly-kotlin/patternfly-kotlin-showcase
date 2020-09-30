@@ -87,36 +87,36 @@ class ButtonComponent : Elements {
             }
             snippet("Disabled", ButtonCode.DISABLED) {
                 pfButton(baseClass = "primary".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     +"Primary disabled"
                 }
                 pfButton(baseClass = "secondary".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     +"Secondary disabled"
                 }
                 pfButton(baseClass = "tertiary".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     +"Tertiary disabled"
                 }
                 pfButton(baseClass = "danger".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     +"Danger disabled"
                 }
                 pfButton(baseClass = "link".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     pfIcon(START, "plus-circle".fas())
                     +"Link disabled"
                 }
                 pfButton(baseClass = classes("link".modifier(), "inline".modifier())) {
-                    disabled = const(false)
+                    disabled = const(true)
                     +"Inline link disabled"
                 }
                 pfButton(baseClass = "plain".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     pfIcon("times".fas())
                 }
                 pfButton(baseClass = "control".modifier()) {
-                    disabled = const(false)
+                    disabled = const(true)
                     +"Control disabled"
                 }
             }
@@ -290,36 +290,36 @@ internal object ButtonCode {
     const val DISABLED: String = """fun main() {
     render {
         pfButton(baseClass = "primary".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             +"Primary disabled"
         }
         pfButton(baseClass = "secondary".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             +"Secondary disabled"
         }
         pfButton(baseClass = "tertiary".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             +"Tertiary disabled"
         }
         pfButton(baseClass = "danger".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             +"Danger disabled"
         }
         pfButton(baseClass = "link".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             pfIcon(START, "plus-circle".fas())
             +"Link disabled"
         }
         pfButton(baseClass = classes("link".modifier(), "inline".modifier())) {
-            disabled = const(false)
+            disabled = const(true)
             +"Inline link disabled"
         }
         pfButton(baseClass = "plain".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             pfIcon("times".fas())
         }
         pfButton(baseClass = "control".modifier()) {
-            disabled = const(false)
+            disabled = const(true)
             +"Control disabled"
         }
     }
