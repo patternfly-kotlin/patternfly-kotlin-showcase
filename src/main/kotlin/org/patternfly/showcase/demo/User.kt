@@ -178,21 +178,21 @@ fun HtmlElements.contact(user: User): Ul = ul {
     li {
         a {
             href = const("mailto:${user.email}")
-            pfIcon("envelope".fas(), "mr-sm".util())
+            pfIcon("envelope".fas(), classes = "mr-sm".util())
             +user.email
         }
     }
     li {
         a {
             href = const("tel:${user.phone}")
-            pfIcon("phone".fas(), "mr-sm".util())
+            pfIcon("phone".fas(), classes = "mr-sm".util())
             +user.phone
         }
     }
     li {
         a {
             href = const("tel:${user.cell}")
-            pfIcon("mobile-alt".fas(), "mr-sm".util())
+            pfIcon("mobile-alt".fas(), classes = "mr-sm".util())
             +user.cell
         }
     }

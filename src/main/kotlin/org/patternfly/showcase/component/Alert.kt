@@ -55,8 +55,8 @@ class AlertComponent : Elements {
                         p { +"Success alert description. This should tell the user more information about the alert." }
                     }
                     pfAlertActionGroup {
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
@@ -74,8 +74,8 @@ class AlertComponent : Elements {
                 br {}
                 pfAlert(SUCCESS, "Success alert title", closable = true) {
                     pfAlertActionGroup {
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
@@ -100,8 +100,8 @@ class AlertComponent : Elements {
                         p { +"Success alert description. This should tell the user more information about the alert." }
                     }
                     pfAlertActionGroup {
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
@@ -119,8 +119,8 @@ class AlertComponent : Elements {
                 br {}
                 pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
                     pfAlertActionGroup {
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}

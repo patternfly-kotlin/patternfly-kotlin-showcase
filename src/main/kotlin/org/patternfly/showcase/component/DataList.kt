@@ -198,8 +198,8 @@ class DataListComponent : Elements {
                                 }
                             }
                             pfDataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
-                                pfButton("primary".modifier()) { +"Primary" }
-                                pfButton("secondary".modifier()) { +"Secondary" }
+                                pfButton(baseClass = "primary".modifier()) { +"Primary" }
+                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
                             }
                         }
                     },
@@ -230,10 +230,10 @@ class DataListComponent : Elements {
                                 }
                             }
                             pfDataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
-                                pfButton("primary".modifier()) { +"Primary" }
-                                pfButton("secondary".modifier()) { +"Secondary" }
-                                pfButton("secondary".modifier()) { +"Secondary" }
-                                pfButton("secondary".modifier()) { +"Secondary" }
+                                pfButton(baseClass = "primary".modifier()) { +"Primary" }
+                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
                             }
                         }
                     }
@@ -263,7 +263,7 @@ class DataListComponent : Elements {
                                 pfDataListCell { +"Single actionable Secondary content" }
                             }
                             pfDataListAction {
-                                pfButton("primary".modifier()) { +"Delete" }
+                                pfButton(baseClass = "primary".modifier()) { +"Delete" }
                             }
                         }
                     },

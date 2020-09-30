@@ -61,19 +61,19 @@ class AlertGroupComponent : Elements {
                 }
             }
             snippet("Toast alert group", AlertGroupCode.TOAST_ALERT_GROUP) {
-                pfButton("secondary".modifier()) {
+                pfButton(baseClass = "secondary".modifier()) {
                     +"Add toast success alert"
                     clicks
                         .map { Notification(SUCCESS, "Toast Success Alert") }
                         .handledBy(Notification.store.add)
                 }
-                pfButton("secondary".modifier()) {
+                pfButton(baseClass = "secondary".modifier()) {
                     +"Add toast danger alert"
                     clicks
                         .map { Notification(DANGER, "Toast Danger Alert") }
                         .handledBy(Notification.store.add)
                 }
-                pfButton("secondary".modifier()) {
+                pfButton(baseClass = "secondary".modifier()) {
                     +"Add toast info alert"
                     clicks
                         .map { Notification(INFO, "Toast Info Alert") }
@@ -102,13 +102,13 @@ class AlertGroupComponent : Elements {
                     job?.cancel()
                 }
 
-                pfButton("secondary".modifier()) {
+                pfButton(baseClass = "secondary".modifier()) {
                     +"Start async alerts"
                     MainScope().launch {
                         clicks.events.collect { startSending() }
                     }
                 }
-                pfButton("secondary".modifier()) {
+                pfButton(baseClass = "secondary".modifier()) {
                     +"Stop async alerts"
                     MainScope().launch {
                         clicks.events.collect { stopSending() }
