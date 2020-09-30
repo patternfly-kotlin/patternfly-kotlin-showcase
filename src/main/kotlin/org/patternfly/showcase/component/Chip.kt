@@ -25,7 +25,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalStdlibApi
 @ExperimentalTime
 class ChipComponent : Elements {
-    private lateinit var text: Input
     override val elements = elements {
         intro(
             title = "Chip",
@@ -61,7 +60,7 @@ class ChipComponent : Elements {
             snippet("Reactive", ChipCode.REACTIVE) {
                 fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
-                text = input(baseClass = "form-control".component()) {
+                val text: Input = input(baseClass = "form-control".component()) {
                     type = const("text")
                     value = const("Chip")
                     placeholder = const("Chip text")
@@ -89,14 +88,12 @@ class ChipComponent : Elements {
                         text.keyups.map { currentValue(it).length }.bind()
                     }
                 }
-            }
-        }
-    }
 
-    init {
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            text.domNode.dispatchEvent(Event(Events.keyup.name))
+                MainScope().launch {
+                    delay(EVENT_DELAY)
+                    text.domNode.dispatchEvent(Event(Events.keyup.name))
+                }
+            }
         }
     }
 }
@@ -106,19 +103,24 @@ internal object ChipCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfChip {
-            +"Chip"
-            closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
-        }
+        pfChip { +"Chip" }
+        br {}
         pfChip { +"Really long chip that goes on and on" }
+        br {}
         pfChip {
             +"Chip"
             pfBadge { +"23" }
         }
+        br {}
         pfChip(readOnly = true) { +"Read-only chip" }
+        br {}
         pfChip(readOnly = true) {
             +"Read-only chip"
             pfBadge { +"42" }
+        }
+        pfChip {
+            +"Cloe me"
+            closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
         }
     }
 }
@@ -127,31 +129,40 @@ internal object ChipCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        fun currentValue(event: Event) = (event.target as HTMLInputElement).value
+        fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
-        val input = input(baseClass = "form-control".component()) {
+        val text: Input = input(baseClass = "form-control".component()) {
             type = const("text")
             value = const("Chip")
             placeholder = const("Chip text")
         }
+        br {}
+        br {}
+        pfChip(readOnly = true) {
+            text.keyups.map { currentValue(it) }.bind()
+        }
+        br {}
+        pfChip {
+            text.keyups.map { currentValue(it) }.bind()
+        }
+        br {}
+        pfChip(readOnly = true) {
+            text.keyups.map { currentValue(it) }.bind()
+            pfBadge {
+                text.keyups.map { currentValue(it).length }.bind()
+            }
+        }
+        br {}
+        pfChip {
+            text.keyups.map { currentValue(it) }.bind()
+            pfBadge {
+                text.keyups.map { currentValue(it).length }.bind()
+            }
+        }
 
-        pfChip(readOnly = true) {
-            input.keyups.map { currentValue(it) }.bind()
-        }
-        pfChip {
-            input.keyups.map { currentValue(it) }.bind()
-        }
-        pfChip(readOnly = true) {
-            input.keyups.map { currentValue(it) }.bind()
-            pfBadge {
-                input.keyups.map { currentValue(it).length }.bind()
-            }
-        }
-        pfChip {
-            input.keyups.map { currentValue(it) }.bind()
-            pfBadge {
-                input.keyups.map { currentValue(it).length }.bind()
-            }
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            text.domNode.dispatchEvent(Event(Events.keyup.name))
         }
     }
 }

@@ -54,8 +54,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalStdlibApi
 @ExperimentalTime
 class DropdownComponent : Elements {
-    private lateinit var text: Input
-    private lateinit var enabled: Switch
     override val elements = elements {
         intro(
             title = "Dropdown",
@@ -267,6 +265,9 @@ class DropdownComponent : Elements {
                 }
             }
             snippet("Reactive", DropdownCode.REACTIVE) {
+                lateinit var text: Input
+                lateinit var enabled: Switch
+
                 fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
@@ -404,14 +405,12 @@ class DropdownComponent : Elements {
                     registerEvents(this, "Action icon")
                     action(items()) handledBy store.update
                 }
-            }
-        }
-    }
 
-    init {
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            text.domNode.dispatchEvent(Event(Events.keyup.name))
+                MainScope().launch {
+                    delay(EVENT_DELAY)
+                    text.domNode.dispatchEvent(Event(Events.keyup.name))
+                }
+            }
         }
     }
 }
@@ -422,7 +421,7 @@ internal object DropdownCode {
     const val BASIC: String = """fun main() {
     render {
         pfDropdown<String> {
-            pfDropdownToggle { +"Dropdown" }
+            pfDropdownToggle { content = { +"Dropdown" } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -433,15 +432,16 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
         pfDropdown<String> {
             pfDropdownToggle {
+                content = { +"Dropdown" }
                 disabled = const(true)
-                +"Dropdown"
             }
             pfDropdownItems {
                 pfItem("Action")
@@ -453,13 +453,14 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val PRIMARY: String = """fun main() {
     render {
         pfDropdown<String> {
-            pfDropdownToggle("primary".modifier()) { +"Dropdown" }
+            pfDropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -470,13 +471,14 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val RIGHT: String = """fun main() {
     render {
-        pfDropdown<String>(align = Align.RIGHT) {
-            pfDropdownToggle { +"Dropdown" }
+        pfDropdown<String>(align = RIGHT) {
+            pfDropdownToggle { content = { +"Dropdown" } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -487,13 +489,14 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val UP: String = """fun main() {
     render {
         pfDropdown<String>(up = true) {
-            pfDropdownToggle { +"Dropdown" }
+            pfDropdownToggle { content = { +"Dropdown" } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -504,7 +507,8 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val KEBAB: String = """fun main() {
@@ -521,7 +525,8 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val ICON: String = """fun main() {
@@ -538,16 +543,17 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val DESCRIPTION: String = """fun main() {
     render {
         pfDropdown<String> {
-            pfDropdownToggle { +"Dropdown" }
+            pfDropdownToggle { content = { +"Dropdown" } }
             pfDropdownItems {
                 pfItem("Action 1") {
-                    icon = { { pfIcon("cog".fas()) } }
+                    icon = { pfIcon("cog".fas()) }
                 }
                 pfItem("Action 2") {
                     description = "This is a description"
@@ -573,7 +579,8 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val CHECKBOX_TOGGLE: String = """fun main() {
@@ -589,8 +596,8 @@ internal object DropdownCode {
                 pfItem("Separated Action")
             }
         }
-        pfDropdown<String>(classes = "ml-sm".util()) {
-            pfDropdownToggleCheckbox { +"10 selected" }
+        pfDropdown<String>(baseClass = "ml-sm".util()) {
+            pfDropdownToggleCheckbox { content = { +"10 selected" } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -601,13 +608,14 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val ACTION_TOGGLE: String = """fun main() {
     render {
         pfDropdown<String> {
-            pfDropdownToggleAction { +"Action" }
+            pfDropdownToggleAction { action = { +"Action" } }
             pfDropdownItems {
                 pfItem("Action")
                 pfItem("Disabled Action") {
@@ -617,8 +625,8 @@ internal object DropdownCode {
                 pfItem("Separated Action")
             }
         }
-        pfDropdown<String>(classes = "ml-sm".util()) {
-            pfDropdownToggleAction { icon = { pfIcon("cog".fas()) } }
+        pfDropdown<String>(baseClass = "ml-sm".util()) {
+            pfDropdownToggleAction { action = { pfIcon("cog".fas()) } }
             pfDropdownItems {
                 pfItem("Action") {
                     icon = { pfIcon("cog".fas()) }
@@ -634,13 +642,14 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val GROUPS: String = """fun main() {
     render {
         pfDropdown<String> {
-            pfDropdownToggle { +"Dropdown" }
+            pfDropdownToggle { content = { +"Dropdown" } }
             pfDropdownGroups {
                 pfGroup {
                     pfItem("Action 1")
@@ -659,16 +668,20 @@ internal object DropdownCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
+        lateinit var text: Input
+        lateinit var enabled: Switch
+
         fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
         fun registerEvents(dropdown: Dropdown<String>, name: String) {
             with(dropdown) {
-                store.clicks.unwrap()
+                store.clicked.unwrap()
                     .map { Notification(INFO, "${'$'}name: Clicked on ${'$'}it") }
                     .handledBy(Notification.store.add)
                 ces.collapsed
@@ -689,8 +702,6 @@ internal object DropdownCode {
             pfItem("Separated Action")
         }
 
-        lateinit var text: Input
-        lateinit var enabled: Switch
         div(baseClass = classes {
             +"flex".layout()
             +"align-items-center".modifier()
@@ -707,16 +718,16 @@ internal object DropdownCode {
                 input.checked = const(true)
             }
         }
-        pfDropdown<String>(classes = "mt-sm".util()) {
+        pfDropdown<String>(baseClass = "mt-sm".util()) {
             pfDropdownToggle {
+                content = { text.keyups.map { currentValue(it) }.bind() }
                 disabled = enabled.input.changes.states().map { !it }
-                text.keyups.map { currentValue(it) }.bind()
             }
             pfDropdownItems()
             registerEvents(this, "Text")
             action(items()) handledBy store.update
         }
-        pfDropdown<String>(classes = "ml-sm".util()) {
+        pfDropdown<String>(baseClass = "ml-sm".util()) {
             pfDropdownToggleKebab {
                 disabled = enabled.input.changes.states().map { !it }
             }
@@ -724,20 +735,41 @@ internal object DropdownCode {
             registerEvents(this, "Kebab")
             action(items()) handledBy store.update
         }
-        pfDropdown<String>(classes = "ml-sm".util()) {
+        pfDropdown<String>(baseClass = "ml-sm".util()) {
             pfDropdownToggle {
-                icon = { pfIcon("cog".fas()) }
                 disabled = enabled.input.changes.states().map { !it }
+                icon = { pfIcon("cog".fas()) }
             }
             pfDropdownItems()
             registerEvents(this, "Icon")
             action(items()) handledBy store.update
         }
         br {}
-        pfDropdown<String>(classes = "mt-sm".util()) {
+        pfDropdown<String>(baseClass = "mt-sm".util()) {
             pfDropdownToggleCheckbox {
+                content = {
+                    domNode.styleHidden = true
+                    merge(
+                        this@pfDropdown.store.clicked.unwrap(),
+                        this@pfDropdownToggleCheckbox.input.changes.states()
+                    ).map {
+                        val value = when (it) {
+                            is String -> {
+                                if (it == "Select none") {
+                                    ""
+                                } else it
+                            }
+                            is Boolean -> {
+                                if (it) "Select all" else ""
+                            }
+                            else -> ""
+                        }
+                        domNode.styleHidden = value.isEmpty()
+                        value
+                    }.bind()
+                }
                 disabled = enabled.input.changes.states().map { !it }
-                triState = this@pfDropdown.store.clicks.unwrap().map {
+                triState = this@pfDropdown.store.clicked.unwrap().map {
                     when (it) {
                         "Select none" -> TriState.OFF
                         "Select visible" -> TriState.INDETERMINATE
@@ -745,18 +777,6 @@ internal object DropdownCode {
                         else -> TriState.OFF
                     }
                 }
-                merge(this@pfDropdown.store.clicks.unwrap(), input.changes.states())
-                    .map {
-                        when (it) {
-                            is String -> {
-                                if (it == "Select none") "" else it
-                            }
-                            is Boolean -> {
-                                if (it) "Select all" else ""
-                            }
-                            else -> ""
-                        }
-                    }.bind()
             }
             pfDropdownItems {
                 pfItem("Select none")
@@ -766,30 +786,40 @@ internal object DropdownCode {
             registerEvents(this, "Split button")
         }
         br {}
-        pfDropdown<String>(classes = "mt-sm".util()) {
+        pfDropdown<String>(baseClass = "mt-sm".util()) {
             pfDropdownToggleAction {
+                action = {
+                    text.keyups.map { currentValue(it) }.bind()
+                    clicks
+                        .map { Notification(INFO, "Action clicked") }
+                        .handledBy(Notification.store.add)
+                }
                 disabled = enabled.input.changes.states().map { !it }
-                action.clicks
-                    .map { Notification(INFO, "Action clicked") }
-                    .handledBy(Notification.store.add)
-                text.keyups.map { currentValue(it) }.bind()
             }
             pfDropdownItems()
             registerEvents(this, "Action text")
             action(items()) handledBy store.update
         }
-        pfDropdown<String>(classes = "ml-sm".util()) {
+        pfDropdown<String>(baseClass = "ml-sm".util()) {
             pfDropdownToggleAction {
-                icon = { pfIcon("cog".fas()) }
+                action = {
+                    pfIcon("cog".fas())
+                    clicks
+                        .map { Notification(INFO, "Action clicked") }
+                        .handledBy(Notification.store.add)
+                }
                 disabled = enabled.input.changes.states().map { !it }
-                action.clicks
-                    .map { Notification(INFO, "Action clicked") }
-                    .handledBy(Notification.store.add)
             }
             pfDropdownItems()
             registerEvents(this, "Action icon")
             action(items()) handledBy store.update
         }
+
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            text.domNode.dispatchEvent(Event(Events.keyup.name))
+        }
     }
-}"""
+}
+"""
 }

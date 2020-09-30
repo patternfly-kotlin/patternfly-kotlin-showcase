@@ -15,7 +15,7 @@ class EmptyStateComponent : Elements {
         intro(
             title = "Empty State",
             key = "Empty State",
-            text = "Pending"
+            text = " is not yet implemented"
         )
         pfSection {
             pfContent {

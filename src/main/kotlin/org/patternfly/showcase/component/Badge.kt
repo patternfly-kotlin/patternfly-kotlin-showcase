@@ -28,8 +28,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalStdlibApi
 @ExperimentalTime
 class BadgeComponent : Elements {
-    private lateinit var range: Input
-    private lateinit var state: Switch
     override val elements = elements {
         intro(
             title = "Badge",
@@ -66,6 +64,9 @@ class BadgeComponent : Elements {
                 }
             }
             snippet("Reactive", BadgeCode.REACTIVE) {
+                lateinit var range: Input
+                lateinit var state: Switch
+
                 div(baseClass = classes {
                     +"flex".layout()
                     +"align-items-center".modifier()
@@ -90,14 +91,12 @@ class BadgeComponent : Elements {
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                         .bind()
                 }
-            }
-        }
-    }
 
-    init {
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            range.domNode.dispatchEvent(Event(Events.input.name))
+                MainScope().launch {
+                    delay(EVENT_DELAY)
+                    range.domNode.dispatchEvent(Event(Events.input.name))
+                }
+            }
         }
     }
 }
@@ -143,13 +142,14 @@ internal object BadgeCode {
     render {
         lateinit var range: Input
         lateinit var state: Switch
+
         div(baseClass = classes {
             +"flex".layout()
             +"align-items-center".modifier()
             +"mb-md".util()
         }) {
             label(`for` = "range") { +"Value: " }
-            range = input(id = "range", baseClass = "w-25".util()) {
+            range = input(id = "range", baseClass = "w-50".util()) {
                 type = const("range")
                 min = const("0")
                 max = const("500")
@@ -163,7 +163,14 @@ internal object BadgeCode {
         }
         pfBadge(min = 100, max = 400) {
             read = state.input.changes.states()
-            range.changes.valuesAsNumber().map { it.toInt() }.bind()
+            range.inputs.events
+                .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+                .bind()
+        }
+
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            range.domNode.dispatchEvent(Event(Events.input.name))
         }
     }
 }

@@ -50,8 +50,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalStdlibApi
 @ExperimentalTime
 class OptionsMenuComponent : Elements {
-    private lateinit var text: Input
-    private lateinit var enabled: Switch
     override val elements = elements {
         intro(
             title = "Options menu",
@@ -166,6 +164,9 @@ class OptionsMenuComponent : Elements {
                 }
             }
             snippet("Reactive", OptionsMenuCode.REACTIVE) {
+                lateinit var text: Input
+                lateinit var enabled: Switch
+
                 fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
                 fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
@@ -246,14 +247,12 @@ class OptionsMenuComponent : Elements {
                     action(items()) handledBy store.update
                     registerEvents(this, "Plain with text")
                 }
-            }
-        }
-    }
 
-    init {
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            text.domNode.dispatchEvent(Event(Events.keyup.name))
+                MainScope().launch {
+                    delay(EVENT_DELAY)
+                    text.domNode.dispatchEvent(Event(Events.keyup.name))
+                }
+            }
         }
     }
 }
@@ -264,7 +263,7 @@ internal object OptionsMenuCode {
     const val BASIC: String = """fun main() {
     render {
         pfOptionsMenu<String> {
-            pfOptionsMenuToggle { +"Options menu" }
+            pfOptionsMenuToggle { content = { +"Options menu" } }
             pfOptionsMenuItems {
                 pfItem("Option 1") { selected = true }
                 pfItem("Option 2")
@@ -272,15 +271,16 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
         pfOptionsMenu<String> {
             pfOptionsMenuToggle {
+                content = { +"Options menu" }
                 disabled = const(true)
-                +"Options menu"
             }
             pfOptionsMenuItems {
                 pfItem("Option 1") { selected = true }
@@ -289,13 +289,14 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val RIGHT: String = """fun main() {
     render {
         pfOptionsMenu<String>(align = RIGHT) {
-            pfOptionsMenuToggle { +"Options menu" }
+            pfOptionsMenuToggle { content = { +"Options menu" } }
             pfOptionsMenuItems {
                 pfItem("Right option 1") { selected = true }
                 pfItem("Right option 2")
@@ -303,13 +304,14 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val UP: String = """fun main() {
     render {
         pfOptionsMenu<String>(up = true) {
-            pfOptionsMenuToggle { +"Options menu" }
+            pfOptionsMenuToggle { content = { +"Options menu" } }
             pfOptionsMenuItems {
                 pfItem("Option 1") { selected = true }
                 pfItem("Option 2")
@@ -317,7 +319,8 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val ICON: String = """fun main() {
@@ -331,13 +334,14 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val PLAIN: String = """fun main() {
     render {
         pfOptionsMenu<String> {
-            pfOptionsMenuTogglePlain { +"Options menu" }
+            pfOptionsMenuTogglePlain { content = { +"Options menu" } }
             pfOptionsMenuItems {
                 pfItem("Option 1") { selected = true }
                 pfItem("Option 2")
@@ -345,13 +349,14 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val MULTIPLE_OPTIONS: String = """fun main() {
     render {
         pfOptionsMenu<String> {
-            pfOptionsMenuToggle { +"Sort by" }
+            pfOptionsMenuToggle { content = { +"Sort by" } }
             pfOptionsMenuGroups {
                 pfGroup {
                     pfItem("Name")
@@ -367,13 +372,14 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val GROUPED: String = """fun main() {
     render {
         pfOptionsMenu<String> {
-            pfOptionsMenuToggle { +"Options" }
+            pfOptionsMenuToggle { content = { +"Options" } }
             pfOptionsMenuGroups {
                 pfGroup {
                     pfItem("Option 1") { selected = true }
@@ -392,11 +398,15 @@ internal object OptionsMenuCode {
             }
         }
     }
-}"""
+}
+"""
 
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
+        lateinit var text: Input
+        lateinit var enabled: Switch
+
         fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
         fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
@@ -420,8 +430,6 @@ internal object OptionsMenuCode {
             pfItem("Option 3")
         }
 
-        lateinit var text: Input
-        lateinit var enabled: Switch
         div(baseClass = classes {
             +"flex".layout()
             +"align-items-center".modifier()
@@ -438,16 +446,16 @@ internal object OptionsMenuCode {
                 input.checked = const(true)
             }
         }
-        pfOptionsMenu<String>(classes = "mt-sm".util()) {
+        pfOptionsMenu<String>(baseClass = "mt-sm".util()) {
             pfOptionsMenuToggle {
+                content = { text.keyups.map { currentValue(it) }.bind() }
                 disabled = enabled.input.changes.states().map { !it }
-                text.keyups.map { currentValue(it) }.bind()
             }
             pfOptionsMenuItems()
             action(items()) handledBy store.update
             registerEvents(this, "Text")
         }
-        pfOptionsMenu<String>(classes = "ml-sm".util()) {
+        pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
             pfOptionsMenuToggle {
                 disabled = enabled.input.changes.states().map { !it }
                 icon = { pfIcon("sort-amount-down".fas()) }
@@ -470,15 +478,20 @@ internal object OptionsMenuCode {
             }
             registerEvents(this, "Plain")
         }
-        pfOptionsMenu<String>(classes = "ml-sm".util()) {
+        pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
             pfOptionsMenuTogglePlain {
+                content = { text.keyups.map { currentValue(it) }.bind() }
                 disabled = enabled.input.changes.states().map { !it }
-                text.keyups.map { currentValue(it) }.bind()
             }
             pfOptionsMenuItems()
             action(items()) handledBy store.update
             registerEvents(this, "Plain with text")
         }
-    }
-}"""
+
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            text.domNode.dispatchEvent(Event(Events.keyup.name))
+        }
+}
+"""
 }

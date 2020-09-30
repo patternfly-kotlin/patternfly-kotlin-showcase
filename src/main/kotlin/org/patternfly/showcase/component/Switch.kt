@@ -75,7 +75,7 @@ internal object SwitchCode {
     //language=kotlin
     const val WITHOUT_LABEL: String = """fun main() {
     render {
-        pfSwitch()
+            pfSwitch()
     }
 }
 """

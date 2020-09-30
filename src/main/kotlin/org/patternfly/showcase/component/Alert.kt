@@ -145,9 +145,13 @@ internal object AlertCode {
     const val TYPES: String = """fun main() {
     render {
         pfAlert(DEFAULT, "Default alert title")
+        br {}
         pfAlert(INFO, "Info alert title")
+        br {}
         pfAlert(SUCCESS, "Success alert title")
+        br {}
         pfAlert(WARNING, "Warning alert title")
+        br {}
         pfAlert(DANGER, "Danger alert title")
     }
 }
@@ -161,10 +165,11 @@ internal object AlertCode {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
             pfAlertActionGroup {
-                pfButton(classes(link, inline)) { +"View details" }
-                pfButton(classes(link, inline)) { +"Ignore" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
+        br {}
         pfAlert(SUCCESS, "Success alert title", closable = true) {
             pfAlertDescription {
                 p {
@@ -176,13 +181,16 @@ internal object AlertCode {
                 }
             }
         }
+        br {}
         pfAlert(SUCCESS, "Success alert title", closable = true) {
             pfAlertActionGroup {
-                pfButton(classes(link, inline)) { +"View details" }
-                pfButton(classes(link, inline)) { +"Ignore" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
+        br {}
         pfAlert(SUCCESS, "Success alert title", closable = true)
+        br {}
         pfAlert(SUCCESS, "Success alert title")
     }
 }
@@ -192,9 +200,13 @@ internal object AlertCode {
     const val INLINE_TYPES: String = """fun main() {
     render {
         pfAlert(DEFAULT, "Default inline alert title", inline = true)
+        br {}
         pfAlert(INFO, "Info inline alert title", inline = true)
+        br {}
         pfAlert(SUCCESS, "Success inline alert title", inline = true)
+        br {}
         pfAlert(WARNING, "Warning inline alert title", inline = true)
+        br {}
         pfAlert(DANGER, "Danger inline alert title", inline = true)
     }
 }
@@ -208,10 +220,11 @@ internal object AlertCode {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
             pfAlertActionGroup {
-                pfButton(classes(link, inline)) { +"View details" }
-                pfButton(classes(link, inline)) { +"Ignore" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
+        br {}
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
             pfAlertDescription {
                 p {
@@ -223,13 +236,16 @@ internal object AlertCode {
                 }
             }
         }
+        br {}
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
             pfAlertActionGroup {
-                pfButton(classes(link, inline)) { +"View details" }
-                pfButton(classes(link, inline)) { +"Ignore" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
+        br {}
         pfAlert(SUCCESS, "Success alert title", closable = true, inline = true)
+        br {}
         pfAlert(SUCCESS, "Success alert title", inline = true)
     }
 }
@@ -238,6 +254,11 @@ internal object AlertCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
+        pfAlert(DEFAULT, "Close me", closable = true) {
+            closes.map {
+                Notification(DEFAULT, "Notification closed")
+            } handledBy Notification.store.add
+        }
     }
 }
 """

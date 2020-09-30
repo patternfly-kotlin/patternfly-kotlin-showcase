@@ -212,10 +212,10 @@ internal object DrawerCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        val button = pfButton(classes { +primary; +"mb-md".util() }) {
+        val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
             +"Toggle drawer"
         }
-        br{}
+        br {}
         pfDrawer {
             button.clicks handledBy expanded.toggle
             pfDrawerMain {
@@ -244,10 +244,10 @@ internal object DrawerCode {
     //language=kotlin
     const val LEFT: String = """fun main() {
     render {
-        val button = pfButton(classes { +primary; +"mb-md".util() }) {
+        val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
             +"Toggle drawer"
         }
-        br{}
+        br {}
         pfDrawer("panel-left".modifier()) {
             button.clicks handledBy expanded.toggle
             pfDrawerMain {
@@ -276,10 +276,10 @@ internal object DrawerCode {
     //language=kotlin
     const val INLINE: String = """fun main() {
     render {
-        val button = pfButton(classes { +primary; +"mb-md".util() }) {
+        val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
             +"Toggle drawer"
         }
-        br{}
+        br {}
         pfDrawer("inline".modifier()) {
             button.clicks handledBy expanded.toggle
             pfDrawerMain {
@@ -308,10 +308,10 @@ internal object DrawerCode {
     //language=kotlin
     const val INLINE_LEFT: String = """fun main() {
     render {
-        val button = pfButton(classes { +primary; +"mb-md".util() }) {
+        val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
             +"Toggle drawer"
         }
-        br{}
+        br {}
         pfDrawer(classes("inline".modifier(), "panel-left".modifier())) {
             button.clicks handledBy expanded.toggle
             pfDrawerMain {
@@ -340,7 +340,7 @@ internal object DrawerCode {
     //language=kotlin
     const val SECTION: String = """fun main() {
     render {
-        val button = pfButton(classes { +primary; +"mb-md".util() }) {
+        val button = pfButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
             +"Toggle drawer"
         }
         br {}
@@ -350,7 +350,7 @@ internal object DrawerCode {
                 pfContent {
                     pfTitle { +"Title" }
                     p { +"${'$'}{LOREM_IPSUM.take(15)}..." }
-                    pfDivider(classes = "mb-md".util())
+                    pfDivider(baseClass = "mb-md".util())
                 }
             }
             pfDrawerMain {

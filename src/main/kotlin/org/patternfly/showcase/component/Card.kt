@@ -276,15 +276,15 @@ internal object CardCode {
                     }
                 }
                 pfCardActions {
-                    pfDropdown<String>( align = Align.RIGHT) {
-                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                    pfDropdown<String>(align = Align.RIGHT) {
+                        pfDropdownToggleKebab()
                         pfDropdownItems {
-                            pfItem("Action")
-                            pfItem("Disabled Action") {
+                            pfItem("Item 1")
+                            pfItem("Disabled Item") {
                                 disabled = true
                             }
                             pfSeparator()
-                            pfItem("Separated Action")
+                            pfItem("Separated Item")
                         }
                     }
                     pfCardCheckbox()
@@ -304,8 +304,8 @@ internal object CardCode {
         pfCard {
             pfCardHeader {
                 pfCardActions {
-                    pfDropdown<String>( align = Align.RIGHT) {
-                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                    pfDropdown<String>(align = Align.RIGHT) {
+                        pfDropdownToggleKebab()
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -334,8 +334,8 @@ internal object CardCode {
         pfCard {
             pfCardHeader {
                 pfCardActions {
-                    pfDropdown<String>( align = Align.RIGHT) {
-                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                    pfDropdown<String>(align = Align.RIGHT) {
+                        pfDropdownToggleKebab()
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -427,8 +427,8 @@ internal object CardCode {
         pfCard {
             domNode.style.minHeight = "30em"
             pfCardTitle { +"Title" }
-            pfCardBody(noFill) { +"Body pf-m-no-fill" }
-            pfCardBody(noFill) { +"Body pf-m-no-fill" }
+            pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+            pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
             pfCardBody { +"Body" }
             pfCardFooter { +"Footer" }
         }
@@ -439,7 +439,7 @@ internal object CardCode {
     //language=kotlin
     const val HOVER: String = """fun main() {
     render {
-        pfCard(modifier = hoverable) {
+        pfCard(baseClass = "hoverable".modifier()) {
             pfCardTitle { +"Title" }
             pfCardBody { +"Body" }
             pfCardFooter { +"Footer" }
@@ -451,7 +451,7 @@ internal object CardCode {
     //language=kotlin
     const val COMPACT: String = """fun main() {
     render {
-        pfCard(modifier = compact) {
+        pfCard(baseClass = "compact".modifier()) {
             pfCardTitle { +"Title" }
             pfCardBody { +"Body" }
             pfCardFooter { +"Footer" }
@@ -464,10 +464,14 @@ internal object CardCode {
     const val SELECTABLE: String = """fun main() {
     render {
         pfCard(selectable = true) {
+            selected.data.drop(1).map {
+                Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
+            } handledBy Notification.store.add
+
             pfCardHeader {
                 pfCardActions {
-                    pfDropdown<String>( align = Align.RIGHT) {
-                        pfDropdownToggle { pfIcon("ellipsis-v".fas()) }
+                    pfDropdown<String>(align = Align.RIGHT) {
+                        pfDropdownToggleKebab()
                         pfDropdownItems {
                             pfItem("Action")
                             pfItem("Disabled Action") {
@@ -482,11 +486,21 @@ internal object CardCode {
             pfCardTitle { +"First card" }
             pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
+        br {}
         pfCard(selectable = true) {
+            selected.data.drop(1).map {
+                Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
+            } handledBy Notification.store.add
+
             pfCardTitle { +"Second card" }
             pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
+        br {}
         pfCard(selectable = true) {
+            selected.data.drop(1).map {
+                Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
+            } handledBy Notification.store.add
+
             pfCardHeader {
                 pfCardActions {
                     pfCardCheckbox()
@@ -495,14 +509,14 @@ internal object CardCode {
             pfCardTitle { +"Third card" }
             pfCardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
         }
-    }
+}
 }
 """
 
     //language=kotlin
     const val FLAT: String = """fun main() {
     render {
-        pfCard(modifier = flat) {
+        pfCard(baseClass = "flat".modifier()) {
             pfCardTitle { +"Title" }
             pfCardBody { +"Body" }
             pfCardFooter { +"Footer" }

@@ -146,19 +146,19 @@ internal object AlertGroupCode {
     //language=kotlin
     const val TOAST_ALERT_GROUP: String = """fun main() {
     render {
-        pfButton(secondary) {
+        pfButton(baseClass = "secondary".modifier()) {
             +"Add toast success alert"
             clicks
                 .map { Notification(SUCCESS, "Toast Success Alert") }
                 .handledBy(Notification.store.add)
         }
-        pfButton(secondary) {
+        pfButton(baseClass = "secondary".modifier()) {
             +"Add toast danger alert"
             clicks
                 .map { Notification(DANGER, "Toast Danger Alert") }
                 .handledBy(Notification.store.add)
         }
-        pfButton(secondary) {
+        pfButton(baseClass = "secondary".modifier()) {
             +"Add toast info alert"
             clicks
                 .map { Notification(INFO, "Toast Info Alert") }
@@ -171,15 +171,19 @@ internal object AlertGroupCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        var counter = 1
         var job: Job? = null
+        val counter = object : RootStore<Int>(0, dropInitialData = true) {
+            val inc = handle { it + 1 }
+        }
+        counter.data
+            .map { Notification(INFO, "Async notification ${'$'}it") }
+            .handledBy(Notification.store.add)
 
         fun startSending() {
             job = MainScope().launch {
                 while (true) {
-                    Notification.info("Async notification ${'$'}counter was added to the queue.")
-                    counter++
-                    delay(750)
+                    action() handledBy counter.inc
+                    delay(TICKER_DELAY)
                 }
             }
         }
@@ -188,13 +192,17 @@ internal object AlertGroupCode {
             job?.cancel()
         }
 
-        pfButton(secondary) {
+        pfButton(baseClass = "secondary".modifier()) {
             +"Start async alerts"
-            domNode.onclick = { startSending() }
+            MainScope().launch {
+                clicks.events.collect { startSending() }
+            }
         }
-        pfButton(secondary) {
+        pfButton(baseClass = "secondary".modifier()) {
             +"Stop async alerts"
-            domNode.onclick = { stopSending() }
+            MainScope().launch {
+                clicks.events.collect { stopSending() }
+            }
         }
     }
 }

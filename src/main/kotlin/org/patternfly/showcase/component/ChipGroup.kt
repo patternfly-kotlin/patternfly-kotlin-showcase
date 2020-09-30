@@ -171,6 +171,9 @@ internal object ChipGroupCode {
     const val CLOSABLE: String = """fun main() {
     render {
         pfChipGroup<String>(text = "Category", closable = true) {
+            closes.map {
+                Notification(Severity.INFO, "Chip group closed")
+            } handledBy Notification.store.add
             pfChips {
                 +"Chip one"
                 +listOf(
@@ -188,13 +191,12 @@ internal object ChipGroupCode {
     //language=kotlin
     const val CUSTOM_TYPE: String = """fun main() {
     render {
-        data class Word(val text: String) {
-            val letters = text.length
-        }
+        data class Word(val text: String, val letters: Int = text.length)
+
         val store = ChipGroupStore<Word>()
         pfChipGroup(store, "Letters") {
-            display = { // it: Word
-                { // this: Chip
+            display = {
+                pfChip {
                     +it.text
                     pfBadge {
                         +it.letters.toString()
@@ -228,7 +230,7 @@ internal object ChipGroupCode {
         )
 
         stores.forEach { (limit, store) ->
-            pfButton(classes(link, small)) {
+            pfButton(classes("link".modifier(), "small".modifier())) {
                 pfIcon(START, "plus-circle".fas())
                 +"Add chip"
                 clicks.map { randomString(Random.nextInt(10)) } handledBy store.add

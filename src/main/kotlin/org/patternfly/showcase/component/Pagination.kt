@@ -30,8 +30,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalStdlibApi
 @ExperimentalTime
 class PaginationComponent : Elements {
-    private lateinit var range: Input
-    private lateinit var enabled: Switch
     override val elements = elements {
         intro(
             title = "Pagination",
@@ -62,6 +60,9 @@ class PaginationComponent : Elements {
                 pfPagination(PageInfo(10, 0, 73), compact = true)
             }
             snippet("Reactive", PaginationCode.REACTIVE) {
+                lateinit var range: Input
+                lateinit var enabled: Switch
+
                 div(baseClass = classes {
                     +"flex".layout()
                     +"align-items-center".modifier()
@@ -92,14 +93,12 @@ class PaginationComponent : Elements {
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                         .handledBy(pageInfoHandler.total)
                 }
-            }
-        }
-    }
 
-    init {
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            range.domNode.dispatchEvent(Event(Events.input.name))
+                MainScope().launch {
+                    delay(EVENT_DELAY)
+                    range.domNode.dispatchEvent(Event(Events.input.name))
+                }
+            }
         }
     }
 }
@@ -109,6 +108,7 @@ internal object PaginationCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
+            pfPagination(PageInfo(10, 0, 73))
     }
 }
 """
@@ -116,6 +116,9 @@ internal object PaginationCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
+        pfPagination(PageInfo(10, 0, 73)) {
+            disabled = const(true)
+        }
     }
 }
 """
@@ -123,6 +126,7 @@ internal object PaginationCode {
     //language=kotlin
     const val NO_ITEMS: String = """fun main() {
     render {
+            pfPagination()
     }
 }
 """
@@ -130,6 +134,7 @@ internal object PaginationCode {
     //language=kotlin
     const val ONE_PAGE: String = """fun main() {
     render {
+        pfPagination(PageInfo(10, 0, 8))
     }
 }
 """
@@ -137,6 +142,7 @@ internal object PaginationCode {
     //language=kotlin
     const val COMPACT: String = """fun main() {
     render {
+        pfPagination(PageInfo(10, 0, 73), compact = true)
     }
 }
 """
@@ -144,6 +150,44 @@ internal object PaginationCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
+        lateinit var range: Input
+        lateinit var enabled: Switch
+
+        div(baseClass = classes {
+            +"flex".layout()
+            +"align-items-center".modifier()
+            +"mb-md".util()
+        }) {
+            label(`for` = "total") { +"Total: " }
+            range = input(id = "total", baseClass = "w-50".util()) {
+                type = const("range")
+                min = const("0")
+                max = const("200")
+                value = const("123")
+            }
+            enabled = pfSwitch("ml-md".util()) {
+                label = const("Enabled")
+                labelOff = const("Disabled")
+                input.checked = const(true)
+            }
+        }
+        pfPagination {
+            disabled = enabled.input.changes.states().map { !it }
+            range.inputs.events
+                .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+                .handledBy(pageInfoHandler.total)
+        }
+        pfPagination(compact = true, baseClass = "mt-sm".util()) {
+            disabled = enabled.input.changes.states().map { !it }
+            range.inputs.events
+                .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+                .handledBy(pageInfoHandler.total)
+        }
+
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            range.domNode.dispatchEvent(Event(Events.input.name))
+        }
     }
 }
 """
