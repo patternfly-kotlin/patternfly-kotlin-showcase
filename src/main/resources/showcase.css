@@ -66,6 +66,10 @@
     max-width: 160px;
 }
 
+.sc-user-nat {
+    min-width: 32px;
+}
+
 .sc-user-photo-75 {
     position: relative;
     background: #fff;

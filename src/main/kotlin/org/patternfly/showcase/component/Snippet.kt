@@ -7,6 +7,7 @@ import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.HtmlElements
 import hljs.highlightBlock
 import kotlinx.browser.window
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
 import org.patternfly.By
 import org.patternfly.COMPONENT_TYPE
@@ -27,7 +28,11 @@ import org.patternfly.showcase.Places
 import org.patternfly.util
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
+import kotlin.time.ExperimentalTime
 
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@ExperimentalTime
 fun HtmlElements.intro(
     title: String,
     prefix: String? = null,
@@ -68,11 +73,11 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
             this@Snippet.content(this)
         }
         div("sc-snippet__toolbar") {
-            pfButton("plain".modifier()) {
+            pfButton(classes = "plain".modifier()) {
                 pfIcon("code".fas())
                 clicks handledBy this@Snippet.codeStore.toggle
             }
-            pfButton("plain".modifier()) {
+            pfButton(classes = "plain".modifier()) {
                 pfIcon("copy".fas())
                 val clipboard = ClipboardJS(domNode, object : ClipboardJS.Options {
                     override val text: ((Element) -> String)? = { code }
@@ -81,7 +86,7 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
                     this@Snippet.showCopied()
                 }
             }
-            pfContent("display-none".util()) {
+            pfContent(classes = "display-none".util()) {
                 span("sc-snippet__copied") { +"Copied to clipboard" }
             }
         }

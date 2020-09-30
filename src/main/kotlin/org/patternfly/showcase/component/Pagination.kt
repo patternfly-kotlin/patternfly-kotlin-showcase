@@ -1,21 +1,20 @@
-@file:Suppress("DuplicatedCode")
-
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
-import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
-import dev.fritz2.dom.html.render
 import dev.fritz2.dom.states
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.patternfly.Elements
 import org.patternfly.PageInfo
 import org.patternfly.Switch
 import org.patternfly.classes
+import org.patternfly.elements
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfContent
@@ -23,83 +22,85 @@ import org.patternfly.pfPagination
 import org.patternfly.pfSection
 import org.patternfly.pfSwitch
 import org.patternfly.util
-import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.time.ExperimentalTime
 
-object PaginationComponent : Iterable<Tag<HTMLElement>> {
-    override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
-        yield(render {
-            intro(
-                title = "Pagination",
-                prefix = "The ",
-                key = "pagination",
-                text = " component is used to navigate pages in lists, tables, and other content views. Related design guidelines: ",
-                link = ("lists-and-tables" to "Lists and tables")
-            )
-        })
-        yield(render {
-            pfSection {
-                pfContent {
-                    h2 { +"Examples" }
-                }
-                snippet("Basic", PaginationCode.BASIC) {
-                    pfPagination(PageInfo(10, 0, 73))
-                }
-                snippet("Disabled", PaginationCode.DISABLED) {
-                    pfPagination(PageInfo(10, 0, 73)) {
-                        disabled = const(true)
-                    }
-                }
-                snippet("No items", PaginationCode.NO_ITEMS) {
-                    pfPagination()
-                }
-                snippet("One page", PaginationCode.ONE_PAGE) {
-                    pfPagination(PageInfo(10, 0, 8))
-                }
-                snippet("Compact", PaginationCode.COMPACT) {
-                    pfPagination(PageInfo(10, 0, 73), compact = true)
-                }
-                snippet("Reactive", PaginationCode.REACTIVE) {
-                    lateinit var range: Input
-                    lateinit var enabled: Switch
-                    div(baseClass = classes {
-                        +"flex".layout()
-                        +"align-items-center".modifier()
-                        +"mb-md".util()
-                    }) {
-                        label(`for` = "total") { +"Total: " }
-                        range = input(id = "total", baseClass = "w-50".util()) {
-                            type = const("range")
-                            min = const("0")
-                            max = const("200")
-                            value = const("123")
-                        }
-                        enabled = pfSwitch("ml-md".util()) {
-                            label = const("Enabled")
-                            labelOff = const("Disabled")
-                            input.checked = const(true)
-                        }
-                    }
-                    pfPagination {
-                        disabled = enabled.input.changes.states().map { !it }
-                        range.inputs.events
-                            .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                            .handledBy(pageInfoHandler.total)
-                    }
-                    pfPagination(compact = true, classes = "mt-sm".util()) {
-                        disabled = enabled.input.changes.states().map { !it }
-                        range.inputs.events
-                            .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                            .handledBy(pageInfoHandler.total)
-                    }
-                    MainScope().launch {
-                        delay(333)
-                        range.domNode.dispatchEvent(Event(Events.input.name))
-                    }
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@ExperimentalTime
+class PaginationComponent : Elements {
+    private lateinit var range: Input
+    private lateinit var enabled: Switch
+    override val elements = elements {
+        intro(
+            title = "Pagination",
+            prefix = "The ",
+            key = "pagination",
+            text = " component is used to navigate pages in lists, tables, and other content views. Related design guidelines: ",
+            link = ("lists-and-tables" to "Lists and tables")
+        )
+        pfSection {
+            pfContent {
+                h2 { +"Examples" }
+            }
+            snippet("Basic", PaginationCode.BASIC) {
+                pfPagination(PageInfo(10, 0, 73))
+            }
+            snippet("Disabled", PaginationCode.DISABLED) {
+                pfPagination(PageInfo(10, 0, 73)) {
+                    disabled = const(true)
                 }
             }
-        })
+            snippet("No items", PaginationCode.NO_ITEMS) {
+                pfPagination()
+            }
+            snippet("One page", PaginationCode.ONE_PAGE) {
+                pfPagination(PageInfo(10, 0, 8))
+            }
+            snippet("Compact", PaginationCode.COMPACT) {
+                pfPagination(PageInfo(10, 0, 73), compact = true)
+            }
+            snippet("Reactive", PaginationCode.REACTIVE) {
+                div(baseClass = classes {
+                    +"flex".layout()
+                    +"align-items-center".modifier()
+                    +"mb-md".util()
+                }) {
+                    label(`for` = "total") { +"Total: " }
+                    range = input(id = "total", baseClass = "w-50".util()) {
+                        type = const("range")
+                        min = const("0")
+                        max = const("200")
+                        value = const("123")
+                    }
+                    enabled = pfSwitch("ml-md".util()) {
+                        label = const("Enabled")
+                        labelOff = const("Disabled")
+                        input.checked = const(true)
+                    }
+                }
+                pfPagination {
+                    disabled = enabled.input.changes.states().map { !it }
+                    range.inputs.events
+                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+                        .handledBy(pageInfoHandler.total)
+                }
+                pfPagination(compact = true, classes = "mt-sm".util()) {
+                    disabled = enabled.input.changes.states().map { !it }
+                    range.inputs.events
+                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+                        .handledBy(pageInfoHandler.total)
+                }
+            }
+        }
+    }
+
+    init {
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            range.domNode.dispatchEvent(Event(Events.input.name))
+        }
     }
 }
 

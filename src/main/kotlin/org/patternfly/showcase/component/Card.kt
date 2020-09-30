@@ -3,13 +3,14 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.handledBy
-import dev.fritz2.dom.Tag
-import dev.fritz2.dom.html.render
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import org.patternfly.Align
+import org.patternfly.Elements
 import org.patternfly.Notification
 import org.patternfly.Severity
+import org.patternfly.elements
 import org.patternfly.modifier
 import org.patternfly.pfBrand
 import org.patternfly.pfCard
@@ -27,227 +28,226 @@ import org.patternfly.pfDropdownToggleKebab
 import org.patternfly.pfItem
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
-import org.w3c.dom.HTMLElement
+import kotlin.time.ExperimentalTime
 
-object CardComponent : Iterable<Tag<HTMLElement>> {
-    override fun iterator(): Iterator<Tag<HTMLElement>> = iterator {
-        yield(render {
-            intro(
-                title = "Card",
-                prefix = "A ",
-                key = "card",
-                text = " is a flexible element for containing any kind of content. Cards are used on dashboards, in data displays (e.g. Card View), or for positioning content on a page."
-            )
-        })
-        yield(render {
-            pfSection {
-                pfContent {
-                    h2 { +"Examples" }
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@ExperimentalTime
+class CardComponent : Elements {
+    override val elements = elements {
+        intro(
+            title = "Card",
+            prefix = "A ",
+            key = "card",
+            text = " is a flexible element for containing any kind of content. Cards are used on dashboards, in data displays (e.g. Card View), or for positioning content on a page."
+        )
+        pfSection {
+            pfContent {
+                h2 { +"Examples" }
+            }
+            snippet("Basic", CardCode.BASIC) {
+                pfCard {
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
                 }
-                snippet("Basic", CardCode.BASIC) {
-                    pfCard {
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
-                    }
-                }
-                snippet("With image and action", CardCode.IMAGE_ACTION) {
-                    pfCard {
-                        pfCardHeader {
-                            pfCardHeaderMain {
-                                pfBrand("./pf-logo.svg") {
-                                    domNode.style.width = "300px"
-                                }
+            }
+            snippet("With image and action", CardCode.IMAGE_ACTION) {
+                pfCard {
+                    pfCardHeader {
+                        pfCardHeaderMain {
+                            pfBrand("./pf-logo.svg") {
+                                domNode.style.width = "300px"
                             }
-                            pfCardActions {
-                                pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggleKebab()
-                                    pfDropdownItems {
-                                        pfItem("Item 1")
-                                        pfItem("Disabled Item") {
-                                            disabled = true
-                                        }
-                                        pfSeparator()
-                                        pfItem("Separated Item")
+                        }
+                        pfCardActions {
+                            pfDropdown<String>(align = Align.RIGHT) {
+                                pfDropdownToggleKebab()
+                                pfDropdownItems {
+                                    pfItem("Item 1")
+                                    pfItem("Disabled Item") {
+                                        disabled = true
                                     }
+                                    pfSeparator()
+                                    pfItem("Separated Item")
                                 }
-                                pfCardCheckbox()
                             }
+                            pfCardCheckbox()
                         }
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
                     }
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
                 }
-                snippet("Card title in card header", CardCode.TITLE_IN_HEADER) {
-                    pfCard {
-                        pfCardHeader {
-                            pfCardActions {
-                                pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggleKebab()
-                                    pfDropdownItems {
-                                        pfItem("Action")
-                                        pfItem("Disabled Action") {
-                                            disabled = true
-                                        }
-                                        pfSeparator()
-                                        pfItem("Separated Action")
+            }
+            snippet("Card title in card header", CardCode.TITLE_IN_HEADER) {
+                pfCard {
+                    pfCardHeader {
+                        pfCardActions {
+                            pfDropdown<String>(align = Align.RIGHT) {
+                                pfDropdownToggleKebab()
+                                pfDropdownItems {
+                                    pfItem("Action")
+                                    pfItem("Disabled Action") {
+                                        disabled = true
                                     }
+                                    pfSeparator()
+                                    pfItem("Separated Action")
                                 }
-                                pfCardCheckbox()
                             }
-                            pfCardTitle {
-                                +"This is a really really really really really really really really really really long title"
-                            }
+                            pfCardCheckbox()
                         }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
+                        pfCardTitle {
+                            +"This is a really really really really really really really really really really long title"
+                        }
                     }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
                 }
-                snippet("Only actions in card header (no title/footer)", CardCode.ONLY_ACTIONS) {
-                    pfCard {
-                        pfCardHeader {
-                            pfCardActions {
-                                pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggleKebab()
-                                    pfDropdownItems {
-                                        pfItem("Action")
-                                        pfItem("Disabled Action") {
-                                            disabled = true
-                                        }
-                                        pfSeparator()
-                                        pfItem("Separated Action")
+            }
+            snippet("Only actions in card header (no title/footer)", CardCode.ONLY_ACTIONS) {
+                pfCard {
+                    pfCardHeader {
+                        pfCardActions {
+                            pfDropdown<String>(align = Align.RIGHT) {
+                                pfDropdownToggleKebab()
+                                pfDropdownItems {
+                                    pfItem("Action")
+                                    pfItem("Disabled Action") {
+                                        disabled = true
                                     }
-                                }
-                                pfCardCheckbox()
-                            }
-                        }
-                        pfCardBody {
-                            +"This is the card body, there are only actions in the card head."
-                        }
-                    }
-                }
-                snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
-                    pfCard {
-                        pfCardHeader {
-                            pfCardHeaderMain {
-                                pfBrand("./pf-logo.svg") {
-                                    domNode.style.width = "300px"
+                                    pfSeparator()
+                                    pfItem("Separated Action")
                                 }
                             }
+                            pfCardCheckbox()
                         }
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
                     }
-                }
-                snippet("With no footer", CardCode.NO_FOOTER) {
-                    pfCard {
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"This card has no footer" }
-                    }
-                }
-                snippet("With no title", CardCode.NO_TITLE) {
-                    pfCard {
-                        pfCardBody { +"This card has no title" }
-                        pfCardFooter { +"Footer" }
-                    }
-                }
-                snippet("With only a body", CardCode.ONLY_BODY) {
-                    pfCard {
-                        pfCardBody { +"Body" }
-                    }
-                }
-                snippet("With multiple body sections", CardCode.MULTIPLE_BODY) {
-                    pfCard {
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardBody { +"Body" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
-                    }
-                }
-                snippet("With only one body that fills", CardCode.BODY_FILLS) {
-                    pfCard {
-                        domNode.style.minHeight = "30em"
-                        pfCardTitle { +"Title" }
-                        pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-                        pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
-                    }
-                }
-                snippet("Hover", CardCode.HOVER) {
-                    pfCard(classes = "hoverable".modifier()) {
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
-                    }
-                }
-                snippet("Compact", CardCode.COMPACT) {
-                    pfCard(classes = "compact".modifier()) {
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
-                    }
-                }
-                snippet("Selectable and selected", CardCode.SELECTABLE) {
-                    pfCard(selectable = true) {
-                        selected.data.drop(1).map {
-                            Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                        } handledBy Notification.store.add
-
-                        pfCardHeader {
-                            pfCardActions {
-                                pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggleKebab()
-                                    pfDropdownItems {
-                                        pfItem("Action")
-                                        pfItem("Disabled Action") {
-                                            disabled = true
-                                        }
-                                        pfSeparator()
-                                        pfItem("Separated Action")
-                                    }
-                                }
-                            }
-                        }
-                        pfCardTitle { +"First card" }
-                        pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
-                    }
-                    br {}
-                    pfCard(selectable = true) {
-                        selected.data.drop(1).map {
-                            Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                        } handledBy Notification.store.add
-
-                        pfCardTitle { +"Second card" }
-                        pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
-                    }
-                    br {}
-                    pfCard(selectable = true) {
-                        selected.data.drop(1).map {
-                            Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                        } handledBy Notification.store.add
-
-                        pfCardHeader {
-                            pfCardActions {
-                                pfCardCheckbox()
-                            }
-                        }
-                        pfCardTitle { +"Third card" }
-                        pfCardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
-                    }
-                }
-                snippet("Flat", CardCode.FLAT) {
-                    pfCard(classes = "flat".modifier()) {
-                        pfCardTitle { +"Title" }
-                        pfCardBody { +"Body" }
-                        pfCardFooter { +"Footer" }
+                    pfCardBody {
+                        +"This is the card body, there are only actions in the card head."
                     }
                 }
             }
-        })
+            snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
+                pfCard {
+                    pfCardHeader {
+                        pfCardHeaderMain {
+                            pfBrand("./pf-logo.svg") {
+                                domNode.style.width = "300px"
+                            }
+                        }
+                    }
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+            snippet("With no footer", CardCode.NO_FOOTER) {
+                pfCard {
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"This card has no footer" }
+                }
+            }
+            snippet("With no title", CardCode.NO_TITLE) {
+                pfCard {
+                    pfCardBody { +"This card has no title" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+            snippet("With only a body", CardCode.ONLY_BODY) {
+                pfCard {
+                    pfCardBody { +"Body" }
+                }
+            }
+            snippet("With multiple body sections", CardCode.MULTIPLE_BODY) {
+                pfCard {
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardBody { +"Body" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+            snippet("With only one body that fills", CardCode.BODY_FILLS) {
+                pfCard {
+                    domNode.style.minHeight = "30em"
+                    pfCardTitle { +"Title" }
+                    pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+                    pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+            snippet("Hover", CardCode.HOVER) {
+                pfCard(classes = "hoverable".modifier()) {
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+            snippet("Compact", CardCode.COMPACT) {
+                pfCard(classes = "compact".modifier()) {
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+            snippet("Selectable and selected", CardCode.SELECTABLE) {
+                pfCard(selectable = true) {
+                    selected.data.drop(1).map {
+                        Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
+                    } handledBy Notification.store.add
+
+                    pfCardHeader {
+                        pfCardActions {
+                            pfDropdown<String>(align = Align.RIGHT) {
+                                pfDropdownToggleKebab()
+                                pfDropdownItems {
+                                    pfItem("Action")
+                                    pfItem("Disabled Action") {
+                                        disabled = true
+                                    }
+                                    pfSeparator()
+                                    pfItem("Separated Action")
+                                }
+                            }
+                        }
+                    }
+                    pfCardTitle { +"First card" }
+                    pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+                }
+                br {}
+                pfCard(selectable = true) {
+                    selected.data.drop(1).map {
+                        Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
+                    } handledBy Notification.store.add
+
+                    pfCardTitle { +"Second card" }
+                    pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+                }
+                br {}
+                pfCard(selectable = true) {
+                    selected.data.drop(1).map {
+                        Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
+                    } handledBy Notification.store.add
+
+                    pfCardHeader {
+                        pfCardActions {
+                            pfCardCheckbox()
+                        }
+                    }
+                    pfCardTitle { +"Third card" }
+                    pfCardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
+                }
+            }
+            snippet("Flat", CardCode.FLAT) {
+                pfCard(classes = "flat".modifier()) {
+                    pfCardTitle { +"Title" }
+                    pfCardBody { +"Body" }
+                    pfCardFooter { +"Footer" }
+                }
+            }
+        }
     }
 }
 

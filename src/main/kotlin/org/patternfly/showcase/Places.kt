@@ -1,7 +1,8 @@
 package org.patternfly.showcase
 
-import dev.fritz2.dom.Tag
-import dev.fritz2.dom.html.render
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.patternfly.Elements
+import org.patternfly.elements
 import org.patternfly.modifier
 import org.patternfly.pfContent
 import org.patternfly.pfSection
@@ -23,9 +24,11 @@ import org.patternfly.showcase.component.OptionsMenuComponent
 import org.patternfly.showcase.component.PaginationComponent
 import org.patternfly.showcase.component.SwitchComponent
 import org.patternfly.showcase.demo.UserDemo
-import org.w3c.dom.HTMLElement
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalStdlibApi::class)
+@ExperimentalCoroutinesApi
+@ExperimentalStdlibApi
+@ExperimentalTime
 object Places {
 
     const val CONTRIBUTE = "contribute"
@@ -34,25 +37,25 @@ object Places {
     const val GET_STARTED = "get-started"
     const val HOME = "home"
 
-    private val tags: Map<String, Iterable<Tag<HTMLElement>>> = buildMap {
-        put("home", HomePage)
-        put(component("alert"), AlertComponent)
-        put(component("alert-group"), AlertGroupComponent)
-        put(component("badge"), BadgeComponent)
-        put(component("brand"), BrandComponent)
-        put(component("button"), ButtonComponent)
-        put(component("card"), CardComponent)
-        put(component("chip"), ChipComponent)
-        put(component("chip-group"), ChipGroupComponent)
-        put(component("content"), ContentComponent)
-        put(component("drawer"), DrawerComponent)
-        put(component("data-list"), DataListComponent)
-        put(component("dropdown"), DropdownComponent)
-        put(component("empty-state"), EmptyStateComponent)
-        put(component("options-menu"), OptionsMenuComponent)
-        put(component("pagination"), PaginationComponent)
-        put(component("switch"), SwitchComponent)
-        put(demo("user"), UserDemo)
+    private val tags: Map<String, () -> Elements> = buildMap {
+        put("home", ::HomePage)
+        put(component("alert"), ::AlertComponent)
+        put(component("alert-group"), ::AlertGroupComponent)
+        put(component("badge"), ::BadgeComponent)
+        put(component("brand"), ::BrandComponent)
+        put(component("button"), ::ButtonComponent)
+        put(component("card"), ::CardComponent)
+        put(component("chip"), ::ChipComponent)
+        put(component("chip-group"), ::ChipGroupComponent)
+        put(component("content"), ::ContentComponent)
+        put(component("drawer"), ::DrawerComponent)
+        put(component("data-list"), ::DataListComponent)
+        put(component("dropdown"), ::DropdownComponent)
+        put(component("empty-state"), ::EmptyStateComponent)
+        put(component("options-menu"), ::OptionsMenuComponent)
+        put(component("pagination"), ::PaginationComponent)
+        put(component("switch"), ::SwitchComponent)
+        put(demo("user"), ::UserDemo)
     }
 
     fun behaviour(name: String) = "https://www.patternfly.org/v4/design-guidelines/usage-and-behavior/$name"
@@ -61,19 +64,22 @@ object Places {
 
     fun demo(id: String): String = "$DOCUMENTATION:demo=$id"
 
-    fun lookup(place: String): Iterable<Tag<HTMLElement>> = tags.getOrElse(place) { notFound(place) }
+    fun lookup(place: String): () -> Elements = tags.getOrElse(place) { notFound(place) }
 
-    private fun notFound(place: String) = listOf(
-        render {
-            pfSection("light".modifier()) {
-                pfContent {
-                    pfTitle { +"Not Found" }
-                    p {
-                        +"Page "
-                        code { +place }
-                        +" not found"
+    private fun notFound(place: String): () -> Elements = {
+        object : Elements {
+            override val elements = elements {
+                pfSection("light".modifier()) {
+                    pfContent {
+                        pfTitle { +"Not Found" }
+                        p {
+                            +"Page "
+                            code { +place }
+                            +" not found"
+                        }
                     }
                 }
             }
-        })
+        }
+    }
 }
