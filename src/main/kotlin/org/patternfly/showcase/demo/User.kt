@@ -25,6 +25,7 @@ import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.aria
 import org.patternfly.classes
+import org.patternfly.component
 import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.hide
@@ -50,11 +51,15 @@ import org.patternfly.pfDataListExpandableContentBody
 import org.patternfly.pfDataListItem
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
+import org.patternfly.pfDataTable
+import org.patternfly.pfDataTableCell
+import org.patternfly.pfDataTableColumn
+import org.patternfly.pfDataTableColumns
+import org.patternfly.pfDataTableRow
+import org.patternfly.pfDataTableRows
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownToggleKebab
-import org.patternfly.pfEmptyState
-import org.patternfly.pfEmptyStateBody
 import org.patternfly.pfIcon
 import org.patternfly.pfInputFormControl
 import org.patternfly.pfInputGroup
@@ -395,9 +400,27 @@ class UserDemo : Elements {
                     }
                 }
             }
-            pfEmptyState(iconClass = "times-circle".fas(), "Not yet implemented", id = dataTableId) {
-                pfEmptyStateBody {
-                    +"Data tables component has not yet been implemented."
+            pfDataTable(userStore, id = dataTableId) {
+                pfDataTableColumns {
+                    pfDataTableColumn { +"First name" }
+                    pfDataTableColumn { +"Last name" }
+                    pfDataTableColumn {
+                        div(baseClass = "table".component("column", "help")) {
+                            +"Birthday"
+                            span(baseClass = "table".component("column", "help", "action")) {
+                                pfButton(baseClass = "plain".modifier()) {
+                                    pfIcon("icon-help".pfIcon())
+                                }
+                            }
+                        }
+                    }
+                }
+                pfDataTableRows { user ->
+                    pfDataTableRow {
+                        pfDataTableCell(label = "First name") { +user.name.first }
+                        pfDataTableCell(label = "Last name") { +user.name.last }
+                        pfDataTableCell(label = "Birthday") { +user.dob.asDate().toLocaleDateString("de") }
+                    }
                 }
             }
         }
