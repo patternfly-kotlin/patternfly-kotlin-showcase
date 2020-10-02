@@ -25,7 +25,6 @@ import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.aria
 import org.patternfly.classes
-import org.patternfly.component
 import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.hide
@@ -52,12 +51,10 @@ import org.patternfly.pfDataListItem
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
 import org.patternfly.pfDataTable
-import org.patternfly.pfDataTableCell
-import org.patternfly.pfDataTableColumn
 import org.patternfly.pfDataTableColumns
-import org.patternfly.pfDataTableExpandableContent
-import org.patternfly.pfDataTableExpandableRow
-import org.patternfly.pfDataTableRow
+import org.patternfly.pfDataTableSelectColumn
+import org.patternfly.pfDataTableSimpleColumn
+import org.patternfly.pfDataTableToggleColumn
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownToggleKebab
@@ -401,32 +398,22 @@ class UserDemo : Elements {
                     }
                 }
             }
-            pfDataTable(userStore, id = dataTableId, expandable = true) {
+            pfDataTable(userStore, id = dataTableId) {
                 pfDataTableColumns {
-                    pfDataTableColumn { +"First name" }
-                    pfDataTableColumn { +"Last name" }
-                    pfDataTableColumn {
-                        div(baseClass = "table".component("column", "help")) {
-                            +"Birthday"
-                            span(baseClass = "table".component("column", "help", "action")) {
-                                pfButton(baseClass = "plain".modifier()) {
-                                    pfIcon("icon-help".pfIcon())
-                                }
-                            }
+                    pfDataTableToggleColumn {
+                        {
+                            +"Lorem ipsum"
                         }
                     }
-                }
-                display = { user ->
-                    pfDataTableRow {
-                        pfDataTableCell(label = "First name", id = Id.unique("fn")) { +user.name.first }
-                        pfDataTableCell(label = "Last name", baseClass = "sc-ln") { +user.name.last }
-                        pfDataTableCell(label = "Birthday") {
-                            aria["foo"] = "bar"
-                            +user.dob.asDate().toLocaleDateString("de")
-                        }
-//                        pfDataTableExpandableContent(id = Id.unique("ec"), baseClass = "ec-class") {
-//                            +"Lorem ipsum"
-//                        }
+                    pfDataTableSelectColumn()
+                    pfDataTableSimpleColumn("First name") {
+                        { +it.name.first }
+                    }
+                    pfDataTableSimpleColumn("Last name") {
+                        { +it.name.last }
+                    }
+                    pfDataTableSimpleColumn("Birthday") {
+                        { +it.dob.asDate().toLocaleDateString("en") }
                     }
                 }
             }
