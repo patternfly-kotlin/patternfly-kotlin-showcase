@@ -55,8 +55,9 @@ import org.patternfly.pfDataTable
 import org.patternfly.pfDataTableCell
 import org.patternfly.pfDataTableColumn
 import org.patternfly.pfDataTableColumns
+import org.patternfly.pfDataTableExpandableContent
+import org.patternfly.pfDataTableExpandableRow
 import org.patternfly.pfDataTableRow
-import org.patternfly.pfDataTableRows
 import org.patternfly.pfDropdown
 import org.patternfly.pfDropdownItems
 import org.patternfly.pfDropdownToggleKebab
@@ -400,7 +401,7 @@ class UserDemo : Elements {
                     }
                 }
             }
-            pfDataTable(userStore, id = dataTableId) {
+            pfDataTable(userStore, id = dataTableId, expandable = true) {
                 pfDataTableColumns {
                     pfDataTableColumn { +"First name" }
                     pfDataTableColumn { +"Last name" }
@@ -415,11 +416,17 @@ class UserDemo : Elements {
                         }
                     }
                 }
-                pfDataTableRows { user ->
+                display = { user ->
                     pfDataTableRow {
-                        pfDataTableCell(label = "First name") { +user.name.first }
-                        pfDataTableCell(label = "Last name") { +user.name.last }
-                        pfDataTableCell(label = "Birthday") { +user.dob.asDate().toLocaleDateString("de") }
+                        pfDataTableCell(label = "First name", id = Id.unique("fn")) { +user.name.first }
+                        pfDataTableCell(label = "Last name", baseClass = "sc-ln") { +user.name.last }
+                        pfDataTableCell(label = "Birthday") {
+                            aria["foo"] = "bar"
+                            +user.dob.asDate().toLocaleDateString("de")
+                        }
+//                        pfDataTableExpandableContent(id = Id.unique("ec"), baseClass = "ec-class") {
+//                            +"Lorem ipsum"
+//                        }
                     }
                 }
             }
