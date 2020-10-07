@@ -14,10 +14,11 @@ repositories {
 }
 
 dependencies {
-    implementation( "org.jetbrains:kotlin-extensions:1.0.1-pre.112-kotlin-1.4.0")
+    implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.112-kotlin-1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
     implementation("dev.fritz2:core:0.8-SNAPSHOT")
     implementation("org.patternfly:patternfly-fritz2:0.1-SNAPSHOT")
+    implementation(npm("@github/time-elements", "3.1.1"))
     implementation(npm("@patternfly/patternfly", "4.42.2"))
     implementation(npm("clipboard", "2.0.6"))
     implementation(npm("highlight.js", "10.1.1"))

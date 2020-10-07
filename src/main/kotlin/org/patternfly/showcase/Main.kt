@@ -16,6 +16,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalStdlibApi
 @ExperimentalTime
 fun main() {
+    require("@github/time-elements/dist/time-elements")
     require("@patternfly/patternfly/patternfly.css")
     require("@patternfly/patternfly/patternfly-addons.css")
     require("clipboard/dist/clipboard")

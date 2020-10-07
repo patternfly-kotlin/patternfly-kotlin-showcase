@@ -23,6 +23,7 @@ import org.patternfly.ComponentType
 import org.patternfly.Elements
 import org.patternfly.Id
 import org.patternfly.ItemStore
+import org.patternfly.SortInfo
 import org.patternfly.aria
 import org.patternfly.classes
 import org.patternfly.elements
@@ -51,6 +52,8 @@ import org.patternfly.pfDataListItem
 import org.patternfly.pfDataListRow
 import org.patternfly.pfDataListToggle
 import org.patternfly.pfDataTable
+import org.patternfly.pfDataTableActionColumn
+import org.patternfly.pfDataTableColumn
 import org.patternfly.pfDataTableColumns
 import org.patternfly.pfDataTableSelectColumn
 import org.patternfly.pfDataTableSimpleColumn
@@ -224,6 +227,13 @@ class UserDemo : Elements {
     private val dataTableId = Id.unique(ComponentType.DataTable.id)
     private val dataViewIds = setOf(cardViewId, dataListId, dataTableId)
     private val userStore = ItemStore<User> { it.login.uuid }
+    private val sortInfos = linkedMapOf<String, SortInfo<User>>(
+        "last-name" to SortInfo("last-name", "Last name", compareBy { it.name.last }),
+        "first-name" to SortInfo("first-name", "First name", compareBy { it.name.first }),
+        "user-name" to SortInfo("user-name", "User name", compareBy { it.login.username }),
+        "age" to SortInfo("age", "Age", compareBy { it.dob.age }),
+        "nat" to SortInfo("nat", "Nationality", compareBy { it.nat }),
+    )
 
     override val elements = elements {
         pfSection {
@@ -278,15 +288,7 @@ class UserDemo : Elements {
                             }
                         }
                         pfToolbarItem {
-                            pfSortOptions(
-                                userStore, mapOf(
-                                    "Last name" to compareBy { it.name.last },
-                                    "First name" to compareBy { it.name.first },
-                                    "User name" to compareBy { it.login.username },
-                                    "Age" to compareBy { it.dob.age },
-                                    "Nationality" to compareBy { it.nat },
-                                )
-                            )
+                            pfSortOptions(userStore, sortInfos.values.toList())
                         }
                         pfToolbarGroup("icon-button-group".modifier()) {
                             pfToolbarItem {
@@ -364,7 +366,7 @@ class UserDemo : Elements {
                                 pfDataListCheck()
                             }
                             pfDataListContent {
-                                pfDataListCell("icon".modifier()) {
+                                pfDataListCell(baseClass = "icon".modifier()) {
                                     nat(user)
                                 }
                                 pfDataListCell {
@@ -372,7 +374,7 @@ class UserDemo : Elements {
                                 }
                                 pfDataListCell("flex-4".modifier()) {
                                     p {
-                                        pfIcon("user-alt".fas(), "mr-sm".util())
+                                        pfIcon("user-alt".fas(), baseClass = "mr-sm".util())
                                         +user.login.username
                                     }
                                     p { small { +"MD5: "; code { +user.login.md5 } } }
@@ -380,8 +382,8 @@ class UserDemo : Elements {
                                 }
                             }
                             pfDataListAction {
-                                pfButton("secondary".modifier()) { +"Edit" }
-                                pfButton("secondary".modifier()) { +"Remove" }
+                                pfButton(baseClass = "secondary".modifier()) { +"Edit" }
+                                pfButton(baseClass = "secondary".modifier()) { +"Remove" }
                             }
                         }
                         pfDataListExpandableContent {
@@ -400,20 +402,54 @@ class UserDemo : Elements {
             }
             pfDataTable(userStore, id = dataTableId) {
                 pfDataTableColumns {
-                    pfDataTableToggleColumn {
+                    pfDataTableToggleColumn(baseClass = classes {
+                        +"flex".layout()
+                        +"align-items-center".modifier()
+                        +"space-items-2xl".modifier()
+                    }) { user ->
                         {
-                            +"Lorem ipsum"
+                            photo(user); address(user); contact(user)
                         }
                     }
                     pfDataTableSelectColumn()
-                    pfDataTableSimpleColumn("First name") {
-                        { +it.name.first }
+                    pfDataTableColumn("First name") {
+                        hasId = true
+                        sortInfo = sortInfos["first-name"]
+                        headerBaseClass = "with-25".modifier()
+                        cellDisplay = { user ->
+                            { +user.name.first }
+                        }
                     }
-                    pfDataTableSimpleColumn("Last name") {
-                        { +it.name.last }
+                    pfDataTableColumn("Last name") {
+                        sortInfo = sortInfos["last-name"]
+                        headerBaseClass = "with-25".modifier()
+                        cellDisplay = { user ->
+                            { +user.name.last }
+                        }
                     }
-                    pfDataTableSimpleColumn("Birthday") {
-                        { +it.dob.asDate().toLocaleDateString("en") }
+                    pfDataTableColumn("Birthday") {
+                        sortInfo = SortInfo("birthday", "Birthday", compareBy { it.dob.date })
+                        cellDisplay = { user ->
+                            { +user.dob.asDate().toLocaleDateString("en") }
+                        }
+                    }
+                    pfDataTableSimpleColumn("Registered") { user ->
+                        {
+                            custom("relative-time") {
+                                attr("datetime", user.registered.date)
+                            }
+                        }
+                    }
+                    pfDataTableActionColumn {
+                        {
+                            pfDropdown<String>(align = Align.RIGHT) {
+                                pfDropdownToggleKebab()
+                                pfDropdownItems {
+                                    pfItem("Edit")
+                                    pfItem("Remove")
+                                }
+                            }
+                        }
                     }
                 }
             }
