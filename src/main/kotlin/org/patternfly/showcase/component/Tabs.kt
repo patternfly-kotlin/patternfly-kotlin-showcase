@@ -71,24 +71,12 @@ class TabsComponent : Elements {
                             domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
                         }
                     }
-                    pfTabItem("Users") {
-                        +"Users"
-                    }
-                    pfTabItem("Containers") {
-                        +"Containers"
-                    }
-                    pfTabItem("Database") {
-                        +"Database"
-                    }
-                    pfTabItem("Server") {
-                        +"Server"
-                    }
-                    pfTabItem("System") {
-                        +"System"
-                    }
-                    pfTabItem("Network") {
-                        +"Network"
-                    }
+                    pfTabItem("Users") { +"Users" }
+                    pfTabItem("Containers") { +"Containers" }
+                    pfTabItem("Database") { +"Database" }
+                    pfTabItem("Server") { +"Server" }
+                    pfTabItem("System") { +"System" }
+                    pfTabItem("Network") { +"Network" }
                 }
             }
             snippet("Overflow", TabsCode.OVERFLOW) {
@@ -245,24 +233,12 @@ internal object TabsCode {
                     domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
                 }
             }
-            pfTabItem("Users") {
-                +"Users"
-            }
-            pfTabItem("Containers") {
-                +"Containers"
-            }
-            pfTabItem("Database") {
-                +"Database"
-            }
-            pfTabItem("Server") {
-                +"Server"
-            }
-            pfTabItem("System") {
-                +"System"
-            }
-            pfTabItem("Network") {
-                +"Network"
-            }
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
         }
     }
 }
