@@ -154,12 +154,12 @@ internal data class RandomUsers(val results: List<User>, val info: Info)
 internal data class Info(val seed: String, val results: Int, val page: Int, val version: String)
 
 suspend fun randomUsers(size: Int = 123): List<User> {
-    val json = remote("https://randomuser.me/api/?exc=id&results=$size")
+    val payload = remote("https://randomuser.me/api/?exc=id&results=$size")
         .acceptJson()
         .get()
         .getBody()
-    val format = Json { isLenient = true }
-    val randomUsers = format.decodeFromString(RandomUsers.serializer(), json)
+    val json = Json { isLenient = true }
+    val randomUsers = json.decodeFromString(RandomUsers.serializer(), payload)
     return randomUsers.results
 }
 
