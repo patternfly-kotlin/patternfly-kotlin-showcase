@@ -209,6 +209,14 @@ internal object TabsCode {
     //language=kotlin
     const val DEFAULT: String = """fun main() {
     render {
+        pfTabs<String> {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
+        }
     }
 }
 """
@@ -216,6 +224,14 @@ internal object TabsCode {
     //language=kotlin
     const val BOX: String = """fun main() {
     render {
+        pfTabs<String>(box = true) {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
+        }
     }
 }
 """
@@ -223,6 +239,31 @@ internal object TabsCode {
     //language=kotlin
     const val BOX_LIGHT: String = """fun main() {
     render {
+        pfTabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
+            contentDisplay = {
+                {
+                    domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
+                }
+            }
+            pfTabItem("Users") {
+                +"Users"
+            }
+            pfTabItem("Containers") {
+                +"Containers"
+            }
+            pfTabItem("Database") {
+                +"Database"
+            }
+            pfTabItem("Server") {
+                +"Server"
+            }
+            pfTabItem("System") {
+                +"System"
+            }
+            pfTabItem("Network") {
+                +"Network"
+            }
+        }
     }
 }
 """
@@ -230,6 +271,19 @@ internal object TabsCode {
     //language=kotlin
     const val OVERFLOW: String = """fun main() {
     render {
+        pfTabs<String> {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
+            pfTabItem("Tab item 7") { +"Tab content 7" }
+            pfTabItem("Tab item 8") { +"Tab content 8" }
+            pfTabItem("Tab item 9") { +"Tab content 9" }
+            pfTabItem("Tab item 10") { +"Tab content 10" }
+            pfTabItem("Tab item 11") { +"Tab content 11" }
+        }
     }
 }
 """
@@ -237,6 +291,18 @@ internal object TabsCode {
     //language=kotlin
     const val INSET: String = """fun main() {
     render {
+        pfTabs<String>(baseClass = classes {
+            +"inset-sm-on-md".modifier()
+            +"inset-lg-on-lg".modifier()
+            +"inset-2xl-on-xl".modifier()
+        }) {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
+        }
     }
 }
 """
@@ -244,6 +310,11 @@ internal object TabsCode {
     //language=kotlin
     const val FILLED: String = """fun main() {
     render {
+        pfTabs<String>(filled = true) {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+        }
     }
 }
 """
@@ -251,6 +322,14 @@ internal object TabsCode {
     //language=kotlin
     const val VERTICAL: String = """fun main() {
     render {
+        pfTabs<String>(vertical = true) {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
+        }
     }
 }
 """
@@ -258,6 +337,14 @@ internal object TabsCode {
     //language=kotlin
     const val VERTICAL_BOX: String = """fun main() {
     render {
+        pfTabs<String>(vertical = true, box = true) {
+            pfTabItem("Users") { +"Users" }
+            pfTabItem("Containers") { +"Containers" }
+            pfTabItem("Database") { +"Database" }
+            pfTabItem("Server") { +"Server" }
+            pfTabItem("System") { +"System" }
+            pfTabItem("Network") { +"Network" }
+        }
     }
 }
 """
@@ -265,6 +352,14 @@ internal object TabsCode {
     //language=kotlin
     const val ICONS: String = """fun main() {
     render {
+        pfTabs<String> {
+            pfTabItem("Users", icon = { pfIcon("users".fas()) }) { +"Users" }
+            pfTabItem("Containers", icon = { pfIcon("box".fas()) }) { +"Containers" }
+            pfTabItem("Database", icon = { pfIcon("database".fas()) }) { +"Database" }
+            pfTabItem("Server", icon = { pfIcon("server".fas()) }) { +"Server" }
+            pfTabItem("System", icon = { pfIcon("laptop".fas()) }) { +"System" }
+            pfTabItem("Network", icon = { pfIcon("project-diagram".fas()) }) { +"Network" }
+        }
     }
 }
 """
@@ -272,7 +367,47 @@ internal object TabsCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-    }
+        lateinit var range: Input
+        val store = TabStore<Int>()
+
+        div(baseClass = classes {
+            +"flex".layout()
+            +"align-items-center".modifier()
+            +"mb-md".util()
+        }) {
+            label(`for` = "range") { +"Tabs: " }
+            range = input(id = "range", baseClass = "w-50".util()) {
+                type = const("range")
+                min = const("1")
+                max = const("12")
+                value = const("5")
+            }
+            span {
+                range.inputs.events
+                    .map { it.target.unsafeCast<HTMLInputElement>().value }
+                    .bind()
+            }
+        }
+        pfTabs(store) {
+            itemDisplay = {
+                { +"Tab item ${'$'}it" }
+            }
+            contentDisplay = {
+                { +"Content ${'$'}it" }
+            }
+        }
+
+        range.changes.valuesAsNumber()
+            .map { it.toInt() }
+            .map { tabs ->
+                (1..tabs).map { number -> TabItem(number, selected = number == 1) }
+            } handledBy store.update
+
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            range.domNode.dispatchEvent(Event(Events.input.name))
+            range.domNode.dispatchEvent(Event(Events.change.name))
+        }
 }
 """
 }
