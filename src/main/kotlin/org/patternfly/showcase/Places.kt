@@ -24,6 +24,7 @@ import org.patternfly.showcase.component.OptionsMenuComponent
 import org.patternfly.showcase.component.PaginationComponent
 import org.patternfly.showcase.component.SwitchComponent
 import org.patternfly.showcase.component.TabsComponent
+import org.patternfly.showcase.component.TreeViewComponent
 import org.patternfly.showcase.demo.UserDemo
 import kotlin.time.ExperimentalTime
 
@@ -57,6 +58,7 @@ object Places {
         put(component("pagination"), ::PaginationComponent)
         put(component("switch"), ::SwitchComponent)
         put(component("tabs"), ::TabsComponent)
+        put(component("tree-view"), ::TreeViewComponent)
         put(demo("user"), ::UserDemo)
     }
 

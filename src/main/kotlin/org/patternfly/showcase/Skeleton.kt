@@ -91,6 +91,7 @@ class Skeleton(private val router: Router<String>) : Elements {
                                 pfNavigationItem(Places.component("tabs"), "Tabs")
                                 pfNavigationItem(Places.component("title"), "Title")
                                 pfNavigationItem(Places.component("toolbar"), "Toolbar")
+                                pfNavigationItem(Places.component("tree-view"), "Tree view")
                             }
                             pfNavigationExpandableGroup("Demos") {
                                 pfNavigationItem(Places.demo("server"), "Servers")
