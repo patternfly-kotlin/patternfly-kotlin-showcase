@@ -4,8 +4,8 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
 import kotlin.time.seconds
 
-@ExperimentalTime
+@OptIn(ExperimentalTime::class)
 internal val EVENT_DELAY = 333.milliseconds
 
-@ExperimentalTime
+@OptIn(ExperimentalTime::class)
 internal val TICKER_DELAY = 1.seconds

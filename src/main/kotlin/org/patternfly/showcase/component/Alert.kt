@@ -4,8 +4,7 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.patternfly.Elements
+import dev.fritz2.elemento.elements
 import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
@@ -13,7 +12,6 @@ import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
 import org.patternfly.Severity.WARNING
 import org.patternfly.classes
-import org.patternfly.elements
 import org.patternfly.modifier
 import org.patternfly.pfAlert
 import org.patternfly.pfAlertActionGroup
@@ -21,13 +19,9 @@ import org.patternfly.pfAlertDescription
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfSection
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class AlertComponent : Elements {
-    override val elements = elements {
+class AlertComponent {
+    val elements = elements {
         intro(
             title = "Alert",
             key = "Alerts",

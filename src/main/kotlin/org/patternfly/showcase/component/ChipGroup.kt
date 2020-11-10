@@ -2,14 +2,12 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.action
 import dev.fritz2.binding.handledBy
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import org.patternfly.ChipGroupStore
-import org.patternfly.Elements
 import org.patternfly.Notification
 import org.patternfly.Position.START
 import org.patternfly.Severity
 import org.patternfly.classes
-import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.modifier
 import org.patternfly.pfBadge
@@ -21,13 +19,9 @@ import org.patternfly.pfContent
 import org.patternfly.pfIcon
 import org.patternfly.pfSection
 import kotlin.random.Random
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class ChipGroupComponent : Elements {
-    override val elements = elements {
+class ChipGroupComponent {
+    val elements = elements {
         intro(
             title = "Chip group",
             prefix = "A ",

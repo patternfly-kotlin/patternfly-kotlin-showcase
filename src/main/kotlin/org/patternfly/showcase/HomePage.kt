@@ -1,15 +1,14 @@
 package org.patternfly.showcase
 
 import dev.fritz2.binding.const
-import org.patternfly.Elements
-import org.patternfly.elements
+import dev.fritz2.elemento.elements
 import org.patternfly.modifier
 import org.patternfly.pfContent
 import org.patternfly.pfSection
 import org.patternfly.pfTitle
 
-class HomePage : Elements {
-    override val elements = elements {
+class HomePage  {
+    val elements = elements {
         pfSection("light".modifier()) {
             pfContent {
                 pfTitle { +"PatternFly Fritz2" }

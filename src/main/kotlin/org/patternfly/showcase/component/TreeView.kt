@@ -1,20 +1,16 @@
 package org.patternfly.showcase.component
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.patternfly.Elements
-import org.patternfly.elements
+import dev.fritz2.elemento.Id
+import dev.fritz2.elemento.elements
+import org.patternfly.TreeStore
 import org.patternfly.pfContent
 import org.patternfly.pfSection
 import org.patternfly.pfTreeItem
 import org.patternfly.pfTreeItems
 import org.patternfly.pfTreeView
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class TreeViewComponent : Elements {
-    override val elements = elements {
+class TreeViewComponent {
+    val elements = elements {
         intro(
             title = "Tree",
             key = "Tree",
@@ -25,9 +21,11 @@ class TreeViewComponent : Elements {
                 h2 { +"Examples" }
             }
             snippet("Default", TreeViewCode.DEFAULT) {
-                pfTreeView<String> {
+                val store = TreeStore<String> { Id.build(it) }
+                pfTreeView(store) {
                     pfTreeItems {
                         pfTreeItem("Application Launcher") {
+                            expanded = true
                             pfTreeItems {
                                 pfTreeItem("Application 1") {
                                     pfTreeItems {

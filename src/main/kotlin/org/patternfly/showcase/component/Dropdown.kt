@@ -8,6 +8,8 @@ import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.states
+import dev.fritz2.elemento.elements
+import dev.fritz2.elemento.styleHidden
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -16,7 +18,6 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
 import org.patternfly.Dropdown
-import org.patternfly.Elements
 import org.patternfly.Entry
 import org.patternfly.Notification
 import org.patternfly.Severity.INFO
@@ -24,7 +25,6 @@ import org.patternfly.Switch
 import org.patternfly.TriState
 import org.patternfly.classes
 import org.patternfly.component
-import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.layout
 import org.patternfly.modifier
@@ -43,18 +43,15 @@ import org.patternfly.pfItems
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
 import org.patternfly.pfSwitch
-import org.patternfly.styleHidden
 import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class DropdownComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
+class DropdownComponent {
+    val elements = elements {
         intro(
             title = "Dropdown",
             prefix = "Use a ",
@@ -272,7 +269,7 @@ class DropdownComponent : Elements {
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
-                        store.clicked.unwrap()
+                        store.select.unwrap()
                             .map { Notification(INFO, "$name: Clicked on $it") }
                             .handledBy(Notification.store.add)
                         ces.collapsed
@@ -341,7 +338,7 @@ class DropdownComponent : Elements {
                         content = {
                             domNode.styleHidden = true
                             merge(
-                                this@pfDropdown.store.clicked.unwrap(),
+                                this@pfDropdown.store.select.unwrap(),
                                 this@pfDropdownToggleCheckbox.input.changes.states()
                             ).map {
                                 val value = when (it) {
@@ -360,7 +357,7 @@ class DropdownComponent : Elements {
                             }.bind()
                         }
                         disabled = enabled.input.changes.states().map { !it }
-                        triState = this@pfDropdown.store.clicked.unwrap().map {
+                        triState = this@pfDropdown.store.select.unwrap().map {
                             when (it) {
                                 "Select none" -> TriState.OFF
                                 "Select visible" -> TriState.INDETERMINATE

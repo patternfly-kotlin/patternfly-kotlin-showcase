@@ -4,15 +4,13 @@ import dev.fritz2.binding.const
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.states
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.Elements
 import org.patternfly.Switch
 import org.patternfly.classes
-import org.patternfly.elements
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfBadge
@@ -24,11 +22,9 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class BadgeComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalTime::class)
+class BadgeComponent {
+    val elements = elements {
         intro(
             title = "Badge",
             prefix = "A ",

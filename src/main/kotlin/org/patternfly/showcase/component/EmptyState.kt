@@ -1,17 +1,11 @@
 package org.patternfly.showcase.component
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.patternfly.Elements
-import org.patternfly.elements
+import dev.fritz2.elemento.elements
 import org.patternfly.pfContent
 import org.patternfly.pfSection
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class EmptyStateComponent : Elements {
-    override val elements = elements {
+class EmptyStateComponent {
+    val elements = elements {
         intro(
             title = "Empty State",
             key = "Empty State",

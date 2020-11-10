@@ -7,16 +7,14 @@ import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.valuesAsNumber
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.Elements
 import org.patternfly.TabItem
 import org.patternfly.TabStore
 import org.patternfly.classes
-import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.layout
 import org.patternfly.modifier
@@ -30,11 +28,9 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class TabsComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalTime::class)
+class TabsComponent {
+    val elements = elements {
         intro(
             title = "Tabs",
             key = "Tabs",

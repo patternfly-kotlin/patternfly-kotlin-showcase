@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.js") version "1.4.0"
+    kotlin("js") version "1.4.10"
     kotlin("plugin.serialization") version "1.4.0"
 }
 
@@ -17,7 +17,8 @@ dependencies {
     implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.112-kotlin-1.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
     implementation("dev.fritz2:core:0.8-SNAPSHOT")
-    implementation("org.patternfly:patternfly-fritz2:0.1-SNAPSHOT")
+    implementation("dev.fritz2:elemento:0.0.2")
+    implementation("org.patternfly:patternfly-fritz2:0.0.1")
     implementation(npm("@github/time-elements", "3.1.1"))
     implementation(npm("@patternfly/patternfly", "4.42.2"))
     implementation(npm("clipboard", "2.0.6"))
@@ -27,6 +28,11 @@ dependencies {
 
 kotlin {
     js {
+        compilations.named("main") {
+            kotlinOptions {
+                freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+            }
+        }
         browser {
             webpackTask {
                 cssSupport.enabled = true

@@ -5,21 +5,19 @@ import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.states
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.aria
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.Elements
 import org.patternfly.Notification
 import org.patternfly.Position.END
 import org.patternfly.Position.START
 import org.patternfly.Severity
 import org.patternfly.Switch
-import org.patternfly.aria
 import org.patternfly.classes
 import org.patternfly.component
-import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.layout
 import org.patternfly.modifier
@@ -34,11 +32,9 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class ButtonComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalTime::class)
+class ButtonComponent {
+    val elements = elements {
         intro(
             title = "Button",
             key = "Buttons",

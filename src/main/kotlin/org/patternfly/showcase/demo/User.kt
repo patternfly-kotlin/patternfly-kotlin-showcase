@@ -9,6 +9,12 @@ import dev.fritz2.dom.html.Img
 import dev.fritz2.dom.html.TextElement
 import dev.fritz2.dom.html.Ul
 import dev.fritz2.dom.values
+import dev.fritz2.elemento.Id
+import dev.fritz2.elemento.aria
+import dev.fritz2.elemento.elements
+import dev.fritz2.elemento.hide
+import dev.fritz2.elemento.plusAssign
+import dev.fritz2.elemento.show
 import dev.fritz2.remote.getBody
 import dev.fritz2.remote.remote
 import kotlinx.browser.document
@@ -17,18 +23,14 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.patternfly.Align
 import org.patternfly.ComponentType
-import org.patternfly.Elements
-import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.SortInfo
-import org.patternfly.aria
 import org.patternfly.classes
-import org.patternfly.elements
 import org.patternfly.fas
-import org.patternfly.hide
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pfBulkSelect
@@ -74,8 +76,6 @@ import org.patternfly.pfToolbarContent
 import org.patternfly.pfToolbarContentSection
 import org.patternfly.pfToolbarGroup
 import org.patternfly.pfToolbarItem
-import org.patternfly.plusAssign
-import org.patternfly.show
 import org.patternfly.util
 import kotlin.js.Date
 
@@ -159,7 +159,7 @@ suspend fun randomUsers(size: Int = 123): List<User> {
         .get()
         .getBody()
     val json = Json { isLenient = true }
-    val randomUsers = json.decodeFromString(RandomUsers.serializer(), payload)
+    val randomUsers = json.decodeFromString<RandomUsers>(payload)
     return randomUsers.results
 }
 
@@ -221,7 +221,7 @@ private fun googleMaps(location: Location): String =
 
 // ------------------------------------------------------ UI
 
-class UserDemo : Elements {
+class UserDemo {
     private val cardViewId = Id.unique(ComponentType.CardView.id)
     private val dataListId = Id.unique(ComponentType.DataList.id)
     private val dataTableId = Id.unique(ComponentType.DataTable.id)
@@ -235,7 +235,7 @@ class UserDemo : Elements {
         "nat" to SortInfo("nat", "Nationality", compareBy { it.nat }),
     )
 
-    override val elements = elements {
+    val elements = elements {
         pfSection {
             pfTitle { +"User Demo" }
             p {

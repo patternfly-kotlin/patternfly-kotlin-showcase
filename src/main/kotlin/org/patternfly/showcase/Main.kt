@@ -1,20 +1,15 @@
 package org.patternfly.showcase
 
+import dev.fritz2.elemento.appendAll
 import dev.fritz2.routing.Router
 import dev.fritz2.routing.StringRoute
 import kotlinext.js.require
 import kotlinx.browser.document
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.dom.clear
-import org.patternfly.appendAll
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
 fun main() {
     require("@github/time-elements/dist/time-elements")
     require("@patternfly/patternfly/patternfly.css")
@@ -25,7 +20,7 @@ fun main() {
     require("highlight.js/styles/github.css")
 
     val router = Router(StringRoute(Places.HOME))
-    document.body?.appendAll(Skeleton(router))
+    document.body?.appendAll(Skeleton(router).elements)
 
     MainScope().launch {
         router.collect { place ->

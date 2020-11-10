@@ -4,19 +4,17 @@ import dev.fritz2.binding.RootStore
 import dev.fritz2.binding.action
 import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.Elements
 import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
-import org.patternfly.elements
 import org.patternfly.modifier
 import org.patternfly.pfAlert
 import org.patternfly.pfAlertDescription
@@ -26,11 +24,9 @@ import org.patternfly.pfContent
 import org.patternfly.pfSection
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class AlertGroupComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalTime::class)
+class AlertGroupComponent {
+    val elements = elements {
         intro(
             title = "Alert group",
             prefix = "An ",

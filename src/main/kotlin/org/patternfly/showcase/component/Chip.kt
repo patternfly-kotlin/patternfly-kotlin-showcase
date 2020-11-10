@@ -4,15 +4,13 @@ import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.patternfly.Elements
 import org.patternfly.Notification
 import org.patternfly.Severity
 import org.patternfly.component
-import org.patternfly.elements
 import org.patternfly.pfBadge
 import org.patternfly.pfChip
 import org.patternfly.pfContent
@@ -21,11 +19,9 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class ChipComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalTime::class)
+class ChipComponent {
+    val elements = elements {
         intro(
             title = "Chip",
             key = "Chips",

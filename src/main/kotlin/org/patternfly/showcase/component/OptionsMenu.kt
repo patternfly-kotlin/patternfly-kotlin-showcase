@@ -8,14 +8,13 @@ import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.states
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
-import org.patternfly.Elements
 import org.patternfly.Entry
 import org.patternfly.Notification
 import org.patternfly.OptionsMenu
@@ -23,7 +22,6 @@ import org.patternfly.Severity
 import org.patternfly.Switch
 import org.patternfly.classes
 import org.patternfly.component
-import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.layout
 import org.patternfly.modifier
@@ -46,11 +44,9 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class OptionsMenuComponent : Elements {
-    override val elements = elements {
+@OptIn(ExperimentalTime::class)
+class OptionsMenuComponent {
+    val elements = elements {
         intro(
             title = "Options menu",
             prefix = "An ",

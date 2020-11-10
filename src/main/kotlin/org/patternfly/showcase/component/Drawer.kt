@@ -2,10 +2,8 @@
 
 package org.patternfly.showcase.component
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.patternfly.Elements
+import dev.fritz2.elemento.elements
 import org.patternfly.classes
-import org.patternfly.elements
 import org.patternfly.modifier
 import org.patternfly.pfButton
 import org.patternfly.pfContent
@@ -22,16 +20,12 @@ import org.patternfly.pfDrawerSection
 import org.patternfly.pfSection
 import org.patternfly.pfTitle
 import org.patternfly.util
-import kotlin.time.ExperimentalTime
 
 private const val LOREM_IPSUM =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehicula ex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat,nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodo eleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada sed posuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quam ullamcorper, in commodo massa vulputate."
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class DrawerComponent : Elements {
-    override val elements = elements {
+class DrawerComponent {
+    val elements = elements {
         intro(
             title = "Drawer",
             prefix = "The ",

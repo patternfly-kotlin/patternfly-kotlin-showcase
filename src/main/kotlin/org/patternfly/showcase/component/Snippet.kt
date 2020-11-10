@@ -5,34 +5,29 @@ import dev.fritz2.binding.RootStore
 import dev.fritz2.binding.const
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.HtmlElements
+import dev.fritz2.elemento.By
+import dev.fritz2.elemento.minusAssign
+import dev.fritz2.elemento.plusAssign
+import dev.fritz2.elemento.querySelector
 import hljs.highlightBlock
 import kotlinx.browser.window
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import org.patternfly.By
 import org.patternfly.COMPONENT_TYPE
 import org.patternfly.ComponentType.Content
 import org.patternfly.Section
 import org.patternfly.Size
 import org.patternfly.fas
-import org.patternfly.minusAssign
 import org.patternfly.modifier
 import org.patternfly.pfButton
 import org.patternfly.pfContent
 import org.patternfly.pfIcon
 import org.patternfly.pfSection
 import org.patternfly.pfTitle
-import org.patternfly.plusAssign
-import org.patternfly.querySelector
 import org.patternfly.showcase.Places
 import org.patternfly.util
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
 fun HtmlElements.intro(
     title: String,
     prefix: String? = null,
@@ -80,7 +75,7 @@ class Snippet(header: String, code: String, val content: HtmlElements.() -> Unit
             pfButton(baseClass = "plain".modifier()) {
                 pfIcon("copy".fas())
                 val clipboard = ClipboardJS(domNode, object : ClipboardJS.Options {
-                    override val text: ((Element) -> String)? = { code }
+                    override val text: (Element) -> String = { code }
                 })
                 clipboard.on("success") {
                     this@Snippet.showCopied()

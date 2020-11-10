@@ -1,18 +1,12 @@
 package org.patternfly.showcase.component
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.patternfly.Elements
-import org.patternfly.elements
+import dev.fritz2.elemento.elements
 import org.patternfly.pfBrand
 import org.patternfly.pfContent
 import org.patternfly.pfSection
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class BrandComponent : Elements {
-    override val elements = elements {
+class BrandComponent {
+    val elements = elements {
         intro(
             title = "Brand",
             key = "Brand",

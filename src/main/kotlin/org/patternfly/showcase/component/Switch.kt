@@ -3,22 +3,16 @@ package org.patternfly.showcase.component
 import dev.fritz2.binding.const
 import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.states
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import dev.fritz2.elemento.elements
 import kotlinx.coroutines.flow.map
-import org.patternfly.Elements
 import org.patternfly.Notification
 import org.patternfly.Severity
-import org.patternfly.elements
 import org.patternfly.pfContent
 import org.patternfly.pfSection
 import org.patternfly.pfSwitch
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class SwitchComponent : Elements {
-    override val elements = elements {
+class SwitchComponent {
+    val elements = elements {
         intro(
             title = "Switch",
             prefix = "Use a ",

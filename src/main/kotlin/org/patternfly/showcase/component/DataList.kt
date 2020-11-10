@@ -4,16 +4,14 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.action
 import dev.fritz2.binding.handledBy
+import dev.fritz2.elemento.Id
+import dev.fritz2.elemento.elements
 import dev.fritz2.lenses.IdProvider
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.patternfly.Align
 import org.patternfly.DataListItem
-import org.patternfly.Elements
-import org.patternfly.Id
 import org.patternfly.ItemStore
 import org.patternfly.classes
 import org.patternfly.component
-import org.patternfly.elements
 import org.patternfly.fas
 import org.patternfly.modifier
 import org.patternfly.pfButton
@@ -36,13 +34,9 @@ import org.patternfly.pfIcon
 import org.patternfly.pfItem
 import org.patternfly.pfSection
 import org.patternfly.pfSeparator
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class DataListComponent : Elements {
-    override val elements = elements {
+class DataListComponent {
+    val elements = elements {
         intro(
             title = "Data list",
             prefix = "A ",
@@ -86,7 +80,7 @@ class DataListComponent : Elements {
                     }
                 )
 
-                val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
                 pfDataList(store) {
                     display = { pfDataListItem(item = it, content = it.content) }
@@ -125,7 +119,7 @@ class DataListComponent : Elements {
                     }
                 )
 
-                val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
                 pfDataList(store) {
                     display = { pfDataListItem(item = it, content = it.content) }
@@ -239,7 +233,7 @@ class DataListComponent : Elements {
                     }
                 )
 
-                val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
                 pfDataList(store) {
                     display = { pfDataListItem(item = it, content = it.content) }
@@ -294,7 +288,7 @@ class DataListComponent : Elements {
                     }
                 )
 
-                val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
                 pfDataList(store) {
                     display = { pfDataListItem(item = it, content = it.content) }
@@ -449,7 +443,7 @@ class DataListComponent : Elements {
                             }
                         )))
 
-                val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
                 pfDataList(store) {
                     display = {
@@ -502,7 +496,7 @@ internal object DataListCode {
             }
         )
 
-        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(store) {
             display = { pfDataListItem(item = it, content = it.content) }
@@ -546,7 +540,7 @@ internal object DataListCode {
             }
         )
 
-        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(store) {
             display = { pfDataListItem(item = it, content = it.content) }
@@ -665,7 +659,7 @@ internal object DataListCode {
             }
         )
 
-        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(store) {
             display = { pfDataListItem(item = it, content = it.content) }
@@ -725,7 +719,7 @@ internal object DataListCode {
             }
         )
 
-        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(store) {
             display = { pfDataListItem(item = it, content = it.content) }
@@ -885,7 +879,7 @@ internal object DataListCode {
                     }
                 )))
 
-        val identifier: IdProvider<DisplayData, String> = { Id.asId(it.id) }
+        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
         pfDataList(store) {
             display = {

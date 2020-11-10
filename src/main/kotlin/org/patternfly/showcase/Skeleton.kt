@@ -1,10 +1,8 @@
 package org.patternfly.showcase
 
+import dev.fritz2.elemento.elements
 import dev.fritz2.routing.Router
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.map
-import org.patternfly.Elements
-import org.patternfly.elements
 import org.patternfly.layout
 import org.patternfly.pfAlertGroup
 import org.patternfly.pfBrand
@@ -23,13 +21,9 @@ import org.patternfly.pfSidebar
 import org.patternfly.pfSidebarBody
 import org.patternfly.pfVerticalNavigation
 import org.patternfly.util
-import kotlin.time.ExperimentalTime
 
-@ExperimentalCoroutinesApi
-@ExperimentalStdlibApi
-@ExperimentalTime
-class Skeleton(private val router: Router<String>) : Elements {
-    override val elements = elements {
+class Skeleton(private val router: Router<String>) {
+    val elements = elements {
         pfAlertGroup(true)
         pfPage {
             pfHeader {
