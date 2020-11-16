@@ -15,16 +15,11 @@ import dev.fritz2.elemento.elements
 import dev.fritz2.elemento.hide
 import dev.fritz2.elemento.plusAssign
 import dev.fritz2.elemento.show
-import dev.fritz2.remote.getBody
-import dev.fritz2.remote.remote
 import kotlinx.browser.document
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import org.patternfly.Align
 import org.patternfly.ComponentType
 import org.patternfly.ItemStore
@@ -76,94 +71,10 @@ import org.patternfly.pfToolbarContent
 import org.patternfly.pfToolbarContentSection
 import org.patternfly.pfToolbarGroup
 import org.patternfly.pfToolbarItem
+import org.patternfly.showcase.data.Location
+import org.patternfly.showcase.data.User
+import org.patternfly.showcase.data.randomUsers
 import org.patternfly.util
-import kotlin.js.Date
-
-// ------------------------------------------------------ data
-
-@Serializable
-data class User(
-    val gender: String,
-    val name: Name,
-    val location: Location,
-    val email: String,
-    val login: Login,
-    val dob: DateOfBirth,
-    val registered: DateOfBirth,
-    val phone: String,
-    val cell: String,
-    val picture: Picture,
-    val nat: String
-) {
-    fun match(query: String): Boolean = if (query.isEmpty()) true else {
-        name.first.toLowerCase().contains(query.toLowerCase()) ||
-                name.last.toLowerCase().contains(query.toLowerCase()) ||
-                email.toLowerCase().contains(query.toLowerCase()) ||
-                login.username.toLowerCase().contains(query.toLowerCase())
-    }
-}
-
-@Serializable
-data class Name(val title: String, val first: String, val last: String) {
-    override fun toString(): String = "$first $last"
-}
-
-@Serializable
-data class Location(
-    val street: Street,
-    val city: String,
-    val state: String,
-    val country: String,
-    val postcode: String,
-    var coordinates: Coordinates,
-    val timezone: Timezone
-)
-
-@Serializable
-data class Street(val name: String, val number: Int)
-
-@Serializable
-data class Coordinates(val latitude: String, val longitude: String)
-
-@Serializable
-data class Timezone(val offset: String, val description: String)
-
-@Serializable
-data class Login(
-    val uuid: String,
-    val username: String,
-    val password: String,
-    val salt: String,
-    val md5: String,
-    val sha1: String,
-    val sha256: String
-)
-
-@Serializable
-data class DateOfBirth(val date: String, val age: Int) {
-    fun asDate() = Date(Date.parse(date))
-}
-
-@Serializable
-data class Picture(val large: String, val medium: String, val thumbnail: String)
-
-@Serializable
-internal data class RandomUsers(val results: List<User>, val info: Info)
-
-@Serializable
-internal data class Info(val seed: String, val results: Int, val page: Int, val version: String)
-
-suspend fun randomUsers(size: Int = 123): List<User> {
-    val payload = remote("https://randomuser.me/api/?exc=id&results=$size")
-        .acceptJson()
-        .get()
-        .getBody()
-    val json = Json { isLenient = true }
-    val randomUsers = json.decodeFromString<RandomUsers>(payload)
-    return randomUsers.results
-}
-
-// ------------------------------------------------------ components
 
 fun HtmlElements.address(user: User, content: TextElement.() -> Unit = {}): TextElement = address {
     content.invoke(this)
@@ -216,10 +127,8 @@ fun HtmlElements.photo(user: User): Div = div(baseClass = "sc-user-photo-75") {
     }
 }
 
-private fun googleMaps(location: Location): String =
+fun googleMaps(location: Location): String =
     "https://www.google.com/maps/search/?api=1&query=${location.coordinates.latitude},${location.coordinates.longitude}"
-
-// ------------------------------------------------------ UI
 
 class UserDemo {
     private val cardViewId = Id.unique(ComponentType.CardView.id)
