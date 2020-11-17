@@ -1,11 +1,13 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.action
-import dev.fritz2.binding.handledBy
 import dev.fritz2.elemento.elements
+import org.patternfly.ColExIcon
+import org.patternfly.SingleIcon
+import org.patternfly.TreeBuilder
 import org.patternfly.TreeItemBuilder
-import org.patternfly.TreeStore
+import org.patternfly.TreeView
 import org.patternfly.fas
+import org.patternfly.pfChildren
 import org.patternfly.pfContent
 import org.patternfly.pfIcon
 import org.patternfly.pfSection
@@ -21,131 +23,81 @@ class TreeViewComponent {
     val elements = elements {
         intro(
             title = "Tree",
-            key = "Tree",
-            text = " is under development."
+            prefix = "A ",
+            key = "tree",
+            text = " is a structure that displays data in a hierarchical view."
         )
         pfSection {
             pfContent {
                 h2 { +"Examples" }
             }
             snippet("Default", TreeViewCode.DEFAULT) {
-                val store = TreeStore(placeId)
-                pfTreeView(store) {
-                    fetchItems = { treeItem ->
-                        treeItem.item.places.map { place ->
-                            pfTreeItem(place) {
-                                finishPlace(place, false)
-                            }
-                        }
-                    }
+                pfTreeView(placeId) {
+                    makeWorld()
                 }
-                action(pfTree<Place> {
-                    for (place in world.places) {
-                        pfTreeItem(place) {
-                            finishPlace(place, false)
-                        }
-                    }
-                }) handledBy store.update
             }
             snippet("Checkboxes", TreeViewCode.CHECKBOXES) {
-                val store = TreeStore(placeId)
-                pfTreeView(store, checkboxes = true) {
-                    fetchItems = { treeItem ->
-                        treeItem.item.places.map { place ->
-                            pfTreeItem(place) {
-                                finishPlace(place, false)
-                            }
-                        }
-                    }
+                pfTreeView(placeId, checkboxes = true) {
+                    makeWorld()
                 }
-                action(pfTree<Place> {
-                    for (place in world.places) {
-                        pfTreeItem(place) {
-                            finishPlace(place, false)
-                        }
-                    }
-                }) handledBy store.update
             }
             snippet("Icons", TreeViewCode.ICONS) {
-                val store = TreeStore(placeId)
-                pfTreeView(store) {
-                    fetchItems = { treeItem ->
-                        treeItem.item.places.map { place ->
-                            pfTreeItem(place) {
-                                finishPlace(place, true)
+                pfTreeView(placeId) {
+                    icons = { place ->
+                        when {
+                            place.id.contains("fa-") -> {
+                                SingleIcon { pfIcon(place.id.substringAfter("fa-").fas()) }
+                            }
+                            place.id.matches("[a-z]{2}".toRegex()) -> {
+                                SingleIcon {
+                                    img {
+                                        domNode.style.verticalAlign = "middle"
+                                        domNode.src = "https://www.countryflags.io/${place.id}/flat/16.png"
+                                    }
+                                }
+                            }
+                            else -> {
+                                ColExIcon(
+                                    collapsed = { pfIcon("folder".fas()) },
+                                    expanded = { pfIcon("folder-open".fas()) }
+                                )
                             }
                         }
+
                     }
+                    makeWorld()
                 }
-                action(pfTree<Place> {
-                    for (place in world.places) {
-                        pfTreeItem(place) {
-                            finishPlace(place, true)
-                        }
-                    }
-                }) handledBy store.update
             }
             snippet("Badges", TreeViewCode.BADGES) {
-                val store = TreeStore(placeId)
-                pfTreeView(store, badges = true) {
-                    fetchItems = { treeItem ->
-                        treeItem.item.places.map { place ->
-                            pfTreeItem(place) {
-                                finishPlace(place, false)
-                            }
-                        }
-                    }
+                pfTreeView(placeId, badges = true) {
+                    makeWorld()
                 }
-                action(pfTree<Place> {
-                    for (place in world.places) {
-                        pfTreeItem(place) {
-                            finishPlace(place, false)
-                        }
-                    }
-                }) handledBy store.update
             }
         }
     }
 }
 
-private fun TreeItemBuilder<Place>.finishPlace(place: Place, withIcons: Boolean) {
-    if (withIcons) {
-        // c-       Continent
-        // sc-      Subcontinent
-        // [a-z]{2} Country
-        // co-      County
-        // ci-      City
-        // di-      District
-        when {
-            place.id.startsWith("c-") -> {
-                icon = { pfIcon(place.id.substringAfter("c-").fas()) }
-            }
-            place.id.startsWith("co-") -> {
-                icon = { pfIcon("landmark".fas()) }
-            }
-            place.id.startsWith("ci-") -> {
-                icon = { pfIcon("building".fas()) }
-            }
-            place.id.startsWith("di-") -> {
-                icon = { pfIcon("map-marked-alt".fas()) }
-            }
-            place.id.matches("[a-z]{2}".toRegex()) -> {
-                icon = {
-                    img {
-                        domNode.style.verticalAlign = "middle"
-                        domNode.src = "https://www.countryflags.io/${place.id}/flat/16.png"
-                    }
+private fun TreeView<Place>.makeWorld() {
+    pfTree {
+        for (place in world.places) {
+            place(place)
+        }
+    }
+}
+
+private fun TreeBuilder<Place>.place(place: Place) {
+    pfTreeItem(place) {
+        if (place.places.isNotEmpty()) {
+            pfChildren {
+                for (child in place.places) {
+                    place(child)
                 }
-            }
-            else -> {
-                icon = { pfIcon("folder".fas()) }
-                expandedIcon = { pfIcon("folder-open".fas()) }
             }
         }
     }
-    mightHaveChildren = place.places.isNotEmpty()
-    childCount = place.places.size
 }
+
+
 
 internal object TreeViewCode {
 
