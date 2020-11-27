@@ -1,27 +1,23 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.action
-import dev.fritz2.binding.handledBy
-import dev.fritz2.elemento.elements
+import dev.fritz2.dom.html.RenderContext
+import org.patternfly.ButtonVariation.link
 import org.patternfly.ChipGroupStore
+import org.patternfly.IconPosition.ICON_FIRST
 import org.patternfly.Notification
-import org.patternfly.Position.START
-import org.patternfly.Severity
-import org.patternfly.classes
+import org.patternfly.badge
+import org.patternfly.buttonIcon
+import org.patternfly.chip
+import org.patternfly.chipGroup
+import org.patternfly.chips
+import org.patternfly.clickButton
 import org.patternfly.fas
 import org.patternfly.modifier
-import org.patternfly.pfBadge
-import org.patternfly.pfButton
-import org.patternfly.pfChip
-import org.patternfly.pfChipGroup
-import org.patternfly.pfChips
-import org.patternfly.pfContent
-import org.patternfly.pfIcon
-import org.patternfly.pfSection
+import org.patternfly.pageSection
 import kotlin.random.Random
 
 class ChipGroupComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Chip group",
             prefix = "A ",
@@ -29,13 +25,11 @@ class ChipGroupComponent {
             text = " is used to represent an attribute that has been assigned one or more values. An OR relationship is implied between values in the group. Chip groups are useful to express complex filters to a data set, for example. Related design guidelines: ",
             link = ("filters" to "Filters")
         )
-        pfSection(baseClass = "sc-component__chip-groups") {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection(baseClass = "sc-component__chip-groups") {
+            h2 { +"Examples" }
             snippet("Inline", ChipGroupCode.INLINE) {
-                pfChipGroup<String> {
-                    pfChips {
+                chipGroup<String> {
+                    chips {
                         +"Chip one"
                         +listOf(
                             "Really long chip that goes on and on",
@@ -47,8 +41,9 @@ class ChipGroupComponent {
                 }
             }
             snippet("With category", ChipGroupCode.CATEGORY) {
-                pfChipGroup<String>(text = "Category") {
-                    pfChips {
+                chipGroup<String> {
+                    +"Category"
+                    chips {
                         +"Chip one"
                         +listOf(
                             "Really long chip that goes on and on",
@@ -60,11 +55,10 @@ class ChipGroupComponent {
                 }
             }
             snippet("Closable", ChipGroupCode.CLOSABLE) {
-                pfChipGroup<String>(text = "Category", closable = true) {
-                    closes.map {
-                        Notification(Severity.INFO, "Chip group closed")
-                    } handledBy Notification.store.add
-                    pfChips {
+                chipGroup<String>(closable = true) {
+                    +"Category"
+                    closes handledBy Notification.info("Chip group closed")
+                    chips {
                         +"Chip one"
                         +listOf(
                             "Really long chip that goes on and on",
@@ -79,17 +73,18 @@ class ChipGroupComponent {
                 data class Word(val text: String, val letters: Int = text.length)
 
                 val store = ChipGroupStore<Word>()
-                pfChipGroup(store, "Letters") {
-                    display = {
-                        pfChip {
+                chipGroup(store) {
+                    +"Letters"
+                    display {
+                        chip {
                             +it.text
-                            pfBadge {
+                            badge {
                                 +it.letters.toString()
                             }
                         }
                     }
                 }
-                action(
+                store.addAll(
                     listOf(
                         Word("Chip one"),
                         Word("Really long chip that goes on and on"),
@@ -97,7 +92,7 @@ class ChipGroupComponent {
                         Word("Chip four"),
                         Word("Chip five")
                     )
-                ) handledBy store.update
+                )
             }
             snippet("Reactive", ChipGroupCode.REACTIVE) {
                 fun randomString(length: Int) =
@@ -110,12 +105,11 @@ class ChipGroupComponent {
                 )
 
                 stores.forEach { (limit, store) ->
-                    pfButton(classes("link".modifier(), "small".modifier())) {
-                        pfIcon(START, "plus-circle".fas())
+                    clickButton(link, baseClass =  "small".modifier()) {
+                        buttonIcon(ICON_FIRST, "plus-circle".fas())
                         +"Add chip"
-                        clicks.map { randomString(Random.nextInt(10)) } handledBy store.add
-                    }
-                    pfChipGroup(store, "Max $limit", limit)
+                    }.map { randomString(Random.nextInt(10)) } handledBy store.add
+                    chipGroup(store, limit) { +"Max $limit" }
                     br {}
                 }
             }
@@ -128,8 +122,8 @@ internal object ChipGroupCode {
     //language=kotlin
     const val INLINE: String = """fun main() {
     render {
-        pfChipGroup<String> {
-            pfChips {
+        chipGroup<String> {
+            chips {
                 +"Chip one"
                 +listOf(
                     "Really long chip that goes on and on",
@@ -146,8 +140,8 @@ internal object ChipGroupCode {
     //language=kotlin
     const val CATEGORY: String = """fun main() {
     render {
-        pfChipGroup<String>(text = "Category") {
-            pfChips {
+        chipGroup<String>(text = "Category") {
+            chips {
                 +"Chip one"
                 +listOf(
                     "Really long chip that goes on and on",
@@ -164,11 +158,11 @@ internal object ChipGroupCode {
     //language=kotlin
     const val CLOSABLE: String = """fun main() {
     render {
-        pfChipGroup<String>(text = "Category", closable = true) {
+        chipGroup<String>(text = "Category", closable = true) {
             closes.map {
                 Notification(Severity.INFO, "Chip group closed")
             } handledBy Notification.store.add
-            pfChips {
+            chips {
                 +"Chip one"
                 +listOf(
                     "Really long chip that goes on and on",
@@ -188,11 +182,11 @@ internal object ChipGroupCode {
         data class Word(val text: String, val letters: Int = text.length)
 
         val store = ChipGroupStore<Word>()
-        pfChipGroup(store, "Letters") {
+        chipGroup(store, "Letters") {
             display = {
-                pfChip {
+                chip {
                     +it.text
-                    pfBadge {
+                    badge {
                         +it.letters.toString()
                     }
                 }
@@ -224,12 +218,12 @@ internal object ChipGroupCode {
         )
 
         stores.forEach { (limit, store) ->
-            pfButton(classes("link".modifier(), "small".modifier())) {
-                pfIcon(START, "plus-circle".fas())
+            pushButton(classes("link".modifier(), "small".modifier())) {
+                icon(START, "plus-circle".fas())
                 +"Add chip"
                 clicks.map { randomString(Random.nextInt(10)) } handledBy store.add
             }
-            pfChipGroup(store, "Max ${'$'}limit", limit)
+            chipGroup(store, "Max ${'$'}limit", limit)
             br {}
         }
     }

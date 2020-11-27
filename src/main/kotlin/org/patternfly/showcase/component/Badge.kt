@@ -1,22 +1,21 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Switch
+import org.patternfly.badge
 import org.patternfly.classes
 import org.patternfly.layout
 import org.patternfly.modifier
-import org.patternfly.pfBadge
-import org.patternfly.pfContent
-import org.patternfly.pfSection
-import org.patternfly.pfSwitch
+import org.patternfly.pageSection
+import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.switch
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -24,39 +23,37 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class BadgeComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Badge",
             prefix = "A ",
             key = "badge",
             text = " is used to annotate other information like a label or an object name. Badges are typically used to reflect a count, e.g. number of object, number of events, number of unread, etc."
         )
-        pfSection(baseClass = "sc-component__badges") {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection(baseClass = "sc-component__badges") {
+            h2 { +"Examples" }
             snippet("Read", BadgeCode.READ) {
-                pfBadge { +"7" }
-                pfBadge { +"24" }
-                pfBadge { +"240" }
-                pfBadge { +"999+" }
+                badge { +"7" }
+                badge { +"24" }
+                badge { +"240" }
+                badge { +"999+" }
             }
             snippet("Unread", BadgeCode.UNREAD) {
-                pfBadge {
+                badge {
                     +"7"
-                    read = const(false)
+                    read(false)
                 }
-                pfBadge {
+                badge {
                     +"24"
-                    read = const(false)
+                    read(false)
                 }
-                pfBadge {
+                badge {
                     +"240"
-                    read = const(false)
+                    read(false)
                 }
-                pfBadge {
+                badge {
                     +"999+"
-                    read = const(false)
+                    read(false)
                 }
             }
             snippet("Reactive", BadgeCode.REACTIVE) {
@@ -68,24 +65,25 @@ class BadgeComponent {
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    label(`for` = "range") { +"Value: " }
-                    range = input(id = "range", baseClass = "w-50".util()) {
-                        type = const("range")
-                        min = const("0")
-                        max = const("500")
-                        value = const("240")
+                    label {
+                        `for`("range")
+                        +"Value: "
                     }
-                    state = pfSwitch("ml-md".util()) {
-                        label = const("Read")
-                        labelOff = const("Unread")
-                        input.checked = const(true)
+                    range = input(id = "range", baseClass = "w-50".util()) {
+                        type("range")
+                        min("0")
+                        max("500")
+                        value("240")
+                    }
+                    state = switch("ml-md".util()) {
+                        label("Read")
+                        labelOff("Unread")
+                        input.checked(true)
                     }
                 }
-                pfBadge(min = 100, max = 400) {
-                    read = state.input.changes.states()
-                    range.inputs.events
-                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                        .bind()
+                badge(min = 100, max = 400) {
+                    read(state.input.changes.states())
+                    value(range.inputs.events.map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() })
                 }
 
                 MainScope().launch {
@@ -102,10 +100,10 @@ internal object BadgeCode {
     //language=kotlin
     const val READ: String = """fun main() {
     render {
-        pfBadge { +"7" }
-        pfBadge { +"24" }
-        pfBadge { +"240" }
-        pfBadge { +"999+" }
+        badge { +"7" }
+        badge { +"24" }
+        badge { +"240" }
+        badge { +"999+" }
     }
 }
 """
@@ -113,19 +111,19 @@ internal object BadgeCode {
     //language=kotlin
     const val UNREAD: String = """fun main() {
     render {
-        pfBadge {
+        badge {
             +"7"
             read = const(false)
         }
-        pfBadge {
+        badge {
             +"24"
             read = const(false)
         }
-        pfBadge {
+        badge {
             +"240"
             read = const(false)
         }
-        pfBadge {
+        badge {
             +"999+"
             read = const(false)
         }
@@ -151,13 +149,13 @@ internal object BadgeCode {
                 max = const("500")
                 value = const("240")
             }
-            state = pfSwitch("ml-md".util()) {
+            state = switch("ml-md".util()) {
                 label = const("Read")
                 labelOff = const("Unread")
                 input.checked = const(true)
             }
         }
-        pfBadge(min = 100, max = 400) {
+        badge(min = 100, max = 400) {
             read = state.input.changes.states()
             range.inputs.events
                 .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }

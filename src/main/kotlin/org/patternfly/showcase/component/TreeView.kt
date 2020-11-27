@@ -1,52 +1,51 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.elemento.elements
+import dev.fritz2.dom.html.RenderContext
 import org.patternfly.ColExIcon
 import org.patternfly.SingleIcon
 import org.patternfly.TreeBuilder
-import org.patternfly.TreeItemBuilder
-import org.patternfly.TreeView
+import org.patternfly.children
 import org.patternfly.fas
-import org.patternfly.pfChildren
-import org.patternfly.pfContent
-import org.patternfly.pfIcon
-import org.patternfly.pfSection
-import org.patternfly.pfTree
-import org.patternfly.pfTreeItem
-import org.patternfly.pfTreeView
+import org.patternfly.icon
+import org.patternfly.pageSection
 import org.patternfly.showcase.data.Place
 import org.patternfly.showcase.data.placeId
 import org.patternfly.showcase.data.world
+import org.patternfly.tree
+import org.patternfly.treeItem
+import org.patternfly.treeView
 
 @Suppress("DuplicatedCode")
 class TreeViewComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Tree",
             prefix = "A ",
             key = "tree",
             text = " is a structure that displays data in a hierarchical view."
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Default", TreeViewCode.DEFAULT) {
-                pfTreeView(placeId) {
-                    makeWorld()
+                treeView(placeId) {
+                    tree {
+                        world.places.forEach { place(it) }
+                    }
                 }
             }
             snippet("Checkboxes", TreeViewCode.CHECKBOXES) {
-                pfTreeView(placeId, checkboxes = true) {
-                    makeWorld()
+                treeView(placeId, checkboxes = true) {
+                    tree {
+                        world.places.forEach { place(it) }
+                    }
                 }
             }
             snippet("Icons", TreeViewCode.ICONS) {
-                pfTreeView(placeId) {
+                treeView(placeId) {
                     icons = { place ->
                         when {
                             place.id.contains("fa-") -> {
-                                SingleIcon { pfIcon(place.id.substringAfter("fa-").fas()) }
+                                SingleIcon { icon(place.id.substringAfter("fa-").fas()) }
                             }
                             place.id.matches("[a-z]{2}".toRegex()) -> {
                                 SingleIcon {
@@ -58,46 +57,38 @@ class TreeViewComponent {
                             }
                             else -> {
                                 ColExIcon(
-                                    collapsed = { pfIcon("folder".fas()) },
-                                    expanded = { pfIcon("folder-open".fas()) }
+                                    collapsed = { icon("folder".fas()) },
+                                    expanded = { icon("folder-open".fas()) }
                                 )
                             }
                         }
 
                     }
-                    makeWorld()
+                    tree {
+                        world.places.forEach { place(it) }
+                    }
                 }
             }
             snippet("Badges", TreeViewCode.BADGES) {
-                pfTreeView(placeId, badges = true) {
-                    makeWorld()
+                treeView(placeId, badges = true) {
+                    tree {
+                        world.places.forEach { place(it) }
+                    }
                 }
             }
-        }
-    }
-}
-
-private fun TreeView<Place>.makeWorld() {
-    pfTree {
-        for (place in world.places) {
-            place(place)
         }
     }
 }
 
 private fun TreeBuilder<Place>.place(place: Place) {
-    pfTreeItem(place) {
+    treeItem(place) {
         if (place.places.isNotEmpty()) {
-            pfChildren {
-                for (child in place.places) {
-                    place(child)
-                }
+            children {
+                place.places.forEach { place(it) }
             }
         }
     }
 }
-
-
 
 internal object TreeViewCode {
 

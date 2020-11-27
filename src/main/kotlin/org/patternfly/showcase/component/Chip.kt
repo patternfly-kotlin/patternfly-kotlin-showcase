@@ -1,94 +1,89 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
-import dev.fritz2.elemento.elements
+import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.patternfly.Notification
-import org.patternfly.Severity
+import org.patternfly.badge
+import org.patternfly.chip
 import org.patternfly.component
-import org.patternfly.pfBadge
-import org.patternfly.pfChip
-import org.patternfly.pfContent
-import org.patternfly.pfSection
+import org.patternfly.pageSection
+import org.patternfly.showcase.EVENT_DELAY
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class ChipComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Chip",
             key = "Chips",
             text = " are used to communicate a value, a tag, or a set of attribute-value pairs within workflows that involve filtering or tagging a set of objects. Related design guidelines: ",
             link = ("filters" to "Filters")
         )
-        pfSection(baseClass = "sc-component__chips") {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection(baseClass = "sc-component__chips") {
+            h2 { +"Examples" }
             snippet("Basic", ChipCode.BASIC) {
-                pfChip { +"Chip" }
+                chip { +"Chip" }
                 br {}
-                pfChip { +"Really long chip that goes on and on" }
+                chip { +"Really long chip that goes on and on" }
                 br {}
-                pfChip {
+                chip {
                     +"Chip"
-                    pfBadge { +"23" }
+                    badge { +"23" }
                 }
                 br {}
-                pfChip(readOnly = true) { +"Read-only chip" }
+                chip(readOnly = true) { +"Read-only chip" }
                 br {}
-                pfChip(readOnly = true) {
+                chip(readOnly = true) {
                     +"Read-only chip"
-                    pfBadge { +"42" }
+                    badge { +"42" }
                 }
-                pfChip {
+                chip {
                     +"Cloe me"
-                    closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
+                    closes handledBy Notification.info("Chip closed")
                 }
             }
-            snippet("Reactive", ChipCode.REACTIVE) {
-                fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+        }
+        snippet("Reactive", ChipCode.REACTIVE) {
+            fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
-                val text: Input = input(baseClass = "form-control".component()) {
-                    type = const("text")
-                    value = const("Chip")
-                    placeholder = const("Chip text")
+            val text: Input = input(baseClass = "form-control".component()) {
+                type("text")
+                value("Chip")
+                placeholder("Chip text")
+            }
+            br {}
+            br {}
+            chip(readOnly = true) {
+                text.keyups.map { currentValue(it) }.asText()
+            }
+            br {}
+            chip {
+                text.keyups.map { currentValue(it) }.asText()
+            }
+            br {}
+            chip(readOnly = true) {
+                text.keyups.map { currentValue(it) }.asText()
+                badge {
+                    value(text.keyups.map { currentValue(it).length })
                 }
-                br {}
-                br {}
-                pfChip(readOnly = true) {
-                    text.keyups.map { currentValue(it) }.bind()
+            }
+            br {}
+            chip {
+                text.keyups.map { currentValue(it) }.asText()
+                badge {
+                    value(text.keyups.map { currentValue(it).length })
                 }
-                br {}
-                pfChip {
-                    text.keyups.map { currentValue(it) }.bind()
-                }
-                br {}
-                pfChip(readOnly = true) {
-                    text.keyups.map { currentValue(it) }.bind()
-                    pfBadge {
-                        text.keyups.map { currentValue(it).length }.bind()
-                    }
-                }
-                br {}
-                pfChip {
-                    text.keyups.map { currentValue(it) }.bind()
-                    pfBadge {
-                        text.keyups.map { currentValue(it).length }.bind()
-                    }
-                }
+            }
 
-                MainScope().launch {
-                    delay(EVENT_DELAY)
-                    text.domNode.dispatchEvent(Event(Events.keyup.name))
-                }
+            MainScope().launch {
+                delay(EVENT_DELAY)
+                text.domNode.dispatchEvent(Event(Events.keyup.name))
             }
         }
     }
@@ -99,22 +94,22 @@ internal object ChipCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfChip { +"Chip" }
+        chip { +"Chip" }
         br {}
-        pfChip { +"Really long chip that goes on and on" }
+        chip { +"Really long chip that goes on and on" }
         br {}
-        pfChip {
+        chip {
             +"Chip"
-            pfBadge { +"23" }
+            badge { +"23" }
         }
         br {}
-        pfChip(readOnly = true) { +"Read-only chip" }
+        chip(readOnly = true) { +"Read-only chip" }
         br {}
-        pfChip(readOnly = true) {
+        chip(readOnly = true) {
             +"Read-only chip"
-            pfBadge { +"42" }
+            badge { +"42" }
         }
-        pfChip {
+        chip {
             +"Cloe me"
             closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
         }
@@ -134,24 +129,24 @@ internal object ChipCode {
         }
         br {}
         br {}
-        pfChip(readOnly = true) {
+        chip(readOnly = true) {
             text.keyups.map { currentValue(it) }.bind()
         }
         br {}
-        pfChip {
+        chip {
             text.keyups.map { currentValue(it) }.bind()
         }
         br {}
-        pfChip(readOnly = true) {
+        chip(readOnly = true) {
             text.keyups.map { currentValue(it) }.bind()
-            pfBadge {
+            badge {
                 text.keyups.map { currentValue(it).length }.bind()
             }
         }
         br {}
-        pfChip {
+        chip {
             text.keyups.map { currentValue(it) }.bind()
-            pfBadge {
+            badge {
                 text.keyups.map { currentValue(it).length }.bind()
             }
         }

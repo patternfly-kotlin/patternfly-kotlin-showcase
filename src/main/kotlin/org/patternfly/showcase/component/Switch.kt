@@ -1,18 +1,16 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.elements
 import kotlinx.coroutines.flow.map
 import org.patternfly.Notification
+import org.patternfly.NotificationStore
 import org.patternfly.Severity
-import org.patternfly.pfContent
-import org.patternfly.pfSection
-import org.patternfly.pfSwitch
+import org.patternfly.pageSection
+import org.patternfly.switch
 
 class SwitchComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Switch",
             prefix = "Use a ",
@@ -20,33 +18,31 @@ class SwitchComponent {
             text = " to toggle the state of a setting (between on and off). Switches and checkboxes can often be used interchangeably, but the switch provides a more explicit, visible representation on a setting. Related design guidelines: ",
             ("selection-controls" to "Selection controls")
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Basic", SwitchCode.BASIC) {
-                pfSwitch {
-                    label = const("Message when on")
-                    labelOff = const("Message when off")
+                switch {
+                    label("Message when on")
+                    labelOff("Message when off")
                 }
             }
             snippet("Without label", SwitchCode.WITHOUT_LABEL) {
-                pfSwitch()
+                switch()
             }
             snippet("Disabled", SwitchCode.DISABLED) {
-                pfSwitch {
-                    label = const("Message when on")
-                    labelOff = const("Message when off")
-                    disabled = const(true)
+                switch {
+                    label("Message when on")
+                    labelOff("Message when off")
+                    disabled(true)
                 }
             }
             snippet("Reactive", SwitchCode.REACTIVE) {
-                pfSwitch {
-                    label = const("Message when on")
-                    labelOff = const("Message when off")
+                switch {
+                    label("Message when on")
+                    labelOff("Message when off")
                     input.changes.states().map {
                         Notification(Severity.INFO, "Switch is ${if (it) "" else "not"} checked")
-                    } handledBy Notification.store.add
+                    } handledBy NotificationStore.add
                 }
             }
         }
@@ -58,7 +54,7 @@ internal object SwitchCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfSwitch {
+        switch {
             label = const("Message when on")
             labelOff = const("Message when off")
         }
@@ -69,7 +65,7 @@ internal object SwitchCode {
     //language=kotlin
     const val WITHOUT_LABEL: String = """fun main() {
     render {
-            pfSwitch()
+            switch()
     }
 }
 """
@@ -77,7 +73,7 @@ internal object SwitchCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pfSwitch {
+        switch {
             label = const("Message when on")
             labelOff = const("Message when off")
             disabled = const(true)
@@ -89,7 +85,7 @@ internal object SwitchCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        pfSwitch {
+        switch {
             label = const("Message when on")
             labelOff = const("Message when off")
             input.changes.states().map {

@@ -1,32 +1,28 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.RootStore
-import dev.fritz2.binding.action
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
-import dev.fritz2.elemento.elements
-import kotlinx.coroutines.Job
+import dev.fritz2.binding.storeOf
+import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.patternfly.ButtonVariation.secondary
 import org.patternfly.Notification
+import org.patternfly.NotificationStore
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
-import org.patternfly.modifier
-import org.patternfly.pfAlert
-import org.patternfly.pfAlertDescription
-import org.patternfly.pfAlertGroup
-import org.patternfly.pfButton
-import org.patternfly.pfContent
-import org.patternfly.pfSection
+import org.patternfly.alert
+import org.patternfly.alertDescription
+import org.patternfly.alertGroup
+import org.patternfly.clickButton
+import org.patternfly.pageSection
+import org.patternfly.showcase.TICKER_DELAY
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class AlertGroupComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Alert group",
             prefix = "An ",
@@ -34,21 +30,18 @@ class AlertGroupComponent {
             text = " is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts. Related design guidelines: ",
             link = ("alerts-and-notifications" to "Alerts and notifications")
         )
-        pfSection {
-            className = const("sc-component__buttons")
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection(baseClass = "sc-component__buttons") {
+            h2 { +"Examples" }
             snippet("Static alert group", AlertGroupCode.STATIC_ALERT_GROUP) {
-                pfAlertGroup {
-                    pfAlert(SUCCESS, "Success alert title", inline = true)
-                    pfAlert(DANGER, "Danger alert title", inline = true)
-                    pfAlert(INFO, "Info alert title", inline = true) {
-                        pfAlertDescription {
+                alertGroup {
+                    alert(SUCCESS, "Success alert title", inline = true)
+                    alert(DANGER, "Danger alert title", inline = true)
+                    alert(INFO, "Info alert title", inline = true) {
+                        alertDescription {
                             p {
                                 +"Info alert description. "
                                 a {
-                                    href = const("#")
+                                    href("#")
                                     +"This is a link."
                                 }
                             }
@@ -57,57 +50,29 @@ class AlertGroupComponent {
                 }
             }
             snippet("Toast alert group", AlertGroupCode.TOAST_ALERT_GROUP) {
-                pfButton(baseClass = "secondary".modifier()) {
+                clickButton(secondary) {
                     +"Add toast success alert"
-                    clicks
-                        .map { Notification(SUCCESS, "Toast Success Alert") }
-                        .handledBy(Notification.store.add)
-                }
-                pfButton(baseClass = "secondary".modifier()) {
+                } handledBy Notification.success("Toast Success Alert")
+                clickButton(secondary) {
                     +"Add toast danger alert"
-                    clicks
-                        .map { Notification(DANGER, "Toast Danger Alert") }
-                        .handledBy(Notification.store.add)
-                }
-                pfButton(baseClass = "secondary".modifier()) {
+                } handledBy Notification.error("Toast Danger Alert")
+                clickButton(secondary) {
                     +"Add toast info alert"
-                    clicks
-                        .map { Notification(INFO, "Toast Info Alert") }
-                        .handledBy(Notification.store.add)
-                }
+                } handledBy Notification.info("Toast Info Alert")
             }
             snippet("Reactive", AlertGroupCode.REACTIVE) {
-                var job: Job? = null
-                val counter = object : RootStore<Int>(0, dropInitialData = true) {
-                    val inc = handle { it + 1 }
-                }
-                counter.data
-                    .map { Notification(INFO, "Async notification $it") }
-                    .handledBy(Notification.store.add)
+                val tick = storeOf(false)
+                clickButton(secondary) { +"Start async alerts" }.map { true } handledBy tick.update
+                clickButton(secondary) { +"Stop async alerts" }.map { false } handledBy tick.update
 
-                fun startSending() {
-                    job = MainScope().launch {
-                        while (true) {
-                            action() handledBy counter.inc
+                MainScope().launch {
+                    tick.data.collect {
+                        var counter = 0
+                        while (it) {
+                            NotificationStore.add(Notification(INFO, "Async notification $counter"))
+                            counter++
                             delay(TICKER_DELAY)
                         }
-                    }
-                }
-
-                fun stopSending() {
-                    job?.cancel()
-                }
-
-                pfButton(baseClass = "secondary".modifier()) {
-                    +"Start async alerts"
-                    MainScope().launch {
-                        clicks.events.collect { startSending() }
-                    }
-                }
-                pfButton(baseClass = "secondary".modifier()) {
-                    +"Stop async alerts"
-                    MainScope().launch {
-                        clicks.events.collect { stopSending() }
                     }
                 }
             }
@@ -120,11 +85,11 @@ internal object AlertGroupCode {
     //language=kotlin
     const val STATIC_ALERT_GROUP: String = """fun main() {
     render {
-        pfAlertGroup {
-            pfAlert(SUCCESS, "Success alert title", inline = true)
-            pfAlert(DANGER, "Danger alert title", inline = true)
-            pfAlert(INFO, "Info alert title", inline = true) {
-                pfAlertDescription {
+        alertGroup {
+            alert(SUCCESS, "Success alert title", inline = true)
+            alert(DANGER, "Danger alert title", inline = true)
+            alert(INFO, "Info alert title", inline = true) {
+                alertDescription {
                     p {
                         +"Info alert description. "
                         a {
@@ -142,19 +107,19 @@ internal object AlertGroupCode {
     //language=kotlin
     const val TOAST_ALERT_GROUP: String = """fun main() {
     render {
-        pfButton(baseClass = "secondary".modifier()) {
+        pushButton(baseClass = "secondary".modifier()) {
             +"Add toast success alert"
             clicks
                 .map { Notification(SUCCESS, "Toast Success Alert") }
                 .handledBy(Notification.store.add)
         }
-        pfButton(baseClass = "secondary".modifier()) {
+        pushButton(baseClass = "secondary".modifier()) {
             +"Add toast danger alert"
             clicks
                 .map { Notification(DANGER, "Toast Danger Alert") }
                 .handledBy(Notification.store.add)
         }
-        pfButton(baseClass = "secondary".modifier()) {
+        pushButton(baseClass = "secondary".modifier()) {
             +"Add toast info alert"
             clicks
                 .map { Notification(INFO, "Toast Info Alert") }
@@ -188,13 +153,13 @@ internal object AlertGroupCode {
             job?.cancel()
         }
 
-        pfButton(baseClass = "secondary".modifier()) {
+        pushButton(baseClass = "secondary".modifier()) {
             +"Start async alerts"
             MainScope().launch {
                 clicks.events.collect { startSending() }
             }
         }
-        pfButton(baseClass = "secondary".modifier()) {
+        pushButton(baseClass = "secondary".modifier()) {
             +"Stop async alerts"
             MainScope().launch {
                 clicks.events.collect { stopSending() }

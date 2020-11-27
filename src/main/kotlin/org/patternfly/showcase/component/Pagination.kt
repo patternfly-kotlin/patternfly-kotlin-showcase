@@ -1,11 +1,9 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -15,10 +13,10 @@ import org.patternfly.Switch
 import org.patternfly.classes
 import org.patternfly.layout
 import org.patternfly.modifier
-import org.patternfly.pfContent
-import org.patternfly.pfPagination
-import org.patternfly.pfSection
-import org.patternfly.pfSwitch
+import org.patternfly.pageSection
+import org.patternfly.pagination
+import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.switch
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -26,7 +24,7 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class PaginationComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Pagination",
             prefix = "The ",
@@ -34,26 +32,24 @@ class PaginationComponent {
             text = " component is used to navigate pages in lists, tables, and other content views. Related design guidelines: ",
             link = ("lists-and-tables" to "Lists and tables")
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Basic", PaginationCode.BASIC) {
-                pfPagination(PageInfo(10, 0, 73))
+                pagination(PageInfo(10, 0, 73))
             }
             snippet("Disabled", PaginationCode.DISABLED) {
-                pfPagination(PageInfo(10, 0, 73)) {
-                    disabled = const(true)
+                pagination(PageInfo(10, 0, 73)) {
+                    disabled(true)
                 }
             }
             snippet("No items", PaginationCode.NO_ITEMS) {
-                pfPagination()
+                pagination()
             }
             snippet("One page", PaginationCode.ONE_PAGE) {
-                pfPagination(PageInfo(10, 0, 8))
+                pagination(PageInfo(10, 0, 8))
             }
             snippet("Compact", PaginationCode.COMPACT) {
-                pfPagination(PageInfo(10, 0, 73), compact = true)
+                pagination(PageInfo(10, 0, 73), compact = true)
             }
             snippet("Reactive", PaginationCode.REACTIVE) {
                 lateinit var range: Input
@@ -64,27 +60,30 @@ class PaginationComponent {
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    label(`for` = "total") { +"Total: " }
-                    range = input(id = "total", baseClass = "w-50".util()) {
-                        type = const("range")
-                        min = const("0")
-                        max = const("200")
-                        value = const("123")
+                    label {
+                        `for`("total")
+                        +"Total: "
                     }
-                    enabled = pfSwitch("ml-md".util()) {
-                        label = const("Enabled")
-                        labelOff = const("Disabled")
-                        input.checked = const(true)
+                    range = input(id = "total", baseClass = "w-50".util()) {
+                        type("range")
+                        min("0")
+                        max("200")
+                        value("123")
+                    }
+                    enabled = switch("ml-md".util()) {
+                        label("Enabled")
+                        labelOff("Disabled")
+                        input.checked(true)
                     }
                 }
-                pfPagination {
-                    disabled = enabled.input.changes.states().map { !it }
+                pagination {
+                    disabled(enabled.input.changes.states().map { !it })
                     range.inputs.events
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                         .handledBy(pageInfoHandler.total)
                 }
-                pfPagination(compact = true, baseClass = "mt-sm".util()) {
-                    disabled = enabled.input.changes.states().map { !it }
+                pagination(compact = true, baseClass = "mt-sm".util()) {
+                    disabled(enabled.input.changes.states().map { !it })
                     range.inputs.events
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                         .handledBy(pageInfoHandler.total)
@@ -104,7 +103,7 @@ internal object PaginationCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-            pfPagination(PageInfo(10, 0, 73))
+            pagination(PageInfo(10, 0, 73))
     }
 }
 """
@@ -112,7 +111,7 @@ internal object PaginationCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pfPagination(PageInfo(10, 0, 73)) {
+        pagination(PageInfo(10, 0, 73)) {
             disabled = const(true)
         }
     }
@@ -122,7 +121,7 @@ internal object PaginationCode {
     //language=kotlin
     const val NO_ITEMS: String = """fun main() {
     render {
-            pfPagination()
+            pagination()
     }
 }
 """
@@ -130,7 +129,7 @@ internal object PaginationCode {
     //language=kotlin
     const val ONE_PAGE: String = """fun main() {
     render {
-        pfPagination(PageInfo(10, 0, 8))
+        pagination(PageInfo(10, 0, 8))
     }
 }
 """
@@ -138,7 +137,7 @@ internal object PaginationCode {
     //language=kotlin
     const val COMPACT: String = """fun main() {
     render {
-        pfPagination(PageInfo(10, 0, 73), compact = true)
+        pagination(PageInfo(10, 0, 73), compact = true)
     }
 }
 """
@@ -161,19 +160,19 @@ internal object PaginationCode {
                 max = const("200")
                 value = const("123")
             }
-            enabled = pfSwitch("ml-md".util()) {
+            enabled = switch("ml-md".util()) {
                 label = const("Enabled")
                 labelOff = const("Disabled")
                 input.checked = const(true)
             }
         }
-        pfPagination {
+        pagination {
             disabled = enabled.input.changes.states().map { !it }
             range.inputs.events
                 .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                 .handledBy(pageInfoHandler.total)
         }
-        pfPagination(compact = true, baseClass = "mt-sm".util()) {
+        pagination(compact = true, baseClass = "mt-sm".util()) {
             disabled = enabled.input.changes.states().map { !it }
             range.inputs.events
                 .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }

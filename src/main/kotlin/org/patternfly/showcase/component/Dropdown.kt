@@ -2,13 +2,10 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.action
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.elements
 import dev.fritz2.elemento.styleHidden
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
@@ -20,29 +17,30 @@ import org.patternfly.Align.RIGHT
 import org.patternfly.Dropdown
 import org.patternfly.Entry
 import org.patternfly.Notification
+import org.patternfly.NotificationStore
 import org.patternfly.Severity.INFO
 import org.patternfly.Switch
 import org.patternfly.TriState
 import org.patternfly.classes
 import org.patternfly.component
+import org.patternfly.dropdown
+import org.patternfly.dropdownActionToggle
+import org.patternfly.dropdownCheckboxToggle
+import org.patternfly.dropdownGroups
+import org.patternfly.dropdownItems
+import org.patternfly.dropdownKebabToggle
+import org.patternfly.dropdownToggle
 import org.patternfly.fas
+import org.patternfly.group
+import org.patternfly.icon
+import org.patternfly.item
+import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
-import org.patternfly.pfContent
-import org.patternfly.pfDropdown
-import org.patternfly.pfDropdownGroups
-import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownToggle
-import org.patternfly.pfDropdownToggleAction
-import org.patternfly.pfDropdownToggleCheckbox
-import org.patternfly.pfDropdownToggleKebab
-import org.patternfly.pfGroup
-import org.patternfly.pfIcon
-import org.patternfly.pfItem
-import org.patternfly.pfItems
-import org.patternfly.pfSection
-import org.patternfly.pfSeparator
-import org.patternfly.pfSwitch
+import org.patternfly.pageSection
+import org.patternfly.separator
+import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.switch
 import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
@@ -51,212 +49,210 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
 class DropdownComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Dropdown",
             prefix = "Use a ",
             key = "dropdown",
             text = " when you want to present a list of actions in a limited space."
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Basic", DropdownCode.BASIC) {
-                pfDropdown<String> {
-                    pfDropdownToggle { content = { +"Dropdown" } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String> {
+                    dropdownToggle { content = { +"Dropdown" } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Disabled", DropdownCode.DISABLED) {
-                pfDropdown<String> {
-                    pfDropdownToggle {
+                dropdown<String> {
+                    dropdownToggle {
                         content = { +"Dropdown" }
-                        disabled = const(true)
+                        disabled(true)
                     }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Primary toggle", DropdownCode.PRIMARY) {
-                pfDropdown<String> {
-                    pfDropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String> {
+                    dropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Position right", DropdownCode.RIGHT) {
-                pfDropdown<String>(align = RIGHT) {
-                    pfDropdownToggle { content = { +"Dropdown" } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String>(align = RIGHT) {
+                    dropdownToggle { content = { +"Dropdown" } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Direction up", DropdownCode.UP) {
-                pfDropdown<String>(up = true) {
-                    pfDropdownToggle { content = { +"Dropdown" } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String>(up = true) {
+                    dropdownToggle { content = { +"Dropdown" } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("With kebab", DropdownCode.KEBAB) {
-                pfDropdown<String> {
-                    pfDropdownToggleKebab()
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String> {
+                    dropdownKebabToggle()
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Icon only", DropdownCode.ICON) {
-                pfDropdown<String> {
-                    pfDropdownToggle { icon = { pfIcon("th".fas()) } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String> {
+                    dropdownToggle { icon = { icon("th".fas()) } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Icons and descriptions", DropdownCode.DESCRIPTION) {
-                pfDropdown<String> {
-                    pfDropdownToggle { content = { +"Dropdown" } }
-                    pfDropdownItems {
-                        pfItem("Action 1") {
-                            icon = { pfIcon("cog".fas()) }
+                dropdown<String> {
+                    dropdownToggle { content = { +"Dropdown" } }
+                    dropdownItems {
+                        item("Action 1") {
+                            icon = { icon("cog".fas()) }
                         }
-                        pfItem("Action 2") {
+                        item("Action 2") {
                             description = "This is a description"
                         }
-                        pfItem("Action 3") {
-                            icon = { img { src = const("./pf-logo-small.svg") } }
+                        item("Action 3") {
+                            icon = { img { src("./pf-logo-small.svg") } }
                             description = "This is a description"
                         }
-                        pfSeparator()
-                        pfItem("Disabled action 1") {
+                        separator()
+                        item("Disabled action 1") {
                             disabled = true
-                            icon = { pfIcon("cog".fas()) }
+                            icon = { icon("cog".fas()) }
                         }
-                        pfItem("Disabled action 2") {
+                        item("Disabled action 2") {
                             disabled = true
                             description = "This is a description"
                         }
-                        pfItem("Disabled action 3") {
+                        item("Disabled action 3") {
                             disabled = true
-                            icon = { pfIcon("cog".fas()) }
+                            icon = { icon("cog".fas()) }
                             description = "This is a description"
                         }
                     }
                 }
             }
             snippet("Split button", DropdownCode.CHECKBOX_TOGGLE) {
-                pfDropdown<String> {
-                    pfDropdownToggleCheckbox()
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String> {
+                    dropdownCheckboxToggle()
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
-                pfDropdown<String>(baseClass = "ml-sm".util()) {
-                    pfDropdownToggleCheckbox { content = { +"10 selected" } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String>(baseClass = "ml-sm".util()) {
+                    dropdownCheckboxToggle { text { +"10 selected" } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
             }
             snippet("Split button action", DropdownCode.ACTION_TOGGLE) {
-                pfDropdown<String> {
-                    pfDropdownToggleAction { action = { +"Action" } }
-                    pfDropdownItems {
-                        pfItem("Action")
-                        pfItem("Disabled Action") {
+                dropdown<String> {
+                    dropdownActionToggle { action { +"Action" } }
+                    dropdownItems {
+                        item("Action")
+                        item("Disabled Action") {
                             disabled = true
                         }
-                        pfSeparator()
-                        pfItem("Separated Action")
+                        separator()
+                        item("Separated Action")
                     }
                 }
-                pfDropdown<String>(baseClass = "ml-sm".util()) {
-                    pfDropdownToggleAction { action = { pfIcon("cog".fas()) } }
-                    pfDropdownItems {
-                        pfItem("Action") {
-                            icon = { pfIcon("cog".fas()) }
+                dropdown<String>(baseClass = "ml-sm".util()) {
+                    dropdownActionToggle { action { icon("cog".fas()) } }
+                    dropdownItems {
+                        item("Action") {
+                            icon = { icon("cog".fas()) }
                         }
-                        pfItem("Disabled Action") {
+                        item("Disabled Action") {
                             disabled = true
-                            icon = { pfIcon("bell".fas()) }
+                            icon = { icon("bell".fas()) }
                         }
-                        pfSeparator()
-                        pfItem("Separated Action") {
-                            icon = { pfIcon("cubes".fas()) }
+                        separator()
+                        item("Separated Action") {
+                            icon = { icon("cubes".fas()) }
                         }
                     }
                 }
             }
             snippet("Groups", DropdownCode.GROUPS) {
-                pfDropdown<String> {
-                    pfDropdownToggle { content = { +"Dropdown" } }
-                    pfDropdownGroups {
-                        pfGroup {
-                            pfItem("Action 1")
-                            pfItem("Action 2")
+                dropdown<String> {
+                    dropdownToggle { content = { +"Dropdown" } }
+                    dropdownGroups {
+                        group {
+                            item("Action 1")
+                            item("Action 2")
                         }
-                        pfSeparator()
-                        pfGroup("Group 1") {
-                            pfItem("Action 1")
-                            pfItem("Action 2")
+                        separator()
+                        group("Group 1") {
+                            item("Action 1")
+                            item("Action 2")
                         }
-                        pfSeparator()
-                        pfGroup("Group 2") {
-                            pfItem("Action 1")
-                            pfItem("Action 2")
+                        separator()
+                        group("Group 2") {
+                            item("Action 1")
+                            item("Action 2")
                         }
                     }
                 }
@@ -271,23 +267,23 @@ class DropdownComponent {
                     with(dropdown) {
                         store.select.unwrap()
                             .map { Notification(INFO, "$name: Clicked on $it") }
-                            .handledBy(Notification.store.add)
+                            .handledBy(NotificationStore.add)
                         ces.collapsed
                             .map { Notification(INFO, "$name: Dropdown collapsed") }
-                            .handledBy(Notification.store.add)
+                            .handledBy(NotificationStore.add)
                         ces.expanded
                             .map { Notification(INFO, "$name: Dropdown expanded") }
-                            .handledBy(Notification.store.add)
+                            .handledBy(NotificationStore.add)
                     }
                 }
 
-                fun items(): List<Entry<String>> = pfItems {
-                    pfItem("Action")
-                    pfItem("Disabled Action") {
+                fun items(): List<Entry<String>> = items {
+                    item("Action")
+                    item("Disabled Action") {
                         disabled = true
                     }
-                    pfSeparator()
-                    pfItem("Separated Action")
+                    separator()
+                    item("Separated Action")
                 }
 
                 div(baseClass = classes {
@@ -296,50 +292,50 @@ class DropdownComponent {
                     +"mb-sm".util()
                 }) {
                     text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                        type = const("text")
-                        value = const("Dropdown")
-                        placeholder = const("Dropdown text")
+                        type("text")
+                        value("Dropdown")
+                        placeholder("Dropdown text")
                     }
-                    enabled = pfSwitch("ml-md".util()) {
-                        label = const("Enabled")
-                        labelOff = const("Disabled")
-                        input.checked = const(true)
+                    enabled = switch("ml-md".util()) {
+                        label("Enabled")
+                        labelOff("Disabled")
+                        input.checked(true)
                     }
                 }
-                pfDropdown<String>(baseClass = "mt-sm".util()) {
-                    pfDropdownToggle {
-                        content = { text.keyups.map { currentValue(it) }.bind() }
-                        disabled = enabled.input.changes.states().map { !it }
+                dropdown<String>(baseClass = "mt-sm".util()) {
+                    dropdownToggle {
+                        content = { text.keyups.map { currentValue(it) }.asText() }
+                        disabled(enabled.input.changes.states().map { !it })
                     }
-                    pfDropdownItems()
+                    dropdownItems()
                     registerEvents(this, "Text")
-                    action(items()) handledBy store.update
+                    store.update(items())
                 }
-                pfDropdown<String>(baseClass = "ml-sm".util()) {
-                    pfDropdownToggleKebab {
-                        disabled = enabled.input.changes.states().map { !it }
+                dropdown<String>(baseClass = "ml-sm".util()) {
+                    dropdownKebabToggle {
+                        disabled(enabled.input.changes.states().map { !it })
                     }
-                    pfDropdownItems()
+                    dropdownItems()
                     registerEvents(this, "Kebab")
-                    action(items()) handledBy store.update
+                    store.update(items())
                 }
-                pfDropdown<String>(baseClass = "ml-sm".util()) {
-                    pfDropdownToggle {
-                        disabled = enabled.input.changes.states().map { !it }
-                        icon = { pfIcon("cog".fas()) }
+                dropdown<String>(baseClass = "ml-sm".util()) {
+                    dropdownToggle {
+                        disabled(enabled.input.changes.states().map { !it })
+                        icon = { icon("cog".fas()) }
                     }
-                    pfDropdownItems()
+                    dropdownItems()
                     registerEvents(this, "Icon")
-                    action(items()) handledBy store.update
+                    store.update(items())
                 }
                 br {}
-                pfDropdown<String>(baseClass = "mt-sm".util()) {
-                    pfDropdownToggleCheckbox {
-                        content = {
+                dropdown<String>(baseClass = "mt-sm".util()) {
+                    dropdownCheckboxToggle {
+                        text {
                             domNode.styleHidden = true
                             merge(
-                                this@pfDropdown.store.select.unwrap(),
-                                this@pfDropdownToggleCheckbox.input.changes.states()
+                                this@dropdown.store.select.unwrap(),
+                                this@dropdownCheckboxToggle.input.changes.states()
                             ).map {
                                 val value = when (it) {
                                     is String -> {
@@ -354,53 +350,53 @@ class DropdownComponent {
                                 }
                                 domNode.styleHidden = value.isEmpty()
                                 value
-                            }.bind()
+                            }.asText()
                         }
-                        disabled = enabled.input.changes.states().map { !it }
-                        triState = this@pfDropdown.store.select.unwrap().map {
+                        disabled(enabled.input.changes.states().map { !it })
+                        triState(this@dropdown.store.select.unwrap().map {
                             when (it) {
                                 "Select none" -> TriState.OFF
                                 "Select visible" -> TriState.INDETERMINATE
                                 "Select all" -> TriState.ON
                                 else -> TriState.OFF
                             }
-                        }
+                        })
                     }
-                    pfDropdownItems {
-                        pfItem("Select none")
-                        pfItem("Select visible")
-                        pfItem("Select all")
+                    dropdownItems {
+                        item("Select none")
+                        item("Select visible")
+                        item("Select all")
                     }
                     registerEvents(this, "Split button")
                 }
                 br {}
-                pfDropdown<String>(baseClass = "mt-sm".util()) {
-                    pfDropdownToggleAction {
-                        action = {
-                            text.keyups.map { currentValue(it) }.bind()
+                dropdown<String>(baseClass = "mt-sm".util()) {
+                    dropdownActionToggle {
+                        action {
+                            text.keyups.map { currentValue(it) }.asText()
                             clicks
                                 .map { Notification(INFO, "Action clicked") }
-                                .handledBy(Notification.store.add)
+                                .handledBy(NotificationStore.add)
                         }
-                        disabled = enabled.input.changes.states().map { !it }
+                        disabled(enabled.input.changes.states().map { !it })
                     }
-                    pfDropdownItems()
+                    dropdownItems()
                     registerEvents(this, "Action text")
-                    action(items()) handledBy store.update
+                    store.update(items())
                 }
-                pfDropdown<String>(baseClass = "ml-sm".util()) {
-                    pfDropdownToggleAction {
-                        action = {
-                            pfIcon("cog".fas())
+                dropdown<String>(baseClass = "ml-sm".util()) {
+                    dropdownActionToggle {
+                        action {
+                            icon("cog".fas())
                             clicks
                                 .map { Notification(INFO, "Action clicked") }
-                                .handledBy(Notification.store.add)
+                                .handledBy(NotificationStore.add)
                         }
-                        disabled = enabled.input.changes.states().map { !it }
+                        disabled(enabled.input.changes.states().map { !it })
                     }
-                    pfDropdownItems()
+                    dropdownItems()
                     registerEvents(this, "Action icon")
-                    action(items()) handledBy store.update
+                    store.update(items())
                 }
 
                 MainScope().launch {
@@ -417,15 +413,15 @@ internal object DropdownCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggle { content = { +"Dropdown" } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String> {
+            dropdownToggle { content = { +"Dropdown" } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -435,18 +431,18 @@ internal object DropdownCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggle {
+        dropdown<String> {
+            dropdownToggle {
                 content = { +"Dropdown" }
                 disabled = const(true)
             }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -456,15 +452,15 @@ internal object DropdownCode {
     //language=kotlin
     const val PRIMARY: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String> {
+            dropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -474,15 +470,15 @@ internal object DropdownCode {
     //language=kotlin
     const val RIGHT: String = """fun main() {
     render {
-        pfDropdown<String>(align = RIGHT) {
-            pfDropdownToggle { content = { +"Dropdown" } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String>(align = RIGHT) {
+            dropdownToggle { content = { +"Dropdown" } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -492,15 +488,15 @@ internal object DropdownCode {
     //language=kotlin
     const val UP: String = """fun main() {
     render {
-        pfDropdown<String>(up = true) {
-            pfDropdownToggle { content = { +"Dropdown" } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String>(up = true) {
+            dropdownToggle { content = { +"Dropdown" } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -510,15 +506,15 @@ internal object DropdownCode {
     //language=kotlin
     const val KEBAB: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggleKebab()
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String> {
+            dropdownToggleKebab()
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -528,15 +524,15 @@ internal object DropdownCode {
     //language=kotlin
     const val ICON: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggle { icon = { pfIcon("th".fas()) } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String> {
+            dropdownToggle { icon = { icon("th".fas()) } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -546,31 +542,31 @@ internal object DropdownCode {
     //language=kotlin
     const val DESCRIPTION: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggle { content = { +"Dropdown" } }
-            pfDropdownItems {
-                pfItem("Action 1") {
-                    icon = { pfIcon("cog".fas()) }
+        dropdown<String> {
+            dropdownToggle { content = { +"Dropdown" } }
+            dropdownItems {
+                item("Action 1") {
+                    icon = { icon("cog".fas()) }
                 }
-                pfItem("Action 2") {
+                item("Action 2") {
                     description = "This is a description"
                 }
-                pfItem("Action 3") {
+                item("Action 3") {
                     icon = { img { src = const("./pf-logo-small.svg") } }
                     description = "This is a description"
                 }
-                pfSeparator()
-                pfItem("Disabled action 1") {
+                separator()
+                item("Disabled action 1") {
                     disabled = true
-                    icon = { pfIcon("cog".fas()) }
+                    icon = { icon("cog".fas()) }
                 }
-                pfItem("Disabled action 2") {
+                item("Disabled action 2") {
                     disabled = true
                     description = "This is a description"
                 }
-                pfItem("Disabled action 3") {
+                item("Disabled action 3") {
                     disabled = true
-                    icon = { pfIcon("cog".fas()) }
+                    icon = { icon("cog".fas()) }
                     description = "This is a description"
                 }
             }
@@ -582,26 +578,26 @@ internal object DropdownCode {
     //language=kotlin
     const val CHECKBOX_TOGGLE: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggleCheckbox()
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String> {
+            dropdownToggleCheckbox()
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
-        pfDropdown<String>(baseClass = "ml-sm".util()) {
-            pfDropdownToggleCheckbox { content = { +"10 selected" } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String>(baseClass = "ml-sm".util()) {
+            dropdownToggleCheckbox { content = { +"10 selected" } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
     }
@@ -611,30 +607,30 @@ internal object DropdownCode {
     //language=kotlin
     const val ACTION_TOGGLE: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggleAction { action = { +"Action" } }
-            pfDropdownItems {
-                pfItem("Action")
-                pfItem("Disabled Action") {
+        dropdown<String> {
+            dropdownToggleAction { action = { +"Action" } }
+            dropdownItems {
+                item("Action")
+                item("Disabled Action") {
                     disabled = true
                 }
-                pfSeparator()
-                pfItem("Separated Action")
+                separator()
+                item("Separated Action")
             }
         }
-        pfDropdown<String>(baseClass = "ml-sm".util()) {
-            pfDropdownToggleAction { action = { pfIcon("cog".fas()) } }
-            pfDropdownItems {
-                pfItem("Action") {
-                    icon = { pfIcon("cog".fas()) }
+        dropdown<String>(baseClass = "ml-sm".util()) {
+            dropdownToggleAction { action = { icon("cog".fas()) } }
+            dropdownItems {
+                item("Action") {
+                    icon = { icon("cog".fas()) }
                 }
-                pfItem("Disabled Action") {
+                item("Disabled Action") {
                     disabled = true
-                    icon = { pfIcon("bell".fas()) }
+                    icon = { icon("bell".fas()) }
                 }
-                pfSeparator()
-                pfItem("Separated Action") {
-                    icon = { pfIcon("cubes".fas()) }
+                separator()
+                item("Separated Action") {
+                    icon = { icon("cubes".fas()) }
                 }
             }
         }
@@ -645,22 +641,22 @@ internal object DropdownCode {
     //language=kotlin
     const val GROUPS: String = """fun main() {
     render {
-        pfDropdown<String> {
-            pfDropdownToggle { content = { +"Dropdown" } }
-            pfDropdownGroups {
-                pfGroup {
-                    pfItem("Action 1")
-                    pfItem("Action 2")
+        dropdown<String> {
+            dropdownToggle { content = { +"Dropdown" } }
+            dropdownGroups {
+                group {
+                    item("Action 1")
+                    item("Action 2")
                 }
-                pfSeparator()
-                pfGroup("Group 1") {
-                    pfItem("Action 1")
-                    pfItem("Action 2")
+                separator()
+                group("Group 1") {
+                    item("Action 1")
+                    item("Action 2")
                 }
-                pfSeparator()
-                pfGroup("Group 2") {
-                    pfItem("Action 1")
-                    pfItem("Action 2")
+                separator()
+                group("Group 2") {
+                    item("Action 1")
+                    item("Action 2")
                 }
             }
         }
@@ -690,13 +686,13 @@ internal object DropdownCode {
             }
         }
 
-        fun items(): List<Entry<String>> = pfItems {
-            pfItem("Action")
-            pfItem("Disabled Action") {
+        fun items(): List<Entry<String>> = items {
+            item("Action")
+            item("Disabled Action") {
                 disabled = true
             }
-            pfSeparator()
-            pfItem("Separated Action")
+            separator()
+            item("Separated Action")
         }
 
         div(baseClass = classes {
@@ -709,46 +705,46 @@ internal object DropdownCode {
                 value = const("Dropdown")
                 placeholder = const("Dropdown text")
             }
-            enabled = pfSwitch("ml-md".util()) {
+            enabled = switch("ml-md".util()) {
                 label = const("Enabled")
                 labelOff = const("Disabled")
                 input.checked = const(true)
             }
         }
-        pfDropdown<String>(baseClass = "mt-sm".util()) {
-            pfDropdownToggle {
+        dropdown<String>(baseClass = "mt-sm".util()) {
+            dropdownToggle {
                 content = { text.keyups.map { currentValue(it) }.bind() }
                 disabled = enabled.input.changes.states().map { !it }
             }
-            pfDropdownItems()
+            dropdownItems()
             registerEvents(this, "Text")
             action(items()) handledBy store.update
         }
-        pfDropdown<String>(baseClass = "ml-sm".util()) {
-            pfDropdownToggleKebab {
+        dropdown<String>(baseClass = "ml-sm".util()) {
+            dropdownToggleKebab {
                 disabled = enabled.input.changes.states().map { !it }
             }
-            pfDropdownItems()
+            dropdownItems()
             registerEvents(this, "Kebab")
             action(items()) handledBy store.update
         }
-        pfDropdown<String>(baseClass = "ml-sm".util()) {
-            pfDropdownToggle {
+        dropdown<String>(baseClass = "ml-sm".util()) {
+            dropdownToggle {
                 disabled = enabled.input.changes.states().map { !it }
-                icon = { pfIcon("cog".fas()) }
+                icon = { icon("cog".fas()) }
             }
-            pfDropdownItems()
+            dropdownItems()
             registerEvents(this, "Icon")
             action(items()) handledBy store.update
         }
         br {}
-        pfDropdown<String>(baseClass = "mt-sm".util()) {
-            pfDropdownToggleCheckbox {
+        dropdown<String>(baseClass = "mt-sm".util()) {
+            dropdownToggleCheckbox {
                 content = {
                     domNode.styleHidden = true
                     merge(
-                        this@pfDropdown.store.clicked.unwrap(),
-                        this@pfDropdownToggleCheckbox.input.changes.states()
+                        this@dropdown.store.clicked.unwrap(),
+                        this@dropdownToggleCheckbox.input.changes.states()
                     ).map {
                         val value = when (it) {
                             is String -> {
@@ -766,7 +762,7 @@ internal object DropdownCode {
                     }.bind()
                 }
                 disabled = enabled.input.changes.states().map { !it }
-                triState = this@pfDropdown.store.clicked.unwrap().map {
+                triState = this@dropdown.store.clicked.unwrap().map {
                     when (it) {
                         "Select none" -> TriState.OFF
                         "Select visible" -> TriState.INDETERMINATE
@@ -775,16 +771,16 @@ internal object DropdownCode {
                     }
                 }
             }
-            pfDropdownItems {
-                pfItem("Select none")
-                pfItem("Select visible")
-                pfItem("Select all")
+            dropdownItems {
+                item("Select none")
+                item("Select visible")
+                item("Select all")
             }
             registerEvents(this, "Split button")
         }
         br {}
-        pfDropdown<String>(baseClass = "mt-sm".util()) {
-            pfDropdownToggleAction {
+        dropdown<String>(baseClass = "mt-sm".util()) {
+            dropdownToggleAction {
                 action = {
                     text.keyups.map { currentValue(it) }.bind()
                     clicks
@@ -793,21 +789,21 @@ internal object DropdownCode {
                 }
                 disabled = enabled.input.changes.states().map { !it }
             }
-            pfDropdownItems()
+            dropdownItems()
             registerEvents(this, "Action text")
             action(items()) handledBy store.update
         }
-        pfDropdown<String>(baseClass = "ml-sm".util()) {
-            pfDropdownToggleAction {
+        dropdown<String>(baseClass = "ml-sm".util()) {
+            dropdownToggleAction {
                 action = {
-                    pfIcon("cog".fas())
+                    icon("cog".fas())
                     clicks
                         .map { Notification(INFO, "Action clicked") }
                         .handledBy(Notification.store.add)
                 }
                 disabled = enabled.input.changes.states().map { !it }
             }
-            pfDropdownItems()
+            dropdownItems()
             registerEvents(this, "Action icon")
             action(items()) handledBy store.update
         }

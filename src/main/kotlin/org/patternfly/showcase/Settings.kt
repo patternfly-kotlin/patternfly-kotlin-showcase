@@ -1,4 +1,4 @@
-package org.patternfly.showcase.component
+package org.patternfly.showcase
 
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds

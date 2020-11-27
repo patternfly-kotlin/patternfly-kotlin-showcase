@@ -1,103 +1,69 @@
 package org.patternfly.showcase
 
-import dev.fritz2.elemento.elements
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.routing.Router
-import kotlinx.coroutines.flow.map
+import org.patternfly.Page
+import org.patternfly.brand
+import org.patternfly.expandableGroup
+import org.patternfly.headerTools
+import org.patternfly.horizontalNavigation
+import org.patternfly.installToastAlertGroup
 import org.patternfly.layout
-import org.patternfly.pfAlertGroup
-import org.patternfly.pfBrand
-import org.patternfly.pfBrandContainer
-import org.patternfly.pfBrandLink
-import org.patternfly.pfHeader
-import org.patternfly.pfHeaderTools
-import org.patternfly.pfHorizontalNavigation
-import org.patternfly.pfMain
-import org.patternfly.pfNavigationExpandableGroup
-import org.patternfly.pfNavigationItem
-import org.patternfly.pfNavigationItems
-import org.patternfly.pfNotificationBadge
-import org.patternfly.pfPage
-import org.patternfly.pfSidebar
-import org.patternfly.pfSidebarBody
-import org.patternfly.pfVerticalNavigation
-import org.patternfly.util
+import org.patternfly.navigationItem
+import org.patternfly.navigationItems
+import org.patternfly.notificationBadge
+import org.patternfly.page
+import org.patternfly.pageHeader
+import org.patternfly.pageMain
+import org.patternfly.pageSidebar
+import org.patternfly.verticalNavigation
 
 class Skeleton(private val router: Router<String>) {
-    val elements = elements {
-        pfAlertGroup(true)
-        pfPage {
-            pfHeader {
-                pfBrandContainer {
-                    pfBrandLink("#${Places.HOME}") {
-                        pfBrand("./header-logo.svg")
-                    }
+
+    val content: RenderContext.() -> Page = {
+        page {
+            pageHeader {
+                brand {
+                    home("#home")
+                    img(src = "./header-logo.svg")
                 }
-                pfHorizontalNavigation(router) {
-                    pfNavigationItems {
-                        pfNavigationItem(Places.GET_STARTED, "Get Started")
-                        pfNavigationItem(Places.component("alert"), text = "Documentation") {
-                            it.startsWith(Places.DOCUMENTATION)
+                horizontalNavigation(router) {
+                    navigationItems {
+                        navigationItem("get-started", "Get Started")
+                        navigationItem(item = "documentation:component=alert", text = "Documentation") {
+                            it.startsWith("documentation:")
                         }
-                        pfNavigationItem(Places.CONTRIBUTE, "Contribute")
-                        pfNavigationItem(Places.GET_IN_TOUCH, "Get in Touch")
+                        navigationItem("contribute", "Contribute")
+                        navigationItem("get-in-touch", "Get in Touch")
                     }
                 }
-                pfHeaderTools {
+                headerTools {
                     div("toolbar".layout()) {
                         div("toolbar".layout("group")) {
                             div("toolbar".layout("item")) {
-                                pfNotificationBadge()
+                                notificationBadge()
                             }
                         }
                     }
                 }
             }
-            pfSidebar {
-                classMap = router.map {
-                    mapOf("display-none".util() to !it.startsWith(Places.DOCUMENTATION))
-                }
-                pfSidebarBody {
-                    pfVerticalNavigation(router) {
-                        pfNavigationItems {
-                            pfNavigationExpandableGroup("Components") {
-                                pfNavigationItem(Places.component("alert"), "Alert")
-                                pfNavigationItem(Places.component("alert-group"), "Alert group")
-                                pfNavigationItem(Places.component("avatar"), "Avatar")
-                                pfNavigationItem(Places.component("badge"), "Badge")
-                                pfNavigationItem(Places.component("brand"), "Brand")
-                                pfNavigationItem(Places.component("button"), "Button")
-                                pfNavigationItem(Places.component("card"), "Card")
-                                pfNavigationItem(Places.component("chip"), "Chip")
-                                pfNavigationItem(Places.component("chip-group"), "Chip group")
-                                pfNavigationItem(Places.component("content"), "Content")
-                                pfNavigationItem(Places.component("context-selector"), "Context selector")
-                                pfNavigationItem(Places.component("data-list"), "Data list")
-                                pfNavigationItem(Places.component("data-table"), "Data table")
-                                pfNavigationItem(Places.component("drawer"), "Drawer")
-                                pfNavigationItem(Places.component("dropdown"), "Dropdown")
-                                pfNavigationItem(Places.component("empty-state"), "Empty state")
-                                pfNavigationItem(Places.component("expandable"), "Expandable")
-                                pfNavigationItem(Places.component("label"), "Label")
-                                pfNavigationItem(Places.component("options-menu"), "Options menu")
-                                pfNavigationItem(Places.component("pagination"), "Pagination")
-                                pfNavigationItem(Places.component("select"), "Select")
-                                pfNavigationItem(Places.component("switch"), "Switch")
-                                pfNavigationItem(Places.component("tabs"), "Tabs")
-                                pfNavigationItem(Places.component("title"), "Title")
-                                pfNavigationItem(Places.component("toolbar"), "Toolbar")
-                                pfNavigationItem(Places.component("tree-view"), "Tree view")
-                            }
-                            pfNavigationExpandableGroup("Demos") {
-                                pfNavigationItem(Places.demo("server"), "Servers")
-                                pfNavigationItem(Places.demo("user"), "Users")
-                            }
+            pageSidebar {
+                verticalNavigation(router) {
+                    navigationItems {
+                        expandableGroup("Components") {
+                            components.map { navigationItem(it.place, it.name) }
+                        }
+                        expandableGroup("Demos") {
+                            demos.map { navigationItem(it.place, it.name) }
                         }
                     }
                 }
             }
-            pfMain {
-                domNode.id = "main"
-            }
+            pageMain(id = "main")
         }
+    }
+
+    init {
+        installToastAlertGroup()
     }
 }

@@ -2,243 +2,241 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.handledBy
-import dev.fritz2.elemento.elements
+import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import org.patternfly.Align
 import org.patternfly.Notification
+import org.patternfly.NotificationStore
 import org.patternfly.Severity
+import org.patternfly.card
+import org.patternfly.cardActions
+import org.patternfly.cardBody
+import org.patternfly.cardCheckbox
+import org.patternfly.cardFooter
+import org.patternfly.cardHeader
+import org.patternfly.cardHeaderMain
+import org.patternfly.cardTitle
+import org.patternfly.dropdown
+import org.patternfly.dropdownItems
+import org.patternfly.dropdownKebabToggle
+import org.patternfly.item
 import org.patternfly.modifier
-import org.patternfly.pfBrand
-import org.patternfly.pfCard
-import org.patternfly.pfCardActions
-import org.patternfly.pfCardBody
-import org.patternfly.pfCardCheckbox
-import org.patternfly.pfCardFooter
-import org.patternfly.pfCardHeader
-import org.patternfly.pfCardHeaderMain
-import org.patternfly.pfCardTitle
-import org.patternfly.pfContent
-import org.patternfly.pfDropdown
-import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownToggleKebab
-import org.patternfly.pfItem
-import org.patternfly.pfSection
-import org.patternfly.pfSeparator
+import org.patternfly.pageSection
+import org.patternfly.separator
 
 class CardComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Card",
             prefix = "A ",
             key = "card",
             text = " is a flexible element for containing any kind of content. Cards are used on dashboards, in data displays (e.g. Card View), or for positioning content on a page."
         )
-        pfSection {
-            pfContent {
+        pageSection {
                 h2 { +"Examples" }
-            }
             snippet("Basic", CardCode.BASIC) {
-                pfCard {
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                card {
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("With image and action", CardCode.IMAGE_ACTION) {
-                pfCard {
-                    pfCardHeader {
-                        pfCardHeaderMain {
-                            pfBrand("./pf-logo.svg") {
+                card {
+                    cardHeader {
+                        cardHeaderMain {
+                            img {
+                                src("./pf-logo.svg")
                                 domNode.style.width = "300px"
                             }
                         }
-                        pfCardActions {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Item 1")
-                                    pfItem("Disabled Item") {
+                        cardActions {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownKebabToggle()
+                                dropdownItems {
+                                    item("Item 1")
+                                    item("Disabled Item") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Item")
+                                    separator()
+                                    item("Separated Item")
                                 }
                             }
-                            pfCardCheckbox()
+                            cardCheckbox()
                         }
                     }
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("Card title in card header", CardCode.TITLE_IN_HEADER) {
-                pfCard {
-                    pfCardHeader {
-                        pfCardActions {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                card {
+                    cardHeader {
+                        cardActions {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownKebabToggle()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
-                            pfCardCheckbox()
+                            cardCheckbox()
                         }
-                        pfCardTitle {
+                        cardTitle {
                             +"This is a really really really really really really really really really really long title"
                         }
                     }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("Only actions in card header (no title/footer)", CardCode.ONLY_ACTIONS) {
-                pfCard {
-                    pfCardHeader {
-                        pfCardActions {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                card {
+                    cardHeader {
+                        cardActions {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownKebabToggle()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
-                            pfCardCheckbox()
+                            cardCheckbox()
                         }
                     }
-                    pfCardBody {
+                    cardBody {
                         +"This is the card body, there are only actions in the card head."
                     }
                 }
             }
             snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
-                pfCard {
-                    pfCardHeader {
-                        pfCardHeaderMain {
-                            pfBrand("./pf-logo.svg") {
+                card {
+                    cardHeader {
+                        cardHeaderMain {
+                            img {
+                                src("./pf-logo.svg")
                                 domNode.style.width = "300px"
                             }
                         }
                     }
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("With no footer", CardCode.NO_FOOTER) {
-                pfCard {
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"This card has no footer" }
+                card {
+                    cardTitle { +"Title" }
+                    cardBody { +"This card has no footer" }
                 }
             }
             snippet("With no title", CardCode.NO_TITLE) {
-                pfCard {
-                    pfCardBody { +"This card has no title" }
-                    pfCardFooter { +"Footer" }
+                card {
+                    cardBody { +"This card has no title" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("With only a body", CardCode.ONLY_BODY) {
-                pfCard {
-                    pfCardBody { +"Body" }
+                card {
+                    cardBody { +"Body" }
                 }
             }
             snippet("With multiple body sections", CardCode.MULTIPLE_BODY) {
-                pfCard {
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardBody { +"Body" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                card {
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardBody { +"Body" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("With only one body that fills", CardCode.BODY_FILLS) {
-                pfCard {
+                card {
                     domNode.style.minHeight = "30em"
-                    pfCardTitle { +"Title" }
-                    pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-                    pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                    cardTitle { +"Title" }
+                    cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+                    cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("Hover", CardCode.HOVER) {
-                pfCard(baseClass = "hoverable".modifier()) {
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                card(baseClass = "hoverable".modifier()) {
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("Compact", CardCode.COMPACT) {
-                pfCard(baseClass = "compact".modifier()) {
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                card(baseClass = "compact".modifier()) {
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
             snippet("Selectable and selected", CardCode.SELECTABLE) {
-                pfCard(selectable = true) {
+                card(selectable = true) {
                     selected.data.drop(1).map {
                         Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                    } handledBy Notification.store.add
+                    } handledBy NotificationStore.add
 
-                    pfCardHeader {
-                        pfCardActions {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                    cardHeader {
+                        cardActions {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownKebabToggle()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
                         }
                     }
-                    pfCardTitle { +"First card" }
-                    pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+                    cardTitle { +"First card" }
+                    cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
-                pfCard(selectable = true) {
+                card(selectable = true) {
                     selected.data.drop(1).map {
                         Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                    } handledBy Notification.store.add
+                    } handledBy NotificationStore.add
 
-                    pfCardTitle { +"Second card" }
-                    pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+                    cardTitle { +"Second card" }
+                    cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
-                pfCard(selectable = true) {
+                card(selectable = true) {
                     selected.data.drop(1).map {
                         Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                    } handledBy Notification.store.add
+                    } handledBy NotificationStore.add
 
-                    pfCardHeader {
-                        pfCardActions {
-                            pfCardCheckbox()
+                    cardHeader {
+                        cardActions {
+                            cardCheckbox()
                         }
                     }
-                    pfCardTitle { +"Third card" }
-                    pfCardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
+                    cardTitle { +"Third card" }
+                    cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
                 }
             }
             snippet("Flat", CardCode.FLAT) {
-                pfCard(baseClass = "flat".modifier()) {
-                    pfCardTitle { +"Title" }
-                    pfCardBody { +"Body" }
-                    pfCardFooter { +"Footer" }
+                card(baseClass = "flat".modifier()) {
+                    cardTitle { +"Title" }
+                    cardBody { +"Body" }
+                    cardFooter { +"Footer" }
                 }
             }
         }
@@ -250,10 +248,10 @@ internal object CardCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfCard {
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+        card {
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -262,31 +260,31 @@ internal object CardCode {
     //language=kotlin
     const val IMAGE_ACTION: String = """fun main() {
     render {
-        pfCard {
-            pfCardHeader {
-                pfCardHeaderMain {
-                    pfBrand("./pf-logo.svg") {
+        card {
+            cardHeader {
+                cardHeaderMain {
+                    brand("./pf-logo.svg") {
                         domNode.style.width = "300px"
                     }
                 }
-                pfCardActions {
-                    pfDropdown<String>(align = Align.RIGHT) {
-                        pfDropdownToggleKebab()
-                        pfDropdownItems {
-                            pfItem("Item 1")
-                            pfItem("Disabled Item") {
+                cardActions {
+                    dropdown<String>(align = Align.RIGHT) {
+                        dropdownToggleKebab()
+                        dropdownItems {
+                            item("Item 1")
+                            item("Disabled Item") {
                                 disabled = true
                             }
-                            pfSeparator()
-                            pfItem("Separated Item")
+                            separator()
+                            item("Separated Item")
                         }
                     }
-                    pfCardCheckbox()
+                    cardCheckbox()
                 }
             }
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -295,28 +293,28 @@ internal object CardCode {
     //language=kotlin
     const val TITLE_IN_HEADER: String = """fun main() {
     render {
-        pfCard {
-            pfCardHeader {
-                pfCardActions {
-                    pfDropdown<String>(align = Align.RIGHT) {
-                        pfDropdownToggleKebab()
-                        pfDropdownItems {
-                            pfItem("Action")
-                            pfItem("Disabled Action") {
+        card {
+            cardHeader {
+                cardActions {
+                    dropdown<String>(align = Align.RIGHT) {
+                        dropdownToggleKebab()
+                        dropdownItems {
+                            item("Action")
+                            item("Disabled Action") {
                                 disabled = true
                             }
-                            pfSeparator()
-                            pfItem("Separated Action")
+                            separator()
+                            item("Separated Action")
                         }
                     }
-                    pfCardCheckbox()
+                    cardCheckbox()
                 }
-                pfCardTitle {
+                cardTitle {
                     +"This is a really really really really really really really really really really long title"
                 }
             }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -325,24 +323,24 @@ internal object CardCode {
     //language=kotlin
     const val ONLY_ACTIONS: String = """fun main() {
     render {
-        pfCard {
-            pfCardHeader {
-                pfCardActions {
-                    pfDropdown<String>(align = Align.RIGHT) {
-                        pfDropdownToggleKebab()
-                        pfDropdownItems {
-                            pfItem("Action")
-                            pfItem("Disabled Action") {
+        card {
+            cardHeader {
+                cardActions {
+                    dropdown<String>(align = Align.RIGHT) {
+                        dropdownToggleKebab()
+                        dropdownItems {
+                            item("Action")
+                            item("Disabled Action") {
                                 disabled = true
                             }
-                            pfSeparator()
-                            pfItem("Separated Action")
+                            separator()
+                            item("Separated Action")
                         }
                     }
-                    pfCardCheckbox()
+                    cardCheckbox()
                 }
             }
-            pfCardBody {
+            cardBody {
                 +"This is the card body, there are only actions in the card head."
             }
         }
@@ -353,17 +351,17 @@ internal object CardCode {
     //language=kotlin
     const val ONLY_IMAGE: String = """fun main() {
     render {
-        pfCard {
-            pfCardHeader {
-                pfCardHeaderMain {
-                    pfBrand("./pf-logo.svg") {
+        card {
+            cardHeader {
+                cardHeaderMain {
+                    brand("./pf-logo.svg") {
                         domNode.style.width = "300px"
                     }
                 }
             }
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -372,9 +370,9 @@ internal object CardCode {
     //language=kotlin
     const val NO_FOOTER: String = """fun main() {
     render {
-        pfCard {
-            pfCardTitle { +"Title" }
-            pfCardBody { +"This card has no footer" }
+        card {
+            cardTitle { +"Title" }
+            cardBody { +"This card has no footer" }
         }
     }
 }
@@ -383,9 +381,9 @@ internal object CardCode {
     //language=kotlin
     const val NO_TITLE: String = """fun main() {
     render {
-        pfCard {
-            pfCardBody { +"This card has no title" }
-            pfCardFooter { +"Footer" }
+        card {
+            cardBody { +"This card has no title" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -394,8 +392,8 @@ internal object CardCode {
     //language=kotlin
     const val ONLY_BODY: String = """fun main() {
     render {
-        pfCard {
-            pfCardBody { +"Body" }
+        card {
+            cardBody { +"Body" }
         }
     }
 }
@@ -404,12 +402,12 @@ internal object CardCode {
     //language=kotlin
     const val MULTIPLE_BODY: String = """fun main() {
     render {
-        pfCard {
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardBody { +"Body" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+        card {
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardBody { +"Body" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -418,13 +416,13 @@ internal object CardCode {
     //language=kotlin
     const val BODY_FILLS: String = """fun main() {
     render {
-        pfCard {
+        card {
             domNode.style.minHeight = "30em"
-            pfCardTitle { +"Title" }
-            pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-            pfCardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+            cardTitle { +"Title" }
+            cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+            cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -433,10 +431,10 @@ internal object CardCode {
     //language=kotlin
     const val HOVER: String = """fun main() {
     render {
-        pfCard(baseClass = "hoverable".modifier()) {
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+        card(baseClass = "hoverable".modifier()) {
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -445,10 +443,10 @@ internal object CardCode {
     //language=kotlin
     const val COMPACT: String = """fun main() {
     render {
-        pfCard(baseClass = "compact".modifier()) {
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+        card(baseClass = "compact".modifier()) {
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }
@@ -457,51 +455,51 @@ internal object CardCode {
     //language=kotlin
     const val SELECTABLE: String = """fun main() {
     render {
-        pfCard(selectable = true) {
+        card(selectable = true) {
             selected.data.drop(1).map {
                 Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
             } handledBy Notification.store.add
 
-            pfCardHeader {
-                pfCardActions {
-                    pfDropdown<String>(align = Align.RIGHT) {
-                        pfDropdownToggleKebab()
-                        pfDropdownItems {
-                            pfItem("Action")
-                            pfItem("Disabled Action") {
+            cardHeader {
+                cardActions {
+                    dropdown<String>(align = Align.RIGHT) {
+                        dropdownToggleKebab()
+                        dropdownItems {
+                            item("Action")
+                            item("Disabled Action") {
                                 disabled = true
                             }
-                            pfSeparator()
-                            pfItem("Separated Action")
+                            separator()
+                            item("Separated Action")
                         }
                     }
                 }
             }
-            pfCardTitle { +"First card" }
-            pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+            cardTitle { +"First card" }
+            cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
         br {}
-        pfCard(selectable = true) {
+        card(selectable = true) {
             selected.data.drop(1).map {
                 Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
             } handledBy Notification.store.add
 
-            pfCardTitle { +"Second card" }
-            pfCardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+            cardTitle { +"Second card" }
+            cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
         br {}
-        pfCard(selectable = true) {
+        card(selectable = true) {
             selected.data.drop(1).map {
                 Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
             } handledBy Notification.store.add
 
-            pfCardHeader {
-                pfCardActions {
-                    pfCardCheckbox()
+            cardHeader {
+                cardActions {
+                    cardCheckbox()
                 }
             }
-            pfCardTitle { +"Third card" }
-            pfCardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
+            cardTitle { +"Third card" }
+            cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
         }
 }
 }
@@ -510,10 +508,10 @@ internal object CardCode {
     //language=kotlin
     const val FLAT: String = """fun main() {
     render {
-        pfCard(baseClass = "flat".modifier()) {
-            pfCardTitle { +"Title" }
-            pfCardBody { +"Body" }
-            pfCardFooter { +"Footer" }
+        card(baseClass = "flat".modifier()) {
+            cardTitle { +"Title" }
+            cardBody { +"Body" }
+            cardFooter { +"Footer" }
         }
     }
 }

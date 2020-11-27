@@ -2,12 +2,10 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.valuesAsNumber
-import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -16,13 +14,13 @@ import org.patternfly.TabItem
 import org.patternfly.TabStore
 import org.patternfly.classes
 import org.patternfly.fas
+import org.patternfly.icon
 import org.patternfly.layout
 import org.patternfly.modifier
-import org.patternfly.pfContent
-import org.patternfly.pfIcon
-import org.patternfly.pfSection
-import org.patternfly.pfTabItem
-import org.patternfly.pfTabs
+import org.patternfly.pageSection
+import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.tabItem
+import org.patternfly.tabs
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -30,115 +28,113 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class TabsComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Tabs",
             key = "Tabs",
             text = " are used to present a set on tabs for organizing content on a page."
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Default", TabsCode.DEFAULT) {
-                pfTabs<String> {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
+                tabs<String> {
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
                 }
             }
             snippet("Box", TabsCode.BOX) {
-                pfTabs<String>(box = true) {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
+                tabs<String>(box = true) {
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
                 }
             }
             snippet("Box light", TabsCode.BOX_LIGHT) {
-                pfTabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
+                tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
                     contentDisplay = {
                         {
                             domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
                         }
                     }
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
                 }
             }
             snippet("Overflow", TabsCode.OVERFLOW) {
-                pfTabs<String> {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
-                    pfTabItem("Tab item 7") { +"Tab content 7" }
-                    pfTabItem("Tab item 8") { +"Tab content 8" }
-                    pfTabItem("Tab item 9") { +"Tab content 9" }
-                    pfTabItem("Tab item 10") { +"Tab content 10" }
-                    pfTabItem("Tab item 11") { +"Tab content 11" }
+                tabs<String> {
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
+                    tabItem("Tab item 7") { +"Tab content 7" }
+                    tabItem("Tab item 8") { +"Tab content 8" }
+                    tabItem("Tab item 9") { +"Tab content 9" }
+                    tabItem("Tab item 10") { +"Tab content 10" }
+                    tabItem("Tab item 11") { +"Tab content 11" }
                 }
             }
             snippet("Inset", TabsCode.INSET) {
-                pfTabs<String>(baseClass = classes {
+                tabs<String>(baseClass = classes {
                     +"inset-sm-on-md".modifier()
                     +"inset-lg-on-lg".modifier()
                     +"inset-2xl-on-xl".modifier()
                 }) {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
                 }
             }
             snippet("Filled", TabsCode.FILLED) {
-                pfTabs<String>(filled = true) {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
+                tabs<String>(filled = true) {
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
                 }
             }
             snippet("Vertical", TabsCode.VERTICAL) {
-                pfTabs<String>(vertical = true) {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
+                tabs<String>(vertical = true) {
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
                 }
             }
             snippet("Vertical box", TabsCode.VERTICAL_BOX) {
-                pfTabs<String>(vertical = true, box = true) {
-                    pfTabItem("Users") { +"Users" }
-                    pfTabItem("Containers") { +"Containers" }
-                    pfTabItem("Database") { +"Database" }
-                    pfTabItem("Server") { +"Server" }
-                    pfTabItem("System") { +"System" }
-                    pfTabItem("Network") { +"Network" }
+                tabs<String>(vertical = true, box = true) {
+                    tabItem("Users") { +"Users" }
+                    tabItem("Containers") { +"Containers" }
+                    tabItem("Database") { +"Database" }
+                    tabItem("Server") { +"Server" }
+                    tabItem("System") { +"System" }
+                    tabItem("Network") { +"Network" }
                 }
             }
             snippet("Icons", TabsCode.ICONS) {
-                pfTabs<String> {
-                    pfTabItem("Users", icon = { pfIcon("users".fas()) }) { +"Users" }
-                    pfTabItem("Containers", icon = { pfIcon("box".fas()) }) { +"Containers" }
-                    pfTabItem("Database", icon = { pfIcon("database".fas()) }) { +"Database" }
-                    pfTabItem("Server", icon = { pfIcon("server".fas()) }) { +"Server" }
-                    pfTabItem("System", icon = { pfIcon("laptop".fas()) }) { +"System" }
-                    pfTabItem("Network", icon = { pfIcon("project-diagram".fas()) }) { +"Network" }
+                tabs<String> {
+                    tabItem("Users", icon = { icon("users".fas()) }) { +"Users" }
+                    tabItem("Containers", icon = { icon("box".fas()) }) { +"Containers" }
+                    tabItem("Database", icon = { icon("database".fas()) }) { +"Database" }
+                    tabItem("Server", icon = { icon("server".fas()) }) { +"Server" }
+                    tabItem("System", icon = { icon("laptop".fas()) }) { +"System" }
+                    tabItem("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
                 }
             }
             snippet("Reactive", TabsCode.REACTIVE) {
@@ -150,20 +146,22 @@ class TabsComponent {
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    label(`for` = "range") { +"Tabs: " }
+                    label {
+                        +"Tabs: "
+                        `for`("range")
+                    }
                     range = input(id = "range", baseClass = "w-50".util()) {
-                        type = const("range")
-                        min = const("1")
-                        max = const("12")
-                        value = const("5")
+                        type("range")
+                        min("1")
+                        max("12")
+                        value("5")
                     }
                     span {
                         range.inputs.events
-                            .map { it.target.unsafeCast<HTMLInputElement>().value }
-                            .bind()
+                            .map { it.target.unsafeCast<HTMLInputElement>().value }.asText()
                     }
                 }
-                pfTabs(store) {
+                tabs(store) {
                     itemDisplay = {
                         { +"Tab item $it" }
                     }
@@ -193,13 +191,13 @@ internal object TabsCode {
     //language=kotlin
     const val DEFAULT: String = """fun main() {
     render {
-        pfTabs<String> {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
+        tabs<String> {
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
         }
     }
 }
@@ -208,13 +206,13 @@ internal object TabsCode {
     //language=kotlin
     const val BOX: String = """fun main() {
     render {
-        pfTabs<String>(box = true) {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
+        tabs<String>(box = true) {
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
         }
     }
 }
@@ -223,18 +221,18 @@ internal object TabsCode {
     //language=kotlin
     const val BOX_LIGHT: String = """fun main() {
     render {
-        pfTabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
+        tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
             contentDisplay = {
                 {
                     domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
                 }
             }
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
         }
     }
 }
@@ -243,18 +241,18 @@ internal object TabsCode {
     //language=kotlin
     const val OVERFLOW: String = """fun main() {
     render {
-        pfTabs<String> {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
-            pfTabItem("Tab item 7") { +"Tab content 7" }
-            pfTabItem("Tab item 8") { +"Tab content 8" }
-            pfTabItem("Tab item 9") { +"Tab content 9" }
-            pfTabItem("Tab item 10") { +"Tab content 10" }
-            pfTabItem("Tab item 11") { +"Tab content 11" }
+        tabs<String> {
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
+            tabItem("Tab item 7") { +"Tab content 7" }
+            tabItem("Tab item 8") { +"Tab content 8" }
+            tabItem("Tab item 9") { +"Tab content 9" }
+            tabItem("Tab item 10") { +"Tab content 10" }
+            tabItem("Tab item 11") { +"Tab content 11" }
         }
     }
 }
@@ -263,17 +261,17 @@ internal object TabsCode {
     //language=kotlin
     const val INSET: String = """fun main() {
     render {
-        pfTabs<String>(baseClass = classes {
+        tabs<String>(baseClass = classes {
             +"inset-sm-on-md".modifier()
             +"inset-lg-on-lg".modifier()
             +"inset-2xl-on-xl".modifier()
         }) {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
         }
     }
 }
@@ -282,10 +280,10 @@ internal object TabsCode {
     //language=kotlin
     const val FILLED: String = """fun main() {
     render {
-        pfTabs<String>(filled = true) {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
+        tabs<String>(filled = true) {
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
         }
     }
 }
@@ -294,13 +292,13 @@ internal object TabsCode {
     //language=kotlin
     const val VERTICAL: String = """fun main() {
     render {
-        pfTabs<String>(vertical = true) {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
+        tabs<String>(vertical = true) {
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
         }
     }
 }
@@ -309,13 +307,13 @@ internal object TabsCode {
     //language=kotlin
     const val VERTICAL_BOX: String = """fun main() {
     render {
-        pfTabs<String>(vertical = true, box = true) {
-            pfTabItem("Users") { +"Users" }
-            pfTabItem("Containers") { +"Containers" }
-            pfTabItem("Database") { +"Database" }
-            pfTabItem("Server") { +"Server" }
-            pfTabItem("System") { +"System" }
-            pfTabItem("Network") { +"Network" }
+        tabs<String>(vertical = true, box = true) {
+            tabItem("Users") { +"Users" }
+            tabItem("Containers") { +"Containers" }
+            tabItem("Database") { +"Database" }
+            tabItem("Server") { +"Server" }
+            tabItem("System") { +"System" }
+            tabItem("Network") { +"Network" }
         }
     }
 }
@@ -324,13 +322,13 @@ internal object TabsCode {
     //language=kotlin
     const val ICONS: String = """fun main() {
     render {
-        pfTabs<String> {
-            pfTabItem("Users", icon = { pfIcon("users".fas()) }) { +"Users" }
-            pfTabItem("Containers", icon = { pfIcon("box".fas()) }) { +"Containers" }
-            pfTabItem("Database", icon = { pfIcon("database".fas()) }) { +"Database" }
-            pfTabItem("Server", icon = { pfIcon("server".fas()) }) { +"Server" }
-            pfTabItem("System", icon = { pfIcon("laptop".fas()) }) { +"System" }
-            pfTabItem("Network", icon = { pfIcon("project-diagram".fas()) }) { +"Network" }
+        tabs<String> {
+            tabItem("Users", icon = { icon("users".fas()) }) { +"Users" }
+            tabItem("Containers", icon = { icon("box".fas()) }) { +"Containers" }
+            tabItem("Database", icon = { icon("database".fas()) }) { +"Database" }
+            tabItem("Server", icon = { icon("server".fas()) }) { +"Server" }
+            tabItem("System", icon = { icon("laptop".fas()) }) { +"System" }
+            tabItem("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
         }
     }
 }
@@ -360,7 +358,7 @@ internal object TabsCode {
                     .bind()
             }
         }
-        pfTabs(store) {
+        tabs(store) {
             itemDisplay = {
                 { +"Tab item ${'$'}it" }
             }

@@ -2,131 +2,124 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
-import dev.fritz2.elemento.elements
+import dev.fritz2.dom.html.RenderContext
 import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
 import org.patternfly.Severity.WARNING
+import org.patternfly.alert
+import org.patternfly.alertActions
+import org.patternfly.alertDescription
 import org.patternfly.classes
 import org.patternfly.modifier
-import org.patternfly.pfAlert
-import org.patternfly.pfAlertActionGroup
-import org.patternfly.pfAlertDescription
-import org.patternfly.pfButton
-import org.patternfly.pfContent
-import org.patternfly.pfSection
+import org.patternfly.pageSection
+import org.patternfly.pushButton
 
 class AlertComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Alert",
             key = "Alerts",
             text = " are used to notify the user about a change in status or other event. Related design guidelines: ",
             link = ("alerts-and-notifications" to "Alerts and notifications")
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Types", AlertCode.TYPES) {
-                pfAlert(DEFAULT, "Default alert title")
+                alert(DEFAULT, "Default alert title")
                 br {}
-                pfAlert(INFO, "Info alert title")
+                alert(INFO, "Info alert title")
                 br {}
-                pfAlert(SUCCESS, "Success alert title")
+                alert(SUCCESS, "Success alert title")
                 br {}
-                pfAlert(WARNING, "Warning alert title")
+                alert(WARNING, "Warning alert title")
                 br {}
-                pfAlert(DANGER, "Danger alert title")
+                alert(DANGER, "Danger alert title")
             }
             snippet("Variations", AlertCode.VARIATIONS) {
-                pfAlert(SUCCESS, "Success alert title", closable = true) {
-                    pfAlertDescription {
+                alert(SUCCESS, "Success alert title", closable = true) {
+                    alertDescription {
                         p { +"Success alert description. This should tell the user more information about the alert." }
                     }
-                    pfAlertActionGroup {
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                    alertActions {
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
-                pfAlert(SUCCESS, "Success alert title", closable = true) {
-                    pfAlertDescription {
+                alert(SUCCESS, "Success alert title", closable = true) {
+                    alertDescription {
                         p {
                             +"Success alert description. This should tell the user more information about the alert. "
                             a {
-                                href = const("#")
+                                href("#")
                                 +"This is a link."
                             }
                         }
                     }
                 }
                 br {}
-                pfAlert(SUCCESS, "Success alert title", closable = true) {
-                    pfAlertActionGroup {
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                alert(SUCCESS, "Success alert title", closable = true) {
+                    alertActions {
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
-                pfAlert(SUCCESS, "Success alert title", closable = true)
+                alert(SUCCESS, "Success alert title", closable = true)
                 br {}
-                pfAlert(SUCCESS, "Success alert title")
+                alert(SUCCESS, "Success alert title")
             }
             snippet("Inline types", AlertCode.INLINE_TYPES) {
-                pfAlert(DEFAULT, "Default inline alert title", inline = true)
+                alert(DEFAULT, "Default inline alert title", inline = true)
                 br {}
-                pfAlert(INFO, "Info inline alert title", inline = true)
+                alert(INFO, "Info inline alert title", inline = true)
                 br {}
-                pfAlert(SUCCESS, "Success inline alert title", inline = true)
+                alert(SUCCESS, "Success inline alert title", inline = true)
                 br {}
-                pfAlert(WARNING, "Warning inline alert title", inline = true)
+                alert(WARNING, "Warning inline alert title", inline = true)
                 br {}
-                pfAlert(DANGER, "Danger inline alert title", inline = true)
+                alert(DANGER, "Danger inline alert title", inline = true)
             }
             snippet("Inline Variations", AlertCode.INLINE_VARIATIONS) {
-                pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
-                    pfAlertDescription {
+                alert(SUCCESS, "Success alert title", closable = true, inline = true) {
+                    alertDescription {
                         p { +"Success alert description. This should tell the user more information about the alert." }
                     }
-                    pfAlertActionGroup {
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                    alertActions {
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
-                pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
-                    pfAlertDescription {
+                alert(SUCCESS, "Success alert title", closable = true, inline = true) {
+                    alertDescription {
                         p {
                             +"Success alert description. This should tell the user more information about the alert. "
                             a {
-                                href = const("#")
+                                href("#")
                                 +"This is a link."
                             }
                         }
                     }
                 }
                 br {}
-                pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
-                    pfAlertActionGroup {
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+                alert(SUCCESS, "Success alert title", closable = true, inline = true) {
+                    alertActions {
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
                     }
                 }
                 br {}
-                pfAlert(SUCCESS, "Success alert title", closable = true, inline = true)
+                alert(SUCCESS, "Success alert title", closable = true, inline = true)
                 br {}
-                pfAlert(SUCCESS, "Success alert title", inline = true)
+                alert(SUCCESS, "Success alert title", inline = true)
             }
             snippet("Reactive", AlertCode.REACTIVE) {
-                pfAlert(DEFAULT, "Close me", closable = true) {
-                    closes.map {
-                        Notification(DEFAULT, "Notification closed")
-                    } handledBy Notification.store.add
+                alert(DEFAULT, "Close me", closable = true) {
+                    closes handledBy Notification.default("Notification closed")
                 }
             }
         }
@@ -138,15 +131,15 @@ internal object AlertCode {
     //language=kotlin
     const val TYPES: String = """fun main() {
     render {
-        pfAlert(DEFAULT, "Default alert title")
+        alert(DEFAULT, "Default alert title")
         br {}
-        pfAlert(INFO, "Info alert title")
+        alert(INFO, "Info alert title")
         br {}
-        pfAlert(SUCCESS, "Success alert title")
+        alert(SUCCESS, "Success alert title")
         br {}
-        pfAlert(WARNING, "Warning alert title")
+        alert(WARNING, "Warning alert title")
         br {}
-        pfAlert(DANGER, "Danger alert title")
+        alert(DANGER, "Danger alert title")
     }
 }
 """
@@ -154,18 +147,18 @@ internal object AlertCode {
     //language=kotlin
     const val VARIATIONS: String = """fun main() {
     render {
-        pfAlert(SUCCESS, "Success alert title", closable = true) {
-            pfAlertDescription {
+        alert(SUCCESS, "Success alert title", closable = true) {
+            alertDescription {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
-            pfAlertActionGroup {
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+            alertActionGroup {
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
         br {}
-        pfAlert(SUCCESS, "Success alert title", closable = true) {
-            pfAlertDescription {
+        alert(SUCCESS, "Success alert title", closable = true) {
+            alertDescription {
                 p {
                     +"Success alert description. This should tell the user more information about the alert. "
                     a {
@@ -176,16 +169,16 @@ internal object AlertCode {
             }
         }
         br {}
-        pfAlert(SUCCESS, "Success alert title", closable = true) {
-            pfAlertActionGroup {
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+        alert(SUCCESS, "Success alert title", closable = true) {
+            alertActionGroup {
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
         br {}
-        pfAlert(SUCCESS, "Success alert title", closable = true)
+        alert(SUCCESS, "Success alert title", closable = true)
         br {}
-        pfAlert(SUCCESS, "Success alert title")
+        alert(SUCCESS, "Success alert title")
     }
 }
 """
@@ -193,15 +186,15 @@ internal object AlertCode {
     //language=kotlin
     const val INLINE_TYPES: String = """fun main() {
     render {
-        pfAlert(DEFAULT, "Default inline alert title", inline = true)
+        alert(DEFAULT, "Default inline alert title", inline = true)
         br {}
-        pfAlert(INFO, "Info inline alert title", inline = true)
+        alert(INFO, "Info inline alert title", inline = true)
         br {}
-        pfAlert(SUCCESS, "Success inline alert title", inline = true)
+        alert(SUCCESS, "Success inline alert title", inline = true)
         br {}
-        pfAlert(WARNING, "Warning inline alert title", inline = true)
+        alert(WARNING, "Warning inline alert title", inline = true)
         br {}
-        pfAlert(DANGER, "Danger inline alert title", inline = true)
+        alert(DANGER, "Danger inline alert title", inline = true)
     }
 }
 """
@@ -209,18 +202,18 @@ internal object AlertCode {
     //language=kotlin
     const val INLINE_VARIATIONS: String = """fun main() {
     render {
-        pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
-            pfAlertDescription {
+        alert(SUCCESS, "Success alert title", closable = true, inline = true) {
+            alertDescription {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
-            pfAlertActionGroup {
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+            alertActionGroup {
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
         br {}
-        pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
-            pfAlertDescription {
+        alert(SUCCESS, "Success alert title", closable = true, inline = true) {
+            alertDescription {
                 p {
                     +"Success alert description. This should tell the user more information about the alert. "
                     a {
@@ -231,16 +224,16 @@ internal object AlertCode {
             }
         }
         br {}
-        pfAlert(SUCCESS, "Success alert title", closable = true, inline = true) {
-            pfAlertActionGroup {
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
+        alert(SUCCESS, "Success alert title", closable = true, inline = true) {
+            alertActionGroup {
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
+                pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
         }
         br {}
-        pfAlert(SUCCESS, "Success alert title", closable = true, inline = true)
+        alert(SUCCESS, "Success alert title", closable = true, inline = true)
         br {}
-        pfAlert(SUCCESS, "Success alert title", inline = true)
+        alert(SUCCESS, "Success alert title", inline = true)
     }
 }
 """
@@ -248,7 +241,7 @@ internal object AlertCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        pfAlert(DEFAULT, "Close me", closable = true) {
+        alert(DEFAULT, "Close me", closable = true) {
             closes.map {
                 Notification(DEFAULT, "Notification closed")
             } handledBy Notification.store.add

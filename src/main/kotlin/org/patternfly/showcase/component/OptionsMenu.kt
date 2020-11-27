@@ -2,13 +2,10 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.action
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.drop
@@ -17,27 +14,28 @@ import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
 import org.patternfly.Entry
 import org.patternfly.Notification
+import org.patternfly.NotificationStore
 import org.patternfly.OptionsMenu
 import org.patternfly.Severity
 import org.patternfly.Switch
 import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.fas
+import org.patternfly.group
+import org.patternfly.icon
+import org.patternfly.item
+import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
-import org.patternfly.pfContent
-import org.patternfly.pfGroup
-import org.patternfly.pfIcon
-import org.patternfly.pfItem
-import org.patternfly.pfItems
-import org.patternfly.pfOptionsMenu
-import org.patternfly.pfOptionsMenuGroups
-import org.patternfly.pfOptionsMenuItems
-import org.patternfly.pfOptionsMenuToggle
-import org.patternfly.pfOptionsMenuTogglePlain
-import org.patternfly.pfSection
-import org.patternfly.pfSeparator
-import org.patternfly.pfSwitch
+import org.patternfly.optionsMenu
+import org.patternfly.optionsMenuGroups
+import org.patternfly.optionsMenuItems
+import org.patternfly.optionsMenuToggle
+import org.patternfly.optionsMenuTogglePlain
+import org.patternfly.pageSection
+import org.patternfly.separator
+import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.switch
 import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
@@ -46,115 +44,113 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class OptionsMenuComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Options menu",
             prefix = "An ",
             key = "options menu",
             text = " is similar to a dropdown, but provides a way to select among a set of optional settings rather than trigger an action."
         )
-        pfSection {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection {
+            h2 { +"Examples" }
             snippet("Basic", OptionsMenuCode.BASIC) {
-                pfOptionsMenu<String> {
-                    pfOptionsMenuToggle { content = { +"Options menu" } }
-                    pfOptionsMenuItems {
-                        pfItem("Option 1") { selected = true }
-                        pfItem("Option 2")
-                        pfItem("Option 3")
+                optionsMenu<String> {
+                    optionsMenuToggle { content = { +"Options menu" } }
+                    optionsMenuItems {
+                        item("Option 1") { selected = true }
+                        item("Option 2")
+                        item("Option 3")
                     }
                 }
             }
             snippet("Disabled", OptionsMenuCode.DISABLED) {
-                pfOptionsMenu<String> {
-                    pfOptionsMenuToggle {
+                optionsMenu<String> {
+                    optionsMenuToggle {
                         content = { +"Options menu" }
-                        disabled = const(true)
+                        disabled(true)
                     }
-                    pfOptionsMenuItems {
-                        pfItem("Option 1") { selected = true }
-                        pfItem("Option 2")
-                        pfItem("Option 3")
+                    optionsMenuItems {
+                        item("Option 1") { selected = true }
+                        item("Option 2")
+                        item("Option 3")
                     }
                 }
             }
             snippet("Position right", OptionsMenuCode.RIGHT) {
-                pfOptionsMenu<String>(align = RIGHT) {
-                    pfOptionsMenuToggle { content = { +"Options menu" } }
-                    pfOptionsMenuItems {
-                        pfItem("Right option 1") { selected = true }
-                        pfItem("Right option 2")
-                        pfItem("Right option 3")
+                optionsMenu<String>(align = RIGHT) {
+                    optionsMenuToggle { content = { +"Options menu" } }
+                    optionsMenuItems {
+                        item("Right option 1") { selected = true }
+                        item("Right option 2")
+                        item("Right option 3")
                     }
                 }
             }
             snippet("Direction up", OptionsMenuCode.UP) {
-                pfOptionsMenu<String>(up = true) {
-                    pfOptionsMenuToggle { content = { +"Options menu" } }
-                    pfOptionsMenuItems {
-                        pfItem("Option 1") { selected = true }
-                        pfItem("Option 2")
-                        pfItem("Option 3")
+                optionsMenu<String>(up = true) {
+                    optionsMenuToggle { content = { +"Options menu" } }
+                    optionsMenuItems {
+                        item("Option 1") { selected = true }
+                        item("Option 2")
+                        item("Option 3")
                     }
                 }
             }
             snippet("Plain", OptionsMenuCode.ICON) {
-                pfOptionsMenu<String> {
-                    pfOptionsMenuToggle { icon = { pfIcon("sort-amount-down".fas()) } }
-                    pfOptionsMenuItems {
-                        pfItem("Option 1") { selected = true }
-                        pfItem("Option 2")
-                        pfItem("Option 3")
+                optionsMenu<String> {
+                    optionsMenuToggle { icon = { icon("sort-amount-down".fas()) } }
+                    optionsMenuItems {
+                        item("Option 1") { selected = true }
+                        item("Option 2")
+                        item("Option 3")
                     }
                 }
             }
             snippet("Plain with text", OptionsMenuCode.PLAIN) {
-                pfOptionsMenu<String> {
-                    pfOptionsMenuTogglePlain { content = { +"Options menu" } }
-                    pfOptionsMenuItems {
-                        pfItem("Option 1") { selected = true }
-                        pfItem("Option 2")
-                        pfItem("Option 3")
+                optionsMenu<String> {
+                    optionsMenuTogglePlain { content = { +"Options menu" } }
+                    optionsMenuItems {
+                        item("Option 1") { selected = true }
+                        item("Option 2")
+                        item("Option 3")
                     }
                 }
             }
             snippet("Multiple options", OptionsMenuCode.MULTIPLE_OPTIONS) {
-                pfOptionsMenu<String> {
-                    pfOptionsMenuToggle { content = { +"Sort by" } }
-                    pfOptionsMenuGroups {
-                        pfGroup {
-                            pfItem("Name")
-                            pfItem("Date") { selected = true }
-                            pfItem("Disabled") { disabled = true }
-                            pfItem("Size")
+                optionsMenu<String> {
+                    optionsMenuToggle { content = { +"Sort by" } }
+                    optionsMenuGroups {
+                        group {
+                            item("Name")
+                            item("Date") { selected = true }
+                            item("Disabled") { disabled = true }
+                            item("Size")
                         }
-                        pfSeparator()
-                        pfGroup {
-                            pfItem("Ascending") { selected = true }
-                            pfItem("Descending")
+                        separator()
+                        group {
+                            item("Ascending") { selected = true }
+                            item("Descending")
                         }
                     }
                 }
             }
             snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
-                pfOptionsMenu<String> {
-                    pfOptionsMenuToggle { content = { +"Options" } }
-                    pfOptionsMenuGroups {
-                        pfGroup {
-                            pfItem("Option 1") { selected = true }
-                            pfItem("Option 2")
+                optionsMenu<String> {
+                    optionsMenuToggle { content = { +"Options" } }
+                    optionsMenuGroups {
+                        group {
+                            item("Option 1") { selected = true }
+                            item("Option 2")
                         }
-                        pfSeparator()
-                        pfGroup("Group 1") {
-                            pfItem("Option 1")
-                            pfItem("Option 2")
+                        separator()
+                        group("Group 1") {
+                            item("Option 1")
+                            item("Option 2")
                         }
-                        pfSeparator()
-                        pfGroup("Group 2") {
-                            pfItem("Option 1")
-                            pfItem("Option 2")
+                        separator()
+                        group("Group 2") {
+                            item("Option 1")
+                            item("Option 2")
                         }
                     }
                 }
@@ -170,20 +166,20 @@ class OptionsMenuComponent {
                         store.selection.unwrap()
                             .drop(1)
                             .map { Notification(Severity.INFO, "$name: Selection $it") }
-                            .handledBy(Notification.store.add)
+                            .handledBy(NotificationStore.add)
                         ces.collapsed
                             .map { Notification(Severity.INFO, "$name: Options menu collapsed") }
-                            .handledBy(Notification.store.add)
+                            .handledBy(NotificationStore.add)
                         ces.expanded
                             .map { Notification(Severity.INFO, "$name: Options menu expanded") }
-                            .handledBy(Notification.store.add)
+                            .handledBy(NotificationStore.add)
                     }
                 }
 
-                fun items(): List<Entry<String>> = pfItems {
-                    pfItem("Option 1") { selected = true }
-                    pfItem("Option 2")
-                    pfItem("Option 3")
+                fun items(): List<Entry<String>> = items {
+                    item("Option 1") { selected = true }
+                    item("Option 2")
+                    item("Option 3")
                 }
 
                 div(baseClass = classes {
@@ -192,55 +188,55 @@ class OptionsMenuComponent {
                     +"mb-sm".util()
                 }) {
                     text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                        type = const("text")
-                        value = const("Options")
-                        placeholder = const("Options menu text")
+                        type("text")
+                        value("Options")
+                        placeholder("Options menu text")
                     }
-                    enabled = pfSwitch("ml-md".util()) {
-                        label = const("Enabled")
-                        labelOff = const("Disabled")
-                        input.checked = const(true)
+                    enabled = switch("ml-md".util()) {
+                        label("Enabled")
+                        labelOff("Disabled")
+                        input.checked(true)
                     }
                 }
-                pfOptionsMenu<String>(baseClass = "mt-sm".util()) {
-                    pfOptionsMenuToggle {
-                        content = { text.keyups.map { currentValue(it) }.bind() }
-                        disabled = enabled.input.changes.states().map { !it }
+                optionsMenu<String>(baseClass = "mt-sm".util()) {
+                    optionsMenuToggle {
+                        content = { text.keyups.map { currentValue(it) }.asText() }
+                        disabled(enabled.input.changes.states().map { !it })
                     }
-                    pfOptionsMenuItems()
-                    action(items()) handledBy store.update
+                    optionsMenuItems()
+                    store.update(items())
                     registerEvents(this, "Text")
                 }
-                pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
-                    pfOptionsMenuToggle {
-                        disabled = enabled.input.changes.states().map { !it }
-                        icon = { pfIcon("sort-amount-down".fas()) }
+                optionsMenu<String>(baseClass = "ml-sm".util()) {
+                    optionsMenuToggle {
+                        disabled(enabled.input.changes.states().map { !it })
+                        icon = { icon("sort-amount-down".fas()) }
                     }
-                    pfOptionsMenuGroups {
-                        pfGroup {
-                            pfItem("Option 1") { selected = true }
-                            pfItem("Option 2")
+                    optionsMenuGroups {
+                        group {
+                            item("Option 1") { selected = true }
+                            item("Option 2")
                         }
-                        pfSeparator()
-                        pfGroup("Group 1") {
-                            pfItem("Option 1")
-                            pfItem("Option 2")
+                        separator()
+                        group("Group 1") {
+                            item("Option 1")
+                            item("Option 2")
                         }
-                        pfSeparator()
-                        pfGroup("Group 2") {
-                            pfItem("Option 1")
-                            pfItem("Option 2")
+                        separator()
+                        group("Group 2") {
+                            item("Option 1")
+                            item("Option 2")
                         }
                     }
                     registerEvents(this, "Plain")
                 }
-                pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
-                    pfOptionsMenuTogglePlain {
-                        content = { text.keyups.map { currentValue(it) }.bind() }
-                        disabled = enabled.input.changes.states().map { !it }
+                optionsMenu<String>(baseClass = "ml-sm".util()) {
+                    optionsMenuTogglePlain {
+                        content = { text.keyups.map { currentValue(it) }.asText() }
+                        disabled(enabled.input.changes.states().map { !it })
                     }
-                    pfOptionsMenuItems()
-                    action(items()) handledBy store.update
+                    optionsMenuItems()
+                    store.update(items())
                     registerEvents(this, "Plain with text")
                 }
 
@@ -258,12 +254,12 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        pfOptionsMenu<String> {
-            pfOptionsMenuToggle { content = { +"Options menu" } }
-            pfOptionsMenuItems {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
+        optionsMenu<String> {
+            optionsMenuToggle { content = { +"Options menu" } }
+            optionsMenuItems {
+                item("Option 1") { selected = true }
+                item("Option 2")
+                item("Option 3")
             }
         }
     }
@@ -273,15 +269,15 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pfOptionsMenu<String> {
-            pfOptionsMenuToggle {
+        optionsMenu<String> {
+            optionsMenuToggle {
                 content = { +"Options menu" }
                 disabled = const(true)
             }
-            pfOptionsMenuItems {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
+            optionsMenuItems {
+                item("Option 1") { selected = true }
+                item("Option 2")
+                item("Option 3")
             }
         }
     }
@@ -291,12 +287,12 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val RIGHT: String = """fun main() {
     render {
-        pfOptionsMenu<String>(align = RIGHT) {
-            pfOptionsMenuToggle { content = { +"Options menu" } }
-            pfOptionsMenuItems {
-                pfItem("Right option 1") { selected = true }
-                pfItem("Right option 2")
-                pfItem("Right option 3")
+        optionsMenu<String>(align = RIGHT) {
+            optionsMenuToggle { content = { +"Options menu" } }
+            optionsMenuItems {
+                item("Right option 1") { selected = true }
+                item("Right option 2")
+                item("Right option 3")
             }
         }
     }
@@ -306,12 +302,12 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val UP: String = """fun main() {
     render {
-        pfOptionsMenu<String>(up = true) {
-            pfOptionsMenuToggle { content = { +"Options menu" } }
-            pfOptionsMenuItems {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
+        optionsMenu<String>(up = true) {
+            optionsMenuToggle { content = { +"Options menu" } }
+            optionsMenuItems {
+                item("Option 1") { selected = true }
+                item("Option 2")
+                item("Option 3")
             }
         }
     }
@@ -321,12 +317,12 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val ICON: String = """fun main() {
     render {
-        pfOptionsMenu<String> {
-            pfOptionsMenuToggle { icon = { pfIcon("sort-amount-down".fas()) } }
-            pfOptionsMenuItems {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
+        optionsMenu<String> {
+            optionsMenuToggle { icon = { icon("sort-amount-down".fas()) } }
+            optionsMenuItems {
+                item("Option 1") { selected = true }
+                item("Option 2")
+                item("Option 3")
             }
         }
     }
@@ -336,12 +332,12 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val PLAIN: String = """fun main() {
     render {
-        pfOptionsMenu<String> {
-            pfOptionsMenuTogglePlain { content = { +"Options menu" } }
-            pfOptionsMenuItems {
-                pfItem("Option 1") { selected = true }
-                pfItem("Option 2")
-                pfItem("Option 3")
+        optionsMenu<String> {
+            optionsMenuTogglePlain { content = { +"Options menu" } }
+            optionsMenuItems {
+                item("Option 1") { selected = true }
+                item("Option 2")
+                item("Option 3")
             }
         }
     }
@@ -351,19 +347,19 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val MULTIPLE_OPTIONS: String = """fun main() {
     render {
-        pfOptionsMenu<String> {
-            pfOptionsMenuToggle { content = { +"Sort by" } }
-            pfOptionsMenuGroups {
-                pfGroup {
-                    pfItem("Name")
-                    pfItem("Date") { selected = true }
-                    pfItem("Disabled") { disabled = true }
-                    pfItem("Size")
+        optionsMenu<String> {
+            optionsMenuToggle { content = { +"Sort by" } }
+            optionsMenuGroups {
+                group {
+                    item("Name")
+                    item("Date") { selected = true }
+                    item("Disabled") { disabled = true }
+                    item("Size")
                 }
-                pfSeparator()
-                pfGroup {
-                    pfItem("Ascending") { selected = true }
-                    pfItem("Descending")
+                separator()
+                group {
+                    item("Ascending") { selected = true }
+                    item("Descending")
                 }
             }
         }
@@ -374,22 +370,22 @@ internal object OptionsMenuCode {
     //language=kotlin
     const val GROUPED: String = """fun main() {
     render {
-        pfOptionsMenu<String> {
-            pfOptionsMenuToggle { content = { +"Options" } }
-            pfOptionsMenuGroups {
-                pfGroup {
-                    pfItem("Option 1") { selected = true }
-                    pfItem("Option 2")
+        optionsMenu<String> {
+            optionsMenuToggle { content = { +"Options" } }
+            optionsMenuGroups {
+                group {
+                    item("Option 1") { selected = true }
+                    item("Option 2")
                 }
-                pfSeparator()
-                pfGroup("Group 1") {
-                    pfItem("Option 1")
-                    pfItem("Option 2")
+                separator()
+                group("Group 1") {
+                    item("Option 1")
+                    item("Option 2")
                 }
-                pfSeparator()
-                pfGroup("Group 2") {
-                    pfItem("Option 1")
-                    pfItem("Option 2")
+                separator()
+                group("Group 2") {
+                    item("Option 1")
+                    item("Option 2")
                 }
             }
         }
@@ -420,10 +416,10 @@ internal object OptionsMenuCode {
             }
         }
 
-        fun items(): List<Entry<String>> = pfItems {
-            pfItem("Option 1") { selected = true }
-            pfItem("Option 2")
-            pfItem("Option 3")
+        fun items(): List<Entry<String>> = items {
+            item("Option 1") { selected = true }
+            item("Option 2")
+            item("Option 3")
         }
 
         div(baseClass = classes {
@@ -436,50 +432,50 @@ internal object OptionsMenuCode {
                 value = const("Options")
                 placeholder = const("Options menu text")
             }
-            enabled = pfSwitch("ml-md".util()) {
+            enabled = switch("ml-md".util()) {
                 label = const("Enabled")
                 labelOff = const("Disabled")
                 input.checked = const(true)
             }
         }
-        pfOptionsMenu<String>(baseClass = "mt-sm".util()) {
-            pfOptionsMenuToggle {
+        optionsMenu<String>(baseClass = "mt-sm".util()) {
+            optionsMenuToggle {
                 content = { text.keyups.map { currentValue(it) }.bind() }
                 disabled = enabled.input.changes.states().map { !it }
             }
-            pfOptionsMenuItems()
+            optionsMenuItems()
             action(items()) handledBy store.update
             registerEvents(this, "Text")
         }
-        pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
-            pfOptionsMenuToggle {
+        optionsMenu<String>(baseClass = "ml-sm".util()) {
+            optionsMenuToggle {
                 disabled = enabled.input.changes.states().map { !it }
-                icon = { pfIcon("sort-amount-down".fas()) }
+                icon = { icon("sort-amount-down".fas()) }
             }
-            pfOptionsMenuGroups {
-                pfGroup {
-                    pfItem("Option 1") { selected = true }
-                    pfItem("Option 2")
+            optionsMenuGroups {
+                group {
+                    item("Option 1") { selected = true }
+                    item("Option 2")
                 }
-                pfSeparator()
-                pfGroup("Group 1") {
-                    pfItem("Option 1")
-                    pfItem("Option 2")
+                separator()
+                group("Group 1") {
+                    item("Option 1")
+                    item("Option 2")
                 }
-                pfSeparator()
-                pfGroup("Group 2") {
-                    pfItem("Option 1")
-                    pfItem("Option 2")
+                separator()
+                group("Group 2") {
+                    item("Option 1")
+                    item("Option 2")
                 }
             }
             registerEvents(this, "Plain")
         }
-        pfOptionsMenu<String>(baseClass = "ml-sm".util()) {
-            pfOptionsMenuTogglePlain {
+        optionsMenu<String>(baseClass = "ml-sm".util()) {
+            optionsMenuTogglePlain {
                 content = { text.keyups.map { currentValue(it) }.bind() }
                 disabled = enabled.input.changes.states().map { !it }
             }
-            pfOptionsMenuItems()
+            optionsMenuItems()
             action(items()) handledBy store.update
             registerEvents(this, "Plain with text")
         }

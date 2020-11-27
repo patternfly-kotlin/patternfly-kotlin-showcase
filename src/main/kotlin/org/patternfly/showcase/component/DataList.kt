@@ -2,41 +2,38 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.action
-import dev.fritz2.binding.handledBy
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.elemento.Id
-import dev.fritz2.elemento.elements
 import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.DataListItem
 import org.patternfly.ItemStore
 import org.patternfly.classes
 import org.patternfly.component
+import org.patternfly.dataList
+import org.patternfly.dataListAction
+import org.patternfly.dataListCell
+import org.patternfly.dataListCheck
+import org.patternfly.dataListContent
+import org.patternfly.dataListControl
+import org.patternfly.dataListExpandableContent
+import org.patternfly.dataListExpandableContentBody
+import org.patternfly.dataListItem
+import org.patternfly.dataListRow
+import org.patternfly.dataListToggle
+import org.patternfly.dropdown
+import org.patternfly.dropdownItems
+import org.patternfly.dropdownKebabToggle
 import org.patternfly.fas
+import org.patternfly.icon
+import org.patternfly.item
 import org.patternfly.modifier
-import org.patternfly.pfButton
-import org.patternfly.pfContent
-import org.patternfly.pfDataList
-import org.patternfly.pfDataListAction
-import org.patternfly.pfDataListCell
-import org.patternfly.pfDataListCheck
-import org.patternfly.pfDataListContent
-import org.patternfly.pfDataListControl
-import org.patternfly.pfDataListExpandableContent
-import org.patternfly.pfDataListExpandableContentBody
-import org.patternfly.pfDataListItem
-import org.patternfly.pfDataListRow
-import org.patternfly.pfDataListToggle
-import org.patternfly.pfDropdown
-import org.patternfly.pfDropdownItems
-import org.patternfly.pfDropdownToggleKebab
-import org.patternfly.pfIcon
-import org.patternfly.pfItem
-import org.patternfly.pfSection
-import org.patternfly.pfSeparator
+import org.patternfly.pageSection
+import org.patternfly.pushButton
+import org.patternfly.separator
 
 class DataListComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Data list",
             prefix = "A ",
@@ -44,10 +41,8 @@ class DataListComponent {
             text = " is used to display large data sets when you need a flexible layout or need to include interactive content like charts. Related design guidelines: ",
             link = ("lists-and-tables" to "Lists and tables")
         )
-        pfSection {
-            pfContent {
+        pageSection {
                 h2 { +"Examples" }
-            }
             snippet("Basic", DataListCode.BASIC) {
                 // Just a fake item w/ a display function
                 data class DisplayData(
@@ -57,22 +52,22 @@ class DataListComponent {
 
                 val data = listOf(
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListContent {
-                                pfDataListCell {
+                        dataListRow {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Primary content" }
                                 }
-                                pfDataListCell { +"Secondary content" }
+                                dataListCell { +"Secondary content" }
                             }
                         }
                     },
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListContent {
-                                pfDataListCell("no-fill".modifier()) {
+                        dataListRow {
+                            dataListContent {
+                                dataListCell("no-fill".modifier()) {
                                     span { +"Secondary content (pf-m-no-fill)" }
                                 }
-                                pfDataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
+                                dataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
                                     +"Secondary content (pf-m-align-right pf-m-no-fill)"
                                 }
                             }
@@ -82,10 +77,10 @@ class DataListComponent {
 
                 val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
-                pfDataList(store) {
-                    display = { pfDataListItem(item = it, content = it.content) }
+                dataList(store) {
+                    display { dataListItem(item = it, content = it.content) }
                 }
-                action(data) handledBy store.addAll
+                store.addAll(data)
             }
             snippet("Compact", DataListCode.COMPACT) {
                 // Just a fake item w/ a display function
@@ -96,22 +91,22 @@ class DataListComponent {
 
                 val data = listOf(
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListContent {
-                                pfDataListCell {
+                        dataListRow {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Primary content" }
                                 }
-                                pfDataListCell { +"Secondary content" }
+                                dataListCell { +"Secondary content" }
                             }
                         }
                     },
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListContent {
-                                pfDataListCell("no-fill".modifier()) {
+                        dataListRow {
+                            dataListContent {
+                                dataListCell("no-fill".modifier()) {
                                     span { +"Secondary content (pf-m-no-fill)" }
                                 }
-                                pfDataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
+                                dataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
                                     +"Secondary content (pf-m-align-right pf-m-no-fill)"
                                 }
                             }
@@ -121,10 +116,10 @@ class DataListComponent {
 
                 val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
-                pfDataList(store) {
-                    display = { pfDataListItem(item = it, content = it.content) }
+                dataList(store) {
+                    display { dataListItem(item = it, content = it.content) }
                 }
-                action(data) handledBy store.addAll
+                store.addAll(data)
             }
             snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
                 // Just a fake item w/ a display function
@@ -135,30 +130,30 @@ class DataListComponent {
 
                 val data = listOf(
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListControl {
-                                pfDataListCheck()
+                        dataListRow {
+                            dataListControl {
+                                dataListCheck()
                             }
-                            pfDataListContent {
-                                pfDataListCell {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                                 }
-                                pfDataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                pfDataListCell { +"Tertiary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                pfDataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                pfDataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                                dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                                dataListCell { +"Tertiary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                                dataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                                dataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                             }
-                            pfDataListAction {
+                            dataListAction {
                                 div(baseClass = "data-list".component("action")) {
-                                    pfDropdown<String>(align = Align.RIGHT) {
-                                        pfDropdownToggleKebab()
-                                        pfDropdownItems {
-                                            pfItem("Action")
-                                            pfItem("Disabled Action") {
+                                    dropdown<String>(align = Align.RIGHT) {
+                                        dropdownKebabToggle()
+                                        dropdownItems {
+                                            item("Action")
+                                            item("Disabled Action") {
                                                 disabled = true
                                             }
-                                            pfSeparator()
-                                            pfItem("Separated Action")
+                                            separator()
+                                            item("Separated Action")
                                         }
                                     }
                                 }
@@ -166,68 +161,68 @@ class DataListComponent {
                         }
                     },
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListControl {
-                                pfDataListCheck {}
+                        dataListRow {
+                            dataListControl {
+                                dataListCheck {}
                             }
-                            pfDataListContent {
-                                pfDataListCell {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                                 }
-                                pfDataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                                dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                             }
-                            pfDataListAction("hidden-on-lg".modifier()) {
+                            dataListAction("hidden-on-lg".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
-                                    pfDropdown<String>(align = Align.RIGHT) {
-                                        pfDropdownToggleKebab()
-                                        pfDropdownItems {
-                                            pfItem("Action")
-                                            pfItem("Disabled Action") {
+                                    dropdown<String>(align = Align.RIGHT) {
+                                        dropdownKebabToggle()
+                                        dropdownItems {
+                                            item("Action")
+                                            item("Disabled Action") {
                                                 disabled = true
                                             }
-                                            pfSeparator()
-                                            pfItem("Separated Action")
+                                            separator()
+                                            item("Separated Action")
                                         }
                                     }
                                 }
                             }
-                            pfDataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
-                                pfButton(baseClass = "primary".modifier()) { +"Primary" }
-                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                            dataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
+                                pushButton(baseClass = "primary".modifier()) { +"Primary" }
+                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                             }
                         }
                     },
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListControl {
-                                pfDataListCheck {}
+                        dataListRow {
+                            dataListControl {
+                                dataListCheck {}
                             }
-                            pfDataListContent {
-                                pfDataListCell {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                                 }
-                                pfDataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                                dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                             }
-                            pfDataListAction("hidden-on-xl".modifier()) {
+                            dataListAction("hidden-on-xl".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
-                                    pfDropdown<String>(align = Align.RIGHT) {
-                                        pfDropdownToggleKebab()
-                                        pfDropdownItems {
-                                            pfItem("Action")
-                                            pfItem("Disabled Action") {
+                                    dropdown<String>(align = Align.RIGHT) {
+                                        dropdownKebabToggle()
+                                        dropdownItems {
+                                            item("Action")
+                                            item("Disabled Action") {
                                                 disabled = true
                                             }
-                                            pfSeparator()
-                                            pfItem("Separated Action")
+                                            separator()
+                                            item("Separated Action")
                                         }
                                     }
                                 }
                             }
-                            pfDataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
-                                pfButton(baseClass = "primary".modifier()) { +"Primary" }
-                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                            dataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
+                                pushButton(baseClass = "primary".modifier()) { +"Primary" }
+                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                             }
                         }
                     }
@@ -235,10 +230,10 @@ class DataListComponent {
 
                 val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
-                pfDataList(store) {
-                    display = { pfDataListItem(item = it, content = it.content) }
+                dataList(store) {
+                    display { dataListItem(item = it, content = it.content) }
                 }
-                action(data) handledBy store.addAll
+                store.addAll(data)
             }
             snippet("Actions: single and multiple", DataListCode.ACTIONS) {
                 // Just a fake item w/ a display function
@@ -249,37 +244,37 @@ class DataListComponent {
 
                 val data = listOf(
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListContent {
-                                pfDataListCell {
+                        dataListRow {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Single actionable Primary content" }
                                 }
-                                pfDataListCell { +"Single actionable Secondary content" }
+                                dataListCell { +"Single actionable Secondary content" }
                             }
-                            pfDataListAction {
-                                pfButton(baseClass = "primary".modifier()) { +"Delete" }
+                            dataListAction {
+                                pushButton(baseClass = "primary".modifier()) { +"Delete" }
                             }
                         }
                     },
                     DisplayData {
-                        pfDataListRow {
-                            pfDataListContent {
-                                pfDataListCell {
+                        dataListRow {
+                            dataListContent {
+                                dataListCell {
                                     span { +"Multi actions Primary content" }
                                 }
-                                pfDataListCell { +"Multi actions Secondary content" }
+                                dataListCell { +"Multi actions Secondary content" }
                             }
-                            pfDataListAction {
+                            dataListAction {
                                 div(baseClass = "data-list".component("action")) {
-                                    pfDropdown<String>(align = Align.RIGHT) {
-                                        pfDropdownToggleKebab()
-                                        pfDropdownItems {
-                                            pfItem("Action")
-                                            pfItem("Disabled Action") {
+                                    dropdown<String>(align = Align.RIGHT) {
+                                        dropdownKebabToggle()
+                                        dropdownItems {
+                                            item("Action")
+                                            item("Disabled Action") {
                                                 disabled = true
                                             }
-                                            pfSeparator()
-                                            pfItem("Separated Action")
+                                            separator()
+                                            item("Separated Action")
                                         }
                                     }
                                 }
@@ -290,10 +285,10 @@ class DataListComponent {
 
                 val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
-                pfDataList(store) {
-                    display = { pfDataListItem(item = it, content = it.content) }
+                dataList(store) {
+                    display { dataListItem(item = it, content = it.content) }
                 }
-                action(data) handledBy store.addAll
+                store.addAll(data)
             }
             snippet("Expandable", DataListCode.EXPANDABLE) {
                 // Just a fake item w/ a display function
@@ -305,36 +300,36 @@ class DataListComponent {
                 val data = listOf(
                     DisplayData(content = listOf(
                         {
-                            pfDataListRow {
-                                pfDataListControl {
-                                    pfDataListToggle()
+                            dataListRow {
+                                dataListControl {
+                                    dataListToggle()
                                 }
-                                pfDataListContent {
-                                    pfDataListCell("icon".modifier()) {
-                                        pfIcon("code-branch".fas())
+                                dataListContent {
+                                    dataListCell("icon".modifier()) {
+                                        icon("code-branch".fas())
                                     }
-                                    pfDataListCell {
+                                    dataListCell {
                                         div { +"Primary content" }
                                         span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                     }
-                                    pfDataListCell {
+                                    dataListCell {
                                         span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                     }
-                                    pfDataListCell {
+                                    dataListCell {
                                         span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                     }
                                 }
-                                pfDataListAction {
+                                dataListAction {
                                     div(baseClass = "data-list".component("action")) {
-                                        pfDropdown<String>(align = Align.RIGHT) {
-                                            pfDropdownToggleKebab()
-                                            pfDropdownItems {
-                                                pfItem("Action")
-                                                pfItem("Disabled Action") {
+                                        dropdown<String>(align = Align.RIGHT) {
+                                            dropdownKebabToggle()
+                                            dropdownItems {
+                                                item("Action")
+                                                item("Disabled Action") {
                                                     disabled = true
                                                 }
-                                                pfSeparator()
-                                                pfItem("Separated Action")
+                                                separator()
+                                                item("Separated Action")
                                             }
                                         }
                                     }
@@ -342,8 +337,8 @@ class DataListComponent {
                             }
                         },
                         {
-                            pfDataListExpandableContent {
-                                pfDataListExpandableContentBody {
+                            dataListExpandableContent {
+                                dataListExpandableContentBody {
                                     +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                 }
                             }
@@ -351,36 +346,36 @@ class DataListComponent {
                     )),
                     DisplayData(content = listOf(
                         {
-                            pfDataListRow {
-                                pfDataListControl {
-                                    pfDataListToggle()
+                            dataListRow {
+                                dataListControl {
+                                    dataListToggle()
                                 }
-                                pfDataListContent {
-                                    pfDataListCell("icon".modifier()) {
-                                        pfIcon("code-branch".fas())
+                                dataListContent {
+                                    dataListCell("icon".modifier()) {
+                                        icon("code-branch".fas())
                                     }
-                                    pfDataListCell {
+                                    dataListCell {
                                         div { +"Secondary content" }
                                         span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                     }
-                                    pfDataListCell {
+                                    dataListCell {
                                         span { +"Lorem ipsum dolor sit amet." }
                                     }
-                                    pfDataListCell {
+                                    dataListCell {
                                         span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                     }
                                 }
-                                pfDataListAction {
+                                dataListAction {
                                     div(baseClass = "data-list".component("action")) {
-                                        pfDropdown<String>(align = Align.RIGHT) {
-                                            pfDropdownToggleKebab()
-                                            pfDropdownItems {
-                                                pfItem("Action")
-                                                pfItem("Disabled Action") {
+                                        dropdown<String>(align = Align.RIGHT) {
+                                            dropdownKebabToggle()
+                                            dropdownItems {
+                                                item("Action")
+                                                item("Disabled Action") {
                                                     disabled = true
                                                 }
-                                                pfSeparator()
-                                                pfItem("Separated Action")
+                                                separator()
+                                                item("Separated Action")
                                             }
                                         }
                                     }
@@ -388,8 +383,8 @@ class DataListComponent {
                             }
                         },
                         {
-                            pfDataListExpandableContent {
-                                pfDataListExpandableContentBody {
+                            dataListExpandableContent {
+                                dataListExpandableContentBody {
                                     +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                 }
                             }
@@ -398,36 +393,36 @@ class DataListComponent {
                     DisplayData(
                         content = listOf(
                             {
-                                pfDataListRow {
-                                    pfDataListControl {
-                                        pfDataListToggle()
+                                dataListRow {
+                                    dataListControl {
+                                        dataListToggle()
                                     }
-                                    pfDataListContent {
-                                        pfDataListCell("icon".modifier()) {
-                                            pfIcon("code-branch".fas())
+                                    dataListContent {
+                                        dataListCell("icon".modifier()) {
+                                            icon("code-branch".fas())
                                         }
-                                        pfDataListCell {
+                                        dataListCell {
                                             div { +"Tertiary content" }
                                             span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                         }
-                                        pfDataListCell {
+                                        dataListCell {
                                             span { +"Lorem ipsum dolor sit amet." }
                                         }
-                                        pfDataListCell {
+                                        dataListCell {
                                             span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                         }
                                     }
-                                    pfDataListAction {
+                                    dataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            pfDropdown<String>(align = Align.RIGHT) {
-                                                pfDropdownToggleKebab()
-                                                pfDropdownItems {
-                                                    pfItem("Action")
-                                                    pfItem("Disabled Action") {
+                                            dropdown<String>(align = Align.RIGHT) {
+                                                dropdownKebabToggle()
+                                                dropdownItems {
+                                                    item("Action")
+                                                    item("Disabled Action") {
                                                         disabled = true
                                                     }
-                                                    pfSeparator()
-                                                    pfItem("Separated Action")
+                                                    separator()
+                                                    item("Separated Action")
                                                 }
                                             }
                                         }
@@ -435,8 +430,8 @@ class DataListComponent {
                                 }
                             },
                             {
-                                pfDataListExpandableContent {
-                                    pfDataListExpandableContentBody {
+                                dataListExpandableContent {
+                                    dataListExpandableContentBody {
                                         +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                     }
                                 }
@@ -445,16 +440,16 @@ class DataListComponent {
 
                 val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
                 val store: ItemStore<DisplayData> = ItemStore(identifier)
-                pfDataList(store) {
-                    display = {
-                        pfDataListItem(it) {
+                dataList(store) {
+                    display {
+                        dataListItem(it) {
                             it.content.forEach { content ->
                                 content(this)
                             }
                         }
                     }
                 }
-                action(data) handledBy store.addAll
+                store.addAll(data)
             }
         }
     }
@@ -473,22 +468,22 @@ internal object DataListCode {
 
         val data = listOf(
             DisplayData {
-                pfDataListRow {
-                    pfDataListContent {
-                        pfDataListCell {
+                dataListRow {
+                    dataListContent {
+                        dataListCell {
                             span { +"Primary content" }
                         }
-                        pfDataListCell { +"Secondary content" }
+                        dataListCell { +"Secondary content" }
                     }
                 }
             },
             DisplayData {
-                pfDataListRow {
-                    pfDataListContent {
-                        pfDataListCell("no-fill".modifier()) {
+                dataListRow {
+                    dataListContent {
+                        dataListCell("no-fill".modifier()) {
                             span { +"Secondary content (pf-m-no-fill)" }
                         }
-                        pfDataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
+                        dataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
                             +"Secondary content (pf-m-align-right pf-m-no-fill)"
                         }
                     }
@@ -498,8 +493,8 @@ internal object DataListCode {
 
         val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(store) {
-            display = { pfDataListItem(item = it, content = it.content) }
+        dataList(store) {
+            display = { dataListItem(item = it, content = it.content) }
         }
         action(data) handledBy store.addAll
     }
@@ -517,22 +512,22 @@ internal object DataListCode {
 
         val data = listOf(
             DisplayData {
-                pfDataListRow {
-                    pfDataListContent {
-                        pfDataListCell {
+                dataListRow {
+                    dataListContent {
+                        dataListCell {
                             span { +"Primary content" }
                         }
-                        pfDataListCell { +"Secondary content" }
+                        dataListCell { +"Secondary content" }
                     }
                 }
             },
             DisplayData {
-                pfDataListRow {
-                    pfDataListContent {
-                        pfDataListCell("no-fill".modifier()) {
+                dataListRow {
+                    dataListContent {
+                        dataListCell("no-fill".modifier()) {
                             span { +"Secondary content (pf-m-no-fill)" }
                         }
-                        pfDataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
+                        dataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
                             +"Secondary content (pf-m-align-right pf-m-no-fill)"
                         }
                     }
@@ -542,8 +537,8 @@ internal object DataListCode {
 
         val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(store) {
-            display = { pfDataListItem(item = it, content = it.content) }
+        dataList(store) {
+            display = { dataListItem(item = it, content = it.content) }
         }
         action(data) handledBy store.addAll
     }
@@ -561,30 +556,30 @@ internal object DataListCode {
 
         val data = listOf(
             DisplayData {
-                pfDataListRow {
-                    pfDataListControl {
-                        pfDataListCheck()
+                dataListRow {
+                    dataListControl {
+                        dataListCheck()
                     }
-                    pfDataListContent {
-                        pfDataListCell {
+                    dataListContent {
+                        dataListCell {
                             span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                         }
-                        pfDataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                        pfDataListCell { +"Tertiary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                        pfDataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                        pfDataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                        dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                        dataListCell { +"Tertiary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                        dataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                        dataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                     }
-                    pfDataListAction {
+                    dataListAction {
                         div(baseClass = "data-list".component("action")) {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownToggleKebab()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
                         }
@@ -592,68 +587,68 @@ internal object DataListCode {
                 }
             },
             DisplayData {
-                pfDataListRow {
-                    pfDataListControl {
-                        pfDataListCheck {}
+                dataListRow {
+                    dataListControl {
+                        dataListCheck {}
                     }
-                    pfDataListContent {
-                        pfDataListCell {
+                    dataListContent {
+                        dataListCell {
                             span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                         }
-                        pfDataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                        dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                     }
-                    pfDataListAction("hidden-on-lg".modifier()) {
+                    dataListAction("hidden-on-lg".modifier()) {
                         div(baseClass = "data-list".component("action")) {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownToggleKebab()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
                         }
                     }
-                    pfDataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
-                        pfButton(baseClass = "primary".modifier()) { +"Primary" }
-                        pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                    dataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
+                        pushButton(baseClass = "primary".modifier()) { +"Primary" }
+                        pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                     }
                 }
             },
             DisplayData {
-                pfDataListRow {
-                    pfDataListControl {
-                        pfDataListCheck {}
+                dataListRow {
+                    dataListControl {
+                        dataListCheck {}
                     }
-                    pfDataListContent {
-                        pfDataListCell {
+                    dataListContent {
+                        dataListCell {
                             span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                         }
-                        pfDataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
+                        dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
                     }
-                    pfDataListAction("hidden-on-xl".modifier()) {
+                    dataListAction("hidden-on-xl".modifier()) {
                         div(baseClass = "data-list".component("action")) {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownToggleKebab()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
                         }
                     }
-                    pfDataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
-                        pfButton(baseClass = "primary".modifier()) { +"Primary" }
-                        pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                        pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                        pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                    dataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
+                        pushButton(baseClass = "primary".modifier()) { +"Primary" }
+                        pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                        pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                        pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                     }
                 }
             }
@@ -661,8 +656,8 @@ internal object DataListCode {
 
         val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(store) {
-            display = { pfDataListItem(item = it, content = it.content) }
+        dataList(store) {
+            display = { dataListItem(item = it, content = it.content) }
         }
         action(data) handledBy store.addAll
     }
@@ -680,37 +675,37 @@ internal object DataListCode {
 
         val data = listOf(
             DisplayData {
-                pfDataListRow {
-                    pfDataListContent {
-                        pfDataListCell {
+                dataListRow {
+                    dataListContent {
+                        dataListCell {
                             span { +"Single actionable Primary content" }
                         }
-                        pfDataListCell { +"Single actionable Secondary content" }
+                        dataListCell { +"Single actionable Secondary content" }
                     }
-                    pfDataListAction {
-                        pfButton(baseClass = "primary".modifier()) { +"Delete" }
+                    dataListAction {
+                        pushButton(baseClass = "primary".modifier()) { +"Delete" }
                     }
                 }
             },
             DisplayData {
-                pfDataListRow {
-                    pfDataListContent {
-                        pfDataListCell {
+                dataListRow {
+                    dataListContent {
+                        dataListCell {
                             span { +"Multi actions Primary content" }
                         }
-                        pfDataListCell { +"Multi actions Secondary content" }
+                        dataListCell { +"Multi actions Secondary content" }
                     }
-                    pfDataListAction {
+                    dataListAction {
                         div(baseClass = "data-list".component("action")) {
-                            pfDropdown<String>(align = Align.RIGHT) {
-                                pfDropdownToggleKebab()
-                                pfDropdownItems {
-                                    pfItem("Action")
-                                    pfItem("Disabled Action") {
+                            dropdown<String>(align = Align.RIGHT) {
+                                dropdownToggleKebab()
+                                dropdownItems {
+                                    item("Action")
+                                    item("Disabled Action") {
                                         disabled = true
                                     }
-                                    pfSeparator()
-                                    pfItem("Separated Action")
+                                    separator()
+                                    item("Separated Action")
                                 }
                             }
                         }
@@ -721,8 +716,8 @@ internal object DataListCode {
 
         val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(store) {
-            display = { pfDataListItem(item = it, content = it.content) }
+        dataList(store) {
+            display = { dataListItem(item = it, content = it.content) }
         }
         action(data) handledBy store.addAll
     }
@@ -741,36 +736,36 @@ internal object DataListCode {
         val data = listOf(
             DisplayData(content = listOf(
                 {
-                    pfDataListRow {
-                        pfDataListControl {
-                            pfDataListToggle()
+                    dataListRow {
+                        dataListControl {
+                            dataListToggle()
                         }
-                        pfDataListContent {
-                            pfDataListCell("icon".modifier()) {
-                                pfIcon("code-branch".fas())
+                        dataListContent {
+                            dataListCell("icon".modifier()) {
+                                icon("code-branch".fas())
                             }
-                            pfDataListCell {
+                            dataListCell {
                                 div { +"Primary content" }
                                 span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                             }
-                            pfDataListCell {
+                            dataListCell {
                                 span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                             }
-                            pfDataListCell {
+                            dataListCell {
                                 span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                             }
                         }
-                        pfDataListAction {
+                        dataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggleKebab()
-                                    pfDropdownItems {
-                                        pfItem("Action")
-                                        pfItem("Disabled Action") {
+                                dropdown<String>(align = Align.RIGHT) {
+                                    dropdownToggleKebab()
+                                    dropdownItems {
+                                        item("Action")
+                                        item("Disabled Action") {
                                             disabled = true
                                         }
-                                        pfSeparator()
-                                        pfItem("Separated Action")
+                                        separator()
+                                        item("Separated Action")
                                     }
                                 }
                             }
@@ -778,8 +773,8 @@ internal object DataListCode {
                     }
                 },
                 {
-                    pfDataListExpandableContent {
-                        pfDataListExpandableContentBody {
+                    dataListExpandableContent {
+                        dataListExpandableContentBody {
                             +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         }
                     }
@@ -787,36 +782,36 @@ internal object DataListCode {
             )),
             DisplayData(content = listOf(
                 {
-                    pfDataListRow {
-                        pfDataListControl {
-                            pfDataListToggle()
+                    dataListRow {
+                        dataListControl {
+                            dataListToggle()
                         }
-                        pfDataListContent {
-                            pfDataListCell("icon".modifier()) {
-                                pfIcon("code-branch".fas())
+                        dataListContent {
+                            dataListCell("icon".modifier()) {
+                                icon("code-branch".fas())
                             }
-                            pfDataListCell {
+                            dataListCell {
                                 div { +"Secondary content" }
                                 span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                             }
-                            pfDataListCell {
+                            dataListCell {
                                 span { +"Lorem ipsum dolor sit amet." }
                             }
-                            pfDataListCell {
+                            dataListCell {
                                 span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                             }
                         }
-                        pfDataListAction {
+                        dataListAction {
                             div(baseClass = "data-list".component("action")) {
-                                pfDropdown<String>(align = Align.RIGHT) {
-                                    pfDropdownToggleKebab()
-                                    pfDropdownItems {
-                                        pfItem("Action")
-                                        pfItem("Disabled Action") {
+                                dropdown<String>(align = Align.RIGHT) {
+                                    dropdownToggleKebab()
+                                    dropdownItems {
+                                        item("Action")
+                                        item("Disabled Action") {
                                             disabled = true
                                         }
-                                        pfSeparator()
-                                        pfItem("Separated Action")
+                                        separator()
+                                        item("Separated Action")
                                     }
                                 }
                             }
@@ -824,8 +819,8 @@ internal object DataListCode {
                     }
                 },
                 {
-                    pfDataListExpandableContent {
-                        pfDataListExpandableContentBody {
+                    dataListExpandableContent {
+                        dataListExpandableContentBody {
                             +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         }
                     }
@@ -834,36 +829,36 @@ internal object DataListCode {
             DisplayData(
                 content = listOf(
                     {
-                        pfDataListRow {
-                            pfDataListControl {
-                                pfDataListToggle()
+                        dataListRow {
+                            dataListControl {
+                                dataListToggle()
                             }
-                            pfDataListContent {
-                                pfDataListCell("icon".modifier()) {
-                                    pfIcon("code-branch".fas())
+                            dataListContent {
+                                dataListCell("icon".modifier()) {
+                                    icon("code-branch".fas())
                                 }
-                                pfDataListCell {
+                                dataListCell {
                                     div { +"Tertiary content" }
                                     span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                 }
-                                pfDataListCell {
+                                dataListCell {
                                     span { +"Lorem ipsum dolor sit amet." }
                                 }
-                                pfDataListCell {
+                                dataListCell {
                                     span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
                                 }
                             }
-                            pfDataListAction {
+                            dataListAction {
                                 div(baseClass = "data-list".component("action")) {
-                                    pfDropdown<String>(align = Align.RIGHT) {
-                                        pfDropdownToggleKebab()
-                                        pfDropdownItems {
-                                            pfItem("Action")
-                                            pfItem("Disabled Action") {
+                                    dropdown<String>(align = Align.RIGHT) {
+                                        dropdownToggleKebab()
+                                        dropdownItems {
+                                            item("Action")
+                                            item("Disabled Action") {
                                                 disabled = true
                                             }
-                                            pfSeparator()
-                                            pfItem("Separated Action")
+                                            separator()
+                                            item("Separated Action")
                                         }
                                     }
                                 }
@@ -871,8 +866,8 @@ internal object DataListCode {
                         }
                     },
                     {
-                        pfDataListExpandableContent {
-                            pfDataListExpandableContentBody {
+                        dataListExpandableContent {
+                            dataListExpandableContentBody {
                                 +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                             }
                         }
@@ -881,9 +876,9 @@ internal object DataListCode {
 
         val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
         val store: ItemStore<DisplayData> = ItemStore(identifier)
-        pfDataList(store) {
+        dataList(store) {
             display = {
-                pfDataListItem(it) {
+                dataListItem(it) {
                     it.content.forEach { content ->
                         content(this)
                     }

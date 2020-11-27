@@ -1,32 +1,39 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.const
-import dev.fritz2.binding.handledBy
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
+import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
 import dev.fritz2.elemento.aria
-import dev.fritz2.elemento.elements
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.patternfly.ButtonVariation.control
+import org.patternfly.ButtonVariation.danger
+import org.patternfly.ButtonVariation.inline
+import org.patternfly.ButtonVariation.link
+import org.patternfly.ButtonVariation.plain
+import org.patternfly.ButtonVariation.primary
+import org.patternfly.ButtonVariation.secondary
+import org.patternfly.ButtonVariation.tertiary
+import org.patternfly.IconPosition.ICON_FIRST
+import org.patternfly.IconPosition.ICON_LAST
 import org.patternfly.Notification
-import org.patternfly.Position.END
-import org.patternfly.Position.START
-import org.patternfly.Severity
 import org.patternfly.Switch
+import org.patternfly.buttonIcon
 import org.patternfly.classes
+import org.patternfly.clickButton
 import org.patternfly.component
 import org.patternfly.fas
+import org.patternfly.icon
 import org.patternfly.layout
+import org.patternfly.linkButton
 import org.patternfly.modifier
-import org.patternfly.pfButton
-import org.patternfly.pfContent
-import org.patternfly.pfIcon
-import org.patternfly.pfLinkButton
-import org.patternfly.pfSection
-import org.patternfly.pfSwitch
+import org.patternfly.pageSection
+import org.patternfly.pushButton
+import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.switch
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -34,169 +41,167 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 class ButtonComponent {
-    val elements = elements {
+    val content: RenderContext.() -> Unit = {
         intro(
             title = "Button",
             key = "Buttons",
             text = " communicate and trigger actions a user can take in an application or website. Related design guidelines: ",
             link = ("buttons-and-links" to "Buttons and links")
         )
-        pfSection(baseClass = "sc-component__buttons") {
-            pfContent {
-                h2 { +"Examples" }
-            }
+        pageSection(baseClass = "sc-component__buttons") {
+            h2 { +"Examples" }
             snippet("Variations", ButtonCode.VARIATIONS) {
-                pfButton(baseClass = "primary".modifier()) { +"Primary" }
-                pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                pfButton(baseClass = "tertiary".modifier()) { +"Tertiary" }
-                pfButton(baseClass = "danger".modifier()) { +"Danger" }
+                pushButton(primary) { +"Primary" }
+                pushButton(secondary) { +"Secondary" }
+                pushButton(tertiary) { +"Tertiary" }
+                pushButton(danger) { +"Danger" }
                 br {}
                 br {}
-                pfButton(baseClass = "link".modifier()) {
-                    pfIcon(START, "plus-circle".fas())
+                pushButton(link) {
+                    buttonIcon(ICON_FIRST, "plus-circle".fas())
                     +"Link"
                 }
-                pfButton(baseClass = "link".modifier()) {
+                pushButton(link) {
                     +"Link"
-                    pfIcon(END, "plus-circle".fas())
+                    buttonIcon(ICON_LAST, "plus-circle".fas())
                 }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Inline link" }
+                pushButton(link, inline) { +"Inline link" }
                 br {}
                 br {}
-                pfButton(baseClass = "plain".modifier()) { pfIcon("times".fas()) }
+                pushButton(plain) { icon("times".fas()) }
                 br {}
                 br {}
-                pfButton(baseClass = "control".modifier()) { +"Control" }
-                pfButton(baseClass = "control".modifier()) { pfIcon("copy".fas()) }
+                pushButton(control) { +"Control" }
+                pushButton(control) { icon("copy".fas()) }
                 br {}
                 br {}
-                pfButton(baseClass = classes("primary".modifier(), "small".modifier())) { +"Primary" }
-                pfButton(baseClass = classes("secondary".modifier(), "small".modifier())) { +"Secondary" }
-                pfButton(baseClass = classes("tertiary".modifier(), "small".modifier())) { +"Tertiary" }
-                pfButton(baseClass = classes("danger".modifier(), "small".modifier())) { +"Danger" }
-                pfButton(baseClass = classes("link".modifier(), "small".modifier())) {
-                    pfIcon(START, "plus-circle".fas())
+                pushButton(primary, baseClass = "small".modifier()) { +"Primary" }
+                pushButton(secondary, baseClass = "small".modifier()) { +"Secondary" }
+                pushButton(tertiary, baseClass = "small".modifier()) { +"Tertiary" }
+                pushButton(danger, baseClass = "small".modifier()) { +"Danger" }
+                pushButton(link, baseClass = "small".modifier()) {
+                    buttonIcon(ICON_FIRST, "plus-circle".fas())
                     +"Link"
                 }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier(), "small".modifier())) { +"Inline link" }
-                pfButton(baseClass = classes("control".modifier(), "small".modifier())) { +"Control" }
+                pushButton(link, inline, baseClass = "small".modifier()) { +"Inline link" }
+                pushButton(baseClass = classes("control".modifier(), "small".modifier())) { +"Control" }
             }
             snippet("Disabled", ButtonCode.DISABLED) {
-                pfButton(baseClass = "primary".modifier()) {
-                    disabled = const(true)
+                pushButton(primary) {
+                    disabled(true)
                     +"Primary disabled"
                 }
-                pfButton(baseClass = "secondary".modifier()) {
-                    disabled = const(true)
+                pushButton(secondary) {
+                    disabled(true)
                     +"Secondary disabled"
                 }
-                pfButton(baseClass = "tertiary".modifier()) {
-                    disabled = const(true)
+                pushButton(tertiary) {
+                    disabled(true)
                     +"Tertiary disabled"
                 }
-                pfButton(baseClass = "danger".modifier()) {
-                    disabled = const(true)
+                pushButton(danger) {
+                    disabled(true)
                     +"Danger disabled"
                 }
-                pfButton(baseClass = "link".modifier()) {
-                    disabled = const(true)
-                    pfIcon(START, "plus-circle".fas())
+                pushButton(link) {
+                    disabled(true)
+                    buttonIcon(ICON_FIRST, "plus-circle".fas())
                     +"Link disabled"
                 }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier())) {
-                    disabled = const(true)
+                pushButton(link, inline) {
+                    disabled(true)
                     +"Inline link disabled"
                 }
-                pfButton(baseClass = "plain".modifier()) {
-                    disabled = const(true)
-                    pfIcon("times".fas())
+                pushButton(plain) {
+                    disabled(true)
+                    icon("times".fas())
                 }
-                pfButton(baseClass = "control".modifier()) {
-                    disabled = const(true)
+                pushButton(control) {
+                    disabled(true)
                     +"Control disabled"
                 }
             }
             snippet("Aria-disabled", ButtonCode.ARIA_DISABLED) {
-                pfButton(baseClass = classes("primary".modifier(), "aria-disabled".modifier())) {
+                pushButton(primary, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
                     +"Primary disabled"
                 }
-                pfButton(baseClass = classes("secondary".modifier(), "aria-disabled".modifier())) {
+                pushButton(secondary, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
                     +"Secondary disabled"
                 }
-                pfButton(baseClass = classes("tertiary".modifier(), "aria-disabled".modifier())) {
+                pushButton(tertiary, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
                     +"Tertiary disabled"
                 }
-                pfButton(baseClass = classes("danger".modifier(), "aria-disabled".modifier())) {
+                pushButton(danger, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
                     +"Danger disabled"
                 }
-                pfButton(baseClass = classes("link".modifier(), "aria-disabled".modifier())) {
+                pushButton(link, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
-                    pfIcon(START, "plus-circle".fas())
+                    buttonIcon(ICON_FIRST, "plus-circle".fas())
                     +"Link disabled"
                 }
-                pfButton(baseClass = classes("link".modifier(), "aria-disabled".modifier(), "inline".modifier())) {
+                pushButton(link, inline, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
                     +"Inline link disabled"
                 }
-                pfButton(baseClass = classes("plain".modifier(), "aria-disabled".modifier())) {
+                pushButton(plain, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
-                    pfIcon("times".fas())
+                    icon("times".fas())
                 }
-                pfButton(baseClass = classes("control".modifier(), "aria-disabled".modifier())) {
+                pushButton(control, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
                     +"Control disabled"
                 }
             }
             snippet("Links as buttons", ButtonCode.LINKS) {
-                pfLinkButton("primary".modifier()) {
-                    href = const("https://www.w3.org/TR/WCAG20-TECHS/ARIA8.html#ARIA8-examples")
-                    target = const("_blank")
+                linkButton(primary) {
+                    href("https://www.w3.org/TR/WCAG20-TECHS/ARIA8.html#ARIA8-examples")
+                    target("_blank")
                     +"Primary link to W3.org"
                 }
-                pfLinkButton("secondary".modifier()) {
-                    href = const("https://www.patternfly.org")
-                    target = const("_blank")
+                linkButton(secondary) {
+                    href("https://www.patternfly.org")
+                    target("_blank")
                     +"Secondary link to PatternFly"
                 }
-                pfLinkButton(classes("tertiary".modifier(), "disabled".modifier())) {
+                linkButton(tertiary, baseClass = "disabled".modifier()) {
                     aria["disabled"] = true
                     domNode.tabIndex = -1
-                    href = const("https://www.patternfly.org")
-                    target = const("_blank")
+                    href("https://www.patternfly.org")
+                    target("_blank")
                     +"Tertiary link to W3.org"
                 }
             }
             snippet("Block level", ButtonCode.BLOCK_LEVEL) {
-                pfButton(baseClass = classes("primary".modifier(), "block".modifier())) { +"Block level button" }
+                pushButton(primary, baseClass = "block".modifier()) { +"Block level button" }
             }
             snippet("Types", ButtonCode.TYPES) {
-                pfButton(baseClass = "primary".modifier()) {
-                    type = const("submit")
+                pushButton(primary) {
+                    type("submit")
                     +"Submit"
                 }
-                pfButton(baseClass = "primary".modifier()) {
-                    type = const("reset")
+                pushButton(primary) {
+                    type("reset")
                     +"Reset"
                 }
-                pfButton(baseClass = "primary".modifier()) {
+                pushButton(primary) {
                     +"Default"
                 }
             }
             snippet("Call to action", ButtonCode.CALL_TO_ACTION) {
-                pfButton(baseClass = classes("primary".modifier(), "display-lg".modifier())) { +"Call to action" }
-                pfButton(baseClass = classes("secondary".modifier(), "display-lg".modifier())) { +"Call to action" }
-                pfButton(baseClass = classes("tertiary".modifier(), "display-lg".modifier())) { +"Call to action" }
-                pfButton(baseClass = classes("link".modifier(), "display-lg".modifier())) {
+                pushButton(primary, baseClass = "display-lg".modifier()) { +"Call to action" }
+                pushButton(secondary, baseClass = "display-lg".modifier()) { +"Call to action" }
+                pushButton(tertiary, baseClass = "display-lg".modifier()) { +"Call to action" }
+                pushButton(link, baseClass = "display-lg".modifier()) {
                     +"Call to action"
-                    pfIcon(END, "arrow-right".fas())
+                    buttonIcon(ICON_LAST, "arrow-right".fas())
                 }
-                pfButton(baseClass = classes("link".modifier(), "inline".modifier(), "display-lg".modifier())) {
+                pushButton(link, inline, baseClass = "display-lg".modifier()) {
                     +"Call to action"
-                    pfIcon(END, "arrow-right".fas())
+                    buttonIcon(ICON_LAST, "arrow-right".fas())
                 }
             }
             snippet("Reactive", ButtonCode.REACTIVE) {
@@ -211,24 +216,21 @@ class ButtonComponent {
                     +"mb-md".util()
                 }) {
                     text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                        type = const("text")
-                        value = const("Click me")
-                        placeholder = const("Button text")
+                        type("text")
+                        value("Click me")
+                        placeholder("Button text")
                     }
-                    enabled = pfSwitch("ml-md".util()) {
-                        label = const("Enabled")
-                        labelOff = const("Disabled")
-                        input.checked = const(true)
+                    enabled = switch("ml-md".util()) {
+                        label("Enabled")
+                        labelOff("Disabled")
+                        input.checked(true)
                     }
                 }
                 br {}
-                pfButton(baseClass = "primary".modifier()) {
-                    disabled = enabled.input.changes.states().map { !it }
-                    text.keyups.map { currentValue(it) }.bind()
-                    clicks.map {
-                        Notification(Severity.INFO, "Button clicked")
-                    } handledBy Notification.store.add
-                }
+                clickButton(baseClass = "primary".modifier()) {
+                    disabled(enabled.input.changes.states().map { !it })
+                    text.keyups.map { currentValue(it) }.asText()
+                } handledBy Notification.info("Button clicked")
 
                 MainScope().launch {
                     delay(EVENT_DELAY)
@@ -244,40 +246,40 @@ internal object ButtonCode {
     //language=kotlin
     const val VARIATIONS: String = """fun main() {
     render {
-        pfButton(baseClass = "primary".modifier()) { +"Primary" }
-        pfButton(baseClass = "secondary".modifier()) { +"Secondary" }
-        pfButton(baseClass = "tertiary".modifier()) { +"Tertiary" }
-        pfButton(baseClass = "danger".modifier()) { +"Danger" }
+        pushButton(baseClass = "primary".modifier()) { +"Primary" }
+        pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+        pushButton(baseClass = "tertiary".modifier()) { +"Tertiary" }
+        pushButton(baseClass = "danger".modifier()) { +"Danger" }
         br {}
         br {}
-        pfButton(baseClass = "link".modifier()) {
-            pfIcon(START, "plus-circle".fas())
+        pushButton(baseClass = "link".modifier()) {
+            icon(START, "plus-circle".fas())
             +"Link"
         }
-        pfButton(baseClass = "link".modifier()) {
+        pushButton(baseClass = "link".modifier()) {
             +"Link"
-            pfIcon(END, "plus-circle".fas())
+            icon(END, "plus-circle".fas())
         }
-        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Inline link" }
+        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Inline link" }
         br {}
         br {}
-        pfButton(baseClass = "plain".modifier()) { pfIcon("times".fas()) }
+        pushButton(baseClass = "plain".modifier()) { icon("times".fas()) }
         br {}
         br {}
-        pfButton(baseClass = "control".modifier()) { +"Control" }
-        pfButton(baseClass = "control".modifier()) { pfIcon("copy".fas()) }
+        pushButton(baseClass = "control".modifier()) { +"Control" }
+        pushButton(baseClass = "control".modifier()) { icon("copy".fas()) }
         br {}
         br {}
-        pfButton(baseClass = classes("primary".modifier(), "small".modifier())) { +"Primary" }
-        pfButton(baseClass = classes("secondary".modifier(), "small".modifier())) { +"Secondary" }
-        pfButton(baseClass = classes("tertiary".modifier(), "small".modifier())) { +"Tertiary" }
-        pfButton(baseClass = classes("danger".modifier(), "small".modifier())) { +"Danger" }
-        pfButton(baseClass = classes("link".modifier(), "small".modifier())) {
-            pfIcon(START, "plus-circle".fas())
+        pushButton(baseClass = classes("primary".modifier(), "small".modifier())) { +"Primary" }
+        pushButton(baseClass = classes("secondary".modifier(), "small".modifier())) { +"Secondary" }
+        pushButton(baseClass = classes("tertiary".modifier(), "small".modifier())) { +"Tertiary" }
+        pushButton(baseClass = classes("danger".modifier(), "small".modifier())) { +"Danger" }
+        pushButton(baseClass = classes("link".modifier(), "small".modifier())) {
+            icon(START, "plus-circle".fas())
             +"Link"
         }
-        pfButton(baseClass = classes("link".modifier(), "inline".modifier(), "small".modifier())) { +"Inline link" }
-        pfButton(baseClass = classes("control".modifier(), "small".modifier())) { +"Control" }
+        pushButton(baseClass = classes("link".modifier(), "inline".modifier(), "small".modifier())) { +"Inline link" }
+        pushButton(baseClass = classes("control".modifier(), "small".modifier())) { +"Control" }
     }
 }
 """
@@ -285,36 +287,36 @@ internal object ButtonCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pfButton(baseClass = "primary".modifier()) {
+        pushButton(baseClass = "primary".modifier()) {
             disabled = const(true)
             +"Primary disabled"
         }
-        pfButton(baseClass = "secondary".modifier()) {
+        pushButton(baseClass = "secondary".modifier()) {
             disabled = const(true)
             +"Secondary disabled"
         }
-        pfButton(baseClass = "tertiary".modifier()) {
+        pushButton(baseClass = "tertiary".modifier()) {
             disabled = const(true)
             +"Tertiary disabled"
         }
-        pfButton(baseClass = "danger".modifier()) {
+        pushButton(baseClass = "danger".modifier()) {
             disabled = const(true)
             +"Danger disabled"
         }
-        pfButton(baseClass = "link".modifier()) {
+        pushButton(baseClass = "link".modifier()) {
             disabled = const(true)
-            pfIcon(START, "plus-circle".fas())
+            icon(START, "plus-circle".fas())
             +"Link disabled"
         }
-        pfButton(baseClass = classes("link".modifier(), "inline".modifier())) {
+        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) {
             disabled = const(true)
             +"Inline link disabled"
         }
-        pfButton(baseClass = "plain".modifier()) {
+        pushButton(baseClass = "plain".modifier()) {
             disabled = const(true)
-            pfIcon("times".fas())
+            icon("times".fas())
         }
-        pfButton(baseClass = "control".modifier()) {
+        pushButton(baseClass = "control".modifier()) {
             disabled = const(true)
             +"Control disabled"
         }
@@ -325,36 +327,36 @@ internal object ButtonCode {
     //language=kotlin
     const val ARIA_DISABLED: String = """fun main() {
     render {
-        pfButton(baseClass = classes("primary".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("primary".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
             +"Primary disabled"
         }
-        pfButton(baseClass = classes("secondary".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("secondary".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
             +"Secondary disabled"
         }
-        pfButton(baseClass = classes("tertiary".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("tertiary".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
             +"Tertiary disabled"
         }
-        pfButton(baseClass = classes("danger".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("danger".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
             +"Danger disabled"
         }
-        pfButton(baseClass = classes("link".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("link".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
-            pfIcon(START, "plus-circle".fas())
+            icon(START, "plus-circle".fas())
             +"Link disabled"
         }
-        pfButton(baseClass = classes("link".modifier(), "aria-disabled".modifier(), "inline".modifier())) {
+        pushButton(baseClass = classes("link".modifier(), "aria-disabled".modifier(), "inline".modifier())) {
             aria["disabled"] = true
             +"Inline link disabled"
         }
-        pfButton(baseClass = classes("plain".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("plain".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
-            pfIcon("times".fas())
+            icon("times".fas())
         }
-        pfButton(baseClass = classes("control".modifier(), "aria-disabled".modifier())) {
+        pushButton(baseClass = classes("control".modifier(), "aria-disabled".modifier())) {
             aria["disabled"] = true
             +"Control disabled"
         }
@@ -365,17 +367,17 @@ internal object ButtonCode {
     //language=kotlin
     const val LINKS: String = """fun main() {
     render {
-        pfLinkButton("primary".modifier()) {
+        linkButton("primary".modifier()) {
             href = const("https://www.w3.org/TR/WCAG20-TECHS/ARIA8.html#ARIA8-examples")
             target = const("_blank")
             +"Primary link to W3.org"
         }
-        pfLinkButton("secondary".modifier()) {
+        linkButton("secondary".modifier()) {
             href = const("https://www.patternfly.org")
             target = const("_blank")
             +"Secondary link to PatternFly"
         }
-        pfLinkButton(classes("tertiary".modifier(), "disabled".modifier())) {
+        linkButton(classes("tertiary".modifier(), "disabled".modifier())) {
             aria["disabled"] = true
             domNode.tabIndex = -1
             href = const("https://www.patternfly.org")
@@ -389,7 +391,7 @@ internal object ButtonCode {
     //language=kotlin
     const val BLOCK_LEVEL: String = """fun main() {
     render {
-        pfButton(baseClass = classes("primary".modifier(), "block".modifier())) { +"Block level button" }
+        pushButton(baseClass = classes("primary".modifier(), "block".modifier())) { +"Block level button" }
     } 
 }
 """
@@ -397,15 +399,15 @@ internal object ButtonCode {
     //language=kotlin
     const val TYPES: String = """fun main() {
     render {
-        pfButton(baseClass = "primary".modifier()) {
+        pushButton(baseClass = "primary".modifier()) {
             type = const("submit")
             +"Submit"
         }
-        pfButton(baseClass = "primary".modifier()) {
+        pushButton(baseClass = "primary".modifier()) {
             type = const("reset")
             +"Reset"
         }
-        pfButton(baseClass = "primary".modifier()) {
+        pushButton(baseClass = "primary".modifier()) {
             +"Default"
         }
     } 
@@ -415,16 +417,16 @@ internal object ButtonCode {
     //language=kotlin
     const val CALL_TO_ACTION: String = """fun main() {
     render {
-        pfButton(baseClass = classes("primary".modifier(), "display-lg".modifier())) { +"Call to action" }
-        pfButton(baseClass = classes("secondary".modifier(), "display-lg".modifier())) { +"Call to action" }
-        pfButton(baseClass = classes("tertiary".modifier(), "display-lg".modifier())) { +"Call to action" }
-        pfButton(baseClass = classes("link".modifier(), "display-lg".modifier())) {
+        pushButton(baseClass = classes("primary".modifier(), "display-lg".modifier())) { +"Call to action" }
+        pushButton(baseClass = classes("secondary".modifier(), "display-lg".modifier())) { +"Call to action" }
+        pushButton(baseClass = classes("tertiary".modifier(), "display-lg".modifier())) { +"Call to action" }
+        pushButton(baseClass = classes("link".modifier(), "display-lg".modifier())) {
             +"Call to action"
-            pfIcon(END, "arrow-right".fas())
+            icon(END, "arrow-right".fas())
         }
-        pfButton(baseClass = classes("link".modifier(), "inline".modifier(), "display-lg".modifier())) {
+        pushButton(baseClass = classes("link".modifier(), "inline".modifier(), "display-lg".modifier())) {
             +"Call to action"
-            pfIcon(END, "arrow-right".fas())
+            icon(END, "arrow-right".fas())
         }
     } 
 }
@@ -448,14 +450,14 @@ internal object ButtonCode {
                 value = const("Click me")
                 placeholder = const("Button text")
             }
-            enabled = pfSwitch("ml-md".util()) {
+            enabled = switch("ml-md".util()) {
                 label = const("Enabled")
                 labelOff = const("Disabled")
                 input.checked = const(true)
             }
         }
         br {}
-        pfButton(baseClass = "primary".modifier()) {
+        pushButton(baseClass = "primary".modifier()) {
             disabled = enabled.input.changes.states().map { !it }
             text.keyups.map { currentValue(it) }.bind()
             clicks.map {
