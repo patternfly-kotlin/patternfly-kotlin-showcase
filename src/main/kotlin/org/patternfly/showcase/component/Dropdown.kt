@@ -6,7 +6,7 @@ import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.styleHidden
+import dev.fritz2.elemento.displayNone
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -332,7 +332,7 @@ class DropdownComponent {
                 dropdown<String>(baseClass = "mt-sm".util()) {
                     dropdownCheckboxToggle {
                         text {
-                            domNode.styleHidden = true
+                            domNode.displayNone = true
                             merge(
                                 this@dropdown.store.select.unwrap(),
                                 this@dropdownCheckboxToggle.input.changes.states()
@@ -348,7 +348,7 @@ class DropdownComponent {
                                     }
                                     else -> ""
                                 }
-                                domNode.styleHidden = value.isEmpty()
+                                domNode.displayNone = value.isEmpty()
                                 value
                             }.asText()
                         }

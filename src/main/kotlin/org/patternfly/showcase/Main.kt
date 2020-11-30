@@ -25,10 +25,10 @@ fun main() {
 
     val router = Router(StringRoute("home"))
     appendToBody(renderElement { Skeleton(router).content(this) })
-    document.pageSidebar()?.visible(router.map { it.startsWith("documentation:") })
+    document.pageSidebar()?.visible(router.data.map { it.startsWith("documentation:") })
 
     MainScope().launch {
-        router.collect { place ->
+        router.data.collect { place ->
             document.pageMain()?.let {
                 it.domNode.clear()
                 Place.lookup(place).invoke(it)
