@@ -25,7 +25,7 @@ import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.separator
 
-class CardComponent {
+object CardComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Card",
@@ -243,7 +243,7 @@ class CardComponent {
     }
 }
 
-internal object CardCode {
+object CardCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

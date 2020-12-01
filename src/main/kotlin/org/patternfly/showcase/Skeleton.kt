@@ -1,7 +1,10 @@
 package org.patternfly.showcase
 
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.routing.Router
+import dev.fritz2.mvp.PlaceManager
+import dev.fritz2.mvp.managedBy
+import dev.fritz2.mvp.placeRequest
+import kotlinx.coroutines.flow.map
 import org.patternfly.Page
 import org.patternfly.brand
 import org.patternfly.expandableGroup
@@ -16,9 +19,11 @@ import org.patternfly.page
 import org.patternfly.pageHeader
 import org.patternfly.pageMain
 import org.patternfly.pageSidebar
+import org.patternfly.showcase.component.components
+import org.patternfly.sidebarBody
 import org.patternfly.verticalNavigation
 
-class Skeleton(private val router: Router<String>) {
+class Skeleton(private val placeManager: PlaceManager) {
 
     val content: RenderContext.() -> Page = {
         page {
@@ -27,14 +32,16 @@ class Skeleton(private val router: Router<String>) {
                     home("#home")
                     img(src = "./header-logo.svg")
                 }
-                horizontalNavigation(router) {
+                horizontalNavigation(placeManager.router) {
                     navigationItems {
-                        navigationItem("get-started", "Get Started")
-                        navigationItem(item = "documentation:component=alert", text = "Documentation") {
-                            it.startsWith("documentation:")
-                        }
-                        navigationItem("contribute", "Contribute")
-                        navigationItem("get-in-touch", "Get in Touch")
+                        navigationItem(placeRequest(GET_STARTED), "Get Started")
+                        navigationItem(
+                            item = placeRequest(COMPONENT, "id" to "alert"),
+                            text = "Documentation",
+                            selected = sidebarToken
+                        )
+                        navigationItem(placeRequest(CONTRIBUTE), "Contribute")
+                        navigationItem(placeRequest(GET_IN_TOUCH), "Get in Touch")
                     }
                 }
                 headerTools {
@@ -48,18 +55,25 @@ class Skeleton(private val router: Router<String>) {
                 }
             }
             pageSidebar {
-                verticalNavigation(router) {
-                    navigationItems {
-                        expandableGroup("Components") {
-                            components.map { navigationItem(it.place, it.name) }
-                        }
-                        expandableGroup("Demos") {
-                            demos.map { navigationItem(it.place, it.name) }
+                visible(placeManager.placeRequests.map { sidebarToken(it) })
+                sidebarBody {
+                    verticalNavigation(placeManager.router) {
+                        navigationItems {
+                            expandableGroup("Components") {
+                                components.map {
+                                    navigationItem(placeRequest(COMPONENT, "id" to it.id), it.name)
+                                }
+                            }
+                            expandableGroup("Demos") {
+                                navigationItem(placeRequest(USER_DEMO), "User")
+                            }
                         }
                     }
                 }
             }
-            pageMain(id = "main")
+            pageMain(id = "main") {
+                managedBy(placeManager)
+            }
         }
     }
 

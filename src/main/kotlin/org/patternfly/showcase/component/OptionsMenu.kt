@@ -43,7 +43,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class OptionsMenuComponent {
+object OptionsMenuComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Options menu",
@@ -249,7 +249,7 @@ class OptionsMenuComponent {
     }
 }
 
-internal object OptionsMenuCode {
+object OptionsMenuCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

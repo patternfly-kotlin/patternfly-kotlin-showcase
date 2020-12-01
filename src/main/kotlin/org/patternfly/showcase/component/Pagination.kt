@@ -23,7 +23,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class PaginationComponent {
+object PaginationComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Pagination",
@@ -98,7 +98,7 @@ class PaginationComponent {
     }
 }
 
-internal object PaginationCode {
+object PaginationCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

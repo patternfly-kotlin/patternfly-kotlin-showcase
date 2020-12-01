@@ -16,7 +16,7 @@ import org.patternfly.modifier
 import org.patternfly.pageSection
 import kotlin.random.Random
 
-class ChipGroupComponent {
+object ChipGroupComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Chip group",
@@ -117,7 +117,7 @@ class ChipGroupComponent {
     }
 }
 
-internal object ChipGroupCode {
+object ChipGroupCode {
 
     //language=kotlin
     const val INLINE: String = """fun main() {

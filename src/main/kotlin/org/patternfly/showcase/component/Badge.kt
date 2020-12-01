@@ -22,7 +22,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class BadgeComponent {
+object BadgeComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Badge",
@@ -95,7 +95,7 @@ class BadgeComponent {
     }
 }
 
-internal object BadgeCode {
+object BadgeCode {
 
     //language=kotlin
     const val READ: String = """fun main() {

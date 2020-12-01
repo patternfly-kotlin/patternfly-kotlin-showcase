@@ -18,6 +18,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
     implementation("dev.fritz2:core:0.8-SNAPSHOT")
     implementation("dev.fritz2:elemento:0.0.4")
+    implementation("dev.fritz2:mvp:0.0.4")
     implementation("org.patternfly:patternfly-fritz2:0.0.4")
     implementation(npm("@github/time-elements", "3.1.1"))
     implementation(npm("@patternfly/patternfly", "4.59.1"))

@@ -17,7 +17,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class ChipComponent {
+object ChipComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Chip",
@@ -89,7 +89,7 @@ class ChipComponent {
     }
 }
 
-internal object ChipCode {
+object ChipCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

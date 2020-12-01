@@ -2,17 +2,11 @@ package org.patternfly.showcase
 
 import dev.fritz2.dom.appendToBody
 import dev.fritz2.dom.html.renderElement
-import dev.fritz2.routing.Router
-import dev.fritz2.routing.StringRoute
+import dev.fritz2.mvp.PlaceManager
+import dev.fritz2.mvp.placeRequest
 import kotlinext.js.require
-import kotlinx.browser.document
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.dom.clear
-import org.patternfly.pageMain
-import org.patternfly.pageSidebar
+import org.patternfly.pageSection
+import org.patternfly.title
 
 fun main() {
     require("@github/time-elements/dist/time-elements")
@@ -23,16 +17,19 @@ fun main() {
     require("highlight.js/lib/languages/kotlin")
     require("highlight.js/styles/github.css")
 
-    val router = Router(StringRoute("home"))
-    appendToBody(renderElement { Skeleton(router).content(this) })
-    document.pageSidebar()?.visible(router.data.map { it.startsWith("documentation:") })
-
-    MainScope().launch {
-        router.data.collect { place ->
-            document.pageMain()?.let {
-                it.domNode.clear()
-                Place.lookup(place).invoke(it)
+    registerPresenters()
+    val placeManager = PlaceManager(placeRequest(HOME)) { placeRequest ->
+        pageSection {
+            title { +"Not Found" }
+            p {
+                +"Page "
+                code { +placeRequest.token }
+                +" not found"
             }
         }
     }
+
+    appendToBody(renderElement {
+        Skeleton(placeManager).content(this)
+    })
 }

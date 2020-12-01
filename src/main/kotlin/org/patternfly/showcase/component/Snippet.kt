@@ -50,7 +50,7 @@ fun RenderContext.intro(
 fun RenderContext.snippet(header: String, code: String, content: RenderContext.() -> Unit): Snippet =
     register(Snippet(header, code, job, content), {})
 
-internal class CodeStore : RootStore<Boolean>(true) {
+class CodeStore : RootStore<Boolean>(true) {
     val toggle = handle { hidden -> !hidden }
 }
 

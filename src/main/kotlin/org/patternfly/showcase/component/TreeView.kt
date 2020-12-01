@@ -16,7 +16,7 @@ import org.patternfly.treeItem
 import org.patternfly.treeView
 
 @Suppress("DuplicatedCode")
-class TreeViewComponent {
+object TreeViewComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Tree",
@@ -90,7 +90,7 @@ private fun TreeBuilder<Place>.place(place: Place) {
     }
 }
 
-internal object TreeViewCode {
+object TreeViewCode {
 
     //language=kotlin
     const val DEFAULT: String = """fun main() {

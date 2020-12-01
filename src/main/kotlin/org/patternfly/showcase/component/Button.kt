@@ -40,7 +40,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class ButtonComponent {
+object ButtonComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Button",
@@ -241,7 +241,7 @@ class ButtonComponent {
     }
 }
 
-internal object ButtonCode {
+object ButtonCode {
 
     //language=kotlin
     const val VARIATIONS: String = """fun main() {

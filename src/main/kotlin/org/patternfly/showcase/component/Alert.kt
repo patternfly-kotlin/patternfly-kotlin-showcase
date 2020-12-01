@@ -17,8 +17,9 @@ import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.pushButton
 
-class AlertComponent {
+internal object AlertComponent {
     val content: RenderContext.() -> Unit = {
+        console.log("This is the alert component")
         intro(
             title = "Alert",
             key = "Alerts",

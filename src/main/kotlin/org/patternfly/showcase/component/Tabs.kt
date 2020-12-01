@@ -27,7 +27,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class TabsComponent {
+object TabsComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Tabs",
@@ -186,7 +186,7 @@ class TabsComponent {
     }
 }
 
-internal object TabsCode {
+object TabsCode {
 
     //language=kotlin
     const val DEFAULT: String = """fun main() {

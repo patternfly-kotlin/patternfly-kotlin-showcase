@@ -1,12 +1,18 @@
-package org.patternfly.showcase.page
+package org.patternfly.showcase
 
-import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.mvp.Presenter
+import dev.fritz2.mvp.View
+import dev.fritz2.mvp.ViewContent
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.title
 
-class HomePage  {
-    val content: RenderContext.() -> Unit = {
+class HomePresenter : Presenter<HomeView> {
+    override val view: HomeView = HomeView()
+}
+
+class HomeView : View {
+    override val content: ViewContent = {
         pageSection(baseClass = "light".modifier()) {
             title { +"PatternFly Fritz2" }
             p {

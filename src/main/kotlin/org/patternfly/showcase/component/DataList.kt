@@ -32,7 +32,7 @@ import org.patternfly.pageSection
 import org.patternfly.pushButton
 import org.patternfly.separator
 
-class DataListComponent {
+object DataListComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Data list",
@@ -455,7 +455,7 @@ class DataListComponent {
     }
 }
 
-internal object DataListCode {
+object DataListCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

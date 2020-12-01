@@ -10,6 +10,10 @@ import dev.fritz2.dom.values
 import dev.fritz2.elemento.Id
 import dev.fritz2.elemento.aria
 import dev.fritz2.elemento.plusAssign
+import dev.fritz2.mvp.Presenter
+import dev.fritz2.mvp.View
+import dev.fritz2.mvp.ViewContent
+import dev.fritz2.mvp.WithPresenter
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
@@ -64,9 +68,9 @@ import org.patternfly.pushButton
 import org.patternfly.showcase.data.Location
 import org.patternfly.showcase.data.User
 import org.patternfly.showcase.data.randomUsers
-import org.patternfly.showcase.demo.UserDemo.DataComponent.CARD
-import org.patternfly.showcase.demo.UserDemo.DataComponent.LIST
-import org.patternfly.showcase.demo.UserDemo.DataComponent.TABLE
+import org.patternfly.showcase.demo.UserDemoView.DataComponent.CARD
+import org.patternfly.showcase.demo.UserDemoView.DataComponent.LIST
+import org.patternfly.showcase.demo.UserDemoView.DataComponent.TABLE
 import org.patternfly.sortOptions
 import org.patternfly.title
 import org.patternfly.toolbar
@@ -76,65 +80,23 @@ import org.patternfly.toolbarGroup
 import org.patternfly.toolbarItem
 import org.patternfly.util
 
-fun RenderContext.address(user: User, content: TextElement.() -> Unit = {}): TextElement = address {
-    content(this)
-    +"${user.location.street.name} ${user.location.street.number}"
-    br { }
-    +"${user.location.postcode} ${user.location.city}"
-    br { }
-    +"${user.location.state} ${user.nat}"
-    a(baseClass = "ml-sm".util()) {
-        href(googleMaps(user.location))
-        target("map")
-        icon("map-marked-alt".fas())
-    }
-}
+class UserDemoPresenter : Presenter<UserDemoView> {
 
-fun RenderContext.contact(user: User): Ul = ul {
-    li {
-        a {
-            href("mailto:${user.email}")
-            icon("envelope".fas(), baseClass = "mr-sm".util())
-            +user.email
-        }
-    }
-    li {
-        a {
-            href("tel:${user.phone}")
-            icon("phone".fas(), baseClass = "mr-sm".util())
-            +user.phone
-        }
-    }
-    li {
-        a {
-            href("tel:${user.cell}")
-            icon("mobile-alt".fas(), baseClass = "mr-sm".util())
-            +user.cell
+    internal val userStore = ItemStore<User> { it.login.uuid }
+    override val view: UserDemoView = UserDemoView(this)
+
+    override fun show() {
+        MainScope().launch {
+            userStore.addAll(randomUsers(73))
         }
     }
 }
 
-fun RenderContext.nat(user: User): Img = img(baseClass = "sc-user-nat") {
-    src("https://www.countryflags.io/${user.nat}/flat/32.png")
-    with(domNode) {
-        title = user.nat
-    }
-}
+class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresenter<UserDemoPresenter> {
 
-fun RenderContext.photo(user: User): Div = div(baseClass = "sc-user-photo-75") {
-    img {
-        src(user.picture.medium)
-    }
-}
-
-fun googleMaps(location: Location): String =
-    "https://www.google.com/maps/search/?api=1&query=${location.coordinates.latitude},${location.coordinates.longitude}"
-
-class UserDemo {
     internal enum class DataComponent { CARD, LIST, TABLE }
 
     private val activeComponent = storeOf(CARD)
-    private val userStore = ItemStore<User> { it.login.uuid }
     private val sortInfos = linkedMapOf<String, SortInfo<User>>(
         "last-name" to SortInfo("last-name", "Last name", compareBy { it.name.last }),
         "first-name" to SortInfo("first-name", "First name", compareBy { it.name.first }),
@@ -143,7 +105,7 @@ class UserDemo {
         "nat" to SortInfo("nat", "Nationality", compareBy { it.nat }),
     )
 
-    val content: RenderContext.() -> Unit = {
+    override val content: ViewContent = {
         pageSection {
             title { +"User Demo" }
             p {
@@ -173,7 +135,7 @@ class UserDemo {
                 toolbarContent {
                     toolbarContentSection {
                         toolbarItem {
-                            bulkSelect(userStore)
+                            bulkSelect(presenter.userStore)
                         }
                         toolbarItem {
                             inputGroup {
@@ -183,11 +145,11 @@ class UserDemo {
                                     changes.values()
                                         .filter { it.isEmpty() }
                                         .map { domNode.id }
-                                        .handledBy(userStore.removeFilter)
+                                        .handledBy(presenter.userStore.removeFilter)
                                     changes.values()
                                         .filter { it.isNotEmpty() }
                                         .map { domNode.id to { user: User -> user.match(it) } }
-                                        .handledBy(userStore.addFilter)
+                                        .handledBy(presenter.userStore.addFilter)
                                 }
                                 pushButton(control) {
                                     icon("search".fas())
@@ -195,7 +157,7 @@ class UserDemo {
                             }
                         }
                         toolbarItem {
-                            sortOptions(userStore, sortInfos.values.toList())
+                            sortOptions(presenter.userStore, sortInfos.values.toList())
                         }
                         toolbarGroup("icon-button-group".modifier()) {
                             toolbarItem {
@@ -215,12 +177,12 @@ class UserDemo {
                             }
                         }
                         toolbarItem {
-                            pagination(itemStore = userStore, compact = true)
+                            pagination(itemStore = presenter.userStore, compact = true)
                         }
                     }
                 }
             }
-            cardView(userStore) {
+            cardView(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it == CARD)) })
                 display { user ->
                     card(user, baseClass = classes {
@@ -262,7 +224,7 @@ class UserDemo {
                     }
                 }
             }
-            dataList(userStore) {
+            dataList(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it == LIST)) })
                 display { user ->
                     dataListItem(user) {
@@ -276,7 +238,7 @@ class UserDemo {
                                     nat(user)
                                 }
                                 dataListCell {
-                                    p(id = userStore.identifier(user)) { +user.name.toString() }
+                                    p(id = presenter.userStore.identifier(user)) { +user.name.toString() }
                                 }
                                 dataListCell("flex-4".modifier()) {
                                     p {
@@ -306,7 +268,7 @@ class UserDemo {
                     }
                 }
             }
-            dataTable(userStore) {
+            dataTable(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it == TABLE)) })
                 dataTableColumns {
                     dataTableToggleColumn(baseClass = classes {
@@ -363,9 +325,57 @@ class UserDemo {
         }
     }
 
-    init {
-        MainScope().launch {
-            userStore.addAll(randomUsers(73))
+    private fun RenderContext.address(user: User, content: TextElement.() -> Unit = {}): TextElement = address {
+        content(this)
+        +"${user.location.street.name} ${user.location.street.number}"
+        br { }
+        +"${user.location.postcode} ${user.location.city}"
+        br { }
+        +"${user.location.state} ${user.nat}"
+        a(baseClass = "ml-sm".util()) {
+            href(googleMaps(user.location))
+            target("map")
+            icon("map-marked-alt".fas())
         }
     }
+
+    private fun RenderContext.contact(user: User): Ul = ul {
+        li {
+            a {
+                href("mailto:${user.email}")
+                icon("envelope".fas(), baseClass = "mr-sm".util())
+                +user.email
+            }
+        }
+        li {
+            a {
+                href("tel:${user.phone}")
+                icon("phone".fas(), baseClass = "mr-sm".util())
+                +user.phone
+            }
+        }
+        li {
+            a {
+                href("tel:${user.cell}")
+                icon("mobile-alt".fas(), baseClass = "mr-sm".util())
+                +user.cell
+            }
+        }
+    }
+
+    private fun RenderContext.nat(user: User): Img = img(baseClass = "sc-user-nat") {
+        src("https://www.countryflags.io/${user.nat}/flat/32.png")
+        with(domNode) {
+            title = user.nat
+        }
+    }
+
+    private fun RenderContext.photo(user: User): Div = div(baseClass = "sc-user-photo-75") {
+        img {
+            src(user.picture.medium)
+        }
+    }
+
+    private fun googleMaps(location: Location): String =
+        "https://www.google.com/maps/search/?api=1&query=${location.coordinates.latitude},${location.coordinates.longitude}"
 }

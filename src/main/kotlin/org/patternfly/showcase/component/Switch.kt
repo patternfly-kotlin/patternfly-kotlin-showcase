@@ -9,7 +9,7 @@ import org.patternfly.Severity
 import org.patternfly.pageSection
 import org.patternfly.switch
 
-class SwitchComponent {
+object SwitchComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Switch",
@@ -49,7 +49,7 @@ class SwitchComponent {
     }
 }
 
-internal object SwitchCode {
+object SwitchCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

@@ -48,7 +48,7 @@ import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalCoroutinesApi::class, ExperimentalTime::class)
-class DropdownComponent {
+object DropdownComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Dropdown",
@@ -408,7 +408,7 @@ class DropdownComponent {
     }
 }
 
-internal object DropdownCode {
+object DropdownCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {

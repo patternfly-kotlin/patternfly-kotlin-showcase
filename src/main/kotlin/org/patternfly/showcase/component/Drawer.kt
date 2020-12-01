@@ -20,10 +20,10 @@ import org.patternfly.pushButton
 import org.patternfly.title
 import org.patternfly.util
 
-private const val LOREM_IPSUM =
+const val LOREM_IPSUM =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehicula ex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat,nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodo eleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada sed posuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quam ullamcorper, in commodo massa vulputate."
 
-class DrawerComponent {
+object DrawerComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Drawer",
@@ -196,7 +196,7 @@ class DrawerComponent {
     }
 }
 
-internal object DrawerCode {
+object DrawerCode {
 
     //language=kotlin
     const val BASIC: String = """fun main() {
