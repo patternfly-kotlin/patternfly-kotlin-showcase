@@ -17,16 +17,15 @@ import org.patternfly.dataListCheck
 import org.patternfly.dataListContent
 import org.patternfly.dataListControl
 import org.patternfly.dataListExpandableContent
-import org.patternfly.dataListExpandableContentBody
 import org.patternfly.dataListItem
 import org.patternfly.dataListRow
 import org.patternfly.dataListToggle
 import org.patternfly.dropdown
-import org.patternfly.dropdownItems
-import org.patternfly.dropdownKebabToggle
 import org.patternfly.fas
 import org.patternfly.icon
 import org.patternfly.item
+import org.patternfly.items
+import org.patternfly.kebabToggle
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.pushButton
@@ -42,7 +41,7 @@ object DataListComponent {
             link = ("lists-and-tables" to "Lists and tables")
         )
         pageSection {
-                h2 { +"Examples" }
+            h2 { +"Examples" }
             snippet("Basic", DataListCode.BASIC) {
                 // Just a fake item w/ a display function
                 data class DisplayData(
@@ -146,8 +145,8 @@ object DataListComponent {
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        dropdownKebabToggle()
-                                        dropdownItems {
+                                        kebabToggle()
+                                        items {
                                             item("Action")
                                             item("Disabled Action") {
                                                 disabled = true
@@ -174,8 +173,8 @@ object DataListComponent {
                             dataListAction("hidden-on-lg".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        dropdownKebabToggle()
-                                        dropdownItems {
+                                        kebabToggle()
+                                        items {
                                             item("Action")
                                             item("Disabled Action") {
                                                 disabled = true
@@ -206,8 +205,8 @@ object DataListComponent {
                             dataListAction("hidden-on-xl".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        dropdownKebabToggle()
-                                        dropdownItems {
+                                        kebabToggle()
+                                        items {
                                             item("Action")
                                             item("Disabled Action") {
                                                 disabled = true
@@ -267,8 +266,8 @@ object DataListComponent {
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        dropdownKebabToggle()
-                                        dropdownItems {
+                                        kebabToggle()
+                                        items {
                                             item("Action")
                                             item("Disabled Action") {
                                                 disabled = true
@@ -322,8 +321,8 @@ object DataListComponent {
                                 dataListAction {
                                     div(baseClass = "data-list".component("action")) {
                                         dropdown<String>(align = Align.RIGHT) {
-                                            dropdownKebabToggle()
-                                            dropdownItems {
+                                            kebabToggle()
+                                            items {
                                                 item("Action")
                                                 item("Disabled Action") {
                                                     disabled = true
@@ -338,9 +337,7 @@ object DataListComponent {
                         },
                         {
                             dataListExpandableContent {
-                                dataListExpandableContentBody {
-                                    +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                }
+                                +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                             }
                         }
                     )),
@@ -368,8 +365,8 @@ object DataListComponent {
                                 dataListAction {
                                     div(baseClass = "data-list".component("action")) {
                                         dropdown<String>(align = Align.RIGHT) {
-                                            dropdownKebabToggle()
-                                            dropdownItems {
+                                            kebabToggle()
+                                            items {
                                                 item("Action")
                                                 item("Disabled Action") {
                                                     disabled = true
@@ -384,9 +381,7 @@ object DataListComponent {
                         },
                         {
                             dataListExpandableContent {
-                                dataListExpandableContentBody {
                                     +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                }
                             }
                         }
                     )),
@@ -415,8 +410,8 @@ object DataListComponent {
                                     dataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             dropdown<String>(align = Align.RIGHT) {
-                                                dropdownKebabToggle()
-                                                dropdownItems {
+                                                kebabToggle()
+                                                items {
                                                     item("Action")
                                                     item("Disabled Action") {
                                                         disabled = true
@@ -431,9 +426,7 @@ object DataListComponent {
                             },
                             {
                                 dataListExpandableContent {
-                                    dataListExpandableContentBody {
-                                        +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                    }
+                                    +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                 }
                             }
                         )))

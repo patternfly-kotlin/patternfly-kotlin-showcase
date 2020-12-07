@@ -18,9 +18,9 @@ import org.patternfly.cardHeader
 import org.patternfly.cardHeaderMain
 import org.patternfly.cardTitle
 import org.patternfly.dropdown
-import org.patternfly.dropdownItems
-import org.patternfly.dropdownKebabToggle
 import org.patternfly.item
+import org.patternfly.items
+import org.patternfly.kebabToggle
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.separator
@@ -53,8 +53,8 @@ object CardComponent {
                         }
                         cardActions {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownKebabToggle()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Item 1")
                                     item("Disabled Item") {
                                         disabled = true
@@ -76,8 +76,8 @@ object CardComponent {
                     cardHeader {
                         cardActions {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownKebabToggle()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true
@@ -101,8 +101,8 @@ object CardComponent {
                     cardHeader {
                         cardActions {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownKebabToggle()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true
@@ -193,8 +193,8 @@ object CardComponent {
                     cardHeader {
                         cardActions {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownKebabToggle()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true

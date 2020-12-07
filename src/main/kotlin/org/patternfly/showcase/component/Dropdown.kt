@@ -6,42 +6,40 @@ import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.displayNone
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
+import org.patternfly.ButtonVariation.primary
 import org.patternfly.Dropdown
 import org.patternfly.Entry
 import org.patternfly.Notification
-import org.patternfly.NotificationStore
-import org.patternfly.Severity.INFO
 import org.patternfly.Switch
 import org.patternfly.TriState
+import org.patternfly.actionToggle
+import org.patternfly.checkboxToggle
 import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.dropdown
-import org.patternfly.dropdownActionToggle
-import org.patternfly.dropdownCheckboxToggle
-import org.patternfly.dropdownGroups
-import org.patternfly.dropdownItems
-import org.patternfly.dropdownKebabToggle
-import org.patternfly.dropdownToggle
 import org.patternfly.fas
 import org.patternfly.group
+import org.patternfly.groups
 import org.patternfly.icon
+import org.patternfly.iconToggle
 import org.patternfly.item
 import org.patternfly.items
+import org.patternfly.kebabToggle
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.separator
 import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
-import org.patternfly.unwrap
+import org.patternfly.textToggle
+import org.patternfly.triState
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -60,8 +58,8 @@ object DropdownComponent {
             h2 { +"Examples" }
             snippet("Basic", DropdownCode.BASIC) {
                 dropdown<String> {
-                    dropdownToggle { content = { +"Dropdown" } }
-                    dropdownItems {
+                    textToggle { +"Dropdown" }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -73,11 +71,9 @@ object DropdownComponent {
             }
             snippet("Disabled", DropdownCode.DISABLED) {
                 dropdown<String> {
-                    dropdownToggle {
-                        content = { +"Dropdown" }
-                        disabled(true)
-                    }
-                    dropdownItems {
+                    disabled(true)
+                    textToggle { +"Dropdown" }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -89,8 +85,8 @@ object DropdownComponent {
             }
             snippet("Primary toggle", DropdownCode.PRIMARY) {
                 dropdown<String> {
-                    dropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
-                    dropdownItems {
+                    textToggle(primary) { +"Dropdown" }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -102,8 +98,8 @@ object DropdownComponent {
             }
             snippet("Position right", DropdownCode.RIGHT) {
                 dropdown<String>(align = RIGHT) {
-                    dropdownToggle { content = { +"Dropdown" } }
-                    dropdownItems {
+                    textToggle() { +"Dropdown" }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -115,8 +111,8 @@ object DropdownComponent {
             }
             snippet("Direction up", DropdownCode.UP) {
                 dropdown<String>(up = true) {
-                    dropdownToggle { content = { +"Dropdown" } }
-                    dropdownItems {
+                    textToggle { +"Dropdown" }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -128,8 +124,8 @@ object DropdownComponent {
             }
             snippet("With kebab", DropdownCode.KEBAB) {
                 dropdown<String> {
-                    dropdownKebabToggle()
-                    dropdownItems {
+                    kebabToggle()
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -141,8 +137,8 @@ object DropdownComponent {
             }
             snippet("Icon only", DropdownCode.ICON) {
                 dropdown<String> {
-                    dropdownToggle { icon = { icon("th".fas()) } }
-                    dropdownItems {
+                    iconToggle { icon("th".fas()) }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -154,8 +150,8 @@ object DropdownComponent {
             }
             snippet("Icons and descriptions", DropdownCode.DESCRIPTION) {
                 dropdown<String> {
-                    dropdownToggle { content = { +"Dropdown" } }
-                    dropdownItems {
+                    textToggle { +"Dropdown" }
+                    items {
                         item("Action 1") {
                             icon = { icon("cog".fas()) }
                         }
@@ -185,8 +181,8 @@ object DropdownComponent {
             }
             snippet("Split button", DropdownCode.CHECKBOX_TOGGLE) {
                 dropdown<String> {
-                    dropdownCheckboxToggle()
-                    dropdownItems {
+                    checkboxToggle()
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -196,8 +192,8 @@ object DropdownComponent {
                     }
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    dropdownCheckboxToggle { text { +"10 selected" } }
-                    dropdownItems {
+                    checkboxToggle { text { +"10 selected" } }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -209,8 +205,8 @@ object DropdownComponent {
             }
             snippet("Split button action", DropdownCode.ACTION_TOGGLE) {
                 dropdown<String> {
-                    dropdownActionToggle { action { +"Action" } }
-                    dropdownItems {
+                    actionToggle { +"Action" }
+                    items {
                         item("Action")
                         item("Disabled Action") {
                             disabled = true
@@ -220,8 +216,8 @@ object DropdownComponent {
                     }
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    dropdownActionToggle { action { icon("cog".fas()) } }
-                    dropdownItems {
+                    actionToggle { icon("cog".fas()) }
+                    items {
                         item("Action") {
                             icon = { icon("cog".fas()) }
                         }
@@ -237,9 +233,9 @@ object DropdownComponent {
                 }
             }
             snippet("Groups", DropdownCode.GROUPS) {
-                dropdown<String> {
-                    dropdownToggle { content = { +"Dropdown" } }
-                    dropdownGroups {
+                dropdown<String>(grouped = true) {
+                    textToggle { +"Dropdown" }
+                    groups {
                         group {
                             item("Action 1")
                             item("Action 2")
@@ -265,15 +261,12 @@ object DropdownComponent {
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
-                        store.select.unwrap()
-                            .map { Notification(INFO, "$name: Clicked on $it") }
-                            .handledBy(NotificationStore.add)
-                        ces.collapsed
-                            .map { Notification(INFO, "$name: Dropdown collapsed") }
-                            .handledBy(NotificationStore.add)
-                        ces.expanded
-                            .map { Notification(INFO, "$name: Dropdown expanded") }
-                            .handledBy(NotificationStore.add)
+                        store.select handledBy Notification.add {
+                            info("$name: Clicked on $it")
+                        }
+                        ces.data.drop(1) handledBy Notification.add { expanded ->
+                            info("$name: Expanded state: $expanded.")
+                        }
                     }
                 }
 
@@ -303,99 +296,68 @@ object DropdownComponent {
                     }
                 }
                 dropdown<String>(baseClass = "mt-sm".util()) {
-                    dropdownToggle {
-                        content = { text.keyups.map { currentValue(it) }.asText() }
-                        disabled(enabled.input.changes.states().map { !it })
+                    disabled(enabled.input.changes.states().map { !it })
+                    textToggle {
+                        text.keyups.map { currentValue(it) }.asText()
                     }
-                    dropdownItems()
-                    registerEvents(this, "Text")
+                    registerEvents(this, "Text toggle")
                     store.update(items())
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    dropdownKebabToggle {
-                        disabled(enabled.input.changes.states().map { !it })
-                    }
-                    dropdownItems()
-                    registerEvents(this, "Kebab")
+                    disabled(enabled.input.changes.states().map { !it })
+                    kebabToggle()
+                    registerEvents(this, "Kebab toggle")
                     store.update(items())
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    dropdownToggle {
-                        disabled(enabled.input.changes.states().map { !it })
-                        icon = { icon("cog".fas()) }
-                    }
-                    dropdownItems()
-                    registerEvents(this, "Icon")
+                    disabled(enabled.input.changes.states().map { !it })
+                    iconToggle { icon("cog".fas()) }
+                    registerEvents(this, "Icon toggle")
                     store.update(items())
                 }
                 br {}
                 dropdown<String>(baseClass = "mt-sm".util()) {
-                    dropdownCheckboxToggle {
+                    disabled(enabled.input.changes.states().map { !it })
+                    checkboxToggle {
                         text {
-                            domNode.displayNone = true
-                            merge(
-                                this@dropdown.store.select.unwrap(),
-                                this@dropdownCheckboxToggle.input.changes.states()
-                            ).map {
-                                val value = when (it) {
-                                    is String -> {
-                                        if (it == "Select none") {
-                                            ""
-                                        } else it
-                                    }
-                                    is Boolean -> {
-                                        if (it) "Select all" else ""
-                                    }
-                                    else -> ""
-                                }
-                                domNode.displayNone = value.isEmpty()
-                                value
-                            }.asText()
+                            this@dropdown.store.select.asText()
                         }
-                        disabled(enabled.input.changes.states().map { !it })
-                        triState(this@dropdown.store.select.unwrap().map {
-                            when (it) {
-                                "Select none" -> TriState.OFF
-                                "Select visible" -> TriState.INDETERMINATE
-                                "Select all" -> TriState.ON
-                                else -> TriState.OFF
+                        checkbox {
+                            changes.states() handledBy Notification.add {
+                                info("Checkbox toggle: Checked: $it")
                             }
-                        })
+                            triState(this@dropdown.store.select.map {
+                                when (it) {
+                                    "Select none" -> TriState.OFF
+                                    "Select visible" -> TriState.INDETERMINATE
+                                    "Select all" -> TriState.ON
+                                    else -> TriState.OFF
+                                }
+                            })
+                        }
                     }
-                    dropdownItems {
+                    items {
                         item("Select none")
                         item("Select visible")
                         item("Select all")
                     }
-                    registerEvents(this, "Split button")
+                    registerEvents(this, "Checkbox toggle")
                 }
                 br {}
                 dropdown<String>(baseClass = "mt-sm".util()) {
-                    dropdownActionToggle {
-                        action {
-                            text.keyups.map { currentValue(it) }.asText()
-                            clicks
-                                .map { Notification(INFO, "Action clicked") }
-                                .handledBy(NotificationStore.add)
-                        }
-                        disabled(enabled.input.changes.states().map { !it })
-                    }
-                    dropdownItems()
-                    registerEvents(this, "Action text")
+                    disabled(enabled.input.changes.states().map { !it })
+                    actionToggle {
+                        text.keyups.map { currentValue(it) }.asText()
+                    } handledBy Notification.info("Action toggle (text): Clicked")
+                    registerEvents(this, "Action toggle (text)")
                     store.update(items())
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    dropdownActionToggle {
-                        action {
-                            icon("cog".fas())
-                            clicks
-                                .map { Notification(INFO, "Action clicked") }
-                                .handledBy(NotificationStore.add)
-                        }
-                        disabled(enabled.input.changes.states().map { !it })
-                    }
-                    dropdownItems()
-                    registerEvents(this, "Action icon")
+                    disabled(enabled.input.changes.states().map { !it })
+                    actionToggle {
+                        icon("cog".fas())
+                    } handledBy Notification.info("Action toggle (icon): Clicked")
+                    registerEvents(this, "Action toggle (icon)")
                     store.update(items())
                 }
 

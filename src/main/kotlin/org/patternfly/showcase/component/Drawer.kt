@@ -11,7 +11,6 @@ import org.patternfly.drawerBody
 import org.patternfly.drawerClose
 import org.patternfly.drawerContent
 import org.patternfly.drawerHead
-import org.patternfly.drawerMain
 import org.patternfly.drawerPanel
 import org.patternfly.drawerSection
 import org.patternfly.modifier
@@ -39,21 +38,19 @@ object DrawerComponent {
                 }
                 br {}
                 drawer {
-                    button.clicks handledBy expanded.toggle
-                    drawerMain {
-                        drawerContent {
-                            drawerBody { +LOREM_IPSUM }
-                        }
-                        drawerPanel {
-                            drawerBody {
-                                drawerHead {
-                                    span {
-                                        domNode.tabIndex = 0
-                                        +"Drawer panel"
-                                    }
-                                    drawerActions {
-                                        drawerClose()
-                                    }
+                    button.clicks handledBy ces.toggle
+                    drawerContent {
+                        drawerBody { +LOREM_IPSUM }
+                    }
+                    drawerPanel {
+                        drawerBody {
+                            drawerHead {
+                                span {
+                                    domNode.tabIndex = 0
+                                    +"Drawer panel"
+                                }
+                                drawerActions {
+                                    drawerClose()
                                 }
                             }
                         }
@@ -66,21 +63,19 @@ object DrawerComponent {
                 }
                 br {}
                 drawer("panel-left".modifier()) {
-                    button.clicks handledBy expanded.toggle
-                    drawerMain {
-                        drawerContent {
-                            drawerBody { +LOREM_IPSUM }
-                        }
-                        drawerPanel {
-                            drawerBody {
-                                drawerHead {
-                                    span {
-                                        domNode.tabIndex = 0
-                                        +"Drawer panel"
-                                    }
-                                    drawerActions {
-                                        drawerClose()
-                                    }
+                    button.clicks handledBy ces.toggle
+                    drawerContent {
+                        drawerBody { +LOREM_IPSUM }
+                    }
+                    drawerPanel {
+                        drawerBody {
+                            drawerHead {
+                                span {
+                                    domNode.tabIndex = 0
+                                    +"Drawer panel"
+                                }
+                                drawerActions {
+                                    drawerClose()
                                 }
                             }
                         }
@@ -93,21 +88,19 @@ object DrawerComponent {
                 }
                 br {}
                 drawer("inline".modifier()) {
-                    button.clicks handledBy expanded.toggle
-                    drawerMain {
-                        drawerContent {
-                            drawerBody { +LOREM_IPSUM }
-                        }
-                        drawerPanel {
-                            drawerBody {
-                                drawerHead {
-                                    span {
-                                        domNode.tabIndex = 0
-                                        +"Drawer panel"
-                                    }
-                                    drawerActions {
-                                        drawerClose()
-                                    }
+                    button.clicks handledBy ces.toggle
+                    drawerContent {
+                        drawerBody { +LOREM_IPSUM }
+                    }
+                    drawerPanel {
+                        drawerBody {
+                            drawerHead {
+                                span {
+                                    domNode.tabIndex = 0
+                                    +"Drawer panel"
+                                }
+                                drawerActions {
+                                    drawerClose()
                                 }
                             }
                         }
@@ -120,21 +113,19 @@ object DrawerComponent {
                 }
                 br {}
                 drawer(classes("inline".modifier(), "panel-left".modifier())) {
-                    button.clicks handledBy expanded.toggle
-                    drawerMain {
-                        drawerContent {
-                            drawerBody { +LOREM_IPSUM }
-                        }
-                        drawerPanel {
-                            drawerBody {
-                                drawerHead {
-                                    span {
-                                        domNode.tabIndex = 0
-                                        +"Drawer panel"
-                                    }
-                                    drawerActions {
-                                        drawerClose()
-                                    }
+                    button.clicks handledBy ces.toggle
+                    drawerContent {
+                        drawerBody { +LOREM_IPSUM }
+                    }
+                    drawerPanel {
+                        drawerBody {
+                            drawerHead {
+                                span {
+                                    domNode.tabIndex = 0
+                                    +"Drawer panel"
+                                }
+                                drawerActions {
+                                    drawerClose()
                                 }
                             }
                         }
@@ -147,26 +138,24 @@ object DrawerComponent {
                 }
                 br {}
                 drawer {
-                    button.clicks handledBy expanded.toggle
+                    button.clicks handledBy ces.toggle
                     drawerSection {
                         title { +"Title" }
                         p { +"${LOREM_IPSUM.take(15)}..." }
                         divider(baseClass = "mb-md".util())
                     }
-                    drawerMain {
-                        drawerContent {
-                            drawerBody { +LOREM_IPSUM }
-                        }
-                        drawerPanel {
-                            drawerBody {
-                                drawerHead {
-                                    span {
-                                        domNode.tabIndex = 0
-                                        +"Drawer panel"
-                                    }
-                                    drawerActions {
-                                        drawerClose()
-                                    }
+                    drawerContent {
+                        drawerBody { +LOREM_IPSUM }
+                    }
+                    drawerPanel {
+                        drawerBody {
+                            drawerHead {
+                                span {
+                                    domNode.tabIndex = 0
+                                    +"Drawer panel"
+                                }
+                                drawerActions {
+                                    drawerClose()
                                 }
                             }
                         }
@@ -175,17 +164,15 @@ object DrawerComponent {
             }
             snippet("Static", DrawerCode.STATIC) {
                 drawer("static".modifier()) {
-                    drawerMain {
-                        drawerContent {
-                            drawerBody { +LOREM_IPSUM }
-                        }
-                        drawerPanel {
-                            drawerBody {
-                                drawerHead {
-                                    span { +"Drawer panel" }
-                                    drawerActions {
-                                        drawerClose()
-                                    }
+                    drawerContent {
+                        drawerBody { +LOREM_IPSUM }
+                    }
+                    drawerPanel {
+                        drawerBody {
+                            drawerHead {
+                                span { +"Drawer panel" }
+                                drawerActions {
+                                    drawerClose()
                                 }
                             }
                         }

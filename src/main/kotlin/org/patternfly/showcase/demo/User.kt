@@ -1,3 +1,5 @@
+@file:Suppress("DuplicatedCode")
+
 package org.patternfly.showcase.demo
 
 import dev.fritz2.binding.storeOf
@@ -23,6 +25,7 @@ import org.patternfly.ButtonVariation.control
 import org.patternfly.ButtonVariation.plain
 import org.patternfly.ButtonVariation.secondary
 import org.patternfly.ItemStore
+import org.patternfly.Notification
 import org.patternfly.SortInfo
 import org.patternfly.bulkSelect
 import org.patternfly.card
@@ -41,7 +44,6 @@ import org.patternfly.dataListCheck
 import org.patternfly.dataListContent
 import org.patternfly.dataListControl
 import org.patternfly.dataListExpandableContent
-import org.patternfly.dataListExpandableContentBody
 import org.patternfly.dataListItem
 import org.patternfly.dataListRow
 import org.patternfly.dataListToggle
@@ -50,16 +52,15 @@ import org.patternfly.dataTableActionColumn
 import org.patternfly.dataTableColumn
 import org.patternfly.dataTableColumns
 import org.patternfly.dataTableSelectColumn
-import org.patternfly.dataTableSimpleColumn
 import org.patternfly.dataTableToggleColumn
 import org.patternfly.dropdown
-import org.patternfly.dropdownItems
-import org.patternfly.dropdownKebabToggle
 import org.patternfly.fas
 import org.patternfly.icon
 import org.patternfly.inputFormControl
 import org.patternfly.inputGroup
 import org.patternfly.item
+import org.patternfly.items
+import org.patternfly.kebabToggle
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
@@ -117,8 +118,8 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                 }
                 +". Flags generated with "
                 a {
-                    +"https://www.countryflags.io"
-                    href("https://www.countryflags.io")
+                    +"https://flagicons.lipis.dev/"
+                    href("https://flagicons.lipis.dev/")
                     target("ext")
                 }
                 +". See "
@@ -183,7 +184,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                 }
             }
             cardView(presenter.userStore) {
-                classMap(activeComponent.data.map { mapOf("display-none".util() to (it == CARD)) })
+                classMap(activeComponent.data.map { mapOf("display-none".util() to (it != CARD)) })
                 display { user ->
                     card(user, baseClass = classes {
                         +"hoverable".modifier()
@@ -198,8 +199,11 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             }
                             cardActions {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    dropdownKebabToggle()
-                                    dropdownItems {
+                                    store.select handledBy Notification.add {
+                                        info("$it ${user.name} not yet implemented")
+                                    }
+                                    kebabToggle()
+                                    items {
                                         item("Edit")
                                         item("Remove")
                                     }
@@ -225,7 +229,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                 }
             }
             dataList(presenter.userStore) {
-                classMap(activeComponent.data.map { mapOf("display-none".util() to (it == LIST)) })
+                classMap(activeComponent.data.map { mapOf("display-none".util() to (it != LIST)) })
                 display { user ->
                     dataListItem(user) {
                         dataListRow {
@@ -238,7 +242,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                                     nat(user)
                                 }
                                 dataListCell {
-                                    p(id = presenter.userStore.identifier(user)) { +user.name.toString() }
+                                    p(id = itemId(user)) { +user.name.toString() }
                                 }
                                 dataListCell("flex-4".modifier()) {
                                     p {
@@ -250,73 +254,69 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                                 }
                             }
                             dataListAction {
-                                pushButton(secondary) { +"Edit" }
-                                pushButton(secondary) { +"Remove" }
+                                clickButton(secondary) { +"Edit" } handledBy Notification.add {
+                                    info("Edit ${user.name} not yet implemented")
+                                }
+                                clickButton(secondary) { +"Remove" } handledBy Notification.add {
+                                    info("Remove ${user.name} not yet implemented")
+                                }
                             }
                         }
                         dataListExpandableContent {
-                            dataListExpandableContentBody {
-                                div(baseClass = classes {
-                                    +"flex".layout()
-                                    +"align-items-center".modifier()
-                                    +"space-items-2xl".modifier()
-                                }) {
-                                    photo(user); address(user); contact(user)
-                                }
+                            div(baseClass = classes {
+                                +"flex".layout()
+                                +"align-items-center".modifier()
+                                +"space-items-2xl".modifier()
+                            }) {
+                                photo(user); address(user); contact(user)
                             }
                         }
                     }
                 }
             }
             dataTable(presenter.userStore) {
-                classMap(activeComponent.data.map { mapOf("display-none".util() to (it == TABLE)) })
+                classMap(activeComponent.data.map { mapOf("display-none".util() to (it != TABLE)) })
                 dataTableColumns {
                     dataTableToggleColumn(baseClass = classes {
                         +"flex".layout()
                         +"align-items-center".modifier()
                         +"space-items-2xl".modifier()
                     }) { user ->
-                        {
-                            photo(user); address(user); contact(user)
-                        }
+                        photo(user); address(user); contact(user)
                     }
                     dataTableSelectColumn()
                     dataTableColumn("First name") {
-                        hasId = true
-                        sortInfo = sortInfos["first-name"]
-                        headerBaseClass = "with-25".modifier()
-                        cellDisplay = { user ->
-                            { +user.name.first }
-                        }
+                        sortInfo(sortInfos["first-name"]!!)
+                        headerClass("with-25".modifier())
+                        cellDisplay { user -> +user.name.first }
                     }
                     dataTableColumn("Last name") {
-                        sortInfo = sortInfos["last-name"]
-                        headerBaseClass = "with-25".modifier()
-                        cellDisplay = { user ->
-                            { +user.name.last }
-                        }
+                        sortInfo(sortInfos["last-name"]!!)
+                        headerClass("with-25".modifier())
+                        cellDisplay { user -> +user.name.last }
                     }
                     dataTableColumn("Birthday") {
-                        sortInfo = SortInfo("birthday", "Birthday", compareBy { it.dob.date })
-                        cellDisplay = { user ->
-                            { +user.dob.asDate().toLocaleDateString("en") }
+                        sortInfo("birthday", "Birthday", compareBy { it.dob.date })
+                        cellDisplay { user ->
+                            +user.dob.asDate().toLocaleDateString("en")
                         }
                     }
-                    dataTableSimpleColumn("Registered") { user ->
-                        {
+                    dataTableColumn("Registered") {
+                        cellDisplay { user ->
                             custom("relative-time") {
                                 attr("datetime", user.registered.date)
                             }
                         }
                     }
-                    dataTableActionColumn {
-                        {
-                            dropdown<String>(align = Align.RIGHT) {
-                                dropdownKebabToggle()
-                                dropdownItems {
-                                    item("Edit")
-                                    item("Remove")
-                                }
+                    dataTableActionColumn { user ->
+                        dropdown<String>(align = Align.RIGHT) {
+                            store.select handledBy Notification.add {
+                                info("$it ${user.name} not yet implemented")
+                            }
+                            kebabToggle()
+                            items {
+                                item("Edit")
+                                item("Remove")
                             }
                         }
                     }
@@ -364,7 +364,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
     }
 
     private fun RenderContext.nat(user: User): Img = img(baseClass = "sc-user-nat") {
-        src("https://www.countryflags.io/${user.nat}/flat/32.png")
+        src("https://lipis.github.io/flag-icon-css/flags/4x3/${user.nat.toLowerCase()}.svg")
         with(domNode) {
             title = user.nat
         }

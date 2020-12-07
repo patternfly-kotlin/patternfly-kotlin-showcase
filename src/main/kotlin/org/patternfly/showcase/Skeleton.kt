@@ -4,13 +4,14 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.mvp.PlaceManager
 import dev.fritz2.mvp.managedBy
 import dev.fritz2.mvp.placeRequest
+import kotlinx.browser.document
 import kotlinx.coroutines.flow.map
 import org.patternfly.Page
+import org.patternfly.addToastAlertGroup
 import org.patternfly.brand
 import org.patternfly.expandableGroup
 import org.patternfly.headerTools
 import org.patternfly.horizontalNavigation
-import org.patternfly.installToastAlertGroup
 import org.patternfly.layout
 import org.patternfly.navigationItem
 import org.patternfly.navigationItems
@@ -78,6 +79,6 @@ class Skeleton(private val placeManager: PlaceManager) {
     }
 
     init {
-        installToastAlertGroup()
+        document.addToastAlertGroup()
     }
 }
