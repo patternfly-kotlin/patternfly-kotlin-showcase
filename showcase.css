@@ -68,6 +68,7 @@
 
 .sc-user-nat {
     min-width: 32px;
+    max-width: 32px;
 }
 
 .sc-user-photo-75 {
