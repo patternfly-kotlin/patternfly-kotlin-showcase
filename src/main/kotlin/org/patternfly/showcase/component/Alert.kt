@@ -152,7 +152,7 @@ internal object AlertCode {
             alertDescription {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
-            alertActionGroup {
+            alertActions {
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
@@ -163,7 +163,7 @@ internal object AlertCode {
                 p {
                     +"Success alert description. This should tell the user more information about the alert. "
                     a {
-                        href = const("#")
+                        href("#")
                         +"This is a link."
                     }
                 }
@@ -171,7 +171,7 @@ internal object AlertCode {
         }
         br {}
         alert(SUCCESS, "Success alert title", closable = true) {
-            alertActionGroup {
+            alertActions {
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
@@ -207,7 +207,7 @@ internal object AlertCode {
             alertDescription {
                 p { +"Success alert description. This should tell the user more information about the alert." }
             }
-            alertActionGroup {
+            alertActions {
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
@@ -218,7 +218,7 @@ internal object AlertCode {
                 p {
                     +"Success alert description. This should tell the user more information about the alert. "
                     a {
-                        href = const("#")
+                        href("#")
                         +"This is a link."
                     }
                 }
@@ -226,7 +226,7 @@ internal object AlertCode {
         }
         br {}
         alert(SUCCESS, "Success alert title", closable = true, inline = true) {
-            alertActionGroup {
+            alertActions {
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"View details" }
                 pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Ignore" }
             }
@@ -243,9 +243,7 @@ internal object AlertCode {
     const val REACTIVE: String = """fun main() {
     render {
         alert(DEFAULT, "Close me", closable = true) {
-            closes.map {
-                Notification(DEFAULT, "Notification closed")
-            } handledBy Notification.store.add
+            closes handledBy Notification.default("Notification closed")
         }
     }
 }

@@ -91,7 +91,7 @@ internal object AlertGroupCode {
                     p {
                         +"Info alert description. "
                         a {
-                            href = const("#")
+                            href("#")
                             +"This is a link."
                         }
                     }
@@ -105,24 +105,15 @@ internal object AlertGroupCode {
     //language=kotlin
     const val TOAST_ALERT_GROUP: String = """fun main() {
     render {
-        pushButton(baseClass = "secondary".modifier()) {
+        clickButton(secondary) {
             +"Add toast success alert"
-            clicks
-                .map { Notification(SUCCESS, "Toast Success Alert") }
-                .handledBy(Notification.store.add)
-        }
-        pushButton(baseClass = "secondary".modifier()) {
+        } handledBy Notification.success("Toast Success Alert")
+        clickButton(secondary) {
             +"Add toast danger alert"
-            clicks
-                .map { Notification(DANGER, "Toast Danger Alert") }
-                .handledBy(Notification.store.add)
-        }
-        pushButton(baseClass = "secondary".modifier()) {
+        } handledBy Notification.error("Toast Danger Alert")
+        clickButton(secondary) {
             +"Add toast info alert"
-            clicks
-                .map { Notification(INFO, "Toast Info Alert") }
-                .handledBy(Notification.store.add)
-        }
+        } handledBy Notification.info("Toast Info Alert")
     }
 }
 """
@@ -130,37 +121,18 @@ internal object AlertGroupCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        var job: Job? = null
-        val counter = object : RootStore<Int>(0, dropInitialData = true) {
-            val inc = handle { it + 1 }
-        }
-        counter.data
-            .map { Notification(INFO, "Async notification ${'$'}it") }
-            .handledBy(Notification.store.add)
+        val tick = storeOf(false)
+        clickButton(secondary) { +"Start async alerts" }.map { true } handledBy tick.update
+        clickButton(secondary) { +"Stop async alerts" }.map { false } handledBy tick.update
 
-        fun startSending() {
-            job = MainScope().launch {
-                while (true) {
-                    action() handledBy counter.inc
+        MainScope().launch {
+            tick.data.collect {
+                var counter = 0
+                while (it) {
+                    NotificationStore.add(Notification(INFO, "Async notification ${'$'}counter"))
+                    counter++
                     delay(TICKER_DELAY)
                 }
-            }
-        }
-
-        fun stopSending() {
-            job?.cancel()
-        }
-
-        pushButton(baseClass = "secondary".modifier()) {
-            +"Start async alerts"
-            MainScope().launch {
-                clicks.events.collect { startSending() }
-            }
-        }
-        pushButton(baseClass = "secondary".modifier()) {
-            +"Stop async alerts"
-            MainScope().launch {
-                clicks.events.collect { stopSending() }
             }
         }
     }

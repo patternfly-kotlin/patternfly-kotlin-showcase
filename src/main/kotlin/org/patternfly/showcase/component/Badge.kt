@@ -111,19 +111,19 @@ object BadgeCode {
     render {
         badge {
             +"7"
-            read = const(false)
+            read(false)
         }
         badge {
             +"24"
-            read = const(false)
+            read(false)
         }
         badge {
             +"240"
-            read = const(false)
+            read(false)
         }
         badge {
             +"999+"
-            read = const(false)
+            read(false)
         }
     }
 }
@@ -140,24 +140,25 @@ object BadgeCode {
             +"align-items-center".modifier()
             +"mb-md".util()
         }) {
-            label(`for` = "range") { +"Value: " }
+            label {
+                `for`("range")
+                +"Value: "
+            }
             range = input(id = "range", baseClass = "w-50".util()) {
-                type = const("range")
-                min = const("0")
-                max = const("500")
-                value = const("240")
+                type("range")
+                min("0")
+                max("500")
+                value("240")
             }
             state = switch("ml-md".util()) {
-                label = const("Read")
-                labelOff = const("Unread")
-                input.checked = const(true)
+                label("Read")
+                labelOff("Unread")
+                input.checked(true)
             }
         }
         badge(min = 100, max = 400) {
-            read = state.input.changes.states()
-            range.inputs.events
-                .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                .bind()
+            read(state.input.changes.states())
+            value(range.inputs.events.map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() })
         }
 
         MainScope().launch {
