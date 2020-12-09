@@ -244,39 +244,39 @@ object ButtonCode {
     //language=kotlin
     const val VARIATIONS: String = """fun main() {
     render {
-        pushButton(baseClass = "primary".modifier()) { +"Primary" }
-        pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
-        pushButton(baseClass = "tertiary".modifier()) { +"Tertiary" }
-        pushButton(baseClass = "danger".modifier()) { +"Danger" }
+        pushButton(primary) { +"Primary" }
+        pushButton(secondary) { +"Secondary" }
+        pushButton(tertiary) { +"Tertiary" }
+        pushButton(danger) { +"Danger" }
         br {}
         br {}
-        pushButton(baseClass = "link".modifier()) {
-            icon(START, "plus-circle".fas())
+        pushButton(link) {
+            buttonIcon(ICON_FIRST, "plus-circle".fas())
             +"Link"
         }
-        pushButton(baseClass = "link".modifier()) {
+        pushButton(link) {
             +"Link"
-            icon(END, "plus-circle".fas())
+            buttonIcon(ICON_LAST, "plus-circle".fas())
         }
-        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) { +"Inline link" }
+        pushButton(link, inline) { +"Inline link" }
         br {}
         br {}
-        pushButton(baseClass = "plain".modifier()) { icon("times".fas()) }
+        pushButton(plain) { icon("times".fas()) }
         br {}
         br {}
-        pushButton(baseClass = "control".modifier()) { +"Control" }
-        pushButton(baseClass = "control".modifier()) { icon("copy".fas()) }
+        pushButton(control) { +"Control" }
+        pushButton(control) { icon("copy".fas()) }
         br {}
         br {}
-        pushButton(baseClass = classes("primary".modifier(), "small".modifier())) { +"Primary" }
-        pushButton(baseClass = classes("secondary".modifier(), "small".modifier())) { +"Secondary" }
-        pushButton(baseClass = classes("tertiary".modifier(), "small".modifier())) { +"Tertiary" }
-        pushButton(baseClass = classes("danger".modifier(), "small".modifier())) { +"Danger" }
-        pushButton(baseClass = classes("link".modifier(), "small".modifier())) {
-            icon(START, "plus-circle".fas())
+        pushButton(primary, baseClass = "small".modifier()) { +"Primary" }
+        pushButton(secondary, baseClass = "small".modifier()) { +"Secondary" }
+        pushButton(tertiary, baseClass = "small".modifier()) { +"Tertiary" }
+        pushButton(danger, baseClass = "small".modifier()) { +"Danger" }
+        pushButton(link, baseClass = "small".modifier()) {
+            buttonIcon(ICON_FIRST, "plus-circle".fas())
             +"Link"
         }
-        pushButton(baseClass = classes("link".modifier(), "inline".modifier(), "small".modifier())) { +"Inline link" }
+        pushButton(link, inline, baseClass = "small".modifier()) { +"Inline link" }
         pushButton(baseClass = classes("control".modifier(), "small".modifier())) { +"Control" }
     }
 }
@@ -285,37 +285,37 @@ object ButtonCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        pushButton(baseClass = "primary".modifier()) {
-            disabled = const(true)
+        pushButton(primary) {
+            disabled(true)
             +"Primary disabled"
         }
-        pushButton(baseClass = "secondary".modifier()) {
-            disabled = const(true)
+        pushButton(secondary) {
+            disabled(true)
             +"Secondary disabled"
         }
-        pushButton(baseClass = "tertiary".modifier()) {
-            disabled = const(true)
+        pushButton(tertiary) {
+            disabled(true)
             +"Tertiary disabled"
         }
-        pushButton(baseClass = "danger".modifier()) {
-            disabled = const(true)
+        pushButton(danger) {
+            disabled(true)
             +"Danger disabled"
         }
-        pushButton(baseClass = "link".modifier()) {
-            disabled = const(true)
-            icon(START, "plus-circle".fas())
+        pushButton(link) {
+            disabled(true)
+            buttonIcon(ICON_FIRST, "plus-circle".fas())
             +"Link disabled"
         }
-        pushButton(baseClass = classes("link".modifier(), "inline".modifier())) {
-            disabled = const(true)
+        pushButton(link, inline) {
+            disabled(true)
             +"Inline link disabled"
         }
-        pushButton(baseClass = "plain".modifier()) {
-            disabled = const(true)
+        pushButton(plain) {
+            disabled(true)
             icon("times".fas())
         }
-        pushButton(baseClass = "control".modifier()) {
-            disabled = const(true)
+        pushButton(control) {
+            disabled(true)
             +"Control disabled"
         }
     }
@@ -325,36 +325,36 @@ object ButtonCode {
     //language=kotlin
     const val ARIA_DISABLED: String = """fun main() {
     render {
-        pushButton(baseClass = classes("primary".modifier(), "aria-disabled".modifier())) {
+        pushButton(primary, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             +"Primary disabled"
         }
-        pushButton(baseClass = classes("secondary".modifier(), "aria-disabled".modifier())) {
+        pushButton(secondary, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             +"Secondary disabled"
         }
-        pushButton(baseClass = classes("tertiary".modifier(), "aria-disabled".modifier())) {
+        pushButton(tertiary, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             +"Tertiary disabled"
         }
-        pushButton(baseClass = classes("danger".modifier(), "aria-disabled".modifier())) {
+        pushButton(danger, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             +"Danger disabled"
         }
-        pushButton(baseClass = classes("link".modifier(), "aria-disabled".modifier())) {
+        pushButton(link, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
-            icon(START, "plus-circle".fas())
+            buttonIcon(ICON_FIRST, "plus-circle".fas())
             +"Link disabled"
         }
-        pushButton(baseClass = classes("link".modifier(), "aria-disabled".modifier(), "inline".modifier())) {
+        pushButton(link, inline, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             +"Inline link disabled"
         }
-        pushButton(baseClass = classes("plain".modifier(), "aria-disabled".modifier())) {
+        pushButton(plain, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             icon("times".fas())
         }
-        pushButton(baseClass = classes("control".modifier(), "aria-disabled".modifier())) {
+        pushButton(control, baseClass = "aria-disabled".modifier()) {
             aria["disabled"] = true
             +"Control disabled"
         }
@@ -365,21 +365,21 @@ object ButtonCode {
     //language=kotlin
     const val LINKS: String = """fun main() {
     render {
-        linkButton("primary".modifier()) {
-            href = const("https://www.w3.org/TR/WCAG20-TECHS/ARIA8.html#ARIA8-examples")
-            target = const("_blank")
+        linkButton(primary) {
+            href("https://www.w3.org/TR/WCAG20-TECHS/ARIA8.html#ARIA8-examples")
+            target("_blank")
             +"Primary link to W3.org"
         }
-        linkButton("secondary".modifier()) {
-            href = const("https://www.patternfly.org")
-            target = const("_blank")
+        linkButton(secondary) {
+            href("https://www.patternfly.org")
+            target("_blank")
             +"Secondary link to PatternFly"
         }
-        linkButton(classes("tertiary".modifier(), "disabled".modifier())) {
+        linkButton(tertiary, baseClass = "disabled".modifier()) {
             aria["disabled"] = true
             domNode.tabIndex = -1
-            href = const("https://www.patternfly.org")
-            target = const("_blank")
+            href("https://www.patternfly.org")
+            target("_blank")
             +"Tertiary link to W3.org"
         }
     } 
@@ -389,7 +389,7 @@ object ButtonCode {
     //language=kotlin
     const val BLOCK_LEVEL: String = """fun main() {
     render {
-        pushButton(baseClass = classes("primary".modifier(), "block".modifier())) { +"Block level button" }
+        pushButton(primary, baseClass = "block".modifier()) { +"Block level button" }
     } 
 }
 """
@@ -397,15 +397,15 @@ object ButtonCode {
     //language=kotlin
     const val TYPES: String = """fun main() {
     render {
-        pushButton(baseClass = "primary".modifier()) {
-            type = const("submit")
+        pushButton(primary) {
+            type("submit")
             +"Submit"
         }
-        pushButton(baseClass = "primary".modifier()) {
-            type = const("reset")
+        pushButton(primary) {
+            type("reset")
             +"Reset"
         }
-        pushButton(baseClass = "primary".modifier()) {
+        pushButton(primary) {
             +"Default"
         }
     } 
@@ -415,16 +415,16 @@ object ButtonCode {
     //language=kotlin
     const val CALL_TO_ACTION: String = """fun main() {
     render {
-        pushButton(baseClass = classes("primary".modifier(), "display-lg".modifier())) { +"Call to action" }
-        pushButton(baseClass = classes("secondary".modifier(), "display-lg".modifier())) { +"Call to action" }
-        pushButton(baseClass = classes("tertiary".modifier(), "display-lg".modifier())) { +"Call to action" }
-        pushButton(baseClass = classes("link".modifier(), "display-lg".modifier())) {
+        pushButton(primary, baseClass = "display-lg".modifier()) { +"Call to action" }
+        pushButton(secondary, baseClass = "display-lg".modifier()) { +"Call to action" }
+        pushButton(tertiary, baseClass = "display-lg".modifier()) { +"Call to action" }
+        pushButton(link, baseClass = "display-lg".modifier()) {
             +"Call to action"
-            icon(END, "arrow-right".fas())
+            buttonIcon(ICON_LAST, "arrow-right".fas())
         }
-        pushButton(baseClass = classes("link".modifier(), "inline".modifier(), "display-lg".modifier())) {
+        pushButton(link, inline, baseClass = "display-lg".modifier()) {
             +"Call to action"
-            icon(END, "arrow-right".fas())
+            buttonIcon(ICON_LAST, "arrow-right".fas())
         }
     } 
 }
@@ -444,24 +444,21 @@ object ButtonCode {
             +"mb-md".util()
         }) {
             text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                type = const("text")
-                value = const("Click me")
-                placeholder = const("Button text")
+                type("text")
+                value("Click me")
+                placeholder("Button text")
             }
             enabled = switch("ml-md".util()) {
-                label = const("Enabled")
-                labelOff = const("Disabled")
-                input.checked = const(true)
+                label("Enabled")
+                labelOff("Disabled")
+                input.checked(true)
             }
         }
         br {}
-        pushButton(baseClass = "primary".modifier()) {
-            disabled = enabled.input.changes.states().map { !it }
-            text.keyups.map { currentValue(it) }.bind()
-            clicks.map {
-                Notification(Severity.INFO, "Button clicked")
-            } handledBy Notification.store.add
-        }
+        clickButton(baseClass = "primary".modifier()) {
+            disabled(enabled.input.changes.states().map { !it })
+            text.keyups.map { currentValue(it) }.asText()
+        } handledBy Notification.info("Button clicked")
 
         MainScope().launch {
             delay(EVENT_DELAY)

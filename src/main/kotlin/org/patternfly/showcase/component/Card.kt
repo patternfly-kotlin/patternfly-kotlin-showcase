@@ -263,14 +263,15 @@ object CardCode {
         card {
             cardHeader {
                 cardHeaderMain {
-                    brand("./pf-logo.svg") {
+                    img {
+                        src("./pf-logo.svg")
                         domNode.style.width = "300px"
                     }
                 }
                 cardActions {
                     dropdown<String>(align = Align.RIGHT) {
-                        dropdownToggleKebab()
-                        dropdownItems {
+                        kebabToggle()
+                        items {
                             item("Item 1")
                             item("Disabled Item") {
                                 disabled = true
@@ -297,8 +298,8 @@ object CardCode {
             cardHeader {
                 cardActions {
                     dropdown<String>(align = Align.RIGHT) {
-                        dropdownToggleKebab()
-                        dropdownItems {
+                        kebabToggle()
+                        items {
                             item("Action")
                             item("Disabled Action") {
                                 disabled = true
@@ -327,8 +328,8 @@ object CardCode {
             cardHeader {
                 cardActions {
                     dropdown<String>(align = Align.RIGHT) {
-                        dropdownToggleKebab()
-                        dropdownItems {
+                        kebabToggle()
+                        items {
                             item("Action")
                             item("Disabled Action") {
                                 disabled = true
@@ -354,7 +355,8 @@ object CardCode {
         card {
             cardHeader {
                 cardHeaderMain {
-                    brand("./pf-logo.svg") {
+                    img {
+                        src("./pf-logo.svg")
                         domNode.style.width = "300px"
                     }
                 }
@@ -458,13 +460,13 @@ object CardCode {
         card(selectable = true) {
             selected.data.drop(1).map {
                 Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
-            } handledBy Notification.store.add
+            } handledBy NotificationStore.add
 
             cardHeader {
                 cardActions {
                     dropdown<String>(align = Align.RIGHT) {
-                        dropdownToggleKebab()
-                        dropdownItems {
+                        kebabToggle()
+                        items {
                             item("Action")
                             item("Disabled Action") {
                                 disabled = true
@@ -482,7 +484,7 @@ object CardCode {
         card(selectable = true) {
             selected.data.drop(1).map {
                 Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
-            } handledBy Notification.store.add
+            } handledBy NotificationStore.add
 
             cardTitle { +"Second card" }
             cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
@@ -491,7 +493,7 @@ object CardCode {
         card(selectable = true) {
             selected.data.drop(1).map {
                 Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
-            } handledBy Notification.store.add
+            } handledBy NotificationStore.add
 
             cardHeader {
                 cardActions {
@@ -501,7 +503,7 @@ object CardCode {
             cardTitle { +"Third card" }
             cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
         }
-}
+    }
 }
 """
 

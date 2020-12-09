@@ -18,6 +18,7 @@ import org.patternfly.alertGroup
 import org.patternfly.clickButton
 import org.patternfly.pageSection
 import org.patternfly.showcase.TICKER_DELAY
+import kotlin.time.milliseconds
 
 object AlertGroupComponent {
     val content: RenderContext.() -> Unit = {
@@ -63,13 +64,13 @@ object AlertGroupComponent {
                 clickButton(secondary) { +"Start async alerts" }.map { true } handledBy tick.update
                 clickButton(secondary) { +"Stop async alerts" }.map { false } handledBy tick.update
 
+                var counter = 0
                 MainScope().launch {
                     tick.data.collect {
-                        var counter = 0
-                        while (it) {
-                            NotificationStore.add(Notification(INFO, "Async notification $counter"))
+                        while (tick.current) {
+                            NotificationStore.add(Notification(INFO, "Async notification #$counter"))
                             counter++
-                            delay(TICKER_DELAY)
+                            delay(750.milliseconds)
                         }
                     }
                 }
@@ -125,13 +126,13 @@ internal object AlertGroupCode {
         clickButton(secondary) { +"Start async alerts" }.map { true } handledBy tick.update
         clickButton(secondary) { +"Stop async alerts" }.map { false } handledBy tick.update
 
+        var counter = 0
         MainScope().launch {
             tick.data.collect {
-                var counter = 0
-                while (it) {
-                    NotificationStore.add(Notification(INFO, "Async notification ${'$'}counter"))
+                while (tick.current) {
+                    NotificationStore.add(Notification(INFO, "Async notification #${'$'}counter"))
                     counter++
-                    delay(TICKER_DELAY)
+                    delay(750.milliseconds)
                 }
             }
         }
