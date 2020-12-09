@@ -18,9 +18,7 @@ import org.patternfly.alertGroup
 import org.patternfly.clickButton
 import org.patternfly.pageSection
 import org.patternfly.showcase.TICKER_DELAY
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object AlertGroupComponent {
     val content: RenderContext.() -> Unit = {
         intro(

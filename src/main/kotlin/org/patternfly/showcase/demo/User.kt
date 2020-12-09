@@ -9,9 +9,6 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.html.TextElement
 import dev.fritz2.dom.html.Ul
 import dev.fritz2.dom.values
-import dev.fritz2.elemento.Id
-import dev.fritz2.elemento.aria
-import dev.fritz2.elemento.plusAssign
 import dev.fritz2.mvp.Presenter
 import dev.fritz2.mvp.View
 import dev.fritz2.mvp.ViewContent
@@ -53,6 +50,9 @@ import org.patternfly.dataTableColumn
 import org.patternfly.dataTableColumns
 import org.patternfly.dataTableSelectColumn
 import org.patternfly.dataTableToggleColumn
+import org.patternfly.dom.Id
+import org.patternfly.dom.aria
+import org.patternfly.dom.plusAssign
 import org.patternfly.dropdown
 import org.patternfly.fas
 import org.patternfly.icon

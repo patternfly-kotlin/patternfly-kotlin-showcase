@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.patternfly"
-version = "0.1-SNAPSHOT"
+version = "0.1.0"
 
 repositories {
     mavenLocal()
@@ -16,10 +16,9 @@ repositories {
 dependencies {
     implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.129-kotlin-1.4.20")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("dev.fritz2:core:0.9-SNAPSHOT")
-    implementation("dev.fritz2:elemento:0.0.5")
-    implementation("dev.fritz2:mvp:0.0.5")
-    implementation("org.patternfly:patternfly-fritz2:0.0.5")
+    implementation("dev.fritz2:core:0.8")
+    implementation("dev.fritz2:mvp:0.1.0")
+    implementation("org.patternfly:patternfly-fritz2:0.1.0")
     implementation(npm("@github/time-elements", "3.1.1"))
     implementation(npm("@patternfly/patternfly", "4.65.6"))
     implementation(npm("clipboard", "2.0.6"))
@@ -29,16 +28,22 @@ dependencies {
 
 kotlin {
     js {
+        sourceSets {
+            named("main") {
+                languageSettings.apply {
+                    useExperimentalAnnotation("kotlin.ExperimentalStdlibApi")
+                    useExperimentalAnnotation("kotlin.time.ExperimentalTime")
+                    useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                }
+            }
+        }
         compilations.named("main") {
             kotlinOptions {
                 freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
             }
         }
         browser {
-            webpackTask {
-                cssSupport.enabled = true
-            }
-            runTask {
+            commonWebpackConfig {
                 cssSupport.enabled = true
             }
         }

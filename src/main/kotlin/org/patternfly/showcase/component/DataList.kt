@@ -3,7 +3,6 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.elemento.Id
 import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.DataListItem
@@ -20,6 +19,7 @@ import org.patternfly.dataListExpandableContent
 import org.patternfly.dataListItem
 import org.patternfly.dataListRow
 import org.patternfly.dataListToggle
+import org.patternfly.dom.Id
 import org.patternfly.dropdown
 import org.patternfly.fas
 import org.patternfly.icon

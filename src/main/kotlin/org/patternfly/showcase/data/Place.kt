@@ -10,7 +10,6 @@ data class Place(val id: String, val name: String, val places: List<Place> = lis
 
 val placeId: IdProvider<Place, String> = { it.id }
 
-@OptIn(ExperimentalStdlibApi::class)
 val world = Place("world", "World", buildList {
     add(Place("africa-fa-globe-africa", "Africa", buildList {
         add(Place("north-africa", "North Africa", buildList {

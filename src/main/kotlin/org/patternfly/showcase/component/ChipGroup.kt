@@ -7,10 +7,10 @@ import org.patternfly.IconPosition.ICON_FIRST
 import org.patternfly.Notification
 import org.patternfly.badge
 import org.patternfly.buttonIcon
-import org.patternfly.chip
 import org.patternfly.chipGroup
 import org.patternfly.chips
 import org.patternfly.clickButton
+import org.patternfly.dom.chip
 import org.patternfly.fas
 import org.patternfly.modifier
 import org.patternfly.pageSection

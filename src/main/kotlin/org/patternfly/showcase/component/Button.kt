@@ -4,7 +4,6 @@ import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import dev.fritz2.elemento.aria
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
@@ -25,6 +24,7 @@ import org.patternfly.buttonIcon
 import org.patternfly.classes
 import org.patternfly.clickButton
 import org.patternfly.component
+import org.patternfly.dom.aria
 import org.patternfly.fas
 import org.patternfly.icon
 import org.patternfly.layout
@@ -37,9 +37,7 @@ import org.patternfly.switch
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object ButtonComponent {
     val content: RenderContext.() -> Unit = {
         intro(
