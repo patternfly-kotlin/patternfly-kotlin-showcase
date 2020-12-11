@@ -8,8 +8,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.patternfly.Notification
 import org.patternfly.badge
+import org.patternfly.chip
 import org.patternfly.component
-import org.patternfly.dom.chip
 import org.patternfly.pageSection
 import org.patternfly.showcase.EVENT_DELAY
 import org.w3c.dom.HTMLInputElement

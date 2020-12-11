@@ -28,7 +28,7 @@ class HomeView : View {
                 +" implementation of "
                 a {
                     +"PatternFly"
-                    href("https://www.patternfly.org//")
+                    href("https://www.patternfly.org/")
                 }
                 +" based on "
                 a {

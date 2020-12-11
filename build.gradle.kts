@@ -20,7 +20,7 @@ dependencies {
     implementation("dev.fritz2:mvp:0.1.0")
     implementation("org.patternfly:patternfly-fritz2:0.1.0")
     implementation(npm("@github/time-elements", "3.1.1"))
-    implementation(npm("@patternfly/patternfly", "4.65.6"))
+    implementation(npm("@patternfly/patternfly", "4"))
     implementation(npm("clipboard", "2.0.6"))
     implementation(npm("highlight.js", "10.4.1"))
     implementation(devNpm("file-loader", "6.2.0"))

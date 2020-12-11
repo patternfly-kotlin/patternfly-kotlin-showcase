@@ -9,13 +9,12 @@ import org.patternfly.Align
 import org.patternfly.Notification
 import org.patternfly.NotificationStore
 import org.patternfly.Severity
+import org.patternfly.actions
 import org.patternfly.card
-import org.patternfly.cardActions
 import org.patternfly.cardBody
 import org.patternfly.cardCheckbox
 import org.patternfly.cardFooter
 import org.patternfly.cardHeader
-import org.patternfly.cardHeaderMain
 import org.patternfly.cardTitle
 import org.patternfly.dropdown
 import org.patternfly.item
@@ -34,7 +33,7 @@ object CardComponent {
             text = " is a flexible element for containing any kind of content. Cards are used on dashboards, in data displays (e.g. Card View), or for positioning content on a page."
         )
         pageSection {
-                h2 { +"Examples" }
+            h2 { +"Examples" }
             snippet("Basic", CardCode.BASIC) {
                 card {
                     cardTitle { +"Title" }
@@ -45,13 +44,11 @@ object CardComponent {
             snippet("With image and action", CardCode.IMAGE_ACTION) {
                 card {
                     cardHeader {
-                        cardHeaderMain {
-                            img {
-                                src("./pf-logo.svg")
-                                domNode.style.width = "300px"
-                            }
+                        img {
+                            src("./pf-logo.svg")
+                            domNode.style.width = "300px"
                         }
-                        cardActions {
+                        actions {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -74,7 +71,7 @@ object CardComponent {
             snippet("Card title in card header", CardCode.TITLE_IN_HEADER) {
                 card {
                     cardHeader {
-                        cardActions {
+                        actions {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -99,7 +96,7 @@ object CardComponent {
             snippet("Only actions in card header (no title/footer)", CardCode.ONLY_ACTIONS) {
                 card {
                     cardHeader {
-                        cardActions {
+                        actions {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -122,11 +119,9 @@ object CardComponent {
             snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
                 card {
                     cardHeader {
-                        cardHeaderMain {
-                            img {
-                                src("./pf-logo.svg")
-                                domNode.style.width = "300px"
-                            }
+                        img {
+                            src("./pf-logo.svg")
+                            domNode.style.width = "300px"
                         }
                     }
                     cardTitle { +"Title" }
@@ -191,7 +186,7 @@ object CardComponent {
                     } handledBy NotificationStore.add
 
                     cardHeader {
-                        cardActions {
+                        actions {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -224,7 +219,7 @@ object CardComponent {
                     } handledBy NotificationStore.add
 
                     cardHeader {
-                        cardActions {
+                        actions {
                             cardCheckbox()
                         }
                     }

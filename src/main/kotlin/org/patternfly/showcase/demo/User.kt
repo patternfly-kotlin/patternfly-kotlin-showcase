@@ -24,9 +24,9 @@ import org.patternfly.ButtonVariation.secondary
 import org.patternfly.ItemStore
 import org.patternfly.Notification
 import org.patternfly.SortInfo
+import org.patternfly.actions
 import org.patternfly.bulkSelect
 import org.patternfly.card
-import org.patternfly.cardActions
 import org.patternfly.cardBody
 import org.patternfly.cardCheckbox
 import org.patternfly.cardFooter
@@ -197,7 +197,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             span(baseClass = classes("ml-sm".util(), "sc-user-card__title")) {
                                 +user.name.toString()
                             }
-                            cardActions {
+                            actions {
                                 dropdown<String>(align = Align.RIGHT) {
                                     store.select handledBy Notification.add {
                                         info("$it ${user.name} not yet implemented")

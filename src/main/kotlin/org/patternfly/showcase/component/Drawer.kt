@@ -3,10 +3,10 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
+import org.patternfly.actions
 import org.patternfly.classes
 import org.patternfly.divider
 import org.patternfly.drawer
-import org.patternfly.drawerActions
 import org.patternfly.drawerBody
 import org.patternfly.drawerClose
 import org.patternfly.drawerContent
@@ -49,7 +49,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                drawerActions {
+                                actions {
                                     drawerClose()
                                 }
                             }
@@ -74,7 +74,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                drawerActions {
+                                actions {
                                     drawerClose()
                                 }
                             }
@@ -99,7 +99,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                drawerActions {
+                                actions {
                                     drawerClose()
                                 }
                             }
@@ -124,7 +124,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                drawerActions {
+                                actions {
                                     drawerClose()
                                 }
                             }
@@ -154,7 +154,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                drawerActions {
+                                actions {
                                     drawerClose()
                                 }
                             }
@@ -171,7 +171,7 @@ object DrawerComponent {
                         drawerBody {
                             drawerHead {
                                 span { +"Drawer panel" }
-                                drawerActions {
+                                actions {
                                     drawerClose()
                                 }
                             }
