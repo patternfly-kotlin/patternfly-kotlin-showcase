@@ -3,6 +3,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
+import org.patternfly.ButtonVariation.primary
 import org.patternfly.actions
 import org.patternfly.classes
 import org.patternfly.divider
@@ -33,11 +34,8 @@ object DrawerComponent {
         pageSection {
             h2 { +"Examples" }
             snippet("Basic", DrawerCode.BASIC) {
-                val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-                    +"Toggle drawer"
-                }
-                br {}
-                drawer {
+                val button = pushButton(primary) { +"Toggle" }
+                drawer(baseClass = "mt-md".util()) {
                     button.clicks handledBy ces.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
@@ -58,11 +56,8 @@ object DrawerComponent {
                 }
             }
             snippet("Left", DrawerCode.LEFT) {
-                val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-                    +"Toggle drawer"
-                }
-                br {}
-                drawer("panel-left".modifier()) {
+                val button = pushButton(primary) { +"Toggle" }
+                drawer(baseClass = classes("panel-left".modifier(), "mt-md".util())) {
                     button.clicks handledBy ces.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
@@ -83,11 +78,8 @@ object DrawerComponent {
                 }
             }
             snippet("Inline", DrawerCode.INLINE) {
-                val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-                    +"Toggle drawer"
-                }
-                br {}
-                drawer("inline".modifier()) {
+                val button = pushButton(primary) { +"Toggle" }
+                drawer(baseClass = classes("inline".modifier(), "mt-md".util())) {
                     button.clicks handledBy ces.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
@@ -108,11 +100,8 @@ object DrawerComponent {
                 }
             }
             snippet("Inline left", DrawerCode.INLINE_LEFT) {
-                val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-                    +"Toggle drawer"
-                }
-                br {}
-                drawer(classes("inline".modifier(), "panel-left".modifier())) {
+                val button = pushButton(primary) { +"Toggle" }
+                drawer(classes("inline".modifier(), "panel-left".modifier(), "mt-md".util())) {
                     button.clicks handledBy ces.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
@@ -133,11 +122,8 @@ object DrawerComponent {
                 }
             }
             snippet("Additional section above drawer content", DrawerCode.SECTION) {
-                val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-                    +"Toggle drawer"
-                }
-                br {}
-                drawer {
+                val button = pushButton(primary) { +"Toggle" }
+                drawer(baseClass = "mt-md".util()) {
                     button.clicks handledBy ces.toggle
                     drawerSection {
                         title { +"Title" }
@@ -188,26 +174,21 @@ object DrawerCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-            +"Toggle drawer"
-        }
-        br {}
-        drawer {
-            button.clicks handledBy expanded.toggle
-            drawerMain {
-                drawerContent {
-                    drawerBody { +LOREM_IPSUM }
-                }
-                drawerPanel {
-                    drawerBody {
-                        drawerHead {
-                            span {
-                                domNode.tabIndex = 0
-                                +"Drawer panel"
-                            }
-                            drawerActions {
-                                drawerClose()
-                            }
+        val button = pushButton(primary) { +"Toggle" }
+        drawer(baseClass = "mt-md".util()) {
+            button.clicks handledBy ces.toggle
+            drawerContent {
+                drawerBody { +LOREM_IPSUM }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span {
+                            domNode.tabIndex = 0
+                            +"Drawer panel"
+                        }
+                        actions {
+                            drawerClose()
                         }
                     }
                 }
@@ -220,26 +201,21 @@ object DrawerCode {
     //language=kotlin
     const val LEFT: String = """fun main() {
     render {
-        val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-            +"Toggle drawer"
-        }
-        br {}
-        drawer("panel-left".modifier()) {
-            button.clicks handledBy expanded.toggle
-            drawerMain {
-                drawerContent {
-                    drawerBody { +LOREM_IPSUM }
-                }
-                drawerPanel {
-                    drawerBody {
-                        drawerHead {
-                            span {
-                                domNode.tabIndex = 0
-                                +"Drawer panel"
-                            }
-                            drawerActions {
-                                drawerClose()
-                            }
+        val button = pushButton(primary) { +"Toggle" }
+        drawer(baseClass = classes("panel-left".modifier(), "mt-md".util())) {
+            button.clicks handledBy ces.toggle
+            drawerContent {
+                drawerBody { +LOREM_IPSUM }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span {
+                            domNode.tabIndex = 0
+                            +"Drawer panel"
+                        }
+                        actions {
+                            drawerClose()
                         }
                     }
                 }
@@ -252,26 +228,21 @@ object DrawerCode {
     //language=kotlin
     const val INLINE: String = """fun main() {
     render {
-        val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-            +"Toggle drawer"
-        }
-        br {}
-        drawer("inline".modifier()) {
-            button.clicks handledBy expanded.toggle
-            drawerMain {
-                drawerContent {
-                    drawerBody { +LOREM_IPSUM }
-                }
-                drawerPanel {
-                    drawerBody {
-                        drawerHead {
-                            span {
-                                domNode.tabIndex = 0
-                                +"Drawer panel"
-                            }
-                            drawerActions {
-                                drawerClose()
-                            }
+        val button = pushButton(primary) { +"Toggle" }
+        drawer(baseClass = classes("inline".modifier(), "mt-md".util())) {
+            button.clicks handledBy ces.toggle
+            drawerContent {
+                drawerBody { +LOREM_IPSUM }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span {
+                            domNode.tabIndex = 0
+                            +"Drawer panel"
+                        }
+                        actions {
+                            drawerClose()
                         }
                     }
                 }
@@ -284,26 +255,21 @@ object DrawerCode {
     //language=kotlin
     const val INLINE_LEFT: String = """fun main() {
     render {
-        val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-            +"Toggle drawer"
-        }
-        br {}
-        drawer(classes("inline".modifier(), "panel-left".modifier())) {
-            button.clicks handledBy expanded.toggle
-            drawerMain {
-                drawerContent {
-                    drawerBody { +LOREM_IPSUM }
-                }
-                drawerPanel {
-                    drawerBody {
-                        drawerHead {
-                            span {
-                                domNode.tabIndex = 0
-                                +"Drawer panel"
-                            }
-                            drawerActions {
-                                drawerClose()
-                            }
+        val button = pushButton(primary) { +"Toggle" }
+        drawer(classes("inline".modifier(), "panel-left".modifier(), "mt-md".util())) {
+            button.clicks handledBy ces.toggle
+            drawerContent {
+                drawerBody { +LOREM_IPSUM }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span {
+                            domNode.tabIndex = 0
+                            +"Drawer panel"
+                        }
+                        actions {
+                            drawerClose()
                         }
                     }
                 }
@@ -316,33 +282,26 @@ object DrawerCode {
     //language=kotlin
     const val SECTION: String = """fun main() {
     render {
-        val button = pushButton(baseClass = classes { +"primary".modifier(); +"mb-md".util() }) {
-            +"Toggle drawer"
-        }
-        br {}
-        drawer {
-            button.clicks handledBy expanded.toggle
+        val button = pushButton(primary) { +"Toggle" }
+        drawer(baseClass = "mt-md".util()) {
+            button.clicks handledBy ces.toggle
             drawerSection {
-                content {
-                    title { +"Title" }
-                    p { +"${'$'}{LOREM_IPSUM.take(15)}..." }
-                    divider(baseClass = "mb-md".util())
-                }
+                title { +"Title" }
+                p { +"${'$'}{LOREM_IPSUM.take(15)}..." }
+                divider(baseClass = "mb-md".util())
             }
-            drawerMain {
-                drawerContent {
-                    drawerBody { +LOREM_IPSUM }
-                }
-                drawerPanel {
-                    drawerBody {
-                        drawerHead {
-                            span {
-                                domNode.tabIndex = 0
-                                +"Drawer panel"
-                            }
-                            drawerActions {
-                                drawerClose()
-                            }
+            drawerContent {
+                drawerBody { +LOREM_IPSUM }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span {
+                            domNode.tabIndex = 0
+                            +"Drawer panel"
+                        }
+                        actions {
+                            drawerClose()
                         }
                     }
                 }
@@ -356,17 +315,15 @@ object DrawerCode {
     const val STATIC: String = """fun main() {
     render {
         drawer("static".modifier()) {
-            drawerMain {
-                drawerContent {
-                    drawerBody { +LOREM_IPSUM }
-                }
-                drawerPanel {
-                    drawerBody {
-                        drawerHead {
-                            span { +"Drawer panel" }
-                            drawerActions {
-                                drawerClose()
-                            }
+            drawerContent {
+                drawerBody { +LOREM_IPSUM }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span { +"Drawer panel" }
+                        actions {
+                            drawerClose()
                         }
                     }
                 }

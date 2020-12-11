@@ -25,6 +25,18 @@ object TreeViewComponent {
             text = " is a structure that displays data in a hierarchical view."
         )
         pageSection {
+            p {
+                +"The demos here use the data class "
+                code { +"Place()" }
+                +" and static data from "
+                a {
+                    href("https://github.com/patternfly-kotlin/patternfly-fritz2-showcase/blob/master/src/main/kotlin/org/patternfly/showcase/data/Place.kt")
+                    +"Place.kt"
+                }
+                +"."
+            }
+        }
+        pageSection {
             h2 { +"Examples" }
             snippet("Default", TreeViewCode.DEFAULT) {
                 treeView(placeId) {
@@ -50,8 +62,11 @@ object TreeViewComponent {
                             place.id.matches("[a-z]{2}".toRegex()) -> {
                                 SingleIcon {
                                     img {
-                                        domNode.style.verticalAlign = "middle"
-                                        domNode.src = "https://www.countryflags.io/${place.id}/flat/16.png"
+                                        with (domNode) {
+                                            style.width = "16px"
+                                            style.verticalAlign = "middle"
+                                            src = "https://lipis.github.io/flag-icon-css/flags/4x3/${place.id}.svg"
+                                        }
                                     }
                                 }
                             }
@@ -95,6 +110,11 @@ object TreeViewCode {
     //language=kotlin
     const val DEFAULT: String = """fun main() {
     render {
+        treeView(placeId) {
+            tree {
+                world.places.forEach { place(it) }
+            }
+        }
     }
 }
 """
@@ -102,6 +122,11 @@ object TreeViewCode {
     //language=kotlin
     const val CHECKBOXES: String = """fun main() {
     render {
+        treeView(placeId, checkboxes = true) {
+            tree {
+                world.places.forEach { place(it) }
+            }
+        }
     }
 }
 """
@@ -109,6 +134,33 @@ object TreeViewCode {
     //language=kotlin
     const val ICONS: String = """fun main() {
     render {
+        treeView(placeId) {
+            icons = { place ->
+                when {
+                    place.id.contains("fa-") -> {
+                        SingleIcon { icon(place.id.substringAfter("fa-").fas()) }
+                    }
+                    place.id.matches("[a-z]{2}".toRegex()) -> {
+                        SingleIcon {
+                            img {
+                                domNode.style.verticalAlign = "middle"
+                                domNode.src = "https://lipis.github.io/flag-icon-css/flags/4x3/${'$'}{place.id}.svg"
+                            }
+                        }
+                    }
+                    else -> {
+                        ColExIcon(
+                            collapsed = { icon("folder".fas()) },
+                            expanded = { icon("folder-open".fas()) }
+                        )
+                    }
+                }
+
+            }
+            tree {
+                world.places.forEach { place(it) }
+            }
+        }
     }
 }
 """
@@ -116,6 +168,11 @@ object TreeViewCode {
     //language=kotlin
     const val BADGES: String = """fun main() {
     render {
+        treeView(placeId, badges = true) {
+            tree {
+                world.places.forEach { place(it) }
+            }
+        }
     }
 }
 """

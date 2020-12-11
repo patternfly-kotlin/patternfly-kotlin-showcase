@@ -3,7 +3,6 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.lenses.IdProvider
 import org.patternfly.Align
 import org.patternfly.DataListItem
 import org.patternfly.ItemStore
@@ -37,8 +36,7 @@ object DataListComponent {
             title = "Data list",
             prefix = "A ",
             key = "data list",
-            text = " is used to display large data sets when you need a flexible layout or need to include interactive content like charts. Related design guidelines: ",
-            link = ("lists-and-tables" to "Lists and tables")
+            text = " is used to display large data sets when you need a flexible layout or need to include interactive content like charts."
         )
         pageSection {
             h2 { +"Examples" }
@@ -49,7 +47,8 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val data = listOf(
+                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                store.addAll(listOf(
                     DisplayData {
                         dataListRow {
                             dataListContent {
@@ -72,14 +71,13 @@ object DataListComponent {
                             }
                         }
                     }
-                )
+                ))
 
-                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-                val store: ItemStore<DisplayData> = ItemStore(identifier)
                 dataList(store) {
-                    display { dataListItem(item = it, content = it.content) }
+                    display {
+                        dataListItem(item = it, content = it.content)
+                    }
                 }
-                store.addAll(data)
             }
             snippet("Compact", DataListCode.COMPACT) {
                 // Just a fake item w/ a display function
@@ -88,7 +86,8 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val data = listOf(
+                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                store.addAll(listOf(
                     DisplayData {
                         dataListRow {
                             dataListContent {
@@ -111,14 +110,11 @@ object DataListComponent {
                             }
                         }
                     }
-                )
+                ))
 
-                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-                val store: ItemStore<DisplayData> = ItemStore(identifier)
                 dataList(store) {
                     display { dataListItem(item = it, content = it.content) }
                 }
-                store.addAll(data)
             }
             snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
                 // Just a fake item w/ a display function
@@ -127,7 +123,8 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val data = listOf(
+                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                store.addAll(listOf(
                     DisplayData {
                         dataListRow {
                             dataListControl {
@@ -225,14 +222,11 @@ object DataListComponent {
                             }
                         }
                     }
-                )
+                ))
 
-                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-                val store: ItemStore<DisplayData> = ItemStore(identifier)
                 dataList(store) {
                     display { dataListItem(item = it, content = it.content) }
                 }
-                store.addAll(data)
             }
             snippet("Actions: single and multiple", DataListCode.ACTIONS) {
                 // Just a fake item w/ a display function
@@ -241,7 +235,8 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val data = listOf(
+                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                store.addAll(listOf(
                     DisplayData {
                         dataListRow {
                             dataListContent {
@@ -280,23 +275,21 @@ object DataListComponent {
                             }
                         }
                     }
-                )
+                ))
 
-                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-                val store: ItemStore<DisplayData> = ItemStore(identifier)
                 dataList(store) {
                     display { dataListItem(item = it, content = it.content) }
                 }
-                store.addAll(data)
             }
             snippet("Expandable", DataListCode.EXPANDABLE) {
-                // Just a fake item w/ a display function
+                // Just a fake item w/ two display function
                 data class DisplayData(
                     val id: String = Id.unique(),
                     val content: List<DataListItem<DisplayData>.() -> Unit>
                 )
 
-                val data = listOf(
+                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                store.addAll(listOf(
                     DisplayData(content = listOf(
                         {
                             dataListRow {
@@ -381,7 +374,7 @@ object DataListComponent {
                         },
                         {
                             dataListExpandableContent {
-                                    +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                                +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                             }
                         }
                     )),
@@ -429,10 +422,8 @@ object DataListComponent {
                                     +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                                 }
                             }
-                        )))
+                        ))))
 
-                val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-                val store: ItemStore<DisplayData> = ItemStore(identifier)
                 dataList(store) {
                     display {
                         dataListItem(it) {
@@ -442,7 +433,6 @@ object DataListComponent {
                         }
                     }
                 }
-                store.addAll(data)
             }
         }
     }
@@ -459,7 +449,8 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val data = listOf(
+        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        store.addAll(listOf(
             DisplayData {
                 dataListRow {
                     dataListContent {
@@ -482,14 +473,13 @@ object DataListCode {
                     }
                 }
             }
-        )
-
-        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-        val store: ItemStore<DisplayData> = ItemStore(identifier)
+        ))
+        
         dataList(store) {
-            display = { dataListItem(item = it, content = it.content) }
+            display {
+                dataListItem(item = it, content = it.content) 
+            }
         }
-        action(data) handledBy store.addAll
     }
 }
 """
@@ -503,7 +493,8 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val data = listOf(
+        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        store.addAll(listOf(
             DisplayData {
                 dataListRow {
                     dataListContent {
@@ -526,14 +517,11 @@ object DataListCode {
                     }
                 }
             }
-        )
-
-        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-        val store: ItemStore<DisplayData> = ItemStore(identifier)
+        ))
+        
         dataList(store) {
-            display = { dataListItem(item = it, content = it.content) }
+            display { dataListItem(item = it, content = it.content) }
         }
-        action(data) handledBy store.addAll
     }
 }
 """
@@ -547,7 +535,8 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val data = listOf(
+        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        store.addAll(listOf(
             DisplayData {
                 dataListRow {
                     dataListControl {
@@ -565,8 +554,8 @@ object DataListCode {
                     dataListAction {
                         div(baseClass = "data-list".component("action")) {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownToggleKebab()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true
@@ -593,8 +582,8 @@ object DataListCode {
                     dataListAction("hidden-on-lg".modifier()) {
                         div(baseClass = "data-list".component("action")) {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownToggleKebab()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true
@@ -625,8 +614,8 @@ object DataListCode {
                     dataListAction("hidden-on-xl".modifier()) {
                         div(baseClass = "data-list".component("action")) {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownToggleKebab()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true
@@ -645,14 +634,11 @@ object DataListCode {
                     }
                 }
             }
-        )
-
-        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-        val store: ItemStore<DisplayData> = ItemStore(identifier)
+        ))
+        
         dataList(store) {
-            display = { dataListItem(item = it, content = it.content) }
+            display { dataListItem(item = it, content = it.content) }
         }
-        action(data) handledBy store.addAll
     }
 }
 """
@@ -666,7 +652,8 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val data = listOf(
+        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        store.addAll(listOf(
             DisplayData {
                 dataListRow {
                     dataListContent {
@@ -691,8 +678,8 @@ object DataListCode {
                     dataListAction {
                         div(baseClass = "data-list".component("action")) {
                             dropdown<String>(align = Align.RIGHT) {
-                                dropdownToggleKebab()
-                                dropdownItems {
+                                kebabToggle()
+                                items {
                                     item("Action")
                                     item("Disabled Action") {
                                         disabled = true
@@ -705,14 +692,11 @@ object DataListCode {
                     }
                 }
             }
-        )
+        ))
 
-        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-        val store: ItemStore<DisplayData> = ItemStore(identifier)
         dataList(store) {
-            display = { dataListItem(item = it, content = it.content) }
+            display { dataListItem(item = it, content = it.content) }
         }
-        action(data) handledBy store.addAll
     }
 }
 """
@@ -720,13 +704,14 @@ object DataListCode {
     //language=kotlin
     const val EXPANDABLE: String = """fun main() {
     render {
-        // Just a fake item w/ a display function
+        // Just a fake item w/ two display function
         data class DisplayData(
             val id: String = Id.unique(),
             val content: List<DataListItem<DisplayData>.() -> Unit>
         )
 
-        val data = listOf(
+        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        store.addAll(listOf(
             DisplayData(content = listOf(
                 {
                     dataListRow {
@@ -751,8 +736,8 @@ object DataListCode {
                         dataListAction {
                             div(baseClass = "data-list".component("action")) {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    dropdownToggleKebab()
-                                    dropdownItems {
+                                    kebabToggle()
+                                    items {
                                         item("Action")
                                         item("Disabled Action") {
                                             disabled = true
@@ -767,9 +752,7 @@ object DataListCode {
                 },
                 {
                     dataListExpandableContent {
-                        dataListExpandableContentBody {
-                            +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                        }
+                        +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                     }
                 }
             )),
@@ -797,8 +780,8 @@ object DataListCode {
                         dataListAction {
                             div(baseClass = "data-list".component("action")) {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    dropdownToggleKebab()
-                                    dropdownItems {
+                                    kebabToggle()
+                                    items {
                                         item("Action")
                                         item("Disabled Action") {
                                             disabled = true
@@ -813,9 +796,7 @@ object DataListCode {
                 },
                 {
                     dataListExpandableContent {
-                        dataListExpandableContentBody {
-                            +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                        }
+                        +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                     }
                 }
             )),
@@ -844,8 +825,8 @@ object DataListCode {
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        dropdownToggleKebab()
-                                        dropdownItems {
+                                        kebabToggle()
+                                        items {
                                             item("Action")
                                             item("Disabled Action") {
                                                 disabled = true
@@ -860,17 +841,13 @@ object DataListCode {
                     },
                     {
                         dataListExpandableContent {
-                            dataListExpandableContentBody {
-                                +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            }
+                            +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         }
                     }
-                )))
+                ))))
 
-        val identifier: IdProvider<DisplayData, String> = { Id.build(it.id) }
-        val store: ItemStore<DisplayData> = ItemStore(identifier)
         dataList(store) {
-            display = {
+            display {
                 dataListItem(it) {
                     it.content.forEach { content ->
                         content(this)
@@ -878,7 +855,6 @@ object DataListCode {
                 }
             }
         }
-        action(data) handledBy store.addAll
     }
 }
 """

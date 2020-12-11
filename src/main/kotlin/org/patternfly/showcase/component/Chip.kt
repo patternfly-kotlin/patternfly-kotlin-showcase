@@ -20,8 +20,7 @@ object ChipComponent {
         intro(
             title = "Chip",
             key = "Chips",
-            text = " are used to communicate a value, a tag, or a set of attribute-value pairs within workflows that involve filtering or tagging a set of objects. Related design guidelines: ",
-            link = ("filters" to "Filters")
+            text = " are used to communicate a value, a tag, or a set of attribute-value pairs within workflows that involve filtering or tagging a set of objects."
         )
         pageSection(baseClass = "sc-component__chips") {
             h2 { +"Examples" }
@@ -109,7 +108,7 @@ object ChipCode {
         }
         chip {
             +"Cloe me"
-            closes.map { Notification(Severity.INFO, "Chip closed") } handledBy Notification.store.add
+            closes handledBy Notification.info("Chip closed")
         }
     }
 }
@@ -117,38 +116,39 @@ object ChipCode {
 
     //language=kotlin
     const val REACTIVE: String = """fun main() {
-    render {
+    render { 
+        val text: Input
         fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
-
-        val text: Input = input(baseClass = "form-control".component()) {
-            type = const("text")
-            value = const("Chip")
-            placeholder = const("Chip text")
+    
+        text = input(baseClass = "form-control".component()) {
+            type("text")
+            value("Chip")
+            placeholder("Chip text")
         }
         br {}
         br {}
         chip(readOnly = true) {
-            text.keyups.map { currentValue(it) }.bind()
+            text.keyups.map { currentValue(it) }.asText()
         }
         br {}
         chip {
-            text.keyups.map { currentValue(it) }.bind()
+            text.keyups.map { currentValue(it) }.asText()
         }
         br {}
         chip(readOnly = true) {
-            text.keyups.map { currentValue(it) }.bind()
+            text.keyups.map { currentValue(it) }.asText()
             badge {
-                text.keyups.map { currentValue(it).length }.bind()
+                value(text.keyups.map { currentValue(it).length })
             }
         }
         br {}
         chip {
-            text.keyups.map { currentValue(it) }.bind()
+            text.keyups.map { currentValue(it) }.asText()
             badge {
-                text.keyups.map { currentValue(it).length }.bind()
+                value(text.keyups.map { currentValue(it).length })
             }
         }
-
+    
         MainScope().launch {
             delay(EVENT_DELAY)
             text.domNode.dispatchEvent(Event(Events.keyup.name))

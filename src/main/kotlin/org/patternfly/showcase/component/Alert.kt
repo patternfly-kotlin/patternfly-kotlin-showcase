@@ -23,8 +23,7 @@ internal object AlertComponent {
         intro(
             title = "Alert",
             key = "Alerts",
-            text = " are used to notify the user about a change in status or other event. Related design guidelines: ",
-            link = ("alerts-and-notifications" to "Alerts and notifications")
+            text = " are used to notify the user about a change in status or other event"
         )
         pageSection {
             h2 { +"Examples" }
@@ -180,7 +179,7 @@ internal object AlertCode {
         alert(SUCCESS, "Success alert title", closable = true)
         br {}
         alert(SUCCESS, "Success alert title")
-    }
+    }    
 }
 """
 

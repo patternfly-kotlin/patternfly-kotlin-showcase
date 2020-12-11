@@ -22,8 +22,7 @@ object ChipGroupComponent {
             title = "Chip group",
             prefix = "A ",
             key = "chip group",
-            text = " is used to represent an attribute that has been assigned one or more values. An OR relationship is implied between values in the group. Chip groups are useful to express complex filters to a data set, for example. Related design guidelines: ",
-            link = ("filters" to "Filters")
+            text = " is used to represent an attribute that has been assigned one or more values. An OR relationship is implied between values in the group. Chip groups are useful to express complex filters to a data set, for example."
         )
         pageSection(baseClass = "sc-component__chip-groups") {
             h2 { +"Examples" }
@@ -141,7 +140,8 @@ object ChipGroupCode {
     //language=kotlin
     const val CATEGORY: String = """fun main() {
     render {
-        chipGroup<String>(text = "Category") {
+        chipGroup<String> {
+            +"Category"
             chips {
                 +"Chip one"
                 +listOf(
@@ -159,10 +159,9 @@ object ChipGroupCode {
     //language=kotlin
     const val CLOSABLE: String = """fun main() {
     render {
-        chipGroup<String>(text = "Category", closable = true) {
-            closes.map {
-                Notification(Severity.INFO, "Chip group closed")
-            } handledBy Notification.store.add
+        chipGroup<String>(closable = true) {
+            +"Category"
+            closes handledBy Notification.info("Chip group closed")
             chips {
                 +"Chip one"
                 +listOf(
@@ -183,17 +182,7 @@ object ChipGroupCode {
         data class Word(val text: String, val letters: Int = text.length)
 
         val store = ChipGroupStore<Word>()
-        chipGroup(store, "Letters") {
-            display = {
-                chip {
-                    +it.text
-                    badge {
-                        +it.letters.toString()
-                    }
-                }
-            }
-        }
-        action(
+        store.addAll(
             listOf(
                 Word("Chip one"),
                 Word("Really long chip that goes on and on"),
@@ -201,7 +190,19 @@ object ChipGroupCode {
                 Word("Chip four"),
                 Word("Chip five")
             )
-        ) handledBy store.update
+        )
+
+        chipGroup(store) {
+            +"Letters"
+            display { word ->
+                chip {
+                    +word.text
+                    badge {
+                        value(word.letters)
+                    }
+                }
+            }
+        }
     }
 }
 """
@@ -211,20 +212,19 @@ object ChipGroupCode {
     render {
         fun randomString(length: Int) =
             (1..(3 + length)).map { ('a'..'z').random() }.joinToString("")
-
+    
         val stores: Array<Pair<Int, ChipGroupStore<String>>> = arrayOf(
             3 to ChipGroupStore(),
             4 to ChipGroupStore(),
             20 to ChipGroupStore()
         )
-
+    
         stores.forEach { (limit, store) ->
-            pushButton(classes("link".modifier(), "small".modifier())) {
-                icon(START, "plus-circle".fas())
+            clickButton(link, baseClass =  "small".modifier()) {
+                buttonIcon(ICON_FIRST, "plus-circle".fas())
                 +"Add chip"
-                clicks.map { randomString(Random.nextInt(10)) } handledBy store.add
-            }
-            chipGroup(store, "Max ${'$'}limit", limit)
+            }.map { randomString(Random.nextInt(10)) } handledBy store.add
+            chipGroup(store, limit) { +"Max ${'$'}limit" }
             br {}
         }
     }

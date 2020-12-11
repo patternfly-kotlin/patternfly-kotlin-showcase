@@ -4,11 +4,8 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.map
 import org.patternfly.Align
 import org.patternfly.Notification
-import org.patternfly.NotificationStore
-import org.patternfly.Severity
 import org.patternfly.actions
 import org.patternfly.card
 import org.patternfly.cardBody
@@ -181,9 +178,9 @@ object CardComponent {
             }
             snippet("Selectable and selected", CardCode.SELECTABLE) {
                 card(selectable = true) {
-                    selected.data.drop(1).map {
-                        Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                    } handledBy NotificationStore.add
+                    selected.data.drop(1) handledBy Notification.add {
+                        info("Card is ${if (it) "" else "not "} selected.")
+                    }
 
                     cardHeader {
                         actions {
@@ -205,18 +202,18 @@ object CardComponent {
                 }
                 br {}
                 card(selectable = true) {
-                    selected.data.drop(1).map {
-                        Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                    } handledBy NotificationStore.add
+                    selected.data.drop(1) handledBy Notification.add {
+                        info("Card is ${if (it) "" else "not "} selected.")
+                    }
 
                     cardTitle { +"Second card" }
                     cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
                 card(selectable = true) {
-                    selected.data.drop(1).map {
-                        Notification(Severity.INFO, "Card is ${if (it) "" else "not "} selected.")
-                    } handledBy NotificationStore.add
+                    selected.data.drop(1) handledBy Notification.add {
+                        info("Card is ${if (it) "" else "not "} selected.")
+                    }
 
                     cardHeader {
                         actions {
@@ -257,13 +254,11 @@ object CardCode {
     render {
         card {
             cardHeader {
-                cardHeaderMain {
-                    img {
-                        src("./pf-logo.svg")
-                        domNode.style.width = "300px"
-                    }
+                img {
+                    src("./pf-logo.svg")
+                    domNode.style.width = "300px"
                 }
-                cardActions {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -291,7 +286,7 @@ object CardCode {
     render {
         card {
             cardHeader {
-                cardActions {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -321,7 +316,7 @@ object CardCode {
     render {
         card {
             cardHeader {
-                cardActions {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -349,11 +344,9 @@ object CardCode {
     render {
         card {
             cardHeader {
-                cardHeaderMain {
-                    img {
-                        src("./pf-logo.svg")
-                        domNode.style.width = "300px"
-                    }
+                img {
+                    src("./pf-logo.svg")
+                    domNode.style.width = "300px"
                 }
             }
             cardTitle { +"Title" }
@@ -453,12 +446,12 @@ object CardCode {
     const val SELECTABLE: String = """fun main() {
     render {
         card(selectable = true) {
-            selected.data.drop(1).map {
-                Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
-            } handledBy NotificationStore.add
+            selected.data.drop(1) handledBy Notification.add { 
+                info("Card is ${'$'}{if (it) "" else "not "} selected.") 
+            }
 
             cardHeader {
-                cardActions {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -477,21 +470,21 @@ object CardCode {
         }
         br {}
         card(selectable = true) {
-            selected.data.drop(1).map {
-                Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
-            } handledBy NotificationStore.add
+            selected.data.drop(1) handledBy Notification.add { 
+                info("Card is ${'$'}{if (it) "" else "not "} selected.") 
+            }
 
             cardTitle { +"Second card" }
             cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
         br {}
         card(selectable = true) {
-            selected.data.drop(1).map {
-                Notification(Severity.INFO, "Card is ${'$'}{if (it) "" else "not "} selected.")
-            } handledBy NotificationStore.add
+            selected.data.drop(1) handledBy Notification.add { 
+                info("Card is ${'$'}{if (it) "" else "not "} selected.") 
+            }
 
             cardHeader {
-                cardActions {
+                actions {
                     cardCheckbox()
                 }
             }

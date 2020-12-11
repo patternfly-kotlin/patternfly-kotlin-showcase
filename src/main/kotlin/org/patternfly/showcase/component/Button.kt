@@ -43,8 +43,7 @@ object ButtonComponent {
         intro(
             title = "Button",
             key = "Buttons",
-            text = " communicate and trigger actions a user can take in an application or website. Related design guidelines: ",
-            link = ("buttons-and-links" to "Buttons and links")
+            text = " communicate and trigger actions a user can take in an application or website"
         )
         pageSection(baseClass = "sc-component__buttons") {
             h2 { +"Examples" }
@@ -435,9 +434,9 @@ object ButtonCode {
     render {
         lateinit var text: Input
         lateinit var enabled: Switch
-
+    
         fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
-
+    
         div(baseClass = classes {
             +"flex".layout()
             +"align-items-center".modifier()
@@ -459,7 +458,7 @@ object ButtonCode {
             disabled(enabled.input.changes.states().map { !it })
             text.keyups.map { currentValue(it) }.asText()
         } handledBy Notification.info("Button clicked")
-
+    
         MainScope().launch {
             delay(EVENT_DELAY)
             text.domNode.dispatchEvent(Event(Events.keyup.name))

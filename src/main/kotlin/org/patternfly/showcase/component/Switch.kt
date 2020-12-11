@@ -15,8 +15,7 @@ object SwitchComponent {
             title = "Switch",
             prefix = "Use a ",
             key = "switch",
-            text = " to toggle the state of a setting (between on and off). Switches and checkboxes can often be used interchangeably, but the switch provides a more explicit, visible representation on a setting. Related design guidelines: ",
-            ("selection-controls" to "Selection controls")
+            text = " to toggle the state of a setting (between on and off). Switches and checkboxes can often be used interchangeably, but the switch provides a more explicit, visible representation on a setting."
         )
         pageSection {
             h2 { +"Examples" }
@@ -40,9 +39,9 @@ object SwitchComponent {
                 switch {
                     label("Message when on")
                     labelOff("Message when off")
-                    input.changes.states().map {
-                        Notification(Severity.INFO, "Switch is ${if (it) "" else "not"} checked")
-                    } handledBy NotificationStore.add
+                    input.changes.states() handledBy Notification.add {
+                        info("Switch is ${if (it) "" else "not"} checked")
+                    }
                 }
             }
         }
@@ -55,8 +54,8 @@ object SwitchCode {
     const val BASIC: String = """fun main() {
     render {
         switch {
-            label = const("Message when on")
-            labelOff = const("Message when off")
+            label("Message when on")
+            labelOff("Message when off")
         }
     }
 }
@@ -65,7 +64,7 @@ object SwitchCode {
     //language=kotlin
     const val WITHOUT_LABEL: String = """fun main() {
     render {
-            switch()
+        switch()
     }
 }
 """
@@ -74,9 +73,9 @@ object SwitchCode {
     const val DISABLED: String = """fun main() {
     render {
         switch {
-            label = const("Message when on")
-            labelOff = const("Message when off")
-            disabled = const(true)
+            label("Message when on")
+            labelOff("Message when off")
+            disabled(true)
         }
     }
 }
@@ -86,11 +85,11 @@ object SwitchCode {
     const val REACTIVE: String = """fun main() {
     render {
         switch {
-            label = const("Message when on")
-            labelOff = const("Message when off")
-            input.changes.states().map {
-                Notification(Severity.INFO, "Switch is ${'$'}{if (it) "" else "not"} checked")
-            } handledBy Notification.store.add
+            label("Message when on")
+            labelOff("Message when off")
+            input.changes.states() handledBy Notification.add {
+                info("Switch is ${'$'}{if (it) "" else "not"} checked")
+            }
         }
     }
 }

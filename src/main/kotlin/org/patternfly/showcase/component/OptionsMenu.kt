@@ -270,7 +270,7 @@ object OptionsMenuCode {
         optionsMenu<String> {
             optionsMenuToggle {
                 content = { +"Options menu" }
-                disabled = const(true)
+                disabled(true)
             }
             optionsMenuItems {
                 item("Option 1") { selected = true }
@@ -404,13 +404,13 @@ object OptionsMenuCode {
                 store.selection.unwrap()
                     .drop(1)
                     .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
-                    .handledBy(Notification.store.add)
+                    .handledBy(NotificationStore.add)
                 ces.collapsed
                     .map { Notification(Severity.INFO, "${'$'}name: Options menu collapsed") }
-                    .handledBy(Notification.store.add)
+                    .handledBy(NotificationStore.add)
                 ces.expanded
                     .map { Notification(Severity.INFO, "${'$'}name: Options menu expanded") }
-                    .handledBy(Notification.store.add)
+                    .handledBy(NotificationStore.add)
             }
         }
 
@@ -426,28 +426,28 @@ object OptionsMenuCode {
             +"mb-sm".util()
         }) {
             text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                type = const("text")
-                value = const("Options")
-                placeholder = const("Options menu text")
+                type("text")
+                value("Options")
+                placeholder("Options menu text")
             }
             enabled = switch("ml-md".util()) {
-                label = const("Enabled")
-                labelOff = const("Disabled")
-                input.checked = const(true)
+                label("Enabled")
+                labelOff("Disabled")
+                input.checked(true)
             }
         }
         optionsMenu<String>(baseClass = "mt-sm".util()) {
             optionsMenuToggle {
-                content = { text.keyups.map { currentValue(it) }.bind() }
-                disabled = enabled.input.changes.states().map { !it }
+                content = { text.keyups.map { currentValue(it) }.asText() }
+                disabled(enabled.input.changes.states().map { !it })
             }
             optionsMenuItems()
-            action(items()) handledBy store.update
+            store.update(items())
             registerEvents(this, "Text")
         }
         optionsMenu<String>(baseClass = "ml-sm".util()) {
             optionsMenuToggle {
-                disabled = enabled.input.changes.states().map { !it }
+                disabled(enabled.input.changes.states().map { !it })
                 icon = { icon("sort-amount-down".fas()) }
             }
             optionsMenuGroups {
@@ -470,11 +470,11 @@ object OptionsMenuCode {
         }
         optionsMenu<String>(baseClass = "ml-sm".util()) {
             optionsMenuTogglePlain {
-                content = { text.keyups.map { currentValue(it) }.bind() }
-                disabled = enabled.input.changes.states().map { !it }
+                content = { text.keyups.map { currentValue(it) }.asText() }
+                disabled(enabled.input.changes.states().map { !it })
             }
             optionsMenuItems()
-            action(items()) handledBy store.update
+            store.update(items())
             registerEvents(this, "Plain with text")
         }
 
@@ -482,6 +482,7 @@ object OptionsMenuCode {
             delay(EVENT_DELAY)
             text.domNode.dispatchEvent(Event(Events.keyup.name))
         }
+    }
 }
 """
 }

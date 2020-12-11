@@ -27,8 +27,7 @@ object PaginationComponent {
             title = "Pagination",
             prefix = "The ",
             key = "pagination",
-            text = " component is used to navigate pages in lists, tables, and other content views. Related design guidelines: ",
-            link = ("lists-and-tables" to "Lists and tables")
+            text = " component is used to navigate pages in lists, tables, and other content views."
         )
         pageSection {
             h2 { +"Examples" }
@@ -101,7 +100,7 @@ object PaginationCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-            pagination(PageInfo(10, 0, 73))
+        pagination(PageInfo(10, 0, 73))
     }
 }
 """
@@ -110,7 +109,7 @@ object PaginationCode {
     const val DISABLED: String = """fun main() {
     render {
         pagination(PageInfo(10, 0, 73)) {
-            disabled = const(true)
+            disabled(true)
         }
     }
 }
@@ -119,7 +118,7 @@ object PaginationCode {
     //language=kotlin
     const val NO_ITEMS: String = """fun main() {
     render {
-            pagination()
+        pagination()
     }
 }
 """
@@ -151,27 +150,30 @@ object PaginationCode {
             +"align-items-center".modifier()
             +"mb-md".util()
         }) {
-            label(`for` = "total") { +"Total: " }
+            label {
+                `for`("total")
+                +"Total: "
+            }
             range = input(id = "total", baseClass = "w-50".util()) {
-                type = const("range")
-                min = const("0")
-                max = const("200")
-                value = const("123")
+                type("range")
+                min("0")
+                max("200")
+                value("123")
             }
             enabled = switch("ml-md".util()) {
-                label = const("Enabled")
-                labelOff = const("Disabled")
-                input.checked = const(true)
+                label("Enabled")
+                labelOff("Disabled")
+                input.checked(true)
             }
         }
         pagination {
-            disabled = enabled.input.changes.states().map { !it }
+            disabled(enabled.input.changes.states().map { !it })
             range.inputs.events
                 .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                 .handledBy(pageInfoHandler.total)
         }
         pagination(compact = true, baseClass = "mt-sm".util()) {
-            disabled = enabled.input.changes.states().map { !it }
+            disabled(enabled.input.changes.states().map { !it })
             range.inputs.events
                 .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                 .handledBy(pageInfoHandler.total)

@@ -57,9 +57,7 @@ object TabsComponent {
             snippet("Box light", TabsCode.BOX_LIGHT) {
                 tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
                     contentDisplay = {
-                        {
-                            domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
-                        }
+                        domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
                     }
                     tabItem("Users") { +"Users" }
                     tabItem("Containers") { +"Containers" }
@@ -160,12 +158,8 @@ object TabsComponent {
                     }
                 }
                 tabs(store) {
-                    itemDisplay = {
-                        { +"Tab item $it" }
-                    }
-                    contentDisplay = {
-                        { +"Content $it" }
-                    }
+                    itemDisplay = { +"Tab item $it" }
+                    contentDisplay = { +"Content $it" }
                 }
 
                 range.changes.valuesAsNumber()
@@ -221,9 +215,7 @@ object TabsCode {
     render {
         tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
             contentDisplay = {
-                {
-                    domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
-                }
+                domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
             }
             tabItem("Users") { +"Users" }
             tabItem("Containers") { +"Containers" }
@@ -343,26 +335,24 @@ object TabsCode {
             +"align-items-center".modifier()
             +"mb-md".util()
         }) {
-            label(`for` = "range") { +"Tabs: " }
+            label {
+                +"Tabs: "
+                `for`("range")
+            }
             range = input(id = "range", baseClass = "w-50".util()) {
-                type = const("range")
-                min = const("1")
-                max = const("12")
-                value = const("5")
+                type("range")
+                min("1")
+                max("12")
+                value("5")
             }
             span {
                 range.inputs.events
-                    .map { it.target.unsafeCast<HTMLInputElement>().value }
-                    .bind()
+                    .map { it.target.unsafeCast<HTMLInputElement>().value }.asText()
             }
         }
         tabs(store) {
-            itemDisplay = {
-                { +"Tab item ${'$'}it" }
-            }
-            contentDisplay = {
-                { +"Content ${'$'}it" }
-            }
+            itemDisplay = { +"Tab item ${'$'}it" }
+            contentDisplay = { +"Content ${'$'}it" }
         }
 
         range.changes.valuesAsNumber()
@@ -376,6 +366,7 @@ object TabsCode {
             range.domNode.dispatchEvent(Event(Events.input.name))
             range.domNode.dispatchEvent(Event(Events.change.name))
         }
+    }
 }
 """
 }

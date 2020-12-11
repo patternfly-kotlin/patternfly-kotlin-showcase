@@ -17,7 +17,6 @@ import org.patternfly.alertDescription
 import org.patternfly.alertGroup
 import org.patternfly.clickButton
 import org.patternfly.pageSection
-import org.patternfly.showcase.TICKER_DELAY
 import kotlin.time.milliseconds
 
 object AlertGroupComponent {
@@ -26,8 +25,7 @@ object AlertGroupComponent {
             title = "Alert group",
             prefix = "An ",
             key = "alert group",
-            text = " is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts. Related design guidelines: ",
-            link = ("alerts-and-notifications" to "Alerts and notifications")
+            text = " is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts."
         )
         pageSection(baseClass = "sc-component__buttons") {
             h2 { +"Examples" }
@@ -123,9 +121,10 @@ internal object AlertGroupCode {
     const val REACTIVE: String = """fun main() {
     render {
         val tick = storeOf(false)
+
         clickButton(secondary) { +"Start async alerts" }.map { true } handledBy tick.update
         clickButton(secondary) { +"Stop async alerts" }.map { false } handledBy tick.update
-
+    
         var counter = 0
         MainScope().launch {
             tick.data.collect {

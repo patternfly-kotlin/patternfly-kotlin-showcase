@@ -373,8 +373,8 @@ object DropdownCode {
     const val BASIC: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggle { content = { +"Dropdown" } }
-            dropdownItems {
+            textToggle { +"Dropdown" }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -391,11 +391,9 @@ object DropdownCode {
     const val DISABLED: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggle {
-                content = { +"Dropdown" }
-                disabled = const(true)
-            }
-            dropdownItems {
+            disabled(true)
+            textToggle { +"Dropdown" }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -412,8 +410,8 @@ object DropdownCode {
     const val PRIMARY: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggle("primary".modifier()) { content = { +"Dropdown" } }
-            dropdownItems {
+            textToggle(primary) { +"Dropdown" }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -430,8 +428,8 @@ object DropdownCode {
     const val RIGHT: String = """fun main() {
     render {
         dropdown<String>(align = RIGHT) {
-            dropdownToggle { content = { +"Dropdown" } }
-            dropdownItems {
+            textToggle() { +"Dropdown" }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -448,8 +446,8 @@ object DropdownCode {
     const val UP: String = """fun main() {
     render {
         dropdown<String>(up = true) {
-            dropdownToggle { content = { +"Dropdown" } }
-            dropdownItems {
+            textToggle { +"Dropdown" }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -466,8 +464,8 @@ object DropdownCode {
     const val KEBAB: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggleKebab()
-            dropdownItems {
+            kebabToggle()
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -484,8 +482,8 @@ object DropdownCode {
     const val ICON: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggle { icon = { icon("th".fas()) } }
-            dropdownItems {
+            iconToggle { icon("th".fas()) }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -502,8 +500,8 @@ object DropdownCode {
     const val DESCRIPTION: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggle { content = { +"Dropdown" } }
-            dropdownItems {
+            textToggle { +"Dropdown" }
+            items {
                 item("Action 1") {
                     icon = { icon("cog".fas()) }
                 }
@@ -511,7 +509,7 @@ object DropdownCode {
                     description = "This is a description"
                 }
                 item("Action 3") {
-                    icon = { img { src = const("./pf-logo-small.svg") } }
+                    icon = { img { src("./pf-logo-small.svg") } }
                     description = "This is a description"
                 }
                 separator()
@@ -538,8 +536,8 @@ object DropdownCode {
     const val CHECKBOX_TOGGLE: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggleCheckbox()
-            dropdownItems {
+            checkboxToggle()
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -549,8 +547,8 @@ object DropdownCode {
             }
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
-            dropdownToggleCheckbox { content = { +"10 selected" } }
-            dropdownItems {
+            checkboxToggle { text { +"10 selected" } }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -567,8 +565,8 @@ object DropdownCode {
     const val ACTION_TOGGLE: String = """fun main() {
     render {
         dropdown<String> {
-            dropdownToggleAction { action = { +"Action" } }
-            dropdownItems {
+            actionToggle { +"Action" }
+            items {
                 item("Action")
                 item("Disabled Action") {
                     disabled = true
@@ -578,8 +576,8 @@ object DropdownCode {
             }
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
-            dropdownToggleAction { action = { icon("cog".fas()) } }
-            dropdownItems {
+            actionToggle { icon("cog".fas()) }
+            items {
                 item("Action") {
                     icon = { icon("cog".fas()) }
                 }
@@ -600,9 +598,9 @@ object DropdownCode {
     //language=kotlin
     const val GROUPS: String = """fun main() {
     render {
-        dropdown<String> {
-            dropdownToggle { content = { +"Dropdown" } }
-            dropdownGroups {
+        dropdown<String>(grouped = true) {
+            textToggle { +"Dropdown" }
+            groups {
                 group {
                     item("Action 1")
                     item("Action 2")
@@ -633,15 +631,12 @@ object DropdownCode {
 
         fun registerEvents(dropdown: Dropdown<String>, name: String) {
             with(dropdown) {
-                store.clicked.unwrap()
-                    .map { Notification(INFO, "${'$'}name: Clicked on ${'$'}it") }
-                    .handledBy(Notification.store.add)
-                ces.collapsed
-                    .map { Notification(INFO, "${'$'}name: Dropdown collapsed") }
-                    .handledBy(Notification.store.add)
-                ces.expanded
-                    .map { Notification(INFO, "${'$'}name: Dropdown expanded") }
-                    .handledBy(Notification.store.add)
+                store.select handledBy Notification.add {
+                    info("${'$'}name: Clicked on ${'$'}it")
+                }
+                ces.data.drop(1) handledBy Notification.add { expanded ->
+                    info("${'$'}name: Expanded state: ${'$'}expanded.")
+                }
             }
         }
 
@@ -660,111 +655,80 @@ object DropdownCode {
             +"mb-sm".util()
         }) {
             text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                type = const("text")
-                value = const("Dropdown")
-                placeholder = const("Dropdown text")
+                type("text")
+                value("Dropdown")
+                placeholder("Dropdown text")
             }
             enabled = switch("ml-md".util()) {
-                label = const("Enabled")
-                labelOff = const("Disabled")
-                input.checked = const(true)
+                label("Enabled")
+                labelOff("Disabled")
+                input.checked(true)
             }
         }
         dropdown<String>(baseClass = "mt-sm".util()) {
-            dropdownToggle {
-                content = { text.keyups.map { currentValue(it) }.bind() }
-                disabled = enabled.input.changes.states().map { !it }
+            disabled(enabled.input.changes.states().map { !it })
+            textToggle {
+                text.keyups.map { currentValue(it) }.asText()
             }
-            dropdownItems()
-            registerEvents(this, "Text")
-            action(items()) handledBy store.update
+            registerEvents(this, "Text toggle")
+            store.update(items())
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
-            dropdownToggleKebab {
-                disabled = enabled.input.changes.states().map { !it }
-            }
-            dropdownItems()
-            registerEvents(this, "Kebab")
-            action(items()) handledBy store.update
+            disabled(enabled.input.changes.states().map { !it })
+            kebabToggle()
+            registerEvents(this, "Kebab toggle")
+            store.update(items())
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
-            dropdownToggle {
-                disabled = enabled.input.changes.states().map { !it }
-                icon = { icon("cog".fas()) }
-            }
-            dropdownItems()
-            registerEvents(this, "Icon")
-            action(items()) handledBy store.update
+            disabled(enabled.input.changes.states().map { !it })
+            iconToggle { icon("cog".fas()) }
+            registerEvents(this, "Icon toggle")
+            store.update(items())
         }
         br {}
         dropdown<String>(baseClass = "mt-sm".util()) {
-            dropdownToggleCheckbox {
-                content = {
-                    domNode.styleHidden = true
-                    merge(
-                        this@dropdown.store.clicked.unwrap(),
-                        this@dropdownToggleCheckbox.input.changes.states()
-                    ).map {
-                        val value = when (it) {
-                            is String -> {
-                                if (it == "Select none") {
-                                    ""
-                                } else it
-                            }
-                            is Boolean -> {
-                                if (it) "Select all" else ""
-                            }
-                            else -> ""
-                        }
-                        domNode.styleHidden = value.isEmpty()
-                        value
-                    }.bind()
+            disabled(enabled.input.changes.states().map { !it })
+            checkboxToggle {
+                text {
+                    this@dropdown.store.select.asText()
                 }
-                disabled = enabled.input.changes.states().map { !it }
-                triState = this@dropdown.store.clicked.unwrap().map {
-                    when (it) {
-                        "Select none" -> TriState.OFF
-                        "Select visible" -> TriState.INDETERMINATE
-                        "Select all" -> TriState.ON
-                        else -> TriState.OFF
+                checkbox {
+                    changes.states() handledBy Notification.add {
+                        info("Checkbox toggle: Checked: ${'$'}it")
                     }
+                    triState(this@dropdown.store.select.map {
+                        when (it) {
+                            "Select none" -> TriState.OFF
+                            "Select visible" -> TriState.INDETERMINATE
+                            "Select all" -> TriState.ON
+                            else -> TriState.OFF
+                        }
+                    })
                 }
             }
-            dropdownItems {
+            items {
                 item("Select none")
                 item("Select visible")
                 item("Select all")
             }
-            registerEvents(this, "Split button")
+            registerEvents(this, "Checkbox toggle")
         }
         br {}
         dropdown<String>(baseClass = "mt-sm".util()) {
-            dropdownToggleAction {
-                action = {
-                    text.keyups.map { currentValue(it) }.bind()
-                    clicks
-                        .map { Notification(INFO, "Action clicked") }
-                        .handledBy(Notification.store.add)
-                }
-                disabled = enabled.input.changes.states().map { !it }
-            }
-            dropdownItems()
-            registerEvents(this, "Action text")
-            action(items()) handledBy store.update
+            disabled(enabled.input.changes.states().map { !it })
+            actionToggle {
+                text.keyups.map { currentValue(it) }.asText()
+            } handledBy Notification.info("Action toggle (text): Clicked")
+            registerEvents(this, "Action toggle (text)")
+            store.update(items())
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
-            dropdownToggleAction {
-                action = {
-                    icon("cog".fas())
-                    clicks
-                        .map { Notification(INFO, "Action clicked") }
-                        .handledBy(Notification.store.add)
-                }
-                disabled = enabled.input.changes.states().map { !it }
-            }
-            dropdownItems()
-            registerEvents(this, "Action icon")
-            action(items()) handledBy store.update
+            disabled(enabled.input.changes.states().map { !it })
+            actionToggle {
+                icon("cog".fas())
+            } handledBy Notification.info("Action toggle (icon): Clicked")
+            registerEvents(this, "Action toggle (icon)")
+            store.update(items())
         }
 
         MainScope().launch {

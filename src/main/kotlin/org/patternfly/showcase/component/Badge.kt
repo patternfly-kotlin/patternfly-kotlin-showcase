@@ -134,7 +134,7 @@ object BadgeCode {
     render {
         lateinit var range: Input
         lateinit var state: Switch
-
+        
         div(baseClass = classes {
             +"flex".layout()
             +"align-items-center".modifier()
@@ -160,7 +160,7 @@ object BadgeCode {
             read(state.input.changes.states())
             value(range.inputs.events.map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() })
         }
-
+    
         MainScope().launch {
             delay(EVENT_DELAY)
             range.domNode.dispatchEvent(Event(Events.input.name))
