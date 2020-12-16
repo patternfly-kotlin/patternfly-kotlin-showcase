@@ -22,20 +22,19 @@ import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.fas
 import org.patternfly.group
+import org.patternfly.groups
 import org.patternfly.icon
+import org.patternfly.iconToggle
 import org.patternfly.item
 import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.optionsMenu
-import org.patternfly.optionsMenuGroups
-import org.patternfly.optionsMenuItems
-import org.patternfly.optionsMenuToggle
-import org.patternfly.optionsMenuTogglePlain
 import org.patternfly.pageSection
 import org.patternfly.separator
 import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
+import org.patternfly.textToggle
 import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
@@ -50,11 +49,10 @@ object OptionsMenuComponent {
             text = " is similar to a dropdown, but provides a way to select among a set of optional settings rather than trigger an action."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", OptionsMenuCode.BASIC) {
                 optionsMenu<String> {
-                    optionsMenuToggle { content = { +"Options menu" } }
-                    optionsMenuItems {
+                    textToggle { +"Options menu" }
+                    items {
                         item("Option 1") { selected = true }
                         item("Option 2")
                         item("Option 3")
@@ -63,11 +61,9 @@ object OptionsMenuComponent {
             }
             snippet("Disabled", OptionsMenuCode.DISABLED) {
                 optionsMenu<String> {
-                    optionsMenuToggle {
-                        content = { +"Options menu" }
-                        disabled(true)
-                    }
-                    optionsMenuItems {
+                    disabled(true)
+                    textToggle { +"Options menu" }
+                    items {
                         item("Option 1") { selected = true }
                         item("Option 2")
                         item("Option 3")
@@ -76,8 +72,8 @@ object OptionsMenuComponent {
             }
             snippet("Position right", OptionsMenuCode.RIGHT) {
                 optionsMenu<String>(align = RIGHT) {
-                    optionsMenuToggle { content = { +"Options menu" } }
-                    optionsMenuItems {
+                    textToggle { +"Options menu" }
+                    items {
                         item("Right option 1") { selected = true }
                         item("Right option 2")
                         item("Right option 3")
@@ -86,8 +82,8 @@ object OptionsMenuComponent {
             }
             snippet("Direction up", OptionsMenuCode.UP) {
                 optionsMenu<String>(up = true) {
-                    optionsMenuToggle { content = { +"Options menu" } }
-                    optionsMenuItems {
+                    textToggle { +"Options menu" }
+                    items {
                         item("Option 1") { selected = true }
                         item("Option 2")
                         item("Option 3")
@@ -96,8 +92,8 @@ object OptionsMenuComponent {
             }
             snippet("Plain", OptionsMenuCode.ICON) {
                 optionsMenu<String> {
-                    optionsMenuToggle { icon = { icon("sort-amount-down".fas()) } }
-                    optionsMenuItems {
+                    iconToggle { icon("sort-amount-down".fas()) }
+                    items {
                         item("Option 1") { selected = true }
                         item("Option 2")
                         item("Option 3")
@@ -106,8 +102,8 @@ object OptionsMenuComponent {
             }
             snippet("Plain with text", OptionsMenuCode.PLAIN) {
                 optionsMenu<String> {
-                    optionsMenuTogglePlain { content = { +"Options menu" } }
-                    optionsMenuItems {
+                    textToggle(plain = true) { +"Options menu" }
+                    items {
                         item("Option 1") { selected = true }
                         item("Option 2")
                         item("Option 3")
@@ -115,9 +111,9 @@ object OptionsMenuComponent {
                 }
             }
             snippet("Multiple options", OptionsMenuCode.MULTIPLE_OPTIONS) {
-                optionsMenu<String> {
-                    optionsMenuToggle { content = { +"Sort by" } }
-                    optionsMenuGroups {
+                optionsMenu<String>(grouped = true) {
+                    textToggle { +"Sort by" }
+                    groups {
                         group {
                             item("Name")
                             item("Date") { selected = true }
@@ -133,9 +129,9 @@ object OptionsMenuComponent {
                 }
             }
             snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
-                optionsMenu<String> {
-                    optionsMenuToggle { content = { +"Options" } }
-                    optionsMenuGroups {
+                optionsMenu<String>(grouped = true, multiSelect = true) {
+                    textToggle { +"Options" }
+                    groups {
                         group {
                             item("Option 1") { selected = true }
                             item("Option 2")
@@ -197,20 +193,20 @@ object OptionsMenuComponent {
                     }
                 }
                 optionsMenu<String>(baseClass = "mt-sm".util()) {
-                    optionsMenuToggle {
-                        content = { text.keyups.map { currentValue(it) }.asText() }
-                        disabled(enabled.input.changes.states().map { !it })
+                    disabled(enabled.input.changes.states().map { !it })
+                    textToggle {
+                        text.keyups.map { currentValue(it) }.asText()
                     }
-                    optionsMenuItems()
-                    store.update(items())
                     registerEvents(this, "Text")
+                    store.update(items())
                 }
-                optionsMenu<String>(baseClass = "ml-sm".util()) {
-                    optionsMenuToggle {
-                        disabled(enabled.input.changes.states().map { !it })
-                        icon = { icon("sort-amount-down".fas()) }
+                optionsMenu<String>(grouped = true, multiSelect = true, baseClass = "ml-sm".util()) {
+                    disabled(enabled.input.changes.states().map { !it })
+                    iconToggle {
+                        icon("sort-amount-down".fas())
                     }
-                    optionsMenuGroups {
+                    registerEvents(this, "Icon")
+                    groups {
                         group {
                             item("Option 1") { selected = true }
                             item("Option 2")
@@ -226,16 +222,14 @@ object OptionsMenuComponent {
                             item("Option 2")
                         }
                     }
-                    registerEvents(this, "Plain")
                 }
                 optionsMenu<String>(baseClass = "ml-sm".util()) {
-                    optionsMenuTogglePlain {
-                        content = { text.keyups.map { currentValue(it) }.asText() }
-                        disabled(enabled.input.changes.states().map { !it })
+                    disabled(enabled.input.changes.states().map { !it })
+                    textToggle(plain = true) {
+                        text.keyups.map { currentValue(it) }.asText()
                     }
-                    optionsMenuItems()
                     store.update(items())
-                    registerEvents(this, "Plain with text")
+                    registerEvents(this, "Plain")
                 }
 
                 MainScope().launch {
@@ -253,8 +247,8 @@ object OptionsMenuCode {
     const val BASIC: String = """fun main() {
     render {
         optionsMenu<String> {
-            optionsMenuToggle { content = { +"Options menu" } }
-            optionsMenuItems {
+            textToggle { +"Options menu" }
+            items {
                 item("Option 1") { selected = true }
                 item("Option 2")
                 item("Option 3")
@@ -268,11 +262,9 @@ object OptionsMenuCode {
     const val DISABLED: String = """fun main() {
     render {
         optionsMenu<String> {
-            optionsMenuToggle {
-                content = { +"Options menu" }
-                disabled(true)
-            }
-            optionsMenuItems {
+            disabled(true)
+            textToggle { +"Options menu" }
+            items {
                 item("Option 1") { selected = true }
                 item("Option 2")
                 item("Option 3")
@@ -286,8 +278,8 @@ object OptionsMenuCode {
     const val RIGHT: String = """fun main() {
     render {
         optionsMenu<String>(align = RIGHT) {
-            optionsMenuToggle { content = { +"Options menu" } }
-            optionsMenuItems {
+            textToggle { +"Options menu" }
+            items {
                 item("Right option 1") { selected = true }
                 item("Right option 2")
                 item("Right option 3")
@@ -301,8 +293,8 @@ object OptionsMenuCode {
     const val UP: String = """fun main() {
     render {
         optionsMenu<String>(up = true) {
-            optionsMenuToggle { content = { +"Options menu" } }
-            optionsMenuItems {
+            textToggle { +"Options menu" }
+            items {
                 item("Option 1") { selected = true }
                 item("Option 2")
                 item("Option 3")
@@ -316,8 +308,8 @@ object OptionsMenuCode {
     const val ICON: String = """fun main() {
     render {
         optionsMenu<String> {
-            optionsMenuToggle { icon = { icon("sort-amount-down".fas()) } }
-            optionsMenuItems {
+            iconToggle { icon("sort-amount-down".fas()) }
+            items {
                 item("Option 1") { selected = true }
                 item("Option 2")
                 item("Option 3")
@@ -331,8 +323,8 @@ object OptionsMenuCode {
     const val PLAIN: String = """fun main() {
     render {
         optionsMenu<String> {
-            optionsMenuTogglePlain { content = { +"Options menu" } }
-            optionsMenuItems {
+            textToggle(plain = true) { +"Options menu" }
+            items {
                 item("Option 1") { selected = true }
                 item("Option 2")
                 item("Option 3")
@@ -345,9 +337,9 @@ object OptionsMenuCode {
     //language=kotlin
     const val MULTIPLE_OPTIONS: String = """fun main() {
     render {
-        optionsMenu<String> {
-            optionsMenuToggle { content = { +"Sort by" } }
-            optionsMenuGroups {
+        optionsMenu<String>(grouped = true, multiSelect = true) {
+            textToggle { +"Sort by" }
+            groups {
                 group {
                     item("Name")
                     item("Date") { selected = true }
@@ -368,9 +360,9 @@ object OptionsMenuCode {
     //language=kotlin
     const val GROUPED: String = """fun main() {
     render {
-        optionsMenu<String> {
-            optionsMenuToggle { content = { +"Options" } }
-            optionsMenuGroups {
+        optionsMenu<String>(grouped = true, multiSelect = true) {
+            textToggle { +"Options" }
+            groups {
                 group {
                     item("Option 1") { selected = true }
                     item("Option 2")
@@ -437,20 +429,20 @@ object OptionsMenuCode {
             }
         }
         optionsMenu<String>(baseClass = "mt-sm".util()) {
-            optionsMenuToggle {
-                content = { text.keyups.map { currentValue(it) }.asText() }
-                disabled(enabled.input.changes.states().map { !it })
+            disabled(enabled.input.changes.states().map { !it })
+            textToggle {
+                text.keyups.map { currentValue(it) }.asText()
             }
-            optionsMenuItems()
-            store.update(items())
             registerEvents(this, "Text")
+            store.update(items())
         }
-        optionsMenu<String>(baseClass = "ml-sm".util()) {
-            optionsMenuToggle {
-                disabled(enabled.input.changes.states().map { !it })
-                icon = { icon("sort-amount-down".fas()) }
+        optionsMenu<String>(grouped = true, multiSelect = true, baseClass = "ml-sm".util()) {
+            disabled(enabled.input.changes.states().map { !it })
+            iconToggle {
+                icon("sort-amount-down".fas())
             }
-            optionsMenuGroups {
+            registerEvents(this, "Icon")
+            groups {
                 group {
                     item("Option 1") { selected = true }
                     item("Option 2")
@@ -466,16 +458,14 @@ object OptionsMenuCode {
                     item("Option 2")
                 }
             }
-            registerEvents(this, "Plain")
         }
         optionsMenu<String>(baseClass = "ml-sm".util()) {
-            optionsMenuTogglePlain {
-                content = { text.keyups.map { currentValue(it) }.asText() }
-                disabled(enabled.input.changes.states().map { !it })
+            disabled(enabled.input.changes.states().map { !it })
+            textToggle(plain = true) {
+                text.keyups.map { currentValue(it) }.asText()
             }
-            optionsMenuItems()
             store.update(items())
-            registerEvents(this, "Plain with text")
+            registerEvents(this, "Plain")
         }
 
         MainScope().launch {

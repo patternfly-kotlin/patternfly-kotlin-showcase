@@ -39,6 +39,7 @@ import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
 import org.patternfly.textToggle
 import org.patternfly.triState
+import org.patternfly.unwrap
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -52,7 +53,6 @@ object DropdownComponent {
             text = " when you want to present a list of actions in a limited space."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", DropdownCode.BASIC) {
                 dropdown<String> {
                     textToggle { +"Dropdown" }
@@ -95,7 +95,7 @@ object DropdownComponent {
             }
             snippet("Position right", DropdownCode.RIGHT) {
                 dropdown<String>(align = RIGHT) {
-                    textToggle() { +"Dropdown" }
+                    textToggle { +"Dropdown" }
                     items {
                         item("Action")
                         item("Disabled Action") {
@@ -258,7 +258,7 @@ object DropdownComponent {
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
-                        store.select handledBy Notification.add {
+                        store.selects.unwrap() handledBy Notification.add {
                             info("$name: Clicked on $it")
                         }
                         ces.data.drop(1) handledBy Notification.add { expanded ->
@@ -317,13 +317,13 @@ object DropdownComponent {
                     disabled(enabled.input.changes.states().map { !it })
                     checkboxToggle {
                         text {
-                            this@dropdown.store.select.asText()
+                            this@dropdown.store.selects.unwrap().asText()
                         }
                         checkbox {
                             changes.states() handledBy Notification.add {
                                 info("Checkbox toggle: Checked: $it")
                             }
-                            triState(this@dropdown.store.select.map {
+                            triState(this@dropdown.store.selects.unwrap().map {
                                 when (it) {
                                     "Select none" -> TriState.OFF
                                     "Select visible" -> TriState.INDETERMINATE
@@ -428,7 +428,7 @@ object DropdownCode {
     const val RIGHT: String = """fun main() {
     render {
         dropdown<String>(align = RIGHT) {
-            textToggle() { +"Dropdown" }
+            textToggle { +"Dropdown" }
             items {
                 item("Action")
                 item("Disabled Action") {
@@ -631,7 +631,7 @@ object DropdownCode {
 
         fun registerEvents(dropdown: Dropdown<String>, name: String) {
             with(dropdown) {
-                store.select handledBy Notification.add {
+                store.selects.unwrap() handledBy Notification.add {
                     info("${'$'}name: Clicked on ${'$'}it")
                 }
                 ces.data.drop(1) handledBy Notification.add { expanded ->
@@ -690,13 +690,13 @@ object DropdownCode {
             disabled(enabled.input.changes.states().map { !it })
             checkboxToggle {
                 text {
-                    this@dropdown.store.select.asText()
+                    this@dropdown.store.selects.unwrap().asText()
                 }
                 checkbox {
                     changes.states() handledBy Notification.add {
                         info("Checkbox toggle: Checked: ${'$'}it")
                     }
-                    triState(this@dropdown.store.select.map {
+                    triState(this@dropdown.store.selects.unwrap().map {
                         when (it) {
                             "Select none" -> TriState.OFF
                             "Select visible" -> TriState.INDETERMINATE

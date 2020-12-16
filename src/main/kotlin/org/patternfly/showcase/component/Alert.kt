@@ -19,14 +19,12 @@ import org.patternfly.pushButton
 
 internal object AlertComponent {
     val content: RenderContext.() -> Unit = {
-        console.log("This is the alert component")
         intro(
             title = "Alert",
             key = "Alerts",
             text = " are used to notify the user about a change in status or other event"
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Types", AlertCode.TYPES) {
                 alert(DEFAULT, "Default alert title")
                 br {}

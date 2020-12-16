@@ -4,10 +4,10 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
 import org.patternfly.ButtonVariation.primary
-import org.patternfly.actions
 import org.patternfly.classes
 import org.patternfly.divider
 import org.patternfly.drawer
+import org.patternfly.drawerAction
 import org.patternfly.drawerBody
 import org.patternfly.drawerClose
 import org.patternfly.drawerContent
@@ -32,7 +32,6 @@ object DrawerComponent {
             text = " is a sliding panel that enters from the right edge of the viewport. It can be configured to either overlay content on a page or create a sidebar by pushing that content to the left."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", DrawerCode.BASIC) {
                 val button = pushButton(primary) { +"Toggle" }
                 drawer(baseClass = "mt-md".util()) {
@@ -47,7 +46,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                actions {
+                                drawerAction {
                                     drawerClose()
                                 }
                             }
@@ -69,7 +68,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                actions {
+                                drawerAction {
                                     drawerClose()
                                 }
                             }
@@ -91,7 +90,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                actions {
+                                drawerAction {
                                     drawerClose()
                                 }
                             }
@@ -113,7 +112,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                actions {
+                                drawerAction {
                                     drawerClose()
                                 }
                             }
@@ -140,7 +139,7 @@ object DrawerComponent {
                                     domNode.tabIndex = 0
                                     +"Drawer panel"
                                 }
-                                actions {
+                                drawerAction {
                                     drawerClose()
                                 }
                             }
@@ -150,6 +149,7 @@ object DrawerComponent {
             }
             snippet("Static", DrawerCode.STATIC) {
                 drawer("static".modifier()) {
+                    ces.expand(Unit)
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
                     }
@@ -157,7 +157,7 @@ object DrawerComponent {
                         drawerBody {
                             drawerHead {
                                 span { +"Drawer panel" }
-                                actions {
+                                drawerAction {
                                     drawerClose()
                                 }
                             }
@@ -187,7 +187,7 @@ object DrawerCode {
                             domNode.tabIndex = 0
                             +"Drawer panel"
                         }
-                        actions {
+                        drawerAction {
                             drawerClose()
                         }
                     }
@@ -214,7 +214,7 @@ object DrawerCode {
                             domNode.tabIndex = 0
                             +"Drawer panel"
                         }
-                        actions {
+                        drawerAction {
                             drawerClose()
                         }
                     }
@@ -241,7 +241,7 @@ object DrawerCode {
                             domNode.tabIndex = 0
                             +"Drawer panel"
                         }
-                        actions {
+                        drawerAction {
                             drawerClose()
                         }
                     }
@@ -268,7 +268,7 @@ object DrawerCode {
                             domNode.tabIndex = 0
                             +"Drawer panel"
                         }
-                        actions {
+                        drawerAction {
                             drawerClose()
                         }
                     }
@@ -300,7 +300,7 @@ object DrawerCode {
                             domNode.tabIndex = 0
                             +"Drawer panel"
                         }
-                        actions {
+                        drawerAction {
                             drawerClose()
                         }
                     }
@@ -322,7 +322,7 @@ object DrawerCode {
                 drawerBody {
                     drawerHead {
                         span { +"Drawer panel" }
-                        actions {
+                        drawerAction {
                             drawerClose()
                         }
                     }

@@ -11,7 +11,7 @@ import org.patternfly.component
 import org.patternfly.dataList
 import org.patternfly.dataListAction
 import org.patternfly.dataListCell
-import org.patternfly.dataListCheck
+import org.patternfly.dataListCheckbox
 import org.patternfly.dataListContent
 import org.patternfly.dataListControl
 import org.patternfly.dataListExpandableContent
@@ -39,7 +39,6 @@ object DataListComponent {
             text = " is used to display large data sets when you need a flexible layout or need to include interactive content like charts."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", DataListCode.BASIC) {
                 // Just a fake item w/ a display function
                 data class DisplayData(
@@ -128,7 +127,7 @@ object DataListComponent {
                     DisplayData {
                         dataListRow {
                             dataListControl {
-                                dataListCheck()
+                                dataListCheckbox()
                             }
                             dataListContent {
                                 dataListCell {
@@ -159,7 +158,7 @@ object DataListComponent {
                     DisplayData {
                         dataListRow {
                             dataListControl {
-                                dataListCheck {}
+                                dataListCheckbox()
                             }
                             dataListContent {
                                 dataListCell {
@@ -191,7 +190,7 @@ object DataListComponent {
                     DisplayData {
                         dataListRow {
                             dataListControl {
-                                dataListCheck {}
+                                dataListCheckbox()
                             }
                             dataListContent {
                                 dataListCell {
@@ -540,7 +539,7 @@ object DataListCode {
             DisplayData {
                 dataListRow {
                     dataListControl {
-                        dataListCheck()
+                        dataListCheckbox()
                     }
                     dataListContent {
                         dataListCell {
@@ -571,7 +570,7 @@ object DataListCode {
             DisplayData {
                 dataListRow {
                     dataListControl {
-                        dataListCheck {}
+                        dataListCheckbox()
                     }
                     dataListContent {
                         dataListCell {
@@ -603,7 +602,7 @@ object DataListCode {
             DisplayData {
                 dataListRow {
                     dataListControl {
-                        dataListCheck {}
+                        dataListCheckbox()
                     }
                     dataListContent {
                         dataListCell {

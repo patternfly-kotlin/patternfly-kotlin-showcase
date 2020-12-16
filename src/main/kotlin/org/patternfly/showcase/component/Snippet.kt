@@ -10,6 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.map
 import org.patternfly.PageSection
 import org.patternfly.Size
+import org.patternfly.component
 import org.patternfly.dom.By
 import org.patternfly.dom.Id
 import org.patternfly.dom.minusAssign
@@ -30,20 +31,16 @@ fun RenderContext.intro(
     prefix: String? = null,
     key: String,
     text: String,
-    link: Pair<String, String>? = null
+    content: RenderContext.() -> Unit = {}
 ): PageSection = pageSection("pb-0".util()) {
-    title(size = Size.XL_3, baseClass = "mb-md".util()) { +title }
-    p {
-        prefix?.let { +it }
-        strong { +key }
-        +text
-        link?.let { (url, text) ->
-            a {
-                href(url)
-                target("pf4")
-                +text
-            }
+    div(baseClass = "content".component()) {
+        title(size = Size.XL_3, baseClass = "mb-md".util()) { +title }
+        p {
+            prefix?.let { +it }
+            strong { +key }
+            +text
         }
+        content(this)
     }
 }
 

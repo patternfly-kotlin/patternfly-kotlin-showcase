@@ -29,7 +29,6 @@ object BadgeComponent {
             text = " is used to annotate other information like a label or an object name. Badges are typically used to reflect a count, e.g. number of object, number of events, number of unread, etc."
         )
         pageSection(baseClass = "sc-component__badges") {
-            h2 { +"Examples" }
             snippet("Read", BadgeCode.READ) {
                 badge { +"7" }
                 badge { +"24" }

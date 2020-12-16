@@ -46,7 +46,6 @@ object ButtonComponent {
             text = " communicate and trigger actions a user can take in an application or website"
         )
         pageSection(baseClass = "sc-component__buttons") {
-            h2 { +"Examples" }
             snippet("Variations", ButtonCode.VARIATIONS) {
                 pushButton(primary) { +"Primary" }
                 pushButton(secondary) { +"Secondary" }

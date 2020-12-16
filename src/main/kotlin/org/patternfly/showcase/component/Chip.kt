@@ -23,7 +23,6 @@ object ChipComponent {
             text = " are used to communicate a value, a tag, or a set of attribute-value pairs within workflows that involve filtering or tagging a set of objects."
         )
         pageSection(baseClass = "sc-component__chips") {
-            h2 { +"Examples" }
             snippet("Basic", ChipCode.BASIC) {
                 chip { +"Chip" }
                 br {}
@@ -45,42 +44,42 @@ object ChipComponent {
                     closes handledBy Notification.info("Chip closed")
                 }
             }
-        }
-        snippet("Reactive", ChipCode.REACTIVE) {
-            fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+            snippet("Reactive", ChipCode.REACTIVE) {
+                fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
 
-            val text: Input = input(baseClass = "form-control".component()) {
-                type("text")
-                value("Chip")
-                placeholder("Chip text")
-            }
-            br {}
-            br {}
-            chip(readOnly = true) {
-                text.keyups.map { currentValue(it) }.asText()
-            }
-            br {}
-            chip {
-                text.keyups.map { currentValue(it) }.asText()
-            }
-            br {}
-            chip(readOnly = true) {
-                text.keyups.map { currentValue(it) }.asText()
-                badge {
-                    value(text.keyups.map { currentValue(it).length })
+                val text: Input = input(baseClass = "form-control".component()) {
+                    type("text")
+                    value("Chip")
+                    placeholder("Chip text")
                 }
-            }
-            br {}
-            chip {
-                text.keyups.map { currentValue(it) }.asText()
-                badge {
-                    value(text.keyups.map { currentValue(it).length })
+                br {}
+                br {}
+                chip(readOnly = true) {
+                    text.keyups.map { currentValue(it) }.asText()
                 }
-            }
+                br {}
+                chip {
+                    text.keyups.map { currentValue(it) }.asText()
+                }
+                br {}
+                chip(readOnly = true) {
+                    text.keyups.map { currentValue(it) }.asText()
+                    badge {
+                        value(text.keyups.map { currentValue(it).length })
+                    }
+                }
+                br {}
+                chip {
+                    text.keyups.map { currentValue(it) }.asText()
+                    badge {
+                        value(text.keyups.map { currentValue(it).length })
+                    }
+                }
 
-            MainScope().launch {
-                delay(EVENT_DELAY)
-                text.domNode.dispatchEvent(Event(Events.keyup.name))
+                MainScope().launch {
+                    delay(EVENT_DELAY)
+                    text.domNode.dispatchEvent(Event(Events.keyup.name))
+                }
             }
         }
     }

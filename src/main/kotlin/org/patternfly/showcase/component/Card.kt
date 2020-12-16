@@ -6,8 +6,8 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.drop
 import org.patternfly.Align
 import org.patternfly.Notification
-import org.patternfly.actions
 import org.patternfly.card
+import org.patternfly.cardAction
 import org.patternfly.cardBody
 import org.patternfly.cardCheckbox
 import org.patternfly.cardFooter
@@ -30,7 +30,6 @@ object CardComponent {
             text = " is a flexible element for containing any kind of content. Cards are used on dashboards, in data displays (e.g. Card View), or for positioning content on a page."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", CardCode.BASIC) {
                 card {
                     cardTitle { +"Title" }
@@ -45,7 +44,7 @@ object CardComponent {
                             src("./pf-logo.svg")
                             domNode.style.width = "300px"
                         }
-                        actions {
+                        cardAction {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -68,7 +67,7 @@ object CardComponent {
             snippet("Card title in card header", CardCode.TITLE_IN_HEADER) {
                 card {
                     cardHeader {
-                        actions {
+                        cardAction {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -93,7 +92,7 @@ object CardComponent {
             snippet("Only actions in card header (no title/footer)", CardCode.ONLY_ACTIONS) {
                 card {
                     cardHeader {
-                        actions {
+                        cardAction {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -183,7 +182,7 @@ object CardComponent {
                     }
 
                     cardHeader {
-                        actions {
+                        cardAction {
                             dropdown<String>(align = Align.RIGHT) {
                                 kebabToggle()
                                 items {
@@ -216,7 +215,7 @@ object CardComponent {
                     }
 
                     cardHeader {
-                        actions {
+                        cardAction {
                             cardCheckbox()
                         }
                     }
@@ -258,7 +257,7 @@ object CardCode {
                     src("./pf-logo.svg")
                     domNode.style.width = "300px"
                 }
-                actions {
+                cardAction {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -286,7 +285,7 @@ object CardCode {
     render {
         card {
             cardHeader {
-                actions {
+                cardAction {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -316,7 +315,7 @@ object CardCode {
     render {
         card {
             cardHeader {
-                actions {
+                cardAction {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -451,7 +450,7 @@ object CardCode {
             }
 
             cardHeader {
-                actions {
+                cardAction {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {

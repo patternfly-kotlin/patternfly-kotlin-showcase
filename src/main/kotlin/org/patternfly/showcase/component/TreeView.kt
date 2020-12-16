@@ -23,8 +23,7 @@ object TreeViewComponent {
             prefix = "A ",
             key = "tree",
             text = " is a structure that displays data in a hierarchical view."
-        )
-        pageSection {
+        ) {
             p {
                 +"The demos here use the data class "
                 code { +"Place()" }
@@ -37,7 +36,6 @@ object TreeViewComponent {
             }
         }
         pageSection {
-            h2 { +"Examples" }
             snippet("Default", TreeViewCode.DEFAULT) {
                 treeView(placeId) {
                     tree {
@@ -62,7 +60,7 @@ object TreeViewComponent {
                             place.id.matches("[a-z]{2}".toRegex()) -> {
                                 SingleIcon {
                                     img {
-                                        with (domNode) {
+                                        with(domNode) {
                                             style.width = "16px"
                                             style.verticalAlign = "middle"
                                             src = "https://lipis.github.io/flag-icon-css/flags/4x3/${place.id}.svg"

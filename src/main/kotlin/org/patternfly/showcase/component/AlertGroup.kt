@@ -9,9 +9,12 @@ import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariation.secondary
 import org.patternfly.Notification
 import org.patternfly.NotificationStore
+import org.patternfly.Severity
 import org.patternfly.Severity.DANGER
+import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
+import org.patternfly.Severity.WARNING
 import org.patternfly.alert
 import org.patternfly.alertDescription
 import org.patternfly.alertGroup
@@ -28,11 +31,9 @@ object AlertGroupComponent {
             text = " is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts."
         )
         pageSection(baseClass = "sc-component__buttons") {
-            h2 { +"Examples" }
             snippet("Static alert group", AlertGroupCode.STATIC_ALERT_GROUP) {
                 alertGroup {
-                    alert(SUCCESS, "Success alert title", inline = true)
-                    alert(DANGER, "Danger alert title", inline = true)
+                    alert(DEFAULT, "Default alert title", inline = true)
                     alert(INFO, "Info alert title", inline = true) {
                         alertDescription {
                             p {
@@ -44,6 +45,9 @@ object AlertGroupComponent {
                             }
                         }
                     }
+                    alert(SUCCESS, "Success alert title", inline = true)
+                    alert(WARNING, "Warning alert title", inline = true)
+                    alert(DANGER, "Danger alert title", inline = true)
                 }
             }
             snippet("Toast alert group", AlertGroupCode.TOAST_ALERT_GROUP) {
@@ -83,8 +87,7 @@ internal object AlertGroupCode {
     const val STATIC_ALERT_GROUP: String = """fun main() {
     render {
         alertGroup {
-            alert(SUCCESS, "Success alert title", inline = true)
-            alert(DANGER, "Danger alert title", inline = true)
+            alert(DEFAULT, "Default alert title", inline = true)
             alert(INFO, "Info alert title", inline = true) {
                 alertDescription {
                     p {
@@ -96,6 +99,9 @@ internal object AlertGroupCode {
                     }
                 }
             }
+            alert(SUCCESS, "Success alert title", inline = true)
+            alert(WARNING, "Warning alert title", inline = true)
+            alert(DANGER, "Danger alert title", inline = true)
         }
     }
 }

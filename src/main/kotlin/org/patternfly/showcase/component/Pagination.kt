@@ -30,7 +30,6 @@ object PaginationComponent {
             text = " component is used to navigate pages in lists, tables, and other content views."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", PaginationCode.BASIC) {
                 pagination(PageInfo(10, 0, 73))
             }

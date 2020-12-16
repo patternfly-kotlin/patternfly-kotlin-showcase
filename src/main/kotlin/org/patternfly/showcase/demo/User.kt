@@ -24,9 +24,9 @@ import org.patternfly.ButtonVariation.secondary
 import org.patternfly.ItemStore
 import org.patternfly.Notification
 import org.patternfly.SortInfo
-import org.patternfly.actions
 import org.patternfly.bulkSelect
 import org.patternfly.card
+import org.patternfly.cardAction
 import org.patternfly.cardBody
 import org.patternfly.cardCheckbox
 import org.patternfly.cardFooter
@@ -37,7 +37,7 @@ import org.patternfly.clickButton
 import org.patternfly.dataList
 import org.patternfly.dataListAction
 import org.patternfly.dataListCell
-import org.patternfly.dataListCheck
+import org.patternfly.dataListCheckbox
 import org.patternfly.dataListContent
 import org.patternfly.dataListControl
 import org.patternfly.dataListExpandableContent
@@ -79,6 +79,7 @@ import org.patternfly.toolbarContent
 import org.patternfly.toolbarContentSection
 import org.patternfly.toolbarGroup
 import org.patternfly.toolbarItem
+import org.patternfly.unwrap
 import org.patternfly.util
 
 class UserDemoPresenter : Presenter<UserDemoView> {
@@ -197,9 +198,9 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             span(baseClass = classes("ml-sm".util(), "sc-user-card__title")) {
                                 +user.name.toString()
                             }
-                            actions {
+                            cardAction {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    store.select handledBy Notification.add {
+                                    store.selects.unwrap() handledBy Notification.add {
                                         info("$it ${user.name} not yet implemented")
                                     }
                                     kebabToggle()
@@ -235,7 +236,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                         dataListRow {
                             dataListControl {
                                 dataListToggle()
-                                dataListCheck()
+                                dataListCheckbox()
                             }
                             dataListContent {
                                 dataListCell(baseClass = "icon".modifier()) {
@@ -310,7 +311,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                     dataTableActionColumn { user ->
                         dropdown<String>(align = Align.RIGHT) {
-                            store.select handledBy Notification.add {
+                            store.selects.unwrap() handledBy Notification.add {
                                 info("$it ${user.name} not yet implemented")
                             }
                             kebabToggle()

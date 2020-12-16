@@ -2,10 +2,7 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import kotlinx.coroutines.flow.map
 import org.patternfly.Notification
-import org.patternfly.NotificationStore
-import org.patternfly.Severity
 import org.patternfly.pageSection
 import org.patternfly.switch
 
@@ -18,7 +15,6 @@ object SwitchComponent {
             text = " to toggle the state of a setting (between on and off). Switches and checkboxes can often be used interchangeably, but the switch provides a more explicit, visible representation on a setting."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Basic", SwitchCode.BASIC) {
                 switch {
                     label("Message when on")

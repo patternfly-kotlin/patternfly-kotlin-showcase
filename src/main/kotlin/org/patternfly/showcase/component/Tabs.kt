@@ -33,7 +33,6 @@ object TabsComponent {
             text = " are used to present a set on tabs for organizing content on a page."
         )
         pageSection {
-            h2 { +"Examples" }
             snippet("Default", TabsCode.DEFAULT) {
                 tabs<String> {
                     tabItem("Users") { +"Users" }
