@@ -33,7 +33,7 @@ class GetStartedView : View {
         
                                 dependencies {
                                     implementation("org.jetbrains:kotlin-extensions:<version>")
-                                    implementation("org.patternfly:patternfly-fritz2:0.0.9")
+                                    implementation("org.patternfly:patternfly-fritz2:<version>")
                                     implementation(npm("@patternfly/patternfly", "4"))
                                 }
                             """.trimIndent()
