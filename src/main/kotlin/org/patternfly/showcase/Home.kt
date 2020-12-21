@@ -22,7 +22,7 @@ class HomeView : View {
                         +"PatternFly Fritz2"
                         href("https://github.com/patternfly-kotlin/patternfly-fritz2")
                     }
-                    +" is a "
+                    +" is a pure "
                     a {
                         +"Kotlin / JS"
                         href("https://kotl.in/js")

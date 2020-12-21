@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
-import org.patternfly.Entry
 import org.patternfly.Notification
 import org.patternfly.NotificationStore
 import org.patternfly.OptionsMenu
+import org.patternfly.OptionsMenuStore
 import org.patternfly.Severity
 import org.patternfly.Switch
 import org.patternfly.classes
@@ -129,7 +129,7 @@ object OptionsMenuComponent {
                 }
             }
             snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
-                optionsMenu<String>(grouped = true, multiSelect = true) {
+                optionsMenu<String>(grouped = true) {
                     textToggle { +"Options" }
                     groups {
                         group {
@@ -170,10 +170,14 @@ object OptionsMenuComponent {
                     }
                 }
 
-                fun items(): List<Entry<String>> = items {
-                    item("Option 1") { selected = true }
-                    item("Option 2")
-                    item("Option 3")
+                fun items(store: OptionsMenuStore<String>) {
+                    with (store) {
+                        items {
+                            item("Option 1") { selected = true }
+                            item("Option 2")
+                            item("Option 3")
+                        }
+                    }
                 }
 
                 div(baseClass = classes {
@@ -198,9 +202,9 @@ object OptionsMenuComponent {
                         text.keyups.map { currentValue(it) }.asText()
                     }
                     registerEvents(this, "Text")
-                    store.update(items())
+                    items(store)
                 }
-                optionsMenu<String>(grouped = true, multiSelect = true, baseClass = "ml-sm".util()) {
+                optionsMenu<String>(grouped = true, baseClass = "ml-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     iconToggle {
                         icon("sort-amount-down".fas())
@@ -228,7 +232,7 @@ object OptionsMenuComponent {
                     textToggle(plain = true) {
                         text.keyups.map { currentValue(it) }.asText()
                     }
-                    store.update(items())
+                    items(store)
                     registerEvents(this, "Plain")
                 }
 
@@ -406,11 +410,15 @@ object OptionsMenuCode {
             }
         }
 
-        fun items(): List<Entry<String>> = items {
-            item("Option 1") { selected = true }
-            item("Option 2")
-            item("Option 3")
-        }
+        fun items(store: OptionsMenuStore<String>) {
+            with (store) {
+                items {
+                    item("Option 1") { selected = true }
+                    item("Option 2")
+                    item("Option 3")
+                }
+            } 
+        }  
 
         div(baseClass = classes {
             +"flex".layout()
@@ -434,7 +442,7 @@ object OptionsMenuCode {
                 text.keyups.map { currentValue(it) }.asText()
             }
             registerEvents(this, "Text")
-            store.update(items())
+            items(store)
         }
         optionsMenu<String>(grouped = true, multiSelect = true, baseClass = "ml-sm".util()) {
             disabled(enabled.input.changes.states().map { !it })
@@ -464,7 +472,7 @@ object OptionsMenuCode {
             textToggle(plain = true) {
                 text.keyups.map { currentValue(it) }.asText()
             }
-            store.update(items())
+            items(store)
             registerEvents(this, "Plain")
         }
 

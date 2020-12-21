@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
 import org.patternfly.ButtonVariation.primary
 import org.patternfly.Dropdown
-import org.patternfly.Entry
+import org.patternfly.DropdownStore
 import org.patternfly.Notification
 import org.patternfly.Switch
 import org.patternfly.TriState
@@ -267,13 +267,17 @@ object DropdownComponent {
                     }
                 }
 
-                fun items(): List<Entry<String>> = items {
-                    item("Action")
-                    item("Disabled Action") {
-                        disabled = true
+                fun items(store: DropdownStore<String>) {
+                    with(store) {
+                        items {
+                            item("Action")
+                            item("Disabled Action") {
+                                disabled = true
+                            }
+                            separator()
+                            item("Separated Action")
+                        }
                     }
-                    separator()
-                    item("Separated Action")
                 }
 
                 div(baseClass = classes {
@@ -298,19 +302,19 @@ object DropdownComponent {
                         text.keyups.map { currentValue(it) }.asText()
                     }
                     registerEvents(this, "Text toggle")
-                    store.update(items())
+                    items(store)
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     kebabToggle()
                     registerEvents(this, "Kebab toggle")
-                    store.update(items())
+                    items(store)
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     iconToggle { icon("cog".fas()) }
                     registerEvents(this, "Icon toggle")
-                    store.update(items())
+                    items(store)
                 }
                 br {}
                 dropdown<String>(baseClass = "mt-sm".util()) {
@@ -347,7 +351,7 @@ object DropdownComponent {
                         text.keyups.map { currentValue(it) }.asText()
                     } handledBy Notification.info("Action toggle (text): Clicked")
                     registerEvents(this, "Action toggle (text)")
-                    store.update(items())
+                    items(store)
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
@@ -355,7 +359,7 @@ object DropdownComponent {
                         icon("cog".fas())
                     } handledBy Notification.info("Action toggle (icon): Clicked")
                     registerEvents(this, "Action toggle (icon)")
-                    store.update(items())
+                    items(store)
                 }
 
                 MainScope().launch {
@@ -640,13 +644,17 @@ object DropdownCode {
             }
         }
 
-        fun items(): List<Entry<String>> = items {
-            item("Action")
-            item("Disabled Action") {
-                disabled = true
+        fun items(store: DropdownStore<String>) {
+            with(store) {
+                items {
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled = true
+                    }
+                    separator()
+                    item("Separated Action")
+                }
             }
-            separator()
-            item("Separated Action")
         }
 
         div(baseClass = classes {
@@ -671,19 +679,19 @@ object DropdownCode {
                 text.keyups.map { currentValue(it) }.asText()
             }
             registerEvents(this, "Text toggle")
-            store.update(items())
+            items(store)
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
             disabled(enabled.input.changes.states().map { !it })
             kebabToggle()
             registerEvents(this, "Kebab toggle")
-            store.update(items())
+            items(store)
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
             disabled(enabled.input.changes.states().map { !it })
             iconToggle { icon("cog".fas()) }
             registerEvents(this, "Icon toggle")
-            store.update(items())
+            items(store)
         }
         br {}
         dropdown<String>(baseClass = "mt-sm".util()) {
@@ -720,7 +728,7 @@ object DropdownCode {
                 text.keyups.map { currentValue(it) }.asText()
             } handledBy Notification.info("Action toggle (text): Clicked")
             registerEvents(this, "Action toggle (text)")
-            store.update(items())
+            items(store)
         }
         dropdown<String>(baseClass = "ml-sm".util()) {
             disabled(enabled.input.changes.states().map { !it })
@@ -728,7 +736,7 @@ object DropdownCode {
                 icon("cog".fas())
             } handledBy Notification.info("Action toggle (icon): Clicked")
             registerEvents(this, "Action toggle (icon)")
-            store.update(items())
+            items(store)
         }
 
         MainScope().launch {
