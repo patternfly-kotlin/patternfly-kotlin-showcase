@@ -23,14 +23,6 @@ import org.patternfly.showcase.component.components
 import org.patternfly.sidebarBody
 import org.patternfly.verticalNavigation
 
-val CODE_STYLE = """
-    padding: 16px;
-    overflow: auto;
-    line-height: 1.45;
-    background-color: #f3f3f3;
-    border-radius: 6px;
-""".trimMargin()
-
 class Skeleton(private val placeManager: PlaceManager) {
 
     val content: RenderContext.() -> Page = {

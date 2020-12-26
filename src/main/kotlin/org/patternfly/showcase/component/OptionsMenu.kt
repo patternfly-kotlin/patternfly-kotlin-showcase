@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
+import org.patternfly.ItemSelection.MULTIPLE
+import org.patternfly.ItemSelection.SINGLE
+import org.patternfly.ItemSelection.SINGLE_PER_GROUP
 import org.patternfly.Notification
 import org.patternfly.NotificationStore
 import org.patternfly.OptionsMenu
@@ -110,7 +113,7 @@ object OptionsMenuComponent {
                     }
                 }
             }
-            snippet("Multiple options", OptionsMenuCode.MULTIPLE_OPTIONS) {
+            snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
                 optionsMenu<String>(grouped = true) {
                     textToggle { +"Sort by" }
                     groups {
@@ -128,23 +131,61 @@ object OptionsMenuComponent {
                     }
                 }
             }
-            snippet("Grouped items with titles", OptionsMenuCode.GROUPED) {
-                optionsMenu<String>(grouped = true) {
-                    textToggle { +"Options" }
+            snippet("Multiselect", OptionsMenuCode.MULTIPLE_OPTIONS) {
+                optionsMenu<String>(SINGLE, grouped = true, baseClass = "mr-md".util()) {
+                    textToggle { +"Single select" }
                     groups {
                         group {
-                            item("Option 1") { selected = true }
-                            item("Option 2")
+                            item("Item 1.1")
+                            item("Item 1.2")
+                            item("Item 1.3")
                         }
                         separator()
-                        group("Group 1") {
-                            item("Option 1")
-                            item("Option 2")
+                        group("Second group") {
+                            item("Item 2.1")
+                            item("Item 2.2")
                         }
                         separator()
-                        group("Group 2") {
-                            item("Option 1")
-                            item("Option 2")
+                        group("Third group") {
+                            item("Item 3")
+                        }
+                    }
+                }
+                optionsMenu<String>(SINGLE_PER_GROUP, grouped = true, baseClass = "mr-md".util()) {
+                    textToggle { +"Single per group" }
+                    groups {
+                        group {
+                            item("Item 1.1")
+                            item("Item 1.2")
+                            item("Item 1.3")
+                        }
+                        separator()
+                        group("Second group") {
+                            item("Item 2.1")
+                            item("Item 2.2")
+                        }
+                        separator()
+                        group("Third group") {
+                            item("Item 3")
+                        }
+                    }
+                }
+                optionsMenu<String>(MULTIPLE, grouped = true) {
+                    textToggle { +"Multi select" }
+                    groups {
+                        group {
+                            item("Item 1.1")
+                            item("Item 1.2")
+                            item("Item 1.3")
+                        }
+                        separator()
+                        group("Second group") {
+                            item("Item 2.1")
+                            item("Item 2.2")
+                        }
+                        separator()
+                        group("Third group") {
+                            item("Item 3")
                         }
                     }
                 }
@@ -171,7 +212,7 @@ object OptionsMenuComponent {
                 }
 
                 fun items(store: OptionsMenuStore<String>) {
-                    with (store) {
+                    with(store) {
                         items {
                             item("Option 1") { selected = true }
                             item("Option 2")
@@ -196,38 +237,42 @@ object OptionsMenuComponent {
                         input.checked(true)
                     }
                 }
-                optionsMenu<String>(baseClass = "mt-sm".util()) {
+                optionsMenu<String>(itemSelection = SINGLE, baseClass = "mt-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     textToggle {
                         text.keyups.map { currentValue(it) }.asText()
                     }
-                    registerEvents(this, "Text")
                     items(store)
+                    registerEvents(this, "Text")
                 }
-                optionsMenu<String>(grouped = true, baseClass = "ml-sm".util()) {
+                optionsMenu<String>(
+                    itemSelection = SINGLE_PER_GROUP,
+                    grouped = true,
+                    baseClass = "ml-sm".util()
+                ) {
                     disabled(enabled.input.changes.states().map { !it })
                     iconToggle {
                         icon("sort-amount-down".fas())
                     }
-                    registerEvents(this, "Icon")
                     groups {
                         group {
-                            item("Option 1") { selected = true }
-                            item("Option 2")
-                        }
-                        separator()
-                        group("Group 1") {
-                            item("Option 1")
-                            item("Option 2")
+                            item("Option 1.1") { selected = true }
+                            item("Option 1.2")
                         }
                         separator()
                         group("Group 2") {
-                            item("Option 1")
-                            item("Option 2")
+                            item("Option 2.1")
+                            item("Option 2.2")
+                        }
+                        separator()
+                        group("Group 3") {
+                            item("Option 3.1")
+                            item("Option 3.2")
                         }
                     }
+                    registerEvents(this, "Icon")
                 }
-                optionsMenu<String>(baseClass = "ml-sm".util()) {
+                optionsMenu<String>(itemSelection = MULTIPLE, baseClass = "ml-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     textToggle(plain = true) {
                         text.keyups.map { currentValue(it) }.asText()
@@ -339,9 +384,9 @@ object OptionsMenuCode {
 """
 
     //language=kotlin
-    const val MULTIPLE_OPTIONS: String = """fun main() {
+    const val GROUPED: String = """fun main() {
     render {
-        optionsMenu<String>(grouped = true, multiSelect = true) {
+        optionsMenu<String>(grouped = true) {
             textToggle { +"Sort by" }
             groups {
                 group {
@@ -362,24 +407,62 @@ object OptionsMenuCode {
 """
 
     //language=kotlin
-    const val GROUPED: String = """fun main() {
+    const val MULTIPLE_OPTIONS: String = """fun main() {
     render {
-        optionsMenu<String>(grouped = true, multiSelect = true) {
-            textToggle { +"Options" }
+        optionsMenu<String>(SINGLE, grouped = true, baseClass = "mr-md".util()) {
+            textToggle { +"Single select" }
             groups {
                 group {
-                    item("Option 1") { selected = true }
-                    item("Option 2")
+                    item("Item 1.1")
+                    item("Item 1.2")
+                    item("Item 1.3")
                 }
                 separator()
-                group("Group 1") {
-                    item("Option 1")
-                    item("Option 2")
+                group("Second group") {
+                    item("Item 2.1")
+                    item("Item 2.2")
                 }
                 separator()
-                group("Group 2") {
-                    item("Option 1")
-                    item("Option 2")
+                group("Third group") {
+                    item("Item 3")
+                }
+            }
+        }
+        optionsMenu<String>(SINGLE_PER_GROUP, grouped = true, baseClass = "mr-md".util()) {
+            textToggle { +"Single per group" }
+            groups {
+                group {
+                    item("Item 1.1")
+                    item("Item 1.2")
+                    item("Item 1.3")
+                }
+                separator()
+                group("Second group") {
+                    item("Item 2.1")
+                    item("Item 2.2")
+                }
+                separator()
+                group("Third group") {
+                    item("Item 3")
+                }
+            }
+        }
+        optionsMenu<String>(MULTIPLE, grouped = true) {
+            textToggle { +"Multi select" }
+            groups {
+                group {
+                    item("Item 1.1")
+                    item("Item 1.2")
+                    item("Item 1.3")
+                }
+                separator()
+                group("Second group") {
+                    item("Item 2.1")
+                    item("Item 2.2")
+                }
+                separator()
+                group("Third group") {
+                    item("Item 3")
                 }
             }
         }
@@ -390,6 +473,100 @@ object OptionsMenuCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
+        lateinit var text: Input
+        lateinit var enabled: Switch
+
+        fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+
+        fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
+            with(optionsMenu) {
+                store.selection.unwrap()
+                    .drop(1)
+                    .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
+                    .handledBy(NotificationStore.add)
+                ces.collapsed
+                    .map { Notification(Severity.INFO, "${'$'}name: Options menu collapsed") }
+                    .handledBy(NotificationStore.add)
+                ces.expanded
+                    .map { Notification(Severity.INFO, "${'$'}name: Options menu expanded") }
+                    .handledBy(NotificationStore.add)
+            }
+        }
+
+        fun items(store: OptionsMenuStore<String>) {
+            with(store) {
+                items {
+                    item("Option 1") { selected = true }
+                    item("Option 2")
+                    item("Option 3")
+                }
+            }
+        }
+
+        div(baseClass = classes {
+            +"flex".layout()
+            +"align-items-center".modifier()
+            +"mb-sm".util()
+        }) {
+            text = input(baseClass = classes("form-control".component(), "w-50".util())) {
+                type("text")
+                value("Options")
+                placeholder("Options menu text")
+            }
+            enabled = switch("ml-md".util()) {
+                label("Enabled")
+                labelOff("Disabled")
+                input.checked(true)
+            }
+        }
+        optionsMenu<String>(itemSelection = SINGLE, baseClass = "mt-sm".util()) {
+            disabled(enabled.input.changes.states().map { !it })
+            textToggle {
+                text.keyups.map { currentValue(it) }.asText()
+            }
+            items(store)
+            registerEvents(this, "Text")
+        }
+        optionsMenu<String>(
+            itemSelection = SINGLE_PER_GROUP,
+            grouped = true,
+            baseClass = "ml-sm".util()
+        ) {
+            disabled(enabled.input.changes.states().map { !it })
+            iconToggle {
+                icon("sort-amount-down".fas())
+            }
+            groups {
+                group {
+                    item("Option 1.1") { selected = true }
+                    item("Option 1.2")
+                }
+                separator()
+                group("Group 2") {
+                    item("Option 2.1")
+                    item("Option 2.2")
+                }
+                separator()
+                group("Group 3") {
+                    item("Option 3.1")
+                    item("Option 3.2")
+                }
+            }
+            registerEvents(this, "Icon")
+        }
+        optionsMenu<String>(itemSelection = MULTIPLE, baseClass = "ml-sm".util()) {
+            disabled(enabled.input.changes.states().map { !it })
+            textToggle(plain = true) {
+                text.keyups.map { currentValue(it) }.asText()
+            }
+            items(store)
+            registerEvents(this, "Plain")
+        }
+
+        MainScope().launch {
+            delay(EVENT_DELAY)
+            text.domNode.dispatchEvent(Event(Events.keyup.name))
+        }
         lateinit var text: Input
         lateinit var enabled: Switch
 
