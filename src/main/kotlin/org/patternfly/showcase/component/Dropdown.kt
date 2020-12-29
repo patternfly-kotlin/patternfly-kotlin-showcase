@@ -8,7 +8,6 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
@@ -260,7 +259,7 @@ object DropdownComponent {
                         store.selects.unwrap() handledBy Notification.add {
                             info("$name: Clicked on $it")
                         }
-                        ces.data.drop(1) handledBy Notification.add { expanded ->
+                        expanded.expanded handledBy Notification.add { expanded ->
                             info("$name: Expanded state: $expanded.")
                         }
                     }
@@ -637,7 +636,7 @@ object DropdownCode {
                 store.selects.unwrap() handledBy Notification.add {
                     info("${'$'}name: Clicked on ${'$'}it")
                 }
-                ces.data.drop(1) handledBy Notification.add { expanded ->
+                expanded.expanded handledBy Notification.add { expanded ->
                     info("${'$'}name: Expanded state: ${'$'}expanded.")
                 }
             }

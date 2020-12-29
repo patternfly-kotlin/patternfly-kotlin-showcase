@@ -22,12 +22,7 @@ class HomeView : View {
                         +"PatternFly Fritz2"
                         href("https://github.com/patternfly-kotlin/patternfly-fritz2")
                     }
-                    +" is a pure "
-                    a {
-                        +"Kotlin / JS"
-                        href("https://kotl.in/js")
-                    }
-                    +" implementation of "
+                    +" is is a 💯 Kotlin implementation of "
                     a {
                         +"PatternFly"
                         href("https://www.patternfly.org/")
@@ -36,6 +31,11 @@ class HomeView : View {
                     a {
                         +"fritz2"
                         href("https://www.fritz2.dev/")
+                    }
+                    +" targeting "
+                    a {
+                        +"Kotlin / JS"
+                        href("https://kotl.in/js")
                     }
                     +"."
                 }
@@ -50,7 +50,12 @@ class HomeView : View {
                         +"handlers"
                         href("https://api.fritz2.dev/core/core/dev.fritz2.binding/-handler/index.html")
                     }
-                    +" and other elements from the fritz2 API."
+                    +" and other elements from the "
+                    a {
+                        +"fritz2 API"
+                        href("https://api.fritz2.dev/core/core/index.html")
+                    }
+                    +"."
                 }
                 p {
                     +"To get a quick overview what this is all about go to the "

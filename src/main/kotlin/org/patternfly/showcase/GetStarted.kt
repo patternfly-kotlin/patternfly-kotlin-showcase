@@ -19,9 +19,9 @@ class GetStartedView : View {
             div(baseClass = "content".component()) {
                 title { +"Get Started" }
                 p {
-                    +"PatternFly Fritz2 is available in Bintray. To use it in your Kotlin/JS project add its dependency to your "
+                    +"To use PatternFly Fritz2 add its dependency to your "
                     code { +"gradle.build.kts" }
-                    +" file:"
+                    +" file. All PatternFly components are implemented in Kotlin only. You won't need any additional external JS libraries."
                 }
                 p {
                     pre {
@@ -32,9 +32,7 @@ class GetStartedView : View {
                                 }
         
                                 dependencies {
-                                    implementation("org.jetbrains:kotlin-extensions:<version>")
                                     implementation("org.patternfly:patternfly-fritz2:<version>")
-                                    implementation(npm("@patternfly/patternfly", "4"))
                                 }
                             """.trimIndent()
                             highlightBlock(domNode)

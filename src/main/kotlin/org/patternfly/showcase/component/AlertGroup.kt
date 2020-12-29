@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariation.secondary
 import org.patternfly.Notification
 import org.patternfly.NotificationStore
-import org.patternfly.Severity
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO

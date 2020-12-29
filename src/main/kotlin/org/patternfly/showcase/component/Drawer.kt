@@ -34,7 +34,7 @@ object DrawerComponent {
             snippet("Basic", DrawerCode.BASIC) {
                 val button = pushButton(primary) { +"Toggle" }
                 drawer(baseClass = "mt-md".util()) {
-                    button.clicks handledBy ces.toggle
+                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
                     }
@@ -56,7 +56,7 @@ object DrawerComponent {
             snippet("Left", DrawerCode.LEFT) {
                 val button = pushButton(primary) { +"Toggle" }
                 drawer(baseClass = classes("panel-left".modifier(), "mt-md".util())) {
-                    button.clicks handledBy ces.toggle
+                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
                     }
@@ -78,7 +78,7 @@ object DrawerComponent {
             snippet("Inline", DrawerCode.INLINE) {
                 val button = pushButton(primary) { +"Toggle" }
                 drawer(baseClass = classes("inline".modifier(), "mt-md".util())) {
-                    button.clicks handledBy ces.toggle
+                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
                     }
@@ -100,7 +100,7 @@ object DrawerComponent {
             snippet("Inline left", DrawerCode.INLINE_LEFT) {
                 val button = pushButton(primary) { +"Toggle" }
                 drawer(classes("inline".modifier(), "panel-left".modifier(), "mt-md".util())) {
-                    button.clicks handledBy ces.toggle
+                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
                     }
@@ -122,7 +122,7 @@ object DrawerComponent {
             snippet("Additional section above drawer content", DrawerCode.SECTION) {
                 val button = pushButton(primary) { +"Toggle" }
                 drawer(baseClass = "mt-md".util()) {
-                    button.clicks handledBy ces.toggle
+                    button.clicks handledBy expanded.toggle
                     drawerSection {
                         title { +"Title" }
                         p { +"${LOREM_IPSUM.take(15)}..." }
@@ -148,7 +148,7 @@ object DrawerComponent {
             }
             snippet("Static", DrawerCode.STATIC) {
                 drawer("static".modifier()) {
-                    ces.expand(Unit)
+                    expanded.expand(Unit)
                     drawerContent {
                         drawerBody { +LOREM_IPSUM }
                     }
@@ -175,7 +175,7 @@ object DrawerCode {
     render {
         val button = pushButton(primary) { +"Toggle" }
         drawer(baseClass = "mt-md".util()) {
-            button.clicks handledBy ces.toggle
+            button.clicks handledBy expanded.toggle
             drawerContent {
                 drawerBody { +LOREM_IPSUM }
             }
@@ -202,7 +202,7 @@ object DrawerCode {
     render {
         val button = pushButton(primary) { +"Toggle" }
         drawer(baseClass = classes("panel-left".modifier(), "mt-md".util())) {
-            button.clicks handledBy ces.toggle
+            button.clicks handledBy expanded.toggle
             drawerContent {
                 drawerBody { +LOREM_IPSUM }
             }
@@ -229,7 +229,7 @@ object DrawerCode {
     render {
         val button = pushButton(primary) { +"Toggle" }
         drawer(baseClass = classes("inline".modifier(), "mt-md".util())) {
-            button.clicks handledBy ces.toggle
+            button.clicks handledBy expanded.toggle
             drawerContent {
                 drawerBody { +LOREM_IPSUM }
             }
@@ -256,7 +256,7 @@ object DrawerCode {
     render {
         val button = pushButton(primary) { +"Toggle" }
         drawer(classes("inline".modifier(), "panel-left".modifier(), "mt-md".util())) {
-            button.clicks handledBy ces.toggle
+            button.clicks handledBy expanded.toggle
             drawerContent {
                 drawerBody { +LOREM_IPSUM }
             }
@@ -283,7 +283,7 @@ object DrawerCode {
     render {
         val button = pushButton(primary) { +"Toggle" }
         drawer(baseClass = "mt-md".util()) {
-            button.clicks handledBy ces.toggle
+            button.clicks handledBy expanded.toggle
             drawerSection {
                 title { +"Title" }
                 p { +"${'$'}{LOREM_IPSUM.take(15)}..." }
@@ -314,6 +314,7 @@ object DrawerCode {
     const val STATIC: String = """fun main() {
     render {
         drawer("static".modifier()) {
+            expanded.expand(Unit)
             drawerContent {
                 drawerBody { +LOREM_IPSUM }
             }

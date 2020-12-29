@@ -28,7 +28,7 @@ class GetInTouchView : View {
                         +"issues"
                         href("https://github.com/patternfly-kotlin/patternfly-fritz2/issues")
                     }
-                    +" to file bugs or open feature requests."
+                    +" to report bugs or request new features."
                 }
                 p {
                     +"Of course, you're very welcome to "

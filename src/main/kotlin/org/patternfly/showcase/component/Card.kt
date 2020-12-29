@@ -234,7 +234,7 @@ object CardComponent {
             }
             snippet("Expandable", CardCode.EXPANDABLE) {
                 card {
-                    ces.data.drop(1) handledBy Notification.add { expanded ->
+                    expanded.expanded handledBy Notification.add { expanded ->
                         info("Expanded state of card: $expanded.")
                     }
                     cardHeader {
@@ -552,7 +552,7 @@ object CardCode {
     const val EXPANDABLE: String = """fun main() {
     render {
         card {
-            ces.data handledBy Notification.add { expanded ->
+            expanded.expanded handledBy Notification.add { expanded ->
                 info("Expanded state of card: ${'$'}expanded.")
             }
             cardHeader {

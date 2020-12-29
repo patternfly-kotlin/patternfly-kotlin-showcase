@@ -201,10 +201,10 @@ object OptionsMenuComponent {
                             .drop(1)
                             .map { Notification(Severity.INFO, "$name: Selection $it") }
                             .handledBy(NotificationStore.add)
-                        ces.collapsed
+                        expanded.collapsed
                             .map { Notification(Severity.INFO, "$name: Options menu collapsed") }
                             .handledBy(NotificationStore.add)
-                        ces.expanded
+                        expanded.expanded
                             .map { Notification(Severity.INFO, "$name: Options menu expanded") }
                             .handledBy(NotificationStore.add)
                     }
@@ -483,10 +483,10 @@ object OptionsMenuCode {
                     .drop(1)
                     .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
                     .handledBy(NotificationStore.add)
-                ces.collapsed
+                expanded.collapsed
                     .map { Notification(Severity.INFO, "${'$'}name: Options menu collapsed") }
                     .handledBy(NotificationStore.add)
-                ces.expanded
+                expanded.expanded
                     .map { Notification(Severity.INFO, "${'$'}name: Options menu expanded") }
                     .handledBy(NotificationStore.add)
             }
@@ -554,96 +554,6 @@ object OptionsMenuCode {
             registerEvents(this, "Icon")
         }
         optionsMenu<String>(itemSelection = MULTIPLE, baseClass = "ml-sm".util()) {
-            disabled(enabled.input.changes.states().map { !it })
-            textToggle(plain = true) {
-                text.keyups.map { currentValue(it) }.asText()
-            }
-            items(store)
-            registerEvents(this, "Plain")
-        }
-
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            text.domNode.dispatchEvent(Event(Events.keyup.name))
-        }
-        lateinit var text: Input
-        lateinit var enabled: Switch
-
-        fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
-
-        fun registerEvents(optionsMenu: OptionsMenu<String>, name: String) {
-            with(optionsMenu) {
-                store.selection.unwrap()
-                    .drop(1)
-                    .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
-                    .handledBy(NotificationStore.add)
-                ces.collapsed
-                    .map { Notification(Severity.INFO, "${'$'}name: Options menu collapsed") }
-                    .handledBy(NotificationStore.add)
-                ces.expanded
-                    .map { Notification(Severity.INFO, "${'$'}name: Options menu expanded") }
-                    .handledBy(NotificationStore.add)
-            }
-        }
-
-        fun items(store: OptionsMenuStore<String>) {
-            with (store) {
-                items {
-                    item("Option 1") { selected = true }
-                    item("Option 2")
-                    item("Option 3")
-                }
-            } 
-        }  
-
-        div(baseClass = classes {
-            +"flex".layout()
-            +"align-items-center".modifier()
-            +"mb-sm".util()
-        }) {
-            text = input(baseClass = classes("form-control".component(), "w-50".util())) {
-                type("text")
-                value("Options")
-                placeholder("Options menu text")
-            }
-            enabled = switch("ml-md".util()) {
-                label("Enabled")
-                labelOff("Disabled")
-                input.checked(true)
-            }
-        }
-        optionsMenu<String>(baseClass = "mt-sm".util()) {
-            disabled(enabled.input.changes.states().map { !it })
-            textToggle {
-                text.keyups.map { currentValue(it) }.asText()
-            }
-            registerEvents(this, "Text")
-            items(store)
-        }
-        optionsMenu<String>(grouped = true, multiSelect = true, baseClass = "ml-sm".util()) {
-            disabled(enabled.input.changes.states().map { !it })
-            iconToggle {
-                icon("sort-amount-down".fas())
-            }
-            registerEvents(this, "Icon")
-            groups {
-                group {
-                    item("Option 1") { selected = true }
-                    item("Option 2")
-                }
-                separator()
-                group("Group 1") {
-                    item("Option 1")
-                    item("Option 2")
-                }
-                separator()
-                group("Group 2") {
-                    item("Option 1")
-                    item("Option 2")
-                }
-            }
-        }
-        optionsMenu<String>(baseClass = "ml-sm".util()) {
             disabled(enabled.input.changes.states().map { !it })
             textToggle(plain = true) {
                 text.keyups.map { currentValue(it) }.asText()

@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.map
 import org.patternfly.ButtonVariation.plain
 import org.patternfly.PageSection
 import org.patternfly.Size
-import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.dom.By
 import org.patternfly.dom.Id
