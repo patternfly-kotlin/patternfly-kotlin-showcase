@@ -17,6 +17,7 @@ val components = listOf(
     Component("chip", "Chip", ChipComponent.content),
     Component("chip-group", "Chip group", ChipGroupComponent.content),
     Component("data-list", "Data list", DataListComponent.content),
+    Component("divider", "Divider", DividerComponent.content),
     Component("drawer", "Drawer", DrawerComponent.content),
     Component("dropdown", "Dropdown", DropdownComponent.content),
     Component("options-menu", "Options menu", OptionsMenuComponent.content),

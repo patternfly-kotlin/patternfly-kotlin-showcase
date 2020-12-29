@@ -1,6 +1,5 @@
 package org.patternfly.showcase
 
-import dev.fritz2.mvp.PlaceRequest
 import dev.fritz2.mvp.Presenter
 import org.patternfly.showcase.component.ComponentPresenter
 import org.patternfly.showcase.demo.UserDemoPresenter
@@ -18,5 +17,3 @@ fun registerPresenters() {
     Presenter.register(HOME, ::HomePresenter)
     Presenter.register(USER_DEMO, ::UserDemoPresenter)
 }
-
-val sidebarToken: (PlaceRequest) -> Boolean = { it.token == COMPONENT || it.token in setOf(USER_DEMO) }

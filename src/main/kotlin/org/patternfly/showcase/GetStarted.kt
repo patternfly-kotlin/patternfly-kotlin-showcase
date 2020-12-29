@@ -7,6 +7,7 @@ import hljs.highlightBlock
 import org.patternfly.component
 import org.patternfly.modifier
 import org.patternfly.pageSection
+import org.patternfly.textContent
 import org.patternfly.title
 
 class GetStartedPresenter : Presenter<GetStartedView> {
@@ -16,7 +17,7 @@ class GetStartedPresenter : Presenter<GetStartedView> {
 class GetStartedView : View {
     override val content: ViewContent = {
         pageSection(baseClass = "light".modifier()) {
-            div(baseClass = "content".component()) {
+            textContent {
                 title { +"Get Started" }
                 p {
                     +"To use PatternFly Fritz2 add its dependency to your "

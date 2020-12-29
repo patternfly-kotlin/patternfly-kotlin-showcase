@@ -6,6 +6,7 @@ import dev.fritz2.mvp.ViewContent
 import org.patternfly.component
 import org.patternfly.modifier
 import org.patternfly.pageSection
+import org.patternfly.textContent
 import org.patternfly.title
 
 class GetInTouchPresenter : Presenter<GetInTouchView> {
@@ -15,7 +16,7 @@ class GetInTouchPresenter : Presenter<GetInTouchView> {
 class GetInTouchView : View {
     override val content: ViewContent = {
         pageSection(baseClass = "light".modifier()) {
-            div(baseClass = "content".component()) {
+            textContent {
                 title { +"Get in Touch" }
                 p {
                     +"PatternFly Fritz2 is still under development. The API might change and things might not work as expected. Please give it a try and share your feedback. Join the chat at "

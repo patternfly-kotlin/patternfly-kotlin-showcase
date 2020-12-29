@@ -4,13 +4,11 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.mvp.PlaceManager
 import dev.fritz2.mvp.managedBy
 import dev.fritz2.mvp.placeRequest
-import kotlinx.coroutines.flow.map
 import org.patternfly.AlertGroup
 import org.patternfly.Page
 import org.patternfly.brand
 import org.patternfly.expandableGroup
 import org.patternfly.headerTools
-import org.patternfly.horizontalNavigation
 import org.patternfly.layout
 import org.patternfly.navigationItem
 import org.patternfly.navigationItems
@@ -32,17 +30,6 @@ class Skeleton(private val placeManager: PlaceManager) {
                     home("#home")
                     img(src = "./header-logo.svg")
                 }
-                horizontalNavigation(placeManager.router) {
-                    navigationItems {
-                        navigationItem(placeRequest(GET_STARTED), "Get Started")
-                        navigationItem(
-                            item = placeRequest(COMPONENT, "id" to "alert"),
-                            text = "Documentation",
-                            selected = sidebarToken
-                        )
-                        navigationItem(placeRequest(GET_IN_TOUCH), "Get in Touch")
-                    }
-                }
                 headerTools {
                     div("toolbar".layout()) {
                         div("toolbar".layout("group")) {
@@ -54,10 +41,11 @@ class Skeleton(private val placeManager: PlaceManager) {
                 }
             }
             pageSidebar {
-                visible(placeManager.placeRequests.map { sidebarToken(it) })
                 sidebarBody {
                     verticalNavigation(placeManager.router) {
                         navigationItems {
+                            navigationItem(placeRequest(GET_STARTED), "Get Started")
+                            navigationItem(placeRequest(GET_IN_TOUCH), "Get in Touch")
                             expandableGroup("Components") {
                                 components.map {
                                     navigationItem(placeRequest(COMPONENT, "id" to it.id), it.name)
