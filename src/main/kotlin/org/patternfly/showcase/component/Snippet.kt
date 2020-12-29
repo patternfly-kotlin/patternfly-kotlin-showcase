@@ -9,6 +9,7 @@ import kotlinx.browser.window
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.map
 import org.patternfly.ButtonVariation.plain
+import org.patternfly.Level.H3
 import org.patternfly.PageSection
 import org.patternfly.Size
 import org.patternfly.component
@@ -63,7 +64,7 @@ class Snippet(header: String, code: String, job: Job, val content: RenderContext
     private val copiedId = Id.unique("code")
 
     init {
-        title(level = 3, size = Size.LG, baseClass = "sc-snippet__title") { +header }
+        title(H3, baseClass = "sc-snippet__title") { +header }
         div("sc-snippet__content") {
             this@Snippet.content(this)
         }

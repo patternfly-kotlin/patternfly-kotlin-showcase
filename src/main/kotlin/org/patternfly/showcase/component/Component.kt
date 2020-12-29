@@ -23,6 +23,8 @@ val components = listOf(
     Component("pagination", "Pagination", PaginationComponent.content),
     Component("switch", "Switch", SwitchComponent.content),
     Component("tabs", "Tabs", TabsComponent.content),
+    Component("text", "Text", TextContentComponent.content),
+    Component("title", "Title", TitleComponent.content),
     Component("tree-view", "Tree view", TreeViewComponent.content),
 )
 
