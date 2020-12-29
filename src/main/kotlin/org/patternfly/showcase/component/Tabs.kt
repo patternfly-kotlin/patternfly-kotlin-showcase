@@ -29,8 +29,8 @@ object TabsComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Tabs",
-            key = "Tabs",
-            text = " are used to present a set on tabs for organizing content on a page."
+            text = "A tab component creates a set of tabs to organize content on a page.",
+            designGuidelines = "https://www.patternfly.org/v4/components/tabs/design-guidelines"
         )
         pageSection {
             snippet("Default", TabsCode.DEFAULT) {

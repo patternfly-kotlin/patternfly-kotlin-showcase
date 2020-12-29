@@ -20,9 +20,8 @@ object ChipGroupComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Chip group",
-            prefix = "A ",
-            key = "chip group",
-            text = " is used to represent an attribute that has been assigned one or more values. An OR relationship is implied between values in the group. Chip groups are useful to express complex filters to a data set, for example."
+            text = "A chip group represents an attribute that has been assigned one or more values.",
+            designGuidelines = "https://www.patternfly.org/v4/components/chip-group/design-guidelines"
         )
         pageSection(baseClass = "sc-component__chip-groups") {
             snippet("Inline", ChipGroupCode.INLINE) {

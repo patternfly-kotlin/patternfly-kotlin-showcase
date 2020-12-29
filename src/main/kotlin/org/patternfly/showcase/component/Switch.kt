@@ -10,9 +10,8 @@ object SwitchComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Switch",
-            prefix = "Use a ",
-            key = "switch",
-            text = " to toggle the state of a setting (between on and off). Switches and checkboxes can often be used interchangeably, but the switch provides a more explicit, visible representation on a setting."
+            text = "A switch toggles the state of a setting (between on and off).",
+            designGuidelines = "https://www.patternfly.org/v4/components/switch/design-guidelines"
         )
         pageSection {
             snippet("Basic", SwitchCode.BASIC) {

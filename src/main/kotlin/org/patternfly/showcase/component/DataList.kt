@@ -34,9 +34,8 @@ object DataListComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Data list",
-            prefix = "A ",
-            key = "data list",
-            text = " is used to display large data sets when you need a flexible layout or need to include interactive content like charts."
+            text = "A data list is used to display large data sets when you need a flexible layout or need to include interactive content like charts.",
+            designGuidelines = "https://www.patternfly.org/v4/components/data-list/design-guidelines"
         )
         pageSection {
             snippet("Basic", DataListCode.BASIC) {

@@ -19,10 +19,9 @@ import org.patternfly.treeView
 object TreeViewComponent {
     val content: RenderContext.() -> Unit = {
         intro(
-            title = "Tree",
-            prefix = "A ",
-            key = "tree",
-            text = " is a structure that displays data in a hierarchical view."
+            title = "Tree view",
+            text = "A tree view is a structure that displays data in a hierarchical view. ",
+            designGuidelines = "https://www.patternfly.org/v4/components/tree-view/design-guidelines"
         ) {
             p {
                 +"The demos here use the data class "

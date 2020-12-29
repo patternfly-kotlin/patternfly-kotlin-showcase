@@ -47,9 +47,8 @@ object OptionsMenuComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Options menu",
-            prefix = "An ",
-            key = "options menu",
-            text = " is similar to a dropdown, but provides a way to select among a set of optional settings rather than trigger an action."
+            text = "An options menu is similar to a dropdown, but provides a way to select among a set of optional settings rather than trigger an action.",
+            designGuidelines = "https://www.patternfly.org/v4/components/options-menu/design-guidelines"
         )
         pageSection {
             snippet("Basic", OptionsMenuCode.BASIC) {

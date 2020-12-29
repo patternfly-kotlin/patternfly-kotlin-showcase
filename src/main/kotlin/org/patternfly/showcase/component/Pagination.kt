@@ -25,9 +25,8 @@ object PaginationComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Pagination",
-            prefix = "The ",
-            key = "pagination",
-            text = " component is used to navigate pages in lists, tables, and other content views."
+            text = "A pagination component gives users more navigational capability on pages with content views.",
+            designGuidelines = "https://www.patternfly.org/v4/components/pagination/design-guidelines"
         )
         pageSection {
             snippet("Basic", PaginationCode.BASIC) {

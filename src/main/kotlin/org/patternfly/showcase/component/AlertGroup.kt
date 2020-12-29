@@ -26,9 +26,8 @@ object AlertGroupComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Alert group",
-            prefix = "An ",
-            key = "alert group",
-            text = " is used to stack and position alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts."
+            text = "An alert group stacks and positions alerts in a layer over the main content of a page. This component is mainly used for positioning toast alerts.",
+            designGuidelines = "https://www.patternfly.org/v4/components/alert-group/design-guidelines"
         )
         pageSection(baseClass = "sc-component__buttons") {
             snippet("Static alert group", AlertGroupCode.STATIC_ALERT_GROUP) {

@@ -8,8 +8,10 @@ import hljs.highlightBlock
 import kotlinx.browser.window
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.map
+import org.patternfly.ButtonVariation.plain
 import org.patternfly.PageSection
 import org.patternfly.Size
+import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.dom.By
 import org.patternfly.dom.Id
@@ -18,6 +20,7 @@ import org.patternfly.dom.plusAssign
 import org.patternfly.dom.querySelector
 import org.patternfly.fas
 import org.patternfly.icon
+import org.patternfly.linkButton
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.pushButton
@@ -28,18 +31,21 @@ import org.w3c.dom.HTMLElement
 
 fun RenderContext.intro(
     title: String,
-    prefix: String? = null,
-    key: String,
     text: String,
+    designGuidelines: String,
     content: RenderContext.() -> Unit = {}
-): PageSection = pageSection("pb-0".util()) {
+): PageSection = pageSection(baseClass = "pb-0".util()) {
+    div(baseClass = "float-right".util()) {
+        linkButton(plain, baseClass = "display-lg".modifier()) {
+            href(designGuidelines)
+            target("pf4")
+            icon("swatchbook".fas())
+            domNode.title = "Design guidelines"
+        }
+    }
     div(baseClass = "content".component()) {
         title(size = Size.XL_3, baseClass = "mb-md".util()) { +title }
-        p {
-            prefix?.let { +it }
-            strong { +key }
-            +text
-        }
+        p { +text }
         content(this)
     }
 }

@@ -27,9 +27,8 @@ object DrawerComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Drawer",
-            prefix = "The ",
-            key = "drawer",
-            text = " is a sliding panel that enters from the right edge of the viewport. It can be configured to either overlay content on a page or create a sidebar by pushing that content to the left."
+            text = "A drawer is a sliding panel that enters from the right edge of the viewport.",
+            designGuidelines = "https://www.patternfly.org/v4/components/drawer/design-guidelines"
         )
         pageSection {
             snippet("Basic", DrawerCode.BASIC) {

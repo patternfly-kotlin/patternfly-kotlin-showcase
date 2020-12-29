@@ -24,9 +24,8 @@ object BadgeComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Badge",
-            prefix = "A ",
-            key = "badge",
-            text = " is used to annotate other information like a label or an object name. Badges are typically used to reflect a count, e.g. number of object, number of events, number of unread, etc."
+            text = "A badge is used to annotate other information like a label or an object name.",
+            designGuidelines = "https://www.patternfly.org/v4/components/badge/design-guidelines"
         )
         pageSection(baseClass = "sc-component__badges") {
             snippet("Read", BadgeCode.READ) {

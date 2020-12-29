@@ -21,8 +21,8 @@ internal object AlertComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Alert",
-            key = "Alerts",
-            text = " are used to notify the user about a change in status or other event"
+            text = "An alert is used to notify the user about a change in status or other event without blocking other actions in an interface.",
+            designGuidelines = "https://www.patternfly.org/v4/components/alert/design-guidelines"
         )
         pageSection {
             snippet("Types", AlertCode.TYPES) {

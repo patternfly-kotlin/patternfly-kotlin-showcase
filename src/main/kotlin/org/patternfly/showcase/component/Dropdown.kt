@@ -48,9 +48,8 @@ object DropdownComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Dropdown",
-            prefix = "Use a ",
-            key = "dropdown",
-            text = " when you want to present a list of actions in a limited space."
+            text = "A dropdown presents a menu of actions or links in a constrained space that will trigger a process or navigate to a new location.",
+            designGuidelines = "https://www.patternfly.org/v4/components/dropdown/design-guidelines"
         )
         pageSection {
             snippet("Basic", DropdownCode.BASIC) {

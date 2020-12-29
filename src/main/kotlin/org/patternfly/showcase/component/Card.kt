@@ -10,9 +10,12 @@ import org.patternfly.card
 import org.patternfly.cardAction
 import org.patternfly.cardBody
 import org.patternfly.cardCheckbox
+import org.patternfly.cardExpandableContent
 import org.patternfly.cardFooter
 import org.patternfly.cardHeader
 import org.patternfly.cardTitle
+import org.patternfly.cardToggle
+import org.patternfly.divider
 import org.patternfly.dropdown
 import org.patternfly.item
 import org.patternfly.items
@@ -25,9 +28,8 @@ object CardComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Card",
-            prefix = "A ",
-            key = "card",
-            text = " is a flexible element for containing any kind of content. Cards are used on dashboards, in data displays (e.g. Card View), or for positioning content on a page."
+            text = "A card is a square or rectangular container that can contain any kind of content.",
+            designGuidelines = "https://www.patternfly.org/v4/components/card/design-guidelines"
         )
         pageSection {
             snippet("Basic", CardCode.BASIC) {
@@ -155,8 +157,8 @@ object CardComponent {
                 card {
                     domNode.style.minHeight = "30em"
                     cardTitle { +"Title" }
-                    cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-                    cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+                    cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
+                    cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
                     cardBody { +"Body" }
                     cardFooter { +"Footer" }
                 }
@@ -195,8 +197,8 @@ object CardComponent {
                                 }
                             }
                         }
+                        cardTitle { +"First card" }
                     }
-                    cardTitle { +"First card" }
                     cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
@@ -218,8 +220,8 @@ object CardComponent {
                         cardAction {
                             cardCheckbox()
                         }
+                        cardTitle { +"Third card" }
                     }
-                    cardTitle { +"Third card" }
                     cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
                 }
             }
@@ -227,6 +229,46 @@ object CardComponent {
                 card(baseClass = "flat".modifier()) {
                     cardTitle { +"Title" }
                     cardBody { +"Body" }
+                    cardFooter { +"Footer" }
+                }
+            }
+            snippet("Expandable", CardCode.EXPANDABLE) {
+                card {
+                    ces.data.drop(1) handledBy Notification.add { expanded ->
+                        info("Expanded state of card: $expanded.")
+                    }
+                    cardHeader {
+                        cardToggle()
+                        cardAction {
+                            dropdown<String>(align = Align.RIGHT) {
+                                kebabToggle()
+                                items {
+                                    item("Action")
+                                    item("Disabled Action") {
+                                        disabled = true
+                                    }
+                                    separator()
+                                    item("Separated Action")
+                                }
+                            }
+                            cardCheckbox()
+                        }
+                        cardTitle { +"Title" }
+                    }
+                    cardExpandableContent {
+                        cardBody { +"Body" }
+                        cardFooter { +"Footer" }
+                    }
+                }
+            }
+            snippet("Card with dividers between sections", CardCode.DIVIDERS) {
+                card(baseClass = "flat".modifier()) {
+                    cardTitle { +"Title" }
+                    divider()
+                    cardBody { +"Body" }
+                    divider()
+                    cardBody { +"Body" }
+                    divider()
                     cardFooter { +"Footer" }
                 }
             }
@@ -408,8 +450,8 @@ object CardCode {
         card {
             domNode.style.minHeight = "30em"
             cardTitle { +"Title" }
-            cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
-            cardBody("no-fill".modifier()) { +"Body pf-m-no-fill" }
+            cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
+            cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
             cardBody { +"Body" }
             cardFooter { +"Footer" }
         }
@@ -463,8 +505,8 @@ object CardCode {
                         }
                     }
                 }
+                cardTitle { +"First card" }
             }
-            cardTitle { +"First card" }
             cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
         br {}
@@ -483,11 +525,11 @@ object CardCode {
             }
 
             cardHeader {
-                actions {
+                cardAction {
                     cardCheckbox()
                 }
+                cardTitle { +"Third card" }
             }
-            cardTitle { +"Third card" }
             cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
         }
     }
@@ -500,6 +542,56 @@ object CardCode {
         card(baseClass = "flat".modifier()) {
             cardTitle { +"Title" }
             cardBody { +"Body" }
+            cardFooter { +"Footer" }
+        }
+    }
+}
+"""
+
+    //language=kotlin
+    const val EXPANDABLE: String = """fun main() {
+    render {
+        card {
+            ces.data handledBy Notification.add { expanded ->
+                info("Expanded state of card: ${'$'}expanded.")
+            }
+            cardHeader {
+                cardToggle()
+                cardAction {
+                    dropdown<String>(align = Align.RIGHT) {
+                        kebabToggle()
+                        items {
+                            item("Action")
+                            item("Disabled Action") {
+                                disabled = true
+                            }
+                            separator()
+                            item("Separated Action")
+                        }
+                    }
+                    cardCheckbox()
+                }
+                cardTitle { +"Title" }
+            }
+            cardExpandableContent {
+                cardBody { +"Body" }
+                cardFooter { +"Footer" }
+            }
+        }
+    }
+}
+"""
+
+    //language=kotlin
+    const val DIVIDERS: String = """fun main() {
+    render {
+        card(baseClass = "flat".modifier()) {
+            cardTitle { +"Title" }
+            divider()
+            cardBody { +"Body" }
+            divider()
+            cardBody { +"Body" }
+            divider()
             cardFooter { +"Footer" }
         }
     }

@@ -42,8 +42,8 @@ object ButtonComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Button",
-            key = "Buttons",
-            text = " communicate and trigger actions a user can take in an application or website"
+            text = "A button is a box area or text that communicates and triggers user actions when clicked or selected.",
+            designGuidelines = "https://www.patternfly.org/v4/components/button/design-guidelines"
         )
         pageSection(baseClass = "sc-component__buttons") {
             snippet("Variations", ButtonCode.VARIATIONS) {

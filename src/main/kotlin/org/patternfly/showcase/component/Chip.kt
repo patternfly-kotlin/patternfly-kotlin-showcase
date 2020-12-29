@@ -19,8 +19,8 @@ object ChipComponent {
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Chip",
-            key = "Chips",
-            text = " are used to communicate a value, a tag, or a set of attribute-value pairs within workflows that involve filtering or tagging a set of objects."
+            text = "A chip is used to communicate a value or a set of attribute-value pairs within workflows that involve filtering a set of objects.",
+            designGuidelines = "https://www.patternfly.org/v4/components/chip/design-guidelines"
         )
         pageSection(baseClass = "sc-component__chips") {
             snippet("Basic", ChipCode.BASIC) {
