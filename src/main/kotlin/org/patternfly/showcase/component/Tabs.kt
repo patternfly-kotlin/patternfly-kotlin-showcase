@@ -15,11 +15,12 @@ import org.patternfly.TabStore
 import org.patternfly.classes
 import org.patternfly.fas
 import org.patternfly.icon
+import org.patternfly.item
+import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.showcase.EVENT_DELAY
-import org.patternfly.tabItem
 import org.patternfly.tabs
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
@@ -35,50 +36,58 @@ object TabsComponent {
         pageSection {
             snippet("Default", TabsCode.DEFAULT) {
                 tabs<String> {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
+                    }
                 }
             }
             snippet("Box", TabsCode.BOX) {
                 tabs<String>(box = true) {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
+                    }
                 }
             }
             snippet("Box light", TabsCode.BOX_LIGHT) {
                 tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
-                    contentDisplay = {
+                    contentDisplay {
                         domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
                     }
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
+                    }
                 }
             }
             snippet("Overflow", TabsCode.OVERFLOW) {
                 tabs<String> {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
-                    tabItem("Tab item 7") { +"Tab content 7" }
-                    tabItem("Tab item 8") { +"Tab content 8" }
-                    tabItem("Tab item 9") { +"Tab content 9" }
-                    tabItem("Tab item 10") { +"Tab content 10" }
-                    tabItem("Tab item 11") { +"Tab content 11" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
+                        item("Tab item 7") { +"Tab content 7" }
+                        item("Tab item 8") { +"Tab content 8" }
+                        item("Tab item 9") { +"Tab content 9" }
+                        item("Tab item 10") { +"Tab content 10" }
+                        item("Tab item 11") { +"Tab content 11" }
+                    }
                 }
             }
             snippet("Inset", TabsCode.INSET) {
@@ -87,49 +96,59 @@ object TabsComponent {
                     +"inset-lg-on-lg".modifier()
                     +"inset-2xl-on-xl".modifier()
                 }) {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
+                    }
                 }
             }
             snippet("Filled", TabsCode.FILLED) {
                 tabs<String>(filled = true) {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                    }
                 }
             }
             snippet("Vertical", TabsCode.VERTICAL) {
                 tabs<String>(vertical = true) {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
+                    items {
+                    item("Users") { +"Users" }
+                    item("Containers") { +"Containers" }
+                    item("Database") { +"Database" }
+                    item("Server") { +"Server" }
+                    item("System") { +"System" }
+                    item("Network") { +"Network" }
+                    }
                 }
             }
             snippet("Vertical box", TabsCode.VERTICAL_BOX) {
                 tabs<String>(vertical = true, box = true) {
-                    tabItem("Users") { +"Users" }
-                    tabItem("Containers") { +"Containers" }
-                    tabItem("Database") { +"Database" }
-                    tabItem("Server") { +"Server" }
-                    tabItem("System") { +"System" }
-                    tabItem("Network") { +"Network" }
+                    items {
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
+                    }
                 }
             }
             snippet("Icons", TabsCode.ICONS) {
                 tabs<String> {
-                    tabItem("Users", icon = { icon("users".fas()) }) { +"Users" }
-                    tabItem("Containers", icon = { icon("box".fas()) }) { +"Containers" }
-                    tabItem("Database", icon = { icon("database".fas()) }) { +"Database" }
-                    tabItem("Server", icon = { icon("server".fas()) }) { +"Server" }
-                    tabItem("System", icon = { icon("laptop".fas()) }) { +"System" }
-                    tabItem("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
+                    items {
+                        item("Users", icon = { icon("users".fas()) }) { +"Users" }
+                        item("Containers", icon = { icon("box".fas()) }) { +"Containers" }
+                        item("Database", icon = { icon("database".fas()) }) { +"Database" }
+                        item("Server", icon = { icon("server".fas()) }) { +"Server" }
+                        item("System", icon = { icon("laptop".fas()) }) { +"System" }
+                        item("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
+                    }
                 }
             }
             snippet("Reactive", TabsCode.REACTIVE) {
@@ -157,8 +176,8 @@ object TabsComponent {
                     }
                 }
                 tabs(store) {
-                    itemDisplay = { +"Tab item $it" }
-                    contentDisplay = { +"Content $it" }
+                    tabDisplay { +"Tab item $it" }
+                    contentDisplay { +"Content $it" }
                 }
 
                 range.changes.valuesAsNumber()
@@ -183,12 +202,12 @@ object TabsCode {
     const val DEFAULT: String = """fun main() {
     render {
         tabs<String> {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
         }
     }
 }
@@ -198,12 +217,12 @@ object TabsCode {
     const val BOX: String = """fun main() {
     render {
         tabs<String>(box = true) {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
         }
     }
 }
@@ -216,12 +235,12 @@ object TabsCode {
             contentDisplay = {
                 domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
             }
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
         }
     }
 }
@@ -231,17 +250,17 @@ object TabsCode {
     const val OVERFLOW: String = """fun main() {
     render {
         tabs<String> {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
-            tabItem("Tab item 7") { +"Tab content 7" }
-            tabItem("Tab item 8") { +"Tab content 8" }
-            tabItem("Tab item 9") { +"Tab content 9" }
-            tabItem("Tab item 10") { +"Tab content 10" }
-            tabItem("Tab item 11") { +"Tab content 11" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
+            item("Tab item 7") { +"Tab content 7" }
+            item("Tab item 8") { +"Tab content 8" }
+            item("Tab item 9") { +"Tab content 9" }
+            item("Tab item 10") { +"Tab content 10" }
+            item("Tab item 11") { +"Tab content 11" }
         }
     }
 }
@@ -255,12 +274,12 @@ object TabsCode {
             +"inset-lg-on-lg".modifier()
             +"inset-2xl-on-xl".modifier()
         }) {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
         }
     }
 }
@@ -270,9 +289,9 @@ object TabsCode {
     const val FILLED: String = """fun main() {
     render {
         tabs<String>(filled = true) {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
         }
     }
 }
@@ -282,12 +301,12 @@ object TabsCode {
     const val VERTICAL: String = """fun main() {
     render {
         tabs<String>(vertical = true) {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
         }
     }
 }
@@ -297,12 +316,12 @@ object TabsCode {
     const val VERTICAL_BOX: String = """fun main() {
     render {
         tabs<String>(vertical = true, box = true) {
-            tabItem("Users") { +"Users" }
-            tabItem("Containers") { +"Containers" }
-            tabItem("Database") { +"Database" }
-            tabItem("Server") { +"Server" }
-            tabItem("System") { +"System" }
-            tabItem("Network") { +"Network" }
+            item("Users") { +"Users" }
+            item("Containers") { +"Containers" }
+            item("Database") { +"Database" }
+            item("Server") { +"Server" }
+            item("System") { +"System" }
+            item("Network") { +"Network" }
         }
     }
 }
@@ -312,12 +331,12 @@ object TabsCode {
     const val ICONS: String = """fun main() {
     render {
         tabs<String> {
-            tabItem("Users", icon = { icon("users".fas()) }) { +"Users" }
-            tabItem("Containers", icon = { icon("box".fas()) }) { +"Containers" }
-            tabItem("Database", icon = { icon("database".fas()) }) { +"Database" }
-            tabItem("Server", icon = { icon("server".fas()) }) { +"Server" }
-            tabItem("System", icon = { icon("laptop".fas()) }) { +"System" }
-            tabItem("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
+            item("Users", icon = { icon("users".fas()) }) { +"Users" }
+            item("Containers", icon = { icon("box".fas()) }) { +"Containers" }
+            item("Database", icon = { icon("database".fas()) }) { +"Database" }
+            item("Server", icon = { icon("server".fas()) }) { +"Server" }
+            item("System", icon = { icon("laptop".fas()) }) { +"System" }
+            item("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
         }
     }
 }
@@ -357,7 +376,7 @@ object TabsCode {
         range.changes.valuesAsNumber()
             .map { it.toInt() }
             .map { tabs ->
-                (1..tabs).map { number -> TabItem(number, selected = number == 1) }
+                (1..tabs).map { number -> item(number, selected = number == 1) }
             } handledBy store.update
 
         MainScope().launch {
