@@ -20,6 +20,10 @@
     margin-top: var(--pf-global--spacer--lg);
 }
 
+.sc-snippet:first-child {
+    margin-top: 0;
+}
+
 .sc-snippet .pf-c-content {
     font-size: var(--pf-global--FontSize--md);
 }
