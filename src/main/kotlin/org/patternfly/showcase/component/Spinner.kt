@@ -39,6 +39,7 @@ object SpinnerCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
+        spinner()
     }
 }
 """
@@ -46,6 +47,10 @@ object SpinnerCode {
     //language=kotlin
     const val SIZE_VARIATIONS: String = """fun main() {
     render {
+        spinner(Size.SM, baseClass = "mr-md".util())
+        spinner(Size.MD, baseClass = "mr-md".util())
+        spinner(Size.LG, baseClass = "mr-md".util())
+        spinner(Size.XL)
     }
 }
 """

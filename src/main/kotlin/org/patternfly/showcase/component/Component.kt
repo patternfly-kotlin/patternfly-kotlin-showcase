@@ -9,6 +9,7 @@ import org.patternfly.pageSection
 import org.patternfly.title
 
 val components = listOf(
+    Component("accordion", "Accordion", AccordionComponent.content),
     Component("alert", "Alert", AlertComponent.content),
     Component("alert-group", "Alert group", AlertGroupComponent.content),
     Component("badge", "Badge", BadgeComponent.content),

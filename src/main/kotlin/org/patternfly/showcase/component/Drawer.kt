@@ -1,4 +1,4 @@
-@file:Suppress("DuplicatedCode", "SpellCheckingInspection")
+@file:Suppress("DuplicatedCode")
 
 package org.patternfly.showcase.component
 
@@ -20,9 +20,6 @@ import org.patternfly.pushButton
 import org.patternfly.title
 import org.patternfly.util
 
-const val LOREM_IPSUM =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehicula ex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat,nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodo eleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada sed posuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quam ullamcorper, in commodo massa vulputate."
-
 object DrawerComponent {
     val content: RenderContext.() -> Unit = {
         intro(
@@ -36,7 +33,7 @@ object DrawerComponent {
                 drawer(baseClass = "mt-md".util()) {
                     button.clicks handledBy expanded.toggle
                     drawerContent {
-                        drawerBody { +LOREM_IPSUM }
+                        drawerBody { +loremIpsum(10) }
                     }
                     drawerPanel {
                         drawerBody {
@@ -58,7 +55,7 @@ object DrawerComponent {
                 drawer(baseClass = classes("panel-left".modifier(), "mt-md".util())) {
                     button.clicks handledBy expanded.toggle
                     drawerContent {
-                        drawerBody { +LOREM_IPSUM }
+                        drawerBody { +loremIpsum(10) }
                     }
                     drawerPanel {
                         drawerBody {
@@ -80,7 +77,7 @@ object DrawerComponent {
                 drawer(baseClass = classes("inline".modifier(), "mt-md".util())) {
                     button.clicks handledBy expanded.toggle
                     drawerContent {
-                        drawerBody { +LOREM_IPSUM }
+                        drawerBody { +loremIpsum(10) }
                     }
                     drawerPanel {
                         drawerBody {
@@ -102,7 +99,7 @@ object DrawerComponent {
                 drawer(classes("inline".modifier(), "panel-left".modifier(), "mt-md".util())) {
                     button.clicks handledBy expanded.toggle
                     drawerContent {
-                        drawerBody { +LOREM_IPSUM }
+                        drawerBody { +loremIpsum(10) }
                     }
                     drawerPanel {
                         drawerBody {
@@ -125,11 +122,11 @@ object DrawerComponent {
                     button.clicks handledBy expanded.toggle
                     drawerSection {
                         title { +"Title" }
-                        p { +"${LOREM_IPSUM.take(15)}..." }
+                        p { +loremIpsum(2) }
                         divider(baseClass = "mb-md".util())
                     }
                     drawerContent {
-                        drawerBody { +LOREM_IPSUM }
+                        drawerBody { +loremIpsum(10) }
                     }
                     drawerPanel {
                         drawerBody {
@@ -150,7 +147,7 @@ object DrawerComponent {
                 drawer("static".modifier()) {
                     expanded.expand(Unit)
                     drawerContent {
-                        drawerBody { +LOREM_IPSUM }
+                        drawerBody { +loremIpsum(10) }
                     }
                     drawerPanel {
                         drawerBody {
@@ -177,7 +174,7 @@ object DrawerCode {
         drawer(baseClass = "mt-md".util()) {
             button.clicks handledBy expanded.toggle
             drawerContent {
-                drawerBody { +LOREM_IPSUM }
+                drawerBody { +loremIpsum(10) }
             }
             drawerPanel {
                 drawerBody {
@@ -204,7 +201,7 @@ object DrawerCode {
         drawer(baseClass = classes("panel-left".modifier(), "mt-md".util())) {
             button.clicks handledBy expanded.toggle
             drawerContent {
-                drawerBody { +LOREM_IPSUM }
+                drawerBody { +loremIpsum(10) }
             }
             drawerPanel {
                 drawerBody {
@@ -231,7 +228,7 @@ object DrawerCode {
         drawer(baseClass = classes("inline".modifier(), "mt-md".util())) {
             button.clicks handledBy expanded.toggle
             drawerContent {
-                drawerBody { +LOREM_IPSUM }
+                drawerBody { +loremIpsum(10) }
             }
             drawerPanel {
                 drawerBody {
@@ -258,7 +255,7 @@ object DrawerCode {
         drawer(classes("inline".modifier(), "panel-left".modifier(), "mt-md".util())) {
             button.clicks handledBy expanded.toggle
             drawerContent {
-                drawerBody { +LOREM_IPSUM }
+                drawerBody { +loremIpsum(10) }
             }
             drawerPanel {
                 drawerBody {
@@ -280,7 +277,32 @@ object DrawerCode {
 
     //language=kotlin
     const val SECTION: String = """fun main() {
-    render {
+{
+        val button = pushButton(primary) { +"Toggle" }
+        drawer(baseClass = "mt-md".util()) {
+            button.clicks handledBy expanded.toggle
+            drawerSection {
+                title { +"Title" }
+                p { +loremIpsum(2) }
+                divider(baseClass = "mb-md".util())
+            }
+            drawerContent {
+                drawerBody { +loremIpsum(10) }
+            }
+            drawerPanel {
+                drawerBody {
+                    drawerHead {
+                        span {
+                            domNode.tabIndex = 0
+                            +"Drawer panel"
+                        }
+                        drawerAction {
+                            drawerClose()
+                        }
+                    }
+                }
+            }
+        }
         val button = pushButton(primary) { +"Toggle" }
         drawer(baseClass = "mt-md".util()) {
             button.clicks handledBy expanded.toggle
@@ -316,7 +338,7 @@ object DrawerCode {
         drawer("static".modifier()) {
             expanded.expand(Unit)
             drawerContent {
-                drawerBody { +LOREM_IPSUM }
+                drawerBody { +loremIpsum(10) }
             }
             drawerPanel {
                 drawerBody {
