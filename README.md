@@ -14,7 +14,9 @@ To build and run the showcase locally, you have to first build [Fritz2 MVP](http
 git clone https://github.com/hpehl/fritz2-mvp.git
 cd fritz2-mvp
 ./gradlew publishToMavenLocal
+
 cd ..
+
 git clone https://github.com/patternfly-kotlin/patternfly-fritz2-showcase.git
 cd patternfly-fritz2-showcase
 ./gradlew run
