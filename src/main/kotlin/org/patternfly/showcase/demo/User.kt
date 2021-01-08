@@ -21,7 +21,7 @@ import org.patternfly.Align
 import org.patternfly.ButtonVariation.control
 import org.patternfly.ButtonVariation.plain
 import org.patternfly.ButtonVariation.secondary
-import org.patternfly.ItemStore
+import org.patternfly.ItemsStore
 import org.patternfly.Notification
 import org.patternfly.SortInfo
 import org.patternfly.bulkSelect
@@ -84,7 +84,7 @@ import org.patternfly.util
 
 class UserDemoPresenter : Presenter<UserDemoView> {
 
-    internal val userStore = ItemStore<User> { it.login.uuid }
+    internal val userStore = ItemsStore<User> { it.login.uuid }
     override val view: UserDemoView = UserDemoView(this)
 
     override fun show() {

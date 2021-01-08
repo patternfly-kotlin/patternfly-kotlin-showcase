@@ -22,6 +22,7 @@ val components = listOf(
     Component("drawer", "Drawer", DrawerComponent.content),
     Component("dropdown", "Dropdown", DropdownComponent.content),
     Component("empty-state", "Empty state", EmptyStateComponent.content),
+    Component("navigation", "Navigation", NavigationComponent.content),
     Component("options-menu", "Options menu", OptionsMenuComponent.content),
     Component("pagination", "Pagination", PaginationComponent.content),
     Component("spinner", "Spinner", SpinnerComponent.content),

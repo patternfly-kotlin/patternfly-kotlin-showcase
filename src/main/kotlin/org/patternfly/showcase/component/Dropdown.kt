@@ -39,6 +39,7 @@ import org.patternfly.switch
 import org.patternfly.textToggle
 import org.patternfly.triState
 import org.patternfly.unwrap
+import org.patternfly.updateItems
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -266,15 +267,13 @@ object DropdownComponent {
                 }
 
                 fun items(store: DropdownStore<String>) {
-                    with(store) {
-                        items {
-                            item("Action")
-                            item("Disabled Action") {
-                                disabled = true
-                            }
-                            separator()
-                            item("Separated Action")
+                    store.updateItems {
+                        item("Action")
+                        item("Disabled Action") {
+                            disabled = true
                         }
+                        separator()
+                        item("Separated Action")
                     }
                 }
 
@@ -643,15 +642,13 @@ object DropdownCode {
         }
 
         fun items(store: DropdownStore<String>) {
-            with(store) {
-                items {
-                    item("Action")
-                    item("Disabled Action") {
-                        disabled = true
-                    }
-                    separator()
-                    item("Separated Action")
+            store.updateItems {
+                item("Action")
+                item("Disabled Action") {
+                    disabled = true
                 }
+                separator()
+                item("Separated Action")
             }
         }
 

@@ -7,11 +7,11 @@ import dev.fritz2.mvp.placeRequest
 import org.patternfly.AlertGroup
 import org.patternfly.Page
 import org.patternfly.brand
-import org.patternfly.expandableGroup
+import org.patternfly.group
+import org.patternfly.groups
 import org.patternfly.headerTools
+import org.patternfly.item
 import org.patternfly.layout
-import org.patternfly.navigationItem
-import org.patternfly.navigationItems
 import org.patternfly.notificationBadge
 import org.patternfly.page
 import org.patternfly.pageHeader
@@ -42,17 +42,19 @@ class Skeleton(private val placeManager: PlaceManager) {
             }
             pageSidebar {
                 sidebarBody {
-                    verticalNavigation(placeManager.router) {
-                        navigationItems {
-                            navigationItem(placeRequest(GET_STARTED), "Get Started")
-                            navigationItem(placeRequest(GET_IN_TOUCH), "Get in Touch")
-                            expandableGroup("Components") {
+                    verticalNavigation(placeManager.router, expandable = true) {
+                        groups {
+                            group {
+                                item(placeRequest(GET_STARTED), "Get Started")
+                                item(placeRequest(GET_IN_TOUCH), "Get in Touch")
+                            }
+                            group("Components") {
                                 components.map {
-                                    navigationItem(placeRequest(COMPONENT, "id" to it.id), it.name)
+                                    item(placeRequest(COMPONENT, "id" to it.id), it.name)
                                 }
                             }
-                            expandableGroup("Demos") {
-                                navigationItem(placeRequest(USER_DEMO), "User")
+                            group("Demos") {
+                                item(placeRequest(USER_DEMO), "User")
                             }
                         }
                     }

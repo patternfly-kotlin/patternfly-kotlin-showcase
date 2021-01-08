@@ -39,6 +39,7 @@ import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
 import org.patternfly.textToggle
 import org.patternfly.unwrap
+import org.patternfly.updateItems
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
@@ -211,12 +212,10 @@ object OptionsMenuComponent {
                 }
 
                 fun items(store: OptionsMenuStore<String>) {
-                    with(store) {
-                        items {
+                    store.updateItems {
                             item("Option 1") { selected = true }
                             item("Option 2")
                             item("Option 3")
-                        }
                     }
                 }
 
@@ -493,12 +492,10 @@ object OptionsMenuCode {
         }
 
         fun items(store: OptionsMenuStore<String>) {
-            with(store) {
-                items {
+            store.updateItems { 
                     item("Option 1") { selected = true }
                     item("Option 2")
                     item("Option 3")
-                }
             }
         }
 

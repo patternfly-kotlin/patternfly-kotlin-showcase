@@ -5,7 +5,7 @@ package org.patternfly.showcase.component
 import dev.fritz2.dom.html.RenderContext
 import org.patternfly.Align
 import org.patternfly.DataListItem
-import org.patternfly.ItemStore
+import org.patternfly.ItemsStore
 import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.dataList
@@ -45,7 +45,7 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
                 store.addAll(listOf(
                     DisplayData {
                         dataListRow {
@@ -84,7 +84,7 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
                 store.addAll(listOf(
                     DisplayData {
                         dataListRow {
@@ -121,7 +121,7 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
                 store.addAll(listOf(
                     DisplayData {
                         dataListRow {
@@ -233,7 +233,7 @@ object DataListComponent {
                     val content: DataListItem<DisplayData>.() -> Unit
                 )
 
-                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
                 store.addAll(listOf(
                     DisplayData {
                         dataListRow {
@@ -286,7 +286,7 @@ object DataListComponent {
                     val content: List<DataListItem<DisplayData>.() -> Unit>
                 )
 
-                val store: ItemStore<DisplayData> = ItemStore { it.id }
+                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
                 store.addAll(listOf(
                     DisplayData(content = listOf(
                         {
@@ -447,7 +447,7 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        val store: ItemsStore<DisplayData> = ItemsStore { it.id }
         store.addAll(listOf(
             DisplayData {
                 dataListRow {
@@ -491,7 +491,7 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        val store: ItemsStore<DisplayData> = ItemsStore { it.id }
         store.addAll(listOf(
             DisplayData {
                 dataListRow {
@@ -533,7 +533,7 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        val store: ItemsStore<DisplayData> = ItemsStore { it.id }
         store.addAll(listOf(
             DisplayData {
                 dataListRow {
@@ -650,7 +650,7 @@ object DataListCode {
             val content: DataListItem<DisplayData>.() -> Unit
         )
 
-        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        val store: ItemsStore<DisplayData> = ItemsStore { it.id }
         store.addAll(listOf(
             DisplayData {
                 dataListRow {
@@ -708,7 +708,7 @@ object DataListCode {
             val content: List<DataListItem<DisplayData>.() -> Unit>
         )
 
-        val store: ItemStore<DisplayData> = ItemStore { it.id }
+        val store: ItemsStore<DisplayData> = ItemsStore { it.id }
         store.addAll(listOf(
             DisplayData(content = listOf(
                 {
