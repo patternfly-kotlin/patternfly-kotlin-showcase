@@ -56,7 +56,7 @@
 }
 
 .sc-user-card {
-    min-height: 220px;
+    min-height: 220px !important;
 }
 
 .sc-user-card__title {
@@ -67,7 +67,7 @@
 }
 
 .sc-user-card__address {
-    max-width: 160px;
+    max-width: 160px !important;
 }
 
 .sc-user-nat {
