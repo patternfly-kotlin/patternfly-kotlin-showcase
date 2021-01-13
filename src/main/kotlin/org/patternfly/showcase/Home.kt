@@ -34,13 +34,13 @@ class HomeView : View {
                     }
                     +" targeting "
                     a {
-                        +"Kotlin / JS"
+                        +"Kotlin/JS"
                         href("https://kotl.in/js")
                     }
                     +"."
                 }
                 p {
-                    +"The goal of this project is to provide all PatternFly components in Kotlin/JS. This is done in a way that matches the reactive nature of fritz2. In particular, the components use "
+                    +"The goal of this project is to provide all PatternFly components in Kotlin. This is done in a way that matches the reactive nature of fritz2. In particular, the components use "
                     a {
                         +"stores"
                         href("https://api.fritz2.dev/core/core/dev.fritz2.binding/-store/index.html")
@@ -58,15 +58,20 @@ class HomeView : View {
                     +"."
                 }
                 p {
-                    +"To get a quick overview what this is all about go to the "
+                    +"To get a quick overview what this is all about, take a look at the "
                     a {
-                        +"documentation"
-                        href("#component;id=alert")
+                        +"components"
+                        href("#component;id=accordion")
                     }
-                    +" page which demonstrates the usage of all supported components and also includes more complex demos of data driven components."
+                    +" and "
+                    a {
+                        +"demos"
+                        href("#user-demo")
+                    }
+                    +"."
                 }
                 p {
-                    +"To get all details about how to use PatternFly Fritz2 take a look at the "
+                    +"To get all details about how to use PatternFly Fritz2 read the "
                     a {
                         +"API documentation"
                         href("https://patternfly-kotlin.github.io/patternfly-fritz2/patternfly-fritz2/")
