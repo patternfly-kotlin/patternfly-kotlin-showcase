@@ -91,7 +91,7 @@ class Snippet(header: String, code: String, job: Job, val content: RenderContext
                 mapOf("display-none".util() to hidden)
             })
             pre {
-                code("kotlin") {
+                code(baseClass = "kotlin") {
                     +code
                     highlightBlock(domNode)
                 }

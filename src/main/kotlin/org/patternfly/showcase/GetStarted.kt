@@ -3,6 +3,7 @@ package org.patternfly.showcase
 import dev.fritz2.mvp.Presenter
 import dev.fritz2.mvp.View
 import dev.fritz2.mvp.ViewContent
+import hljs.highlightBlock
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.textContent
@@ -24,7 +25,7 @@ class GetStartedView : View {
                     +" file. All PatternFly components are implemented in Kotlin only. You won't need any additional external JS libraries."
                 }
                 pre {
-                    code("kotlin") {
+                    code(baseClass = "kotlin") {
                         +"""
                             repositories {
                                 maven("https://dl.bintray.com/patternfly-kotlin/patternfly-fritz2")
@@ -34,6 +35,7 @@ class GetStartedView : View {
                                 implementation("org.patternfly:patternfly-fritz2:0.1.0")
                             }
                         """.trimIndent()
+                        highlightBlock(domNode)
                     }
                 }
                 h2 { +"PatternFly Assets" }
@@ -47,11 +49,12 @@ class GetStartedView : View {
                 pre {
                     code(baseClass = "kotlin") {
                         +"""
-                                dependencies {
-                                    implementation("org.jetbrains:kotlin-extensions:<version>")
-                                    implementation(npm("@patternfly/patternfly", "4"))
-                                }
-                            """.trimIndent()
+                            dependencies {
+                                implementation("org.jetbrains:kotlin-extensions:<version>")
+                                implementation(npm("@patternfly/patternfly", "4"))
+                            }
+                        """.trimIndent()
+                        highlightBlock(domNode)
                     }
                 }
                 p {
@@ -62,13 +65,14 @@ class GetStartedView : View {
                 pre {
                     code(baseClass = "kotlin") {
                         +"""
-                                import kotlinext.js.require
-                                
-                                fun main() {
-                                    require("@patternfly/patternfly/patternfly.css")
-                                    require("@patternfly/patternfly/patternfly-addons.css")
-                                }                            
-                            """.trimIndent()
+                            import kotlinext.js.require
+                            
+                            fun main() {
+                                require("@patternfly/patternfly/patternfly.css")
+                                require("@patternfly/patternfly/patternfly-addons.css")
+                            }                            
+                        """.trimIndent()
+                        highlightBlock(domNode)
                     }
                 }
                 p {
@@ -82,18 +86,19 @@ class GetStartedView : View {
                 pre {
                     code(baseClass = "html") {
                         +"""
-                                <!DOCTYPE html>
-                                <html lang="en">
-                                <head>
-                                    <meta charset="UTF-8">
-                                    <title>My App</title>
-                                    <link rel="stylesheet" href="patternfly.css">
-                                    <link rel="stylesheet" href="patternfly-addons.css">
-                                </head>
-                                <body id="entrypoint">
-                                </body>
-                                </html>
-                            """.trimIndent()
+                            <!DOCTYPE html>
+                            <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <title>My App</title>
+                                <link rel="stylesheet" href="patternfly.css">
+                                <link rel="stylesheet" href="patternfly-addons.css">
+                            </head>
+                            <body id="entrypoint">
+                            </body>
+                            </html>
+                        """.trimIndent()
+                        highlightBlock(domNode)
                     }
                 }
                 p {
