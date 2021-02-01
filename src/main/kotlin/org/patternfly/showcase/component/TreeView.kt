@@ -1,7 +1,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.ColExIcon
+import org.patternfly.DoubleIcon
 import org.patternfly.SingleIcon
 import org.patternfly.TreeBuilder
 import org.patternfly.children
@@ -9,7 +9,6 @@ import org.patternfly.fas
 import org.patternfly.icon
 import org.patternfly.pageSection
 import org.patternfly.showcase.data.Place
-import org.patternfly.showcase.data.placeId
 import org.patternfly.showcase.data.world
 import org.patternfly.tree
 import org.patternfly.treeItem
@@ -36,22 +35,22 @@ object TreeViewComponent {
         }
         pageSection {
             snippet("Default", TreeViewCode.DEFAULT) {
-                treeView(placeId) {
+                treeView<Place> {
                     tree {
                         world.places.forEach { place(it) }
                     }
                 }
             }
             snippet("Checkboxes", TreeViewCode.CHECKBOXES) {
-                treeView(placeId, checkboxes = true) {
+                treeView<Place>(checkboxes = true) {
                     tree {
                         world.places.forEach { place(it) }
                     }
                 }
             }
             snippet("Icons", TreeViewCode.ICONS) {
-                treeView(placeId) {
-                    icons = { place ->
+                treeView<Place> {
+                    iconProvider { place ->
                         when {
                             place.id.contains("fa-") -> {
                                 SingleIcon { icon(place.id.substringAfter("fa-").fas()) }
@@ -68,7 +67,7 @@ object TreeViewComponent {
                                 }
                             }
                             else -> {
-                                ColExIcon(
+                                DoubleIcon(
                                     collapsed = { icon("folder".fas()) },
                                     expanded = { icon("folder-open".fas()) }
                                 )
@@ -82,7 +81,7 @@ object TreeViewComponent {
                 }
             }
             snippet("Badges", TreeViewCode.BADGES) {
-                treeView(placeId, badges = true) {
+                treeView<Place>(badges = true) {
                     tree {
                         world.places.forEach { place(it) }
                     }
@@ -107,7 +106,7 @@ object TreeViewCode {
     //language=kotlin
     const val DEFAULT: String = """fun main() {
     render {
-        treeView(placeId) {
+        treeView<Place> {
             tree {
                 world.places.forEach { place(it) }
             }
@@ -119,7 +118,7 @@ object TreeViewCode {
     //language=kotlin
     const val CHECKBOXES: String = """fun main() {
     render {
-        treeView(placeId, checkboxes = true) {
+        treeView<Place>(checkboxes = true) {
             tree {
                 world.places.forEach { place(it) }
             }
@@ -131,8 +130,8 @@ object TreeViewCode {
     //language=kotlin
     const val ICONS: String = """fun main() {
     render {
-        treeView(placeId) {
-            icons = { place ->
+        treeView<Place> {
+            iconProvider { place ->
                 when {
                     place.id.contains("fa-") -> {
                         SingleIcon { icon(place.id.substringAfter("fa-").fas()) }
@@ -140,13 +139,16 @@ object TreeViewCode {
                     place.id.matches("[a-z]{2}".toRegex()) -> {
                         SingleIcon {
                             img {
-                                domNode.style.verticalAlign = "middle"
-                                domNode.src = "https://lipis.github.io/flag-icon-css/flags/4x3/${'$'}{place.id}.svg"
+                                with(domNode) {
+                                    style.width = "16px"
+                                    style.verticalAlign = "middle"
+                                    src = "https://lipis.github.io/flag-icon-css/flags/4x3/${'$'}{place.id}.svg"
+                                }
                             }
                         }
                     }
                     else -> {
-                        ColExIcon(
+                        DoubleIcon(
                             collapsed = { icon("folder".fas()) },
                             expanded = { icon("folder-open".fas()) }
                         )
@@ -165,7 +167,7 @@ object TreeViewCode {
     //language=kotlin
     const val BADGES: String = """fun main() {
     render {
-        treeView(placeId, badges = true) {
+        treeView<Place>(badges = true) {
             tree {
                 world.places.forEach { place(it) }
             }

@@ -200,7 +200,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             }
                             cardAction {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    store.selects.unwrap() handledBy Notification.add {
+                                    store.singleSelection.unwrap() handledBy Notification.add {
                                         info("$it ${user.name} not yet implemented")
                                     }
                                     kebabToggle()
@@ -311,7 +311,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                     dataTableActionColumn { user ->
                         dropdown<String>(align = Align.RIGHT) {
-                            store.selects.unwrap() handledBy Notification.add {
+                            store.singleSelection.unwrap() handledBy Notification.add {
                                 info("$it ${user.name} not yet implemented")
                             }
                             kebabToggle()

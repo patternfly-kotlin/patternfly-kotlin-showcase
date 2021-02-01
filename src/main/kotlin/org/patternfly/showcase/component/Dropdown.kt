@@ -257,7 +257,7 @@ object DropdownComponent {
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
-                        store.selects.unwrap() handledBy Notification.add {
+                        store.singleSelection.unwrap() handledBy Notification.add {
                             info("$name: Clicked on $it")
                         }
                         expanded.expanded handledBy Notification.add { expanded ->
@@ -313,18 +313,17 @@ object DropdownComponent {
                     registerEvents(this, "Icon toggle")
                     items(store)
                 }
-                br {}
                 dropdown<String>(baseClass = "mt-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     checkboxToggle {
                         text {
-                            this@dropdown.store.selects.unwrap().asText()
+                            this@dropdown.store.singleSelection.unwrap().asText()
                         }
                         checkbox {
                             changes.states() handledBy Notification.add {
                                 info("Checkbox toggle: Checked: $it")
                             }
-                            triState(this@dropdown.store.selects.unwrap().map {
+                            triState(this@dropdown.store.singleSelection.unwrap().map {
                                 when (it) {
                                     "Select none" -> TriState.OFF
                                     "Select visible" -> TriState.INDETERMINATE
@@ -341,7 +340,6 @@ object DropdownComponent {
                     }
                     registerEvents(this, "Checkbox toggle")
                 }
-                br {}
                 dropdown<String>(baseClass = "mt-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     actionToggle {
@@ -632,7 +630,7 @@ object DropdownCode {
 
         fun registerEvents(dropdown: Dropdown<String>, name: String) {
             with(dropdown) {
-                store.selects.unwrap() handledBy Notification.add {
+                store.singleSelection.unwrap() handledBy Notification.add {
                     info("${'$'}name: Clicked on ${'$'}it")
                 }
                 expanded.expanded handledBy Notification.add { expanded ->
@@ -693,13 +691,13 @@ object DropdownCode {
             disabled(enabled.input.changes.states().map { !it })
             checkboxToggle {
                 text {
-                    this@dropdown.store.selects.unwrap().asText()
+                    this@dropdown.store.singleSelection.unwrap().asText()
                 }
                 checkbox {
                     changes.states() handledBy Notification.add {
                         info("Checkbox toggle: Checked: ${'$'}it")
                     }
-                    triState(this@dropdown.store.selects.unwrap().map {
+                    triState(this@dropdown.store.singleSelection.unwrap().map {
                         when (it) {
                             "Select none" -> TriState.OFF
                             "Select visible" -> TriState.INDETERMINATE

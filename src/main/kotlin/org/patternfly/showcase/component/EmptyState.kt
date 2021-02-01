@@ -133,7 +133,7 @@ object EmptyStateComponent {
                 emptyStateSpinner()
             }
             snippet("No match found", EmptyStateCode.NO_RESULTS) {
-                emptyStateNoResults(handler = Notification.info("This should clear all filters."))
+                emptyStateNoResults(action = Pair("Clear filter", Notification.info("This should clear all filters.")))
             }
         }
     }
@@ -287,7 +287,7 @@ object EmptyStateCode {
     //language=kotlin
     const val NO_RESULTS: String = """fun main() {
     render {
-        emptyStateNoResults(handler = Notification.info("This should clear all filters."))
+        emptyStateNoResults(action = Pair("Clear filter", Notification.info("This should clear all filters.")))
     }
 }
 """
