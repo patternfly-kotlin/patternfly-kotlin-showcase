@@ -257,7 +257,7 @@ object DropdownComponent {
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
-                        store.singleSelection.unwrap() handledBy Notification.add {
+                        store.clicked.unwrap() handledBy Notification.add {
                             info("$name: Clicked on $it")
                         }
                         expanded.expanded handledBy Notification.add { expanded ->
@@ -313,6 +313,7 @@ object DropdownComponent {
                     registerEvents(this, "Icon toggle")
                     items(store)
                 }
+                br { }
                 dropdown<String>(baseClass = "mt-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     checkboxToggle {
@@ -340,6 +341,7 @@ object DropdownComponent {
                     }
                     registerEvents(this, "Checkbox toggle")
                 }
+                br { }
                 dropdown<String>(baseClass = "mt-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     actionToggle {

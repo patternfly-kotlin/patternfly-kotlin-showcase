@@ -1,10 +1,25 @@
 plugins {
-    kotlin("js") version "1.4.20"
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("js") version "1.4.31"
+    kotlin("plugin.serialization") version "1.4.30"
 }
 
 group = "org.patternfly"
 version = "0.1.0"
+
+object Versions {
+    // dependencies
+    const val fritz2 = "0.9"
+    const val mvp = "0.3.0"
+    const val patternflyFritz2 = "0.2.0"
+    const val serialization = "1.1.0"
+
+    // NPM (dev) dependencies
+    const val clipboard = "2.0.6"
+    const val fileLoader = "6.2.0"
+    const val highlight = "10.4.1"
+    const val patternfly = "4"
+    const val timeElements = "3.1.1"
+}
 
 repositories {
     mavenLocal()
@@ -15,16 +30,15 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains:kotlin-extensions:1.0.1-pre.129-kotlin-1.4.20")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-    implementation("dev.fritz2:core:0.8")
-    implementation("dev.fritz2:mvp:0.1.0")
-    implementation("org.patternfly:patternfly-fritz2:0.2.0")
-    implementation(npm("@github/time-elements", "3.1.1"))
-    implementation(npm("@patternfly/patternfly", "4"))
-    implementation(npm("clipboard", "2.0.6"))
-    implementation(npm("highlight.js", "10.4.1"))
-    implementation(devNpm("file-loader", "6.2.0"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}")
+    implementation("dev.fritz2:core:${Versions.fritz2}")
+    implementation("dev.fritz2:mvp:${Versions.mvp}")
+    implementation("org.patternfly:patternfly-fritz2:${Versions.patternflyFritz2}")
+    implementation(npm("@github/time-elements", Versions.timeElements))
+    implementation(npm("@patternfly/patternfly", Versions.patternfly))
+    implementation(npm("clipboard", Versions.clipboard))
+    implementation(npm("highlight.js", Versions.highlight))
+    implementation(devNpm("file-loader", Versions.fileLoader))
 }
 
 kotlin {
@@ -36,11 +50,6 @@ kotlin {
                     useExperimentalAnnotation("kotlin.time.ExperimentalTime")
                     useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
                 }
-            }
-        }
-        compilations.named("main") {
-            kotlinOptions {
-                freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
             }
         }
         browser {

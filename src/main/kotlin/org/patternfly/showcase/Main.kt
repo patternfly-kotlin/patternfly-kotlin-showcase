@@ -1,12 +1,13 @@
 package org.patternfly.showcase
 
-import dev.fritz2.dom.appendToBody
-import dev.fritz2.dom.html.renderElement
+import dev.fritz2.dom.html.render
 import dev.fritz2.mvp.PlaceManager
 import dev.fritz2.mvp.placeRequest
-import kotlinext.js.require
+import org.patternfly.AlertGroup
 import org.patternfly.pageSection
 import org.patternfly.title
+
+external fun require(name: String): dynamic
 
 fun main() {
     require("@github/time-elements/dist/time-elements")
@@ -29,7 +30,9 @@ fun main() {
         }
     }
 
-    appendToBody(renderElement {
-        Skeleton(placeManager).content(this)
-    })
+    render {
+        skeleton(placeManager)
+    }
+    AlertGroup.addToastAlertGroup()
 }
+

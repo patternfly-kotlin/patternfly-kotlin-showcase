@@ -60,7 +60,12 @@ class GetStartedView : View {
                 p {
                     +"and make a call to "
                     code { +"require()" }
-                    +":"
+                    +" (provided by "
+                    a {
+                        +"Kotlin JS wrappers"
+                        href("https://github.com/JetBrains/kotlin-wrappers")
+                    }
+                    +"):"
                 }
                 pre {
                     code(baseClass = "kotlin") {
@@ -94,7 +99,8 @@ class GetStartedView : View {
                                 <link rel="stylesheet" href="patternfly.css">
                                 <link rel="stylesheet" href="patternfly-addons.css">
                             </head>
-                            <body id="entrypoint">
+                            <body>
+                            <script src="your-app.js"></script>
                             </body>
                             </html>
                         """.trimIndent()

@@ -214,7 +214,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                         }
                         cardBody(baseClass = classes {
                             +"flex".layout()
-                            +"inline-flex".modifier()
+                            +"nowrap".modifier()
                             +"align-items-center".modifier()
                         }) {
                             photo(user)

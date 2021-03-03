@@ -39,6 +39,7 @@ object ChipComponent {
                     +"Read-only chip"
                     badge { +"42" }
                 }
+                br {}
                 chip {
                     +"Cloe me"
                     closes handledBy Notification.info("Chip closed")
@@ -105,6 +106,7 @@ object ChipCode {
             +"Read-only chip"
             badge { +"42" }
         }
+        br {}
         chip {
             +"Cloe me"
             closes handledBy Notification.info("Chip closed")

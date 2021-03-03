@@ -72,7 +72,9 @@ code {
 }
 
 .sc-user-card__address {
-    max-width: 160px !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-y: hidden;
 }
 
 .sc-user-nat {
@@ -85,7 +87,11 @@ code {
     background: #fff;
     padding: 3px;
     width: 75px;
+    min-width: 75px;
+    max-width: 75px;
     height: 75px;
+    min-height: 75px;
+    max-height: 75px;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.25);
 }
