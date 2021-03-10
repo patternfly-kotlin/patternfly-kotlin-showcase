@@ -10,7 +10,7 @@ object Versions {
     // dependencies
     const val fritz2 = "0.9"
     const val mvp = "0.3.0"
-    const val patternflyFritz2 = "0.2.0"
+    const val patternflyFritz2 = "0.3.0-SNAPSHOT"
     const val serialization = "1.1.0"
 
     // NPM (dev) dependencies
@@ -24,8 +24,7 @@ object Versions {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven("https://oss.jfrog.org/artifactory/jfrog-dependencies")
-    maven("https://dl.bintray.com/patternfly-kotlin/patternfly-fritz2")
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     jcenter()
 }
 
@@ -42,7 +41,7 @@ dependencies {
 }
 
 kotlin {
-    js {
+    js(IR) {
         sourceSets {
             named("main") {
                 languageSettings.apply {
