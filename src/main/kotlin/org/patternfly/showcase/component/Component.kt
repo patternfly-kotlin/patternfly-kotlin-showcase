@@ -17,6 +17,7 @@ val components = listOf(
     Component("card", "Card", CardComponent.content),
     Component("chip", "Chip", ChipComponent.content),
     Component("chip-group", "Chip group", ChipGroupComponent.content),
+    Component("context-selector", "Context selector", ContextSelectorComponent.content),
     Component("data-list", "Data list", DataListComponent.content),
     Component("divider", "Divider", DividerComponent.content),
     Component("drawer", "Drawer", DrawerComponent.content),

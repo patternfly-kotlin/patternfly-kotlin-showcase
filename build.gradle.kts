@@ -8,7 +8,7 @@ version = "0.1.0"
 
 object Versions {
     // dependencies
-    const val fritz2 = "0.9"
+    const val fritz2 = "0.9.2"
     const val mvp = "0.3.0"
     const val patternflyFritz2 = "0.3.0-SNAPSHOT"
     const val serialization = "1.1.0"
@@ -25,7 +25,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    jcenter()
 }
 
 dependencies {
