@@ -17,6 +17,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.patternfly.Align
 import org.patternfly.ButtonVariation.control
 import org.patternfly.ButtonVariation.plain
@@ -365,7 +366,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
     }
 
     private fun RenderContext.nat(user: User): Img = img(baseClass = "sc-user-nat") {
-        src("https://lipis.github.io/flag-icon-css/flags/4x3/${user.nat.toLowerCase()}.svg")
+        src("https://lipis.github.io/flag-icon-css/flags/4x3/${user.nat.lowercase()}.svg")
         with(domNode) {
             title = user.nat
         }

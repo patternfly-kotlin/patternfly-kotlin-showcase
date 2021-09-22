@@ -1,34 +1,32 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+// ------------------------------------------------------ core
+
 plugins {
-    kotlin("js") version "1.4.31"
-    kotlin("plugin.serialization") version "1.4.30"
+    kotlin("js") version Versions.kotlin
+    kotlin("plugin.serialization") version Versions.serialization
 }
 
 group = "org.patternfly"
 version = "0.1.0"
 
-object Versions {
-    // dependencies
-    const val fritz2 = "0.9.2"
-    const val mvp = "0.3.0"
-    const val patternflyFritz2 = "0.3.0-SNAPSHOT"
-    const val serialization = "1.1.0"
+// ------------------------------------------------------ repositories
 
-    // NPM (dev) dependencies
-    const val clipboard = "2.0.6"
-    const val fileLoader = "6.2.0"
-    const val highlight = "10.4.1"
-    const val patternfly = "4"
-    const val timeElements = "3.1.1"
-}
+val repositories = arrayOf(
+    "https://oss.sonatype.org/content/repositories/snapshots/",
+    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+)
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+    repositories.forEach { maven(it) }
 }
 
+// ------------------------------------------------------ dependencies
+
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serialization}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serializationJson}")
     implementation("dev.fritz2:core:${Versions.fritz2}")
     implementation("dev.fritz2:mvp:${Versions.mvp}")
     implementation("org.patternfly:patternfly-fritz2:${Versions.patternflyFritz2}")
@@ -39,14 +37,16 @@ dependencies {
     implementation(devNpm("file-loader", Versions.fileLoader))
 }
 
+// ------------------------------------------------------ kotlin/js
+
 kotlin {
     js(IR) {
         sourceSets {
             named("main") {
                 languageSettings.apply {
-                    useExperimentalAnnotation("kotlin.ExperimentalStdlibApi")
-                    useExperimentalAnnotation("kotlin.time.ExperimentalTime")
-                    useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                    optIn("kotlin.ExperimentalStdlibApi")
+                    optIn("kotlin.time.ExperimentalTime")
+                    optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
                 }
             }
         }

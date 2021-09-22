@@ -3,11 +3,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.accordionContent
-import org.patternfly.accordionDiv
-import org.patternfly.accordionDl
-import org.patternfly.accordionItem
-import org.patternfly.accordionTitle
+import org.patternfly.accordion
 import org.patternfly.pageSection
 
 object AccordionComponent {
@@ -18,137 +14,108 @@ object AccordionComponent {
             designGuidelines = "https://www.patternfly.org/v4/components/accordion/design-guidelines"
         )
         pageSection {
-            snippet("Definition list", AccordionCode.DL) {
-                accordionDl {
-                    accordionItem {
-                        accordionTitle { +"Item one" }
-                        accordionContent {
+            snippet("Basic", AccordionCode.BASIC) {
+                accordion {
+                    item {
+                        title("Item one")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem(expanded = true) {
-                        accordionTitle { +"Item two" }
-                        accordionContent {
+                    item {
+                        expanded(true)
+                        title("Item two")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item three" }
-                        accordionContent {
+                    item {
+                        title("Item three")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item four" }
-                        accordionContent {
+                    item {
+                        title("Item four")
+                        content {
                             p { +loremIpsum(10) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item five" }
-                        accordionContent {
+                    item {
+                        title("Item five")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
                 }
             }
-            snippet("Header and Div", AccordionCode.DIV) {
-                accordionDiv {
-                    accordionItem {
-                        accordionTitle { +"Item one" }
-                        accordionContent {
+            snippet("Single expand", AccordionCode.SINGLE_EXPAND) {
+                accordion {
+                    singleExpand(true)
+                    item {
+                        title("Item one")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem(expanded = true) {
-                        accordionTitle { +"Item two" }
-                        accordionContent {
+                    item {
+                        expanded(true)
+                        title("Item two")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item three" }
-                        accordionContent {
+                    item {
+                        title("Item three")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item four" }
-                        accordionContent {
+                    item {
+                        title("Item four")
+                        content {
                             p { +loremIpsum(10) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item five" }
-                        accordionContent {
-                            p { +loremIpsum(2) }
-                        }
-                    }
-                }
-            }
-            snippet("Multiple expand", AccordionCode.MULTI_EXPAND) {
-                accordionDl(singleExpand = false) {
-                    accordionItem {
-                        accordionTitle { +"Item one" }
-                        accordionContent {
-                            p { +loremIpsum(2) }
-                        }
-                    }
-                    accordionItem(expanded = true) {
-                        accordionTitle { +"Item two" }
-                        accordionContent {
-                            p { +loremIpsum(2) }
-                        }
-                    }
-                    accordionItem {
-                        accordionTitle { +"Item three" }
-                        accordionContent {
-                            p { +loremIpsum(2) }
-                        }
-                    }
-                    accordionItem {
-                        accordionTitle { +"Item four" }
-                        accordionContent {
-                            p { +loremIpsum(10) }
-                        }
-                    }
-                    accordionItem {
-                        accordionTitle { +"Item five" }
-                        accordionContent {
+                    item {
+                        title("Item five")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
                 }
             }
             snippet("Fixed height", AccordionCode.FIXED_HEIGHT) {
-                accordionDl(fixed = true) {
-                    accordionItem {
-                        accordionTitle { +"Item one" }
-                        accordionContent {
+                accordion {
+                    fixed(true)
+                    item {
+                        title("Item one")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem(expanded = true) {
-                        accordionTitle { +"Item two" }
-                        accordionContent {
+                    item {
+                        expanded(true)
+                        title("Item two")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item three" }
-                        accordionContent {
+                    item {
+                        title("Item three")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item four" }
-                        accordionContent {
+                    item {
+                        title("Item four")
+                        content {
                             p { +loremIpsum(20) }
                         }
                     }
-                    accordionItem {
-                        accordionTitle { +"Item five" }
-                        accordionContent {
+                    item {
+                        title("Item five")
+                        content {
                             p { +loremIpsum(2) }
                         }
                     }
@@ -161,36 +128,37 @@ object AccordionComponent {
 object AccordionCode {
 
     //language=kotlin
-    const val DL: String = """fun main() {
+    const val BASIC: String = """fun main() {
     render {
-        accordionDl {
-            accordionItem {
-                accordionTitle { +"Item one" }
-                accordionContent {
+        accordion {
+            item {
+                title("Item one")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem(expanded = true) {
-                accordionTitle { +"Item two" }
-                accordionContent {
+            item {
+                expanded(true)
+                title("Item two")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item three" }
-                accordionContent {
+            item {
+                title("Item three")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item four" }
-                accordionContent {
+            item {
+                title("Item four")
+                content {
                     p { +loremIpsum(10) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item five" }
-                accordionContent {
+            item {
+                title("Item five")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
@@ -200,75 +168,38 @@ object AccordionCode {
 """
 
     //language=kotlin
-    const val DIV: String = """fun main() {
+    const val SINGLE_EXPAND: String = """fun main() {
     render {
-        accordionDiv {
-            accordionItem {
-                accordionTitle { +"Item one" }
-                accordionContent {
+        accordion {
+            singleExpand(true)
+            item {
+                title("Item one")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem(expanded = true) {
-                accordionTitle { +"Item two" }
-                accordionContent {
+            item {
+                expanded(true)
+                title("Item two")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item three" }
-                accordionContent {
+            item {
+                title("Item three")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item four" }
-                accordionContent {
+            item {
+                title("Item four")
+                content {
                     p { +loremIpsum(10) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item five" }
-                accordionContent {
-                    p { +loremIpsum(2) }
-                }
-            }
-        }
-    }
-}
-"""
-
-    //language=kotlin
-    const val MULTI_EXPAND: String = """fun main() {
-    render {
-        accordionDl(singleExpand = false) {
-            accordionItem {
-                accordionTitle { +"Item one" }
-                accordionContent {
-                    p { +loremIpsum(2) }
-                }
-            }
-            accordionItem(expanded = true) {
-                accordionTitle { +"Item two" }
-                accordionContent {
-                    p { +loremIpsum(2) }
-                }
-            }
-            accordionItem {
-                accordionTitle { +"Item three" }
-                accordionContent {
-                    p { +loremIpsum(2) }
-                }
-            }
-            accordionItem {
-                accordionTitle { +"Item four" }
-                accordionContent {
-                    p { +loremIpsum(10) }
-                }
-            }
-            accordionItem {
-                accordionTitle { +"Item five" }
-                accordionContent {
+            item {
+                title("Item five")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
@@ -280,34 +211,36 @@ object AccordionCode {
     //language=kotlin
     const val FIXED_HEIGHT: String = """fun main() {
     render {
-        accordionDl(fixed = true) {
-            accordionItem {
-                accordionTitle { +"Item one" }
-                accordionContent {
+        accordion {
+            fixed(true)
+            item {
+                title("Item one")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem(expanded = true) {
-                accordionTitle { +"Item two" }
-                accordionContent {
+            item {
+                expanded(true)
+                title("Item two")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item three" }
-                accordionContent {
+            item {
+                title("Item three")
+                content {
                     p { +loremIpsum(2) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item four" }
-                accordionContent {
+            item {
+                title("Item four")
+                content {
                     p { +loremIpsum(20) }
                 }
             }
-            accordionItem {
-                accordionTitle { +"Item five" }
-                accordionContent {
+            item {
+                title("Item five")
+                content {
                     p { +loremIpsum(2) }
                 }
             }

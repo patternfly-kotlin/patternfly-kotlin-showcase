@@ -4,6 +4,7 @@ import ClipboardJS
 import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.dom.html.Scope
 import hljs.highlightBlock
 import kotlinx.browser.window
 import kotlinx.coroutines.Job
@@ -58,7 +59,7 @@ class CodeStore : RootStore<Boolean>(true) {
 }
 
 class Snippet(header: String, code: String, job: Job, val content: RenderContext.() -> Unit) :
-    Tag<HTMLElement>(tagName = "section", baseClass = "sc-snippet", job = job) {
+    Tag<HTMLElement>(tagName = "section", baseClass = "sc-snippet", job = job, scope = Scope()) {
     private var timeoutHandle = -1
     private val codeStore = CodeStore()
     private val copiedId = Id.unique("code")

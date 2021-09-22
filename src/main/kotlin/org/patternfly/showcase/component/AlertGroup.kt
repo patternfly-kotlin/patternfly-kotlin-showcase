@@ -9,17 +9,13 @@ import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariation.secondary
 import org.patternfly.Notification
 import org.patternfly.NotificationStore
-import org.patternfly.Severity.DANGER
-import org.patternfly.Severity.DEFAULT
-import org.patternfly.Severity.INFO
-import org.patternfly.Severity.SUCCESS
-import org.patternfly.Severity.WARNING
+import org.patternfly.Severity.*
 import org.patternfly.alert
 import org.patternfly.alertDescription
 import org.patternfly.alertGroup
 import org.patternfly.clickButton
 import org.patternfly.pageSection
-import kotlin.time.milliseconds
+import kotlin.time.Duration
 
 object AlertGroupComponent {
     val content: RenderContext.() -> Unit = {
@@ -70,7 +66,7 @@ object AlertGroupComponent {
                         while (tick.current) {
                             NotificationStore.add(Notification(INFO, "Async notification #$counter"))
                             counter++
-                            delay(750.milliseconds)
+                            delay(Duration.milliseconds(750))
                         }
                     }
                 }
