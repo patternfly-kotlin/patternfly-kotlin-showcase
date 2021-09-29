@@ -3,19 +3,12 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.Notification
+import org.patternfly.*
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
 import org.patternfly.Severity.WARNING
-import org.patternfly.alert
-import org.patternfly.alertActions
-import org.patternfly.alertDescription
-import org.patternfly.classes
-import org.patternfly.modifier
-import org.patternfly.pageSection
-import org.patternfly.pushButton
 
 internal object AlertComponent {
     val content: RenderContext.() -> Unit = {
@@ -35,6 +28,32 @@ internal object AlertComponent {
                 alert(WARNING, "Warning alert title")
                 br {}
                 alert(DANGER, "Danger alert title")
+            }
+            snippet("Types 2", AlertCode.TYPES) {
+                alert2 {
+                    severity(DEFAULT)
+                    title("Default alert title")
+                }
+                br {}
+                alert2 {
+                    severity(INFO)
+                    title("Info alert title")
+                }
+                br {}
+                alert2 {
+                    severity(SUCCESS)
+                    title("Success alert title")
+                }
+                br {}
+                alert2 {
+                    severity(WARNING)
+                    title("Warning alert title")
+                }
+                br {}
+                alert2 {
+                    severity(DANGER)
+                    title("Danger alert title")
+                }
             }
             snippet("Variations", AlertCode.VARIATIONS) {
                 alert(SUCCESS, "Success alert title", closable = true) {
@@ -116,8 +135,20 @@ internal object AlertComponent {
                 alert(SUCCESS, "Success alert title", inline = true)
             }
             snippet("Reactive", AlertCode.REACTIVE) {
-                alert(DEFAULT, "Close me", closable = true) {
-                    closes handledBy Notification.default("Notification closed")
+//                alert(DEFAULT, "Close me", closable = true) {
+//                    closes handledBy Notification.default("Notification closed")
+//                }
+//                br {}
+                alert2 {
+                    severity(DEFAULT)
+                    title("Close me")
+                    content { +loremIpsum(3) }
+                    closable(true) {
+                        clicks handledBy Notification.default("Notification closed")
+                    }
+                    action("Click me") {
+                        clicks handledBy Notification.default("You did it!")
+                    }
                 }
             }
         }
