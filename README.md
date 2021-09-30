@@ -21,3 +21,12 @@ git clone https://github.com/patternfly-kotlin/patternfly-fritz2-showcase.git
 cd patternfly-fritz2-showcase
 ./gradlew run
 ```
+
+## Requirements
+
+This project is known to work with the following requirements: 
+
+* JDK 11 and 15 (but not 17)
+* node v16.10.0
+* npm 7.24.0
+* gradle 7.2
