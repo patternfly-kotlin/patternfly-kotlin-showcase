@@ -19,17 +19,6 @@ internal object AlertComponent {
         )
         pageSection {
             snippet("Types", AlertCode.TYPES) {
-                alert(DEFAULT, "Default alert title")
-                br {}
-                alert(INFO, "Info alert title")
-                br {}
-                alert(SUCCESS, "Success alert title")
-                br {}
-                alert(WARNING, "Warning alert title")
-                br {}
-                alert(DANGER, "Danger alert title")
-            }
-            snippet("Types 2", AlertCode.TYPES) {
                 alert {
                     severity(DEFAULT)
                     title("Default alert title")
@@ -156,15 +145,30 @@ internal object AlertCode {
     //language=kotlin
     const val TYPES: String = """fun main() {
     render {
-        alert(DEFAULT, "Default alert title")
+        alert {
+            severity(DEFAULT)
+            title("Default alert title")
+        }
         br {}
-        alert(INFO, "Info alert title")
+        alert {
+            severity(INFO)
+            title("Info alert title")
+        }
         br {}
-        alert(SUCCESS, "Success alert title")
+        alert {
+            severity(SUCCESS)
+            title("Success alert title")
+        }
         br {}
-        alert(WARNING, "Warning alert title")
+        alert {
+            severity(WARNING)
+            title("Warning alert title")
+        }
         br {}
-        alert(DANGER, "Danger alert title")
+        alert {
+            severity(DANGER)
+            title("Danger alert title")
+        }
     }
 }
 """

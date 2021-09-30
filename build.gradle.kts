@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 // ------------------------------------------------------ core
 
 plugins {
@@ -47,6 +45,8 @@ kotlin {
                     optIn("kotlin.ExperimentalStdlibApi")
                     optIn("kotlin.time.ExperimentalTime")
                     optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                    optIn("kotlinx.coroutines.FlowPreview")
+                    optIn("kotlinx.serialization.ExperimentalSerializationApi")
                 }
             }
         }
