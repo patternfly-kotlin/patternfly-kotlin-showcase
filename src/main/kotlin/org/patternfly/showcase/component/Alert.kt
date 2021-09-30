@@ -30,27 +30,27 @@ internal object AlertComponent {
                 alert(DANGER, "Danger alert title")
             }
             snippet("Types 2", AlertCode.TYPES) {
-                alert2 {
+                alert {
                     severity(DEFAULT)
                     title("Default alert title")
                 }
                 br {}
-                alert2 {
+                alert {
                     severity(INFO)
                     title("Info alert title")
                 }
                 br {}
-                alert2 {
+                alert {
                     severity(SUCCESS)
                     title("Success alert title")
                 }
                 br {}
-                alert2 {
+                alert {
                     severity(WARNING)
                     title("Warning alert title")
                 }
                 br {}
-                alert2 {
+                alert {
                     severity(DANGER)
                     title("Danger alert title")
                 }
@@ -135,11 +135,7 @@ internal object AlertComponent {
                 alert(SUCCESS, "Success alert title", inline = true)
             }
             snippet("Reactive", AlertCode.REACTIVE) {
-//                alert(DEFAULT, "Close me", closable = true) {
-//                    closes handledBy Notification.default("Notification closed")
-//                }
-//                br {}
-                alert2 {
+                alert {
                     severity(DEFAULT)
                     title("Close me")
                     content { +loremIpsum(3) }
