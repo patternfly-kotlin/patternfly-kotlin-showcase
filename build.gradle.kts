@@ -1,14 +1,14 @@
-// ------------------------------------------------------ core
+@file:Suppress("UnstableApiUsage")
 
+// https://youtrack.jetbrains.com/issue/KTIJ-19369#focus=Comments-27-5181027.0-0
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    kotlin("js") version Versions.kotlin
-    kotlin("plugin.serialization") version Versions.serialization
+    alias(libs.plugins.js)
+    alias(libs.plugins.serialization)
 }
 
 group = "org.patternfly"
 version = "0.1.0"
-
-// ------------------------------------------------------ repositories
 
 val repositories = arrayOf(
     "https://oss.sonatype.org/content/repositories/snapshots/",
@@ -21,21 +21,15 @@ repositories {
     repositories.forEach { maven(it) }
 }
 
-// ------------------------------------------------------ dependencies
-
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.serializationJson}")
-    implementation("dev.fritz2:core:${Versions.fritz2}")
-    implementation("dev.fritz2:mvp:${Versions.mvp}")
-    implementation("org.patternfly:patternfly-fritz2:${Versions.patternflyFritz2}")
-    implementation(npm("@github/time-elements", Versions.timeElements))
-    implementation(npm("@patternfly/patternfly", Versions.patternfly))
-    implementation(npm("clipboard", Versions.clipboard))
-    implementation(npm("highlight.js", Versions.highlight))
-    implementation(devNpm("file-loader", Versions.fileLoader))
+    implementation(libs.bundles.fritz2)
+    implementation(libs.serialization.json)
+    implementation(npm("@github/time-elements", libs.versions.timeElements.get()))
+    implementation(npm("@patternfly/patternfly", libs.versions.patternFly.get()))
+    implementation(npm("clipboard", libs.versions.clipboard.get()))
+    implementation(npm("highlight.js", libs.versions.highlight.get()))
+    implementation(devNpm("file-loader", libs.versions.fileLoader.get()))
 }
-
-// ------------------------------------------------------ kotlin/js
 
 kotlin {
     js(IR) {
@@ -57,4 +51,10 @@ kotlin {
         }
         binaries.executable()
     }
+}
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-49124
+// see also https://github.com/webpack/webpack-cli/issues/2990
+rootProject.extensions.configure<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension> {
+    versions.webpackCli.version = "4.9.0"
 }
