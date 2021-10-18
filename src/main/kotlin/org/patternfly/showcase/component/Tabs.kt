@@ -25,7 +25,9 @@ import org.patternfly.tabs
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 object TabsComponent {
     val content: RenderContext.() -> Unit = {
         intro(

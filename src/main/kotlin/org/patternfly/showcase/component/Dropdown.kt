@@ -15,6 +15,7 @@ import org.patternfly.ButtonVariation.primary
 import org.patternfly.Dropdown
 import org.patternfly.DropdownStore
 import org.patternfly.Notification
+import org.patternfly.Severity
 import org.patternfly.Switch
 import org.patternfly.TriState
 import org.patternfly.actionToggle
@@ -32,6 +33,7 @@ import org.patternfly.items
 import org.patternfly.kebabToggle
 import org.patternfly.layout
 import org.patternfly.modifier
+import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.separator
 import org.patternfly.showcase.EVENT_DELAY
@@ -43,7 +45,9 @@ import org.patternfly.updateItems
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 object DropdownComponent {
     val content: RenderContext.() -> Unit = {
         intro(
@@ -62,6 +66,10 @@ object DropdownComponent {
                         }
                         separator()
                         item("Separated Action")
+                    }
+                    store.clicked handledBy notification { item ->
+                        severity(Severity.INFO)
+                        title("You've selected ${item.item}")
                     }
                 }
             }
@@ -257,11 +265,13 @@ object DropdownComponent {
 
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
-                        store.clicked.unwrap() handledBy Notification.add {
-                            info("$name: Clicked on $it")
+                        store.clicked.unwrap() handledBy notification {
+                            severity(Severity.INFO)
+                            title("$name: Clicked on $it")
                         }
-                        expanded.expanded handledBy Notification.add { expanded ->
-                            info("$name: Expanded state: $expanded.")
+                        expanded.expanded handledBy notification { expanded ->
+                            severity(Severity.INFO)
+                            title("$name: Expanded state: $expanded.")
                         }
                     }
                 }
@@ -321,8 +331,9 @@ object DropdownComponent {
                             this@dropdown.store.singleSelection.unwrap().asText()
                         }
                         checkbox {
-                            changes.states() handledBy Notification.add {
-                                info("Checkbox toggle: Checked: $it")
+                            changes.states() handledBy notification {
+                                severity(Severity.INFO)
+                                title("Checkbox toggle: Checked: $it")
                             }
                             triState(this@dropdown.store.singleSelection.unwrap().map {
                                 when (it) {
@@ -632,11 +643,13 @@ object DropdownCode {
 
         fun registerEvents(dropdown: Dropdown<String>, name: String) {
             with(dropdown) {
-                store.singleSelection.unwrap() handledBy Notification.add {
-                    info("${'$'}name: Clicked on ${'$'}it")
+                store.clicked.unwrap() handledBy notification {
+                    severity(Severity.INFO)
+                    title("${'$'}name: Clicked on ${'$'}it")
                 }
-                expanded.expanded handledBy Notification.add { expanded ->
-                    info("${'$'}name: Expanded state: ${'$'}expanded.")
+                expanded.expanded handledBy notification { expanded ->
+                    severity(Severity.INFO)
+                    title("${'$'}name: Expanded state: ${'$'}expanded.")
                 }
             }
         }
@@ -696,8 +709,9 @@ object DropdownCode {
                     this@dropdown.store.singleSelection.unwrap().asText()
                 }
                 checkbox {
-                    changes.states() handledBy Notification.add {
-                        info("Checkbox toggle: Checked: ${'$'}it")
+                    changes.states() handledBy notification {
+                        severity(Severity.INFO)
+                        title("Checkbox toggle: Checked: ${'$'}it")
                     }
                     triState(this@dropdown.store.singleSelection.unwrap().map {
                         when (it) {

@@ -5,7 +5,7 @@ package org.patternfly.showcase.component
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.drop
 import org.patternfly.Align
-import org.patternfly.Notification
+import org.patternfly.Severity
 import org.patternfly.card
 import org.patternfly.cardAction
 import org.patternfly.cardBody
@@ -21,6 +21,7 @@ import org.patternfly.item
 import org.patternfly.items
 import org.patternfly.kebabToggle
 import org.patternfly.modifier
+import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.separator
 
@@ -179,8 +180,9 @@ object CardComponent {
             }
             snippet("Selectable and selected", CardCode.SELECTABLE) {
                 card(selectable = true) {
-                    selected.data.drop(1) handledBy Notification.add {
-                        info("Card is ${if (it) "" else "not "} selected.")
+                    selected.data.drop(1) handledBy notification {
+                        severity(Severity.INFO)
+                        title("Card is ${if (it) "" else "not "} selected.")
                     }
 
                     cardHeader {
@@ -203,8 +205,9 @@ object CardComponent {
                 }
                 br {}
                 card(selectable = true) {
-                    selected.data.drop(1) handledBy Notification.add {
-                        info("Card is ${if (it) "" else "not "} selected.")
+                    selected.data.drop(1) handledBy notification {
+                        severity(Severity.INFO)
+                        title("Card is ${if (it) "" else "not "} selected.")
                     }
 
                     cardTitle { +"Second card" }
@@ -212,8 +215,9 @@ object CardComponent {
                 }
                 br {}
                 card(selectable = true) {
-                    selected.data.drop(1) handledBy Notification.add {
-                        info("Card is ${if (it) "" else "not "} selected.")
+                    selected.data.drop(1) handledBy notification {
+                        severity(Severity.INFO)
+                        title("Card is ${if (it) "" else "not "} selected.")
                     }
 
                     cardHeader {
@@ -234,8 +238,9 @@ object CardComponent {
             }
             snippet("Expandable", CardCode.EXPANDABLE) {
                 card {
-                    expanded.expanded handledBy Notification.add { expanded ->
-                        info("Expanded state of card: $expanded.")
+                    expanded.expanded handledBy notification { expanded ->
+                        severity(Severity.INFO)
+                        title("Expanded state of card: $expanded.")
                     }
                     cardHeader {
                         cardToggle()
@@ -487,8 +492,9 @@ object CardCode {
     const val SELECTABLE: String = """fun main() {
     render {
         card(selectable = true) {
-            selected.data.drop(1) handledBy Notification.add { 
-                info("Card is ${'$'}{if (it) "" else "not "} selected.") 
+            selected.data.drop(1) handledBy notification {
+                severity(Severity.INFO)
+                title("Card is ${'$'}{if (it) "" else "not "} selected.")
             }
 
             cardHeader {
@@ -511,8 +517,9 @@ object CardCode {
         }
         br {}
         card(selectable = true) {
-            selected.data.drop(1) handledBy Notification.add { 
-                info("Card is ${'$'}{if (it) "" else "not "} selected.") 
+            selected.data.drop(1) handledBy notification {
+                severity(Severity.INFO)
+                title("Card is ${'$'}{if (it) "" else "not "} selected.")
             }
 
             cardTitle { +"Second card" }
@@ -520,8 +527,9 @@ object CardCode {
         }
         br {}
         card(selectable = true) {
-            selected.data.drop(1) handledBy Notification.add { 
-                info("Card is ${'$'}{if (it) "" else "not "} selected.") 
+            selected.data.drop(1) handledBy notification {
+                severity(Severity.INFO)
+                title("Card is ${'$'}{if (it) "" else "not "} selected.")
             }
 
             cardHeader {
@@ -552,8 +560,9 @@ object CardCode {
     const val EXPANDABLE: String = """fun main() {
     render {
         card {
-            expanded.expanded handledBy Notification.add { expanded ->
-                info("Expanded state of card: ${'$'}expanded.")
+            expanded.expanded handledBy notification { expanded ->
+                severity(Severity.INFO)
+                title("Expanded state of card: ${'$'}expanded.")
             }
             cardHeader {
                 cardToggle()

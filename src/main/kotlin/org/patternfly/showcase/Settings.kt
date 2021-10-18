@@ -1,5 +1,5 @@
 package org.patternfly.showcase
 
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
-internal val EVENT_DELAY = Duration.milliseconds(333)
+internal val EVENT_DELAY = 333.milliseconds

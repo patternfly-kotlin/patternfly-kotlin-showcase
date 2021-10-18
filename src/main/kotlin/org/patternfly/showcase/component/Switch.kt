@@ -2,7 +2,8 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import org.patternfly.Notification
+import org.patternfly.Severity
+import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.switch
 
@@ -34,8 +35,9 @@ object SwitchComponent {
                 switch {
                     label("Message when on")
                     labelOff("Message when off")
-                    input.changes.states() handledBy Notification.add {
-                        info("Switch is ${if (it) "" else "not"} checked")
+                    input.changes.states() handledBy notification {
+                        severity(Severity.INFO)
+                        title("Switch is ${if (it) "" else "not"} checked")
                     }
                 }
             }
@@ -83,7 +85,8 @@ object SwitchCode {
             label("Message when on")
             labelOff("Message when off")
             input.changes.states() handledBy Notification.add {
-                info("Switch is ${'$'}{if (it) "" else "not"} checked")
+                severity(Severity.INFO)
+                title("Switch is ${'$'}{if (it) "" else "not"} checked")
             }
         }
     }

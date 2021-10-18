@@ -1,14 +1,12 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.Level
 import org.patternfly.Level.H1
 import org.patternfly.Level.H2
 import org.patternfly.Level.H3
 import org.patternfly.Level.H4
 import org.patternfly.Level.H5
 import org.patternfly.Level.H6
-import org.patternfly.Size
 import org.patternfly.Size.LG
 import org.patternfly.Size.MD
 import org.patternfly.Size.XL
@@ -16,7 +14,6 @@ import org.patternfly.Size.XL_2
 import org.patternfly.Size.XL_3
 import org.patternfly.Size.XL_4
 import org.patternfly.pageSection
-import org.patternfly.textContent
 import org.patternfly.title
 
 object TitleComponent {

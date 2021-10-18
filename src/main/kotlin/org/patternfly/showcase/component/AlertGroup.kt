@@ -8,15 +8,19 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariation.secondary
 import org.patternfly.Notification
-import org.patternfly.NotificationStore
-import org.patternfly.Severity.*
-import org.patternfly.alert
-import org.patternfly.alertDescription
+import org.patternfly.Severity.DANGER
+import org.patternfly.Severity.DEFAULT
+import org.patternfly.Severity.INFO
+import org.patternfly.Severity.SUCCESS
+import org.patternfly.Severity.WARNING
 import org.patternfly.alertGroup
 import org.patternfly.clickButton
+import org.patternfly.notification
 import org.patternfly.pageSection
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 object AlertGroupComponent {
     val content: RenderContext.() -> Unit = {
         intro(
@@ -27,9 +31,14 @@ object AlertGroupComponent {
         pageSection(baseClass = "sc-component__buttons") {
             snippet("Static alert group", AlertGroupCode.STATIC_ALERT_GROUP) {
                 alertGroup {
-                    alert(DEFAULT, "Default alert title", inline = true)
-                    alert(INFO, "Info alert title", inline = true) {
-                        alertDescription {
+                    alert {
+                        severity(DEFAULT)
+                        title("Default alert title")
+                    }
+                    alert {
+                        severity(INFO)
+                        title("Info alert title")
+                        content {
                             p {
                                 +"Info alert description. "
                                 a {
@@ -39,9 +48,18 @@ object AlertGroupComponent {
                             }
                         }
                     }
-                    alert(SUCCESS, "Success alert title", inline = true)
-                    alert(WARNING, "Warning alert title", inline = true)
-                    alert(DANGER, "Danger alert title", inline = true)
+                    alert {
+                        severity(SUCCESS)
+                        title("Success alert title")
+                    }
+                    alert {
+                        severity(WARNING)
+                        title("Warning alert title")
+                    }
+                    alert {
+                        severity(DANGER)
+                        title("Danger alert title")
+                    }
                 }
             }
             snippet("Toast alert group", AlertGroupCode.TOAST_ALERT_GROUP) {
@@ -64,9 +82,12 @@ object AlertGroupComponent {
                 MainScope().launch {
                     tick.data.collect {
                         while (tick.current) {
-                            NotificationStore.add(Notification(INFO, "Async notification #$counter"))
+                            notification<Int> { counter ->
+                                severity(INFO)
+                                title("Async notification #$counter")
+                            }
                             counter++
-                            delay(Duration.milliseconds(750))
+                            delay(750.milliseconds)
                         }
                     }
                 }
@@ -81,9 +102,14 @@ internal object AlertGroupCode {
     const val STATIC_ALERT_GROUP: String = """fun main() {
     render {
         alertGroup {
-            alert(DEFAULT, "Default alert title", inline = true)
-            alert(INFO, "Info alert title", inline = true) {
-                alertDescription {
+            alert {
+                severity(DEFAULT)
+                title("Default alert title")
+            }
+            alert {
+                severity(INFO)
+                title("Info alert title")
+                content {
                     p {
                         +"Info alert description. "
                         a {
@@ -93,9 +119,18 @@ internal object AlertGroupCode {
                     }
                 }
             }
-            alert(SUCCESS, "Success alert title", inline = true)
-            alert(WARNING, "Warning alert title", inline = true)
-            alert(DANGER, "Danger alert title", inline = true)
+            alert { 
+                severity(SUCCESS)
+                title("Success alert title") 
+            }
+            alert { 
+                severity(WARNING)
+                title("Warning alert title") 
+            }
+            alert { 
+                severity(DANGER)
+                title("Danger alert title") 
+            }
         }
     }
 }
@@ -121,15 +156,17 @@ internal object AlertGroupCode {
     const val REACTIVE: String = """fun main() {
     render {
         val tick = storeOf(false)
-
         clickButton(secondary) { +"Start async alerts" }.map { true } handledBy tick.update
         clickButton(secondary) { +"Stop async alerts" }.map { false } handledBy tick.update
-    
+
         var counter = 0
         MainScope().launch {
             tick.data.collect {
                 while (tick.current) {
-                    NotificationStore.add(Notification(INFO, "Async notification #${'$'}counter"))
+                    notification<Int> { counter ->
+                        severity(INFO)
+                        title("Async notification #${'$'}counter")
+                    }
                     counter++
                     delay(750.milliseconds)
                 }

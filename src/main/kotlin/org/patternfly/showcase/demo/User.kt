@@ -140,8 +140,9 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             }
                             cardAction {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    store.singleSelection.unwrap() handledBy Notification.add {
-                                        info("$it ${user.name} not yet implemented")
+                                    store.singleSelection.unwrap() handledBy notification {
+                                        severity(Severity.INFO)
+                                        title("$it ${user.name} not yet implemented")
                                     }
                                     kebabToggle()
                                     items {
@@ -195,11 +196,13 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                                 }
                             }
                             dataListAction {
-                                clickButton(secondary) { +"Edit" } handledBy Notification.add {
-                                    info("Edit ${user.name} not yet implemented")
+                                clickButton(secondary) { +"Edit" } handledBy notification {
+                                    severity(Severity.INFO)
+                                    title("Edit ${user.name} not yet implemented")
                                 }
-                                clickButton(secondary) { +"Remove" } handledBy Notification.add {
-                                    info("Remove ${user.name} not yet implemented")
+                                clickButton(secondary) { +"Remove" } handledBy notification {
+                                    severity(Severity.INFO)
+                                    title("Remove ${user.name} not yet implemented")
                                 }
                             }
                         }
@@ -251,8 +254,9 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                     dataTableActionColumn { user ->
                         dropdown<String>(align = Align.RIGHT) {
-                            store.singleSelection.unwrap() handledBy Notification.add {
-                                info("$it ${user.name} not yet implemented")
+                            store.singleSelection.unwrap() handledBy notification {
+                                severity(Severity.INFO)
+                                title("$it ${user.name} not yet implemented")
                             }
                             kebabToggle()
                             items {

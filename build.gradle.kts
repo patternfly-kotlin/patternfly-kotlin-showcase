@@ -36,11 +36,7 @@ kotlin {
         sourceSets {
             named("main") {
                 languageSettings.apply {
-                    optIn("kotlin.ExperimentalStdlibApi")
-                    optIn("kotlin.time.ExperimentalTime")
-                    optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
-                    optIn("kotlinx.coroutines.FlowPreview")
-                    optIn("kotlinx.serialization.ExperimentalSerializationApi")
+                    optIn("kotlin.RequiresOptIn")
                 }
             }
         }

@@ -8,14 +8,38 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.*
-import org.patternfly.ButtonVariation.*
+import org.patternfly.ButtonVariation.control
+import org.patternfly.ButtonVariation.danger
+import org.patternfly.ButtonVariation.inline
+import org.patternfly.ButtonVariation.link
+import org.patternfly.ButtonVariation.plain
+import org.patternfly.ButtonVariation.primary
+import org.patternfly.ButtonVariation.secondary
+import org.patternfly.ButtonVariation.tertiary
 import org.patternfly.IconPosition.ICON_FIRST
 import org.patternfly.IconPosition.ICON_LAST
+import org.patternfly.Notification
+import org.patternfly.Switch
+import org.patternfly.aria
+import org.patternfly.buttonIcon
+import org.patternfly.classes
+import org.patternfly.clickButton
+import org.patternfly.component
+import org.patternfly.fas
+import org.patternfly.icon
+import org.patternfly.layout
+import org.patternfly.linkButton
+import org.patternfly.modifier
+import org.patternfly.pageSection
+import org.patternfly.pushButton
 import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.switch
+import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 object ButtonComponent {
     val content: RenderContext.() -> Unit = {
         intro(

@@ -15,8 +15,6 @@ import org.patternfly.Align.RIGHT
 import org.patternfly.ItemSelection.MULTIPLE
 import org.patternfly.ItemSelection.SINGLE
 import org.patternfly.ItemSelection.SINGLE_PER_GROUP
-import org.patternfly.Notification
-import org.patternfly.NotificationStore
 import org.patternfly.OptionsMenu
 import org.patternfly.OptionsMenuStore
 import org.patternfly.Severity
@@ -32,6 +30,7 @@ import org.patternfly.item
 import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
+import org.patternfly.notification
 import org.patternfly.optionsMenu
 import org.patternfly.pageSection
 import org.patternfly.separator
@@ -43,7 +42,9 @@ import org.patternfly.updateItems
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 object OptionsMenuComponent {
     val content: RenderContext.() -> Unit = {
         intro(
@@ -200,22 +201,26 @@ object OptionsMenuComponent {
                     with(optionsMenu) {
                         store.selection.unwrap()
                             .drop(1)
-                            .map { Notification(Severity.INFO, "$name: Selection $it") }
-                            .handledBy(NotificationStore.add)
-                        expanded.collapsed
-                            .map { Notification(Severity.INFO, "$name: Options menu collapsed") }
-                            .handledBy(NotificationStore.add)
-                        expanded.expanded
-                            .map { Notification(Severity.INFO, "$name: Options menu expanded") }
-                            .handledBy(NotificationStore.add)
+                            .handledBy(notification {
+                                severity(Severity.INFO)
+                                title("$name: Selection $it")
+                            })
+                        expanded.collapsed handledBy notification {
+                            severity(Severity.INFO)
+                            title("$name: Options menu collapsed")
+                        }
+                        expanded.expanded handledBy notification {
+                            severity(Severity.INFO)
+                            title("$name: Options menu expanded")
+                        }
                     }
                 }
 
                 fun items(store: OptionsMenuStore<String>) {
                     store.updateItems {
-                            item("Option 1") { selected = true }
-                            item("Option 2")
-                            item("Option 3")
+                        item("Option 1") { selected = true }
+                        item("Option 2")
+                        item("Option 3")
                     }
                 }
 
@@ -480,14 +485,18 @@ object OptionsMenuCode {
             with(optionsMenu) {
                 store.selection.unwrap()
                     .drop(1)
-                    .map { Notification(Severity.INFO, "${'$'}name: Selection ${'$'}it") }
-                    .handledBy(NotificationStore.add)
-                expanded.collapsed
-                    .map { Notification(Severity.INFO, "${'$'}name: Options menu collapsed") }
-                    .handledBy(NotificationStore.add)
-                expanded.expanded
-                    .map { Notification(Severity.INFO, "${'$'}name: Options menu expanded") }
-                    .handledBy(NotificationStore.add)
+                    .handledBy(notification {
+                        severity(Severity.INFO)
+                        title("${'$'}name: Selection ${'$'}it")
+                    })
+                expanded.collapsed handledBy notification { 
+                    severity(Severity.INFO)
+                    title("${'$'}name: Options menu collapsed")
+                }
+                expanded.expanded handledBy notification { 
+                    severity(Severity.INFO)
+                    title("${'$'}name: Options menu expanded")
+                }
             }
         }
 

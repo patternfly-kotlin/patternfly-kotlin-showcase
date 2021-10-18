@@ -14,7 +14,9 @@ import org.patternfly.pageSection
 import org.patternfly.showcase.EVENT_DELAY
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 object ChipComponent {
     val content: RenderContext.() -> Unit = {
         intro(

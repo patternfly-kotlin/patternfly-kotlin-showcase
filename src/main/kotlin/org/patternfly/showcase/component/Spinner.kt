@@ -1,14 +1,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.DividerVariant.DIV
-import org.patternfly.DividerVariant.HR
-import org.patternfly.DividerVariant.LI
 import org.patternfly.Size
-import org.patternfly.classes
-import org.patternfly.divider
-import org.patternfly.layout
-import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.spinner
 import org.patternfly.util
