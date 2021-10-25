@@ -31,26 +31,26 @@ object BadgeComponent {
         )
         pageSection(baseClass = "sc-component__badges") {
             snippet("Read", BadgeCode.READ) {
-                badge { +"7" }
-                badge { +"24" }
-                badge { +"240" }
-                badge { +"999+" }
+                badge { count(7) }
+                badge { count(24) }
+                badge { count(240) }
+                badge { count(999) }
             }
             snippet("Unread", BadgeCode.UNREAD) {
                 badge {
-                    +"7"
+                    count(7)
                     read(false)
                 }
                 badge {
-                    +"24"
+                    count(24)
                     read(false)
                 }
                 badge {
-                    +"240"
+                    count(240)
                     read(false)
                 }
                 badge {
-                    +"999+"
+                    count(999)
                     read(false)
                 }
             }
@@ -79,9 +79,10 @@ object BadgeComponent {
                         input.checked(true)
                     }
                 }
-                badge(min = 100, max = 400) {
+                badge {
+                    bounds(100, 400)
                     read(state.input.changes.states())
-                    value(range.inputs.events.map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() })
+                    count(range.inputs.events.map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() })
                 }
 
                 MainScope().launch {

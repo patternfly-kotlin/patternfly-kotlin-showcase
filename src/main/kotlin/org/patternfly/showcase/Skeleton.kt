@@ -4,38 +4,24 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.mvp.PlaceManager
 import dev.fritz2.mvp.managedBy
 import dev.fritz2.mvp.placeRequest
-import org.patternfly.brand
 import org.patternfly.group
 import org.patternfly.groups
 import org.patternfly.item
-import org.patternfly.notificationBadge
 import org.patternfly.page
-import org.patternfly.pageHeader
-import org.patternfly.pageHeaderTools
-import org.patternfly.pageHeaderToolsItem
-import org.patternfly.pageMain
-import org.patternfly.pageSidebar
 import org.patternfly.showcase.component.components
 import org.patternfly.verticalNavigation
 
 fun RenderContext.skeleton(placeManager: PlaceManager) {
     page {
-        pageHeader {
-            brand {
-                link {
-                    href("#home")
-                    img {
-                        src("./header-logo.svg")
-                    }
-                }
+        masthead {
+            brand("#home") {
+                src("./header-logo.svg")
             }
-            pageHeaderTools {
-                pageHeaderToolsItem {
-                    notificationBadge()
-                }
-            }
+//            toolbar {
+//                notificationBadge()
+//            }
         }
-        pageSidebar {
+        sidebar {
             verticalNavigation(placeManager.router, expandable = true) {
                 groups {
                     group {
@@ -53,7 +39,7 @@ fun RenderContext.skeleton(placeManager: PlaceManager) {
                 }
             }
         }
-        pageMain(id = "main") {
+        main {
             managedBy(placeManager)
         }
     }

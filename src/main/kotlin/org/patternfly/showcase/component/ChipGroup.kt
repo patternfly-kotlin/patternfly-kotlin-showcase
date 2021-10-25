@@ -5,7 +5,6 @@ import org.patternfly.ButtonVariation.link
 import org.patternfly.ChipGroupStore
 import org.patternfly.IconPosition.ICON_FIRST
 import org.patternfly.Notification
-import org.patternfly.badge
 import org.patternfly.buttonIcon
 import org.patternfly.chip
 import org.patternfly.chipGroup
@@ -86,7 +85,7 @@ object ChipGroupComponent {
                         chip {
                             +word.text
                             badge {
-                                value(word.letters)
+                                count(word.letters)
                             }
                         }
                     }

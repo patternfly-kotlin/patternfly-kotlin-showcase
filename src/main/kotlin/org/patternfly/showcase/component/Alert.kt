@@ -21,30 +21,15 @@ internal object AlertComponent {
         )
         pageSection {
             snippet("Types", AlertCode.TYPES) {
-                alert {
-                    severity(DEFAULT)
-                    title("Default alert title")
-                }
+                alert(DEFAULT, "Default alert title")
                 br {}
-                alert {
-                    severity(INFO)
-                    title("Info alert title")
-                }
+                alert(INFO, "Info alert title")
                 br {}
-                alert {
-                    severity(SUCCESS)
-                    title("Success alert title")
-                }
+                alert(SUCCESS, "Success alert title")
                 br {}
-                alert {
-                    severity(WARNING)
-                    title("Warning alert title")
-                }
+                alert(WARNING, "Warning alert title")
                 br {}
-                alert {
-                    severity(DANGER)
-                    title("Danger alert title")
-                }
+                alert(DANGER, "Danger alert title")
             }
             snippet("Variations", AlertCode.VARIATIONS) {
                 alert {
@@ -54,8 +39,12 @@ internal object AlertComponent {
                         p { +"Success alert description. This should tell the user more information about the alert." }
                     }
                     closable(true)
-                    action("View details")
-                    action("Ignore")
+                    action("View details") {
+                        Notification.info("NYI")
+                    }
+                    action("Ignore") {
+                        Notification.info("NYI")
+                    }
                 }
                 br {}
                 alert {
@@ -77,8 +66,12 @@ internal object AlertComponent {
                     severity(SUCCESS)
                     title("Success alert title")
                     closable(true)
-                    action("View details")
-                    action("Ignore")
+                    action("View details") {
+                        Notification.info("NYI")
+                    }
+                    action("Ignore") {
+                        Notification.info("NYI")
+                    }
                 }
                 br {}
                 alert {
@@ -128,8 +121,12 @@ internal object AlertComponent {
                         p { +"Success alert description. This should tell the user more information about the alert." }
                     }
                     closable(true)
-                    action("View details")
-                    action("Ignore")
+                    action("View details") {
+                        Notification.info("NYI")
+                    }
+                    action("Ignore") {
+                        Notification.info("NYI")
+                    }
                 }
                 br {}
                 alert {
@@ -153,8 +150,12 @@ internal object AlertComponent {
                     inline(true)
                     title("Success alert title")
                     closable(true)
-                    action("View details")
-                    action("Ignore")
+                    action("View details") {
+                        Notification.info("NYI")
+                    }
+                    action("Ignore") {
+                        Notification.info("NYI")
+                    }
                 }
                 br {}
                 alert {
@@ -175,7 +176,7 @@ internal object AlertComponent {
                     severity(DEFAULT)
                     title("Close me")
                     content { +loremIpsum(3) }
-                    closable(true) {
+                    closeButton {
                         clicks handledBy Notification.default("Notification closed")
                     }
                     action("Click me") {

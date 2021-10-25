@@ -6,8 +6,6 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.patternfly.Notification
-import org.patternfly.badge
 import org.patternfly.chip
 import org.patternfly.component
 import org.patternfly.pageSection
@@ -32,19 +30,20 @@ object ChipComponent {
                 br {}
                 chip {
                     +"Chip"
-                    badge { +"23" }
+                    badge { count(23) }
                 }
                 br {}
-                chip(readOnly = true) { +"Read-only chip" }
+                chip { +"Read-only chip"; readOnly(true) }
                 br {}
-                chip(readOnly = true) {
+                chip {
                     +"Read-only chip"
-                    badge { +"42" }
+                    badge { count(42) }
+
                 }
                 br {}
                 chip {
                     +"Cloe me"
-                    closes handledBy Notification.info("Chip closed")
+//                    closes handledBy Notification.info("Chip closed")
                 }
             }
             snippet("Reactive", ChipCode.REACTIVE) {
@@ -57,7 +56,8 @@ object ChipComponent {
                 }
                 br {}
                 br {}
-                chip(readOnly = true) {
+                chip {
+                    readOnly(true)
                     text.keyups.map { currentValue(it) }.asText()
                 }
                 br {}
@@ -65,17 +65,18 @@ object ChipComponent {
                     text.keyups.map { currentValue(it) }.asText()
                 }
                 br {}
-                chip(readOnly = true) {
+                chip {
+                    readOnly(true)
                     text.keyups.map { currentValue(it) }.asText()
                     badge {
-                        value(text.keyups.map { currentValue(it).length })
+                        count(text.keyups.map { currentValue(it).length })
                     }
                 }
                 br {}
                 chip {
                     text.keyups.map { currentValue(it) }.asText()
                     badge {
-                        value(text.keyups.map { currentValue(it).length })
+                        count(text.keyups.map { currentValue(it).length })
                     }
                 }
 
@@ -99,7 +100,7 @@ object ChipCode {
         br {}
         chip {
             +"Chip"
-            badge { +"23" }
+            badge { count(23) }
         }
         br {}
         chip(readOnly = true) { +"Read-only chip" }
