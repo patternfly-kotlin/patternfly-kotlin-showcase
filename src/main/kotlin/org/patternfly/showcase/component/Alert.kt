@@ -3,13 +3,13 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.Notification
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
 import org.patternfly.Severity.SUCCESS
 import org.patternfly.Severity.WARNING
 import org.patternfly.alert
+import org.patternfly.notification
 import org.patternfly.pageSection
 
 internal object AlertComponent {
@@ -40,10 +40,10 @@ internal object AlertComponent {
                     }
                     closable(true)
                     action("View details") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                     action("Ignore") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                 }
                 br {}
@@ -67,10 +67,10 @@ internal object AlertComponent {
                     title("Success alert title")
                     closable(true)
                     action("View details") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                     action("Ignore") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                 }
                 br {}
@@ -122,10 +122,10 @@ internal object AlertComponent {
                     }
                     closable(true)
                     action("View details") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                     action("Ignore") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                 }
                 br {}
@@ -151,10 +151,10 @@ internal object AlertComponent {
                     title("Success alert title")
                     closable(true)
                     action("View details") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                     action("Ignore") {
-                        Notification.info("NYI")
+                        clicks handledBy notification(INFO, "NYI")
                     }
                 }
                 br {}
@@ -177,10 +177,10 @@ internal object AlertComponent {
                     title("Close me")
                     content { +loremIpsum(3) }
                     closeButton {
-                        clicks handledBy Notification.default("Notification closed")
+                        clicks handledBy notification(DEFAULT,  "Notification closed")
                     }
                     action("Click me") {
-                        clicks handledBy Notification.default("You did it!")
+                        clicks handledBy notification(DEFAULT, "You did it!")
                     }
                 }
             }

@@ -4,7 +4,7 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
 import org.patternfly.ButtonVariation
-import org.patternfly.Notification
+import org.patternfly.Severity.INFO
 import org.patternfly.Size
 import org.patternfly.emptyState
 import org.patternfly.emptyStateBody
@@ -13,6 +13,7 @@ import org.patternfly.emptyStatePrimary
 import org.patternfly.emptyStateSecondary
 import org.patternfly.emptyStateSpinner
 import org.patternfly.fas
+import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.pushButton
 
@@ -133,7 +134,7 @@ object EmptyStateComponent {
                 emptyStateSpinner()
             }
             snippet("No match found", EmptyStateCode.NO_RESULTS) {
-                emptyStateNoResults(action = Pair("Clear filter", Notification.info("This should clear all filters.")))
+                emptyStateNoResults(action = Pair("Clear filter", notification(INFO, "This should clear all filters.")))
             }
         }
     }

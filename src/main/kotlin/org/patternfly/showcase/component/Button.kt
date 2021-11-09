@@ -1,3 +1,5 @@
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.Events
@@ -18,7 +20,7 @@ import org.patternfly.ButtonVariation.secondary
 import org.patternfly.ButtonVariation.tertiary
 import org.patternfly.IconPosition.ICON_FIRST
 import org.patternfly.IconPosition.ICON_LAST
-import org.patternfly.Notification
+import org.patternfly.Severity.INFO
 import org.patternfly.Switch
 import org.patternfly.aria
 import org.patternfly.buttonIcon
@@ -30,6 +32,7 @@ import org.patternfly.icon
 import org.patternfly.layout
 import org.patternfly.linkButton
 import org.patternfly.modifier
+import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.pushButton
 import org.patternfly.showcase.EVENT_DELAY
@@ -228,7 +231,7 @@ object ButtonComponent {
                 clickButton(baseClass = "primary".modifier()) {
                     disabled(enabled.input.changes.states().map { !it })
                     text.keyups.map { currentValue(it) }.asText()
-                } handledBy Notification.info("Button clicked")
+                } handledBy notification(INFO, "Button clicked")
 
                 MainScope().launch {
                     delay(EVENT_DELAY)

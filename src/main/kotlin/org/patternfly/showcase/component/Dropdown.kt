@@ -1,4 +1,4 @@
-@file:Suppress("DuplicatedCode")
+@file:Suppress("DuplicatedCode", "EXPERIMENTAL_IS_NOT_ENABLED")
 
 package org.patternfly.showcase.component
 
@@ -14,8 +14,7 @@ import org.patternfly.Align.RIGHT
 import org.patternfly.ButtonVariation.primary
 import org.patternfly.Dropdown
 import org.patternfly.DropdownStore
-import org.patternfly.Notification
-import org.patternfly.Severity
+import org.patternfly.Severity.INFO
 import org.patternfly.Switch
 import org.patternfly.TriState
 import org.patternfly.actionToggle
@@ -68,7 +67,7 @@ object DropdownComponent {
                         item("Separated Action")
                     }
                     store.clicked handledBy notification { item ->
-                        severity(Severity.INFO)
+                        severity(INFO)
                         title("You've selected ${item.item}")
                     }
                 }
@@ -266,11 +265,11 @@ object DropdownComponent {
                 fun registerEvents(dropdown: Dropdown<String>, name: String) {
                     with(dropdown) {
                         store.clicked.unwrap() handledBy notification {
-                            severity(Severity.INFO)
+                            severity(INFO)
                             title("$name: Clicked on $it")
                         }
                         expanded.expanded handledBy notification { expanded ->
-                            severity(Severity.INFO)
+                            severity(INFO)
                             title("$name: Expanded state: $expanded.")
                         }
                     }
@@ -332,7 +331,7 @@ object DropdownComponent {
                         }
                         checkbox {
                             changes.states() handledBy notification {
-                                severity(Severity.INFO)
+                                severity(INFO)
                                 title("Checkbox toggle: Checked: $it")
                             }
                             triState(this@dropdown.store.singleSelection.unwrap().map {
@@ -357,7 +356,7 @@ object DropdownComponent {
                     disabled(enabled.input.changes.states().map { !it })
                     actionToggle {
                         text.keyups.map { currentValue(it) }.asText()
-                    } handledBy Notification.info("Action toggle (text): Clicked")
+                    } handledBy notification(INFO, "Action toggle (text): Clicked")
                     registerEvents(this, "Action toggle (text)")
                     items(store)
                 }
@@ -365,7 +364,7 @@ object DropdownComponent {
                     disabled(enabled.input.changes.states().map { !it })
                     actionToggle {
                         icon("cog".fas())
-                    } handledBy Notification.info("Action toggle (icon): Clicked")
+                    } handledBy notification(INFO, "Action toggle (icon): Clicked")
                     registerEvents(this, "Action toggle (icon)")
                     items(store)
                 }

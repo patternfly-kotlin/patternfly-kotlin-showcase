@@ -3,7 +3,9 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
+import org.patternfly.Severity.INFO
 import org.patternfly.accordion
+import org.patternfly.notification
 import org.patternfly.pageSection
 
 object AccordionComponent {
@@ -20,6 +22,12 @@ object AccordionComponent {
                         title("Item one")
                         content {
                             p { +loremIpsum(2) }
+                        }
+                        events {
+                            clicks handledBy notification(INFO, "Clicked")
+                            coexs handledBy notification(INFO) { expanded ->
+                                title("Expanded: $expanded")
+                            }
                         }
                     }
                     item {

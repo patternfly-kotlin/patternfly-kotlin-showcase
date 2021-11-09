@@ -1,3 +1,5 @@
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.storeOf
@@ -7,7 +9,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariation.secondary
-import org.patternfly.Notification
+import org.patternfly.NotificationAlert
+import org.patternfly.NotificationStore
 import org.patternfly.Severity.DANGER
 import org.patternfly.Severity.DEFAULT
 import org.patternfly.Severity.INFO
@@ -65,13 +68,13 @@ object AlertGroupComponent {
             snippet("Toast alert group", AlertGroupCode.TOAST_ALERT_GROUP) {
                 clickButton(secondary) {
                     +"Add toast success alert"
-                } handledBy Notification.success("Toast Success Alert")
+                } handledBy notification(SUCCESS, "Toast Success Alert")
                 clickButton(secondary) {
                     +"Add toast danger alert"
-                } handledBy Notification.error("Toast Danger Alert")
+                } handledBy notification(DANGER, "Toast Danger Alert")
                 clickButton(secondary) {
                     +"Add toast info alert"
-                } handledBy Notification.info("Toast Info Alert")
+                } handledBy notification(INFO, "Toast Info Alert")
             }
             snippet("Reactive", AlertGroupCode.REACTIVE) {
                 val tick = storeOf(false)
@@ -82,12 +85,9 @@ object AlertGroupComponent {
                 MainScope().launch {
                     tick.data.collect {
                         while (tick.current) {
-                            notification<Int> { counter ->
-                                severity(INFO)
-                                title("Async notification #$counter")
-                            }
-                            counter++
+                            NotificationStore.add(NotificationAlert(INFO, "Async notification #$counter"))
                             delay(750.milliseconds)
+                            counter++
                         }
                     }
                 }
