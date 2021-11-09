@@ -6,6 +6,7 @@ import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.routing.router
 import org.patternfly.Severity.INFO
 import org.patternfly.navigation
+import org.patternfly.navigationStore
 import org.patternfly.notification
 import org.patternfly.page
 import org.patternfly.pageSection
@@ -20,9 +21,10 @@ object NavigationComponent {
         )
         pageSection {
             snippet("Default", NavigationCode.DEFAULT) {
+                val router = router("home")
                 page {
                     sidebar {
-                        navigation(router("home")) {
+                        navigation(router) {
                             item("link1", "Link 1") {
                                 events {
                                     clicks handledBy notification(INFO, "Custom navigation!")
@@ -36,9 +38,10 @@ object NavigationComponent {
                 }
             }
             snippet("Grouped", NavigationCode.GROUPED) {
+                val router = router("home")
                 page {
                     sidebar {
-                        navigation(router("home")) {
+                        navigation(router) {
                             group("Group 1") {
                                 item("link11", "Link 1")
                                 item("link12", "Link 2")
@@ -54,9 +57,10 @@ object NavigationComponent {
                 }
             }
             snippet("Expandable", NavigationCode.EXPANDABLE) {
+                val router = router("home")
                 page {
                     sidebar {
-                        navigation(router("home"), expandable = true) {
+                        navigation(router, expandable = true) {
                             group("Group 1") {
                                 item("link11", "Link 1")
                                 separator()
@@ -78,9 +82,10 @@ object NavigationComponent {
                 }
             }
             snippet("Mixed", NavigationCode.MIXED) {
+                val router = router("home")
                 page {
                     sidebar {
-                        navigation(router("home"), expandable = true) {
+                        navigation(router, expandable = true) {
                             item("link1", "Link 1")
                             item("link2", "Link 2")
                             item("link3", "Link 3")
@@ -100,10 +105,11 @@ object NavigationComponent {
             }
         }
         snippet("Horizontal", NavigationCode.HORIZONTAL) {
+            val router = router("home")
             page {
                 masthead {
                     content {
-                        navigation(router("home")) {
+                        navigation(router) {
                             item("link1", "Link 1")
                             item("link2", "Link 2")
                             item("link3", "Link 3")
@@ -114,10 +120,11 @@ object NavigationComponent {
             }
         }
         snippet("Subnav", NavigationCode.TERTIARY) {
+            val router = router("home")
             page {
                 main {
                     pageSubNav {
-                        navigation(router("home")) {
+                        navigation(router) {
                             item("link1", "Link 1")
                             item("link2", "Link 2")
                             item("link3", "Link 3")
@@ -134,6 +141,29 @@ object NavigationComponent {
                             item("link14", "Link 14")
                         }
                     }
+                }
+            }
+        }
+        snippet("Store", NavigationCode.DEFAULT) {
+            val router = router("home")
+            val store = navigationStore<String> {
+                item("link1", "Link 1")
+                item("link2", "Link 2")
+                item("link3", "Link 3")
+                group("Group 1") {
+                    item("link11", "Link 1")
+                    item("link12", "Link 2")
+                    item("link13", "Link 3")
+                }
+                group("Group 2") {
+                    item("link121", "Link 1")
+                    item("link122", "Link 2")
+                    item("link123", "Link 3")
+                }
+            }
+            page {
+                sidebar {
+                    navigation(router, store)
                 }
             }
         }
