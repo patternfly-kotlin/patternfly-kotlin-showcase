@@ -4,6 +4,11 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.js)
+    // Activate as soon as
+    // https://github.com/google/ksp/issues/33 and
+    // https://github.com/varabyte/kobweb/issues/4
+    // have been fixed
+    // alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
 }
 
