@@ -1,7 +1,7 @@
 [versions]
 clipboard = "2.0.8"
 fileLoader = "6.2.0"
-fritz2 = "0.13"
+fritz2 = "0.12"
 highlight = "11.3.1"
 kotlin = "1.6.0"
 ksp = "1.6.0-1.0.1"
@@ -9,7 +9,7 @@ mvp = "0.3.0"
 patternFly = "4.151.4"
 patternFlyFritz2 = "0.3.0-SNAPSHOT"
 serialization = "1.3.1"
-timeElements = "3.1.2"
+timeElements = "3.1.1"
 
 [libraries]
 fritz2-core = { module = "dev.fritz2:core", version.ref = "fritz2" }
