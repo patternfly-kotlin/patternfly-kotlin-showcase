@@ -22,13 +22,9 @@ import org.patternfly.dom.Id
 import org.patternfly.dropdown
 import org.patternfly.fas
 import org.patternfly.icon
-import org.patternfly.item
-import org.patternfly.items
-import org.patternfly.kebabToggle
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.pushButton
-import org.patternfly.separator
 
 object DataListComponent {
     val content: RenderContext.() -> Unit = {
@@ -140,15 +136,13 @@ object DataListComponent {
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        kebabToggle()
-                                        items {
-                                            item("Action")
-                                            item("Disabled Action") {
-                                                disabled = true
-                                            }
-                                            separator()
-                                            item("Separated Action")
+                                        toggle { kebab() }
+                                        item("Item 1")
+                                        item("Disabled Item") {
+                                            disabled(true)
                                         }
+                                        separator()
+                                        item("Separated Item")
                                     }
                                 }
                             }
@@ -168,15 +162,13 @@ object DataListComponent {
                             dataListAction("hidden-on-lg".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        kebabToggle()
-                                        items {
-                                            item("Action")
-                                            item("Disabled Action") {
-                                                disabled = true
-                                            }
-                                            separator()
-                                            item("Separated Action")
+                                        toggle { kebab() }
+                                        item("Item 1")
+                                        item("Disabled Item") {
+                                            disabled(true)
                                         }
+                                        separator()
+                                        item("Separated Item")
                                     }
                                 }
                             }
@@ -200,15 +192,13 @@ object DataListComponent {
                             dataListAction("hidden-on-xl".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        kebabToggle()
-                                        items {
-                                            item("Action")
-                                            item("Disabled Action") {
-                                                disabled = true
-                                            }
-                                            separator()
-                                            item("Separated Action")
+                                        toggle { kebab() }
+                                        item("Item 1")
+                                        item("Disabled Item") {
+                                            disabled(true)
                                         }
+                                        separator()
+                                        item("Separated Item")
                                     }
                                 }
                             }
@@ -259,15 +249,13 @@ object DataListComponent {
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
                                     dropdown<String>(align = Align.RIGHT) {
-                                        kebabToggle()
-                                        items {
-                                            item("Action")
-                                            item("Disabled Action") {
-                                                disabled = true
-                                            }
-                                            separator()
-                                            item("Separated Action")
+                                        toggle { kebab() }
+                                        item("Item 1")
+                                        item("Disabled Item") {
+                                            disabled(true)
                                         }
+                                        separator()
+                                        item("Separated Item")
                                     }
                                 }
                             }
@@ -312,15 +300,13 @@ object DataListComponent {
                                 dataListAction {
                                     div(baseClass = "data-list".component("action")) {
                                         dropdown<String>(align = Align.RIGHT) {
-                                            kebabToggle()
-                                            items {
-                                                item("Action")
-                                                item("Disabled Action") {
-                                                    disabled = true
-                                                }
-                                                separator()
-                                                item("Separated Action")
+                                            toggle { kebab() }
+                                            item("Item 1")
+                                            item("Disabled Item") {
+                                                disabled(true)
                                             }
+                                            separator()
+                                            item("Separated Item")
                                         }
                                     }
                                 }
@@ -356,15 +342,13 @@ object DataListComponent {
                                 dataListAction {
                                     div(baseClass = "data-list".component("action")) {
                                         dropdown<String>(align = Align.RIGHT) {
-                                            kebabToggle()
-                                            items {
-                                                item("Action")
-                                                item("Disabled Action") {
-                                                    disabled = true
-                                                }
-                                                separator()
-                                                item("Separated Action")
+                                            toggle { kebab() }
+                                            item("Item 1")
+                                            item("Disabled Item") {
+                                                disabled(true)
                                             }
+                                            separator()
+                                            item("Separated Item")
                                         }
                                     }
                                 }
@@ -401,15 +385,13 @@ object DataListComponent {
                                     dataListAction {
                                         div(baseClass = "data-list".component("action")) {
                                             dropdown<String>(align = Align.RIGHT) {
-                                                kebabToggle()
-                                                items {
-                                                    item("Action")
-                                                    item("Disabled Action") {
-                                                        disabled = true
-                                                    }
-                                                    separator()
-                                                    item("Separated Action")
+                                                toggle { kebab() }
+                                                item("Item 1")
+                                                item("Disabled Item") {
+                                                    disabled(true)
                                                 }
+                                                separator()
+                                                item("Separated Item")
                                             }
                                         }
                                     }

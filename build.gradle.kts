@@ -53,9 +53,3 @@ kotlin {
         binaries.executable()
     }
 }
-
-// workaround for https://youtrack.jetbrains.com/issue/KT-49124
-// see also https://github.com/webpack/webpack-cli/issues/2990
-rootProject.extensions.configure<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension> {
-    versions.webpackCli.version = "4.9.0"
-}

@@ -176,9 +176,8 @@ internal object AlertComponent {
                     severity(DEFAULT)
                     title("Close me")
                     content { +loremIpsum(3) }
-                    closeButton {
-                        clicks handledBy notification(DEFAULT,  "Notification closed")
-                    }
+                    closable(true)
+                    closes handledBy notification(DEFAULT,  "Notification closed")
                     action("Click me") {
                         clicks handledBy notification(DEFAULT, "You did it!")
                     }

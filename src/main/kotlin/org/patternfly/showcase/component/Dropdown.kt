@@ -2,48 +2,17 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.dom.html.Events
-import dev.fritz2.dom.html.Input
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.dom.states
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.patternfly.Align.RIGHT
 import org.patternfly.ButtonVariation.primary
-import org.patternfly.Dropdown
-import org.patternfly.DropdownStore
 import org.patternfly.Severity.INFO
-import org.patternfly.Switch
-import org.patternfly.TriState
-import org.patternfly.actionToggle
-import org.patternfly.checkboxToggle
-import org.patternfly.classes
-import org.patternfly.component
 import org.patternfly.dropdown
 import org.patternfly.fas
-import org.patternfly.group
-import org.patternfly.groups
 import org.patternfly.icon
-import org.patternfly.iconToggle
-import org.patternfly.item
-import org.patternfly.items
-import org.patternfly.kebabToggle
-import org.patternfly.layout
-import org.patternfly.modifier
 import org.patternfly.notification
 import org.patternfly.pageSection
-import org.patternfly.separator
-import org.patternfly.showcase.EVENT_DELAY
-import org.patternfly.switch
-import org.patternfly.textToggle
-import org.patternfly.triState
-import org.patternfly.unwrap
-import org.patternfly.updateItems
 import org.patternfly.util
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -57,205 +26,235 @@ object DropdownComponent {
         pageSection {
             snippet("Basic", DropdownCode.BASIC) {
                 dropdown<String> {
-                    textToggle { +"Dropdown" }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
+                    events {
+                        selections handledBy notification(INFO) { item ->
+                            +"You've selected $item"
                         }
-                        separator()
-                        item("Separated Action")
+                        expos handledBy notification(INFO) { expanded ->
+                            +if (expanded) "Expanded" else "Collapsed"
+                        }
                     }
-                    store.clicked handledBy notification { item ->
-                        severity(INFO)
-                        title("You've selected ${item.item}")
+                    toggle { text("Dropdown") }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
+                    }
+                    separator()
+                    item("Separated Action") {
+                        events {
+                            clicks handledBy notification(INFO, "Click!")
+                        }
                     }
                 }
             }
             snippet("Disabled", DropdownCode.DISABLED) {
                 dropdown<String> {
                     disabled(true)
-                    textToggle { +"Dropdown" }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { text("Dropdown") }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("Primary toggle", DropdownCode.PRIMARY) {
                 dropdown<String> {
-                    textToggle(primary) { +"Dropdown" }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
+                    toggle {
+                        text(variation = primary) {
+                            +"Dropdown"
                         }
-                        separator()
-                        item("Separated Action")
                     }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
+                    }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("Position right", DropdownCode.RIGHT) {
                 dropdown<String>(align = RIGHT) {
-                    textToggle { +"Dropdown" }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { text("Dropdown") }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("Direction up", DropdownCode.UP) {
                 dropdown<String>(up = true) {
-                    textToggle { +"Dropdown" }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { text("Dropdown") }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("With kebab", DropdownCode.KEBAB) {
                 dropdown<String> {
-                    kebabToggle()
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { kebab() }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("Icon only", DropdownCode.ICON) {
                 dropdown<String> {
-                    iconToggle { icon("th".fas()) }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { icon("th".fas()) }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("Icons and descriptions", DropdownCode.DESCRIPTION) {
                 dropdown<String> {
-                    textToggle { +"Dropdown" }
-                    items {
-                        item("Action 1") {
-                            icon = { icon("cog".fas()) }
-                        }
-                        item("Action 2") {
-                            description = "This is a description"
-                        }
-                        item("Action 3") {
-                            icon = { img { src("./pf-logo-small.svg") } }
-                            description = "This is a description"
-                        }
-                        separator()
-                        item("Disabled action 1") {
-                            disabled = true
-                            icon = { icon("cog".fas()) }
-                        }
-                        item("Disabled action 2") {
-                            disabled = true
-                            description = "This is a description"
-                        }
-                        item("Disabled action 3") {
-                            disabled = true
-                            icon = { icon("cog".fas()) }
-                            description = "This is a description"
-                        }
+                    toggle { text("Dropdown") }
+                    item("Action 1") {
+                        icon("cog".fas())
+                    }
+                    item("Action 2") {
+                        description("This is a description")
+                    }
+                    separator()
+                    item("Disabled action 1") {
+                        disabled(true)
+                        icon("cog".fas())
+                    }
+                    item("Disabled action 2") {
+                        disabled(true)
+                        description("This is a description")
+                    }
+                    item("Disabled action 3") {
+                        disabled(true)
+                        icon("cog".fas())
+                        description("This is a description")
                     }
                 }
             }
             snippet("Split button", DropdownCode.CHECKBOX_TOGGLE) {
                 dropdown<String> {
-                    checkboxToggle()
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { checkbox() }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    checkboxToggle { text { +"10 selected" } }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle { checkbox("10 selected") }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
                     }
+                    separator()
+                    item("Separated Action")
                 }
             }
             snippet("Split button action", DropdownCode.ACTION_TOGGLE) {
                 dropdown<String> {
-                    actionToggle { +"Action" }
-                    items {
-                        item("Action")
-                        item("Disabled Action") {
-                            disabled = true
-                        }
-                        separator()
-                        item("Separated Action")
+                    toggle {
+                        action { +"Action" }
                     }
+                    item("Action")
+                    item("Disabled Action") {
+                        disabled(true)
+                    }
+                    separator()
+                    item("Separated Action")
                 }
                 dropdown<String>(baseClass = "ml-sm".util()) {
-                    actionToggle { icon("cog".fas()) }
-                    items {
-                        item("Action") {
-                            icon = { icon("cog".fas()) }
-                        }
-                        item("Disabled Action") {
-                            disabled = true
-                            icon = { icon("bell".fas()) }
-                        }
-                        separator()
-                        item("Separated Action") {
-                            icon = { icon("cubes".fas()) }
-                        }
+                    toggle {
+                        action { icon("cog".fas()) }
+                    }
+                    item("Action") {
+                        icon("cog".fas())
+                    }
+                    item("Disabled Action") {
+                        disabled(true)
+                        icon("bell".fas())
+                    }
+                    separator()
+                    item("Separated Action") {
+                        icon("cubes".fas())
                     }
                 }
             }
             snippet("Groups", DropdownCode.GROUPS) {
-                dropdown<String>(grouped = true) {
-                    textToggle { +"Dropdown" }
-                    groups {
-                        group {
-                            item("Action 1")
-                            item("Action 2")
-                        }
-                        separator()
-                        group("Group 1") {
-                            item("Action 1")
-                            item("Action 2")
-                        }
-                        separator()
-                        group("Group 2") {
-                            item("Action 1")
-                            item("Action 2")
+                dropdown<String> {
+                    toggle { text("Dropdown") }
+                    item("Action 1")
+                    item("Action 2")
+                    separator()
+                    group("Group 1") {
+                        item("Action 1")
+                        item("Action 2")
+                    }
+                    separator()
+                    group("Group 2") {
+                        item("Action 1")
+                        item("Action 2")
+                    }
+                }
+            }
+            snippet("Store", "n/a") {
+                data class Color(val name: String, val code: String = "", val colors: List<Color> = emptyList())
+
+                val store = storeOf(
+                    listOf(
+                        Color("Blue", "blue-100"),
+                        Color("Green", "green-100"),
+                        Color("Purple", "purple-100"),
+                        Color(
+                            "Light",
+                            colors = listOf(
+                                Color("Light Blue", "light-blue-100"),
+                                Color("Light Green", "light-green-100")
+                            )
+                        ),
+                        Color("Gold", "gold-100"),
+                        Color("Orange", "orange-100"),
+                        Color("Red", "red-100"),
+                    )
+                )
+                dropdown(store) {
+                    toggle { text("Colors") }
+                    display { color ->
+                        if (color.colors.isEmpty()) {
+                            item(color) {
+                                content {
+                                    +color.name
+                                    inlineStyle("background-color: var(--pf-global--palette--${color.code})")
+                                }
+                            }
+                        } else {
+                            group(color.name) {
+                                color.colors.forEach { subcolor ->
+                                    item(subcolor) {
+                                        content {
+                                            +subcolor.name
+                                            inlineStyle("background-color: var(--pf-global--palette--${subcolor.code})")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
+/*
             snippet("Reactive", DropdownCode.REACTIVE) {
                 lateinit var text: Input
                 lateinit var enabled: Switch
@@ -374,6 +373,7 @@ object DropdownComponent {
                     text.domNode.dispatchEvent(Event(Events.keyup.name))
                 }
             }
+*/
         }
     }
 }

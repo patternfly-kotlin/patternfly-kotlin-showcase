@@ -6,8 +6,10 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.patternfly.Severity.INFO
 import org.patternfly.chip
 import org.patternfly.component
+import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.showcase.EVENT_DELAY
 import org.w3c.dom.HTMLInputElement
@@ -43,7 +45,10 @@ object ChipComponent {
                 br {}
                 chip {
                     +"Cloe me"
-//                    closes handledBy Notification.info("Chip closed")
+                    closable(true)
+                    events {
+                        closes handledBy notification(INFO, "Chip closed")
+                    }
                 }
             }
             snippet("Reactive", ChipCode.REACTIVE) {

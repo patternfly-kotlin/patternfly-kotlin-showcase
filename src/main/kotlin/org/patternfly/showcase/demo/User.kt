@@ -140,14 +140,14 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             }
                             cardAction {
                                 dropdown<String>(align = Align.RIGHT) {
-                                    store.singleSelection.unwrap() handledBy notification {
-                                        severity(Severity.INFO)
-                                        title("$it ${user.name} not yet implemented")
-                                    }
-                                    kebabToggle()
-                                    items {
-                                        item("Edit")
-                                        item("Remove")
+                                    toggle { kebab() }
+                                    item("Edit")
+                                    item("Remove")
+                                    events {
+                                        selections handledBy notification {
+                                            severity(Severity.INFO)
+                                            title("$it ${user.name} not yet implemented")
+                                        }
                                     }
                                 }
                                 cardCheckbox()
@@ -254,14 +254,14 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                     dataTableActionColumn { user ->
                         dropdown<String>(align = Align.RIGHT) {
-                            store.singleSelection.unwrap() handledBy notification {
-                                severity(Severity.INFO)
-                                title("$it ${user.name} not yet implemented")
-                            }
-                            kebabToggle()
-                            items {
-                                item("Edit")
-                                item("Remove")
+                            toggle { kebab() }
+                            item("Edit")
+                            item("Remove")
+                            events {
+                                selections handledBy notification {
+                                    severity(Severity.INFO)
+                                    title("$it ${user.name} not yet implemented")
+                                }
                             }
                         }
                     }

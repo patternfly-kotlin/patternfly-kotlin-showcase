@@ -17,13 +17,9 @@ import org.patternfly.cardTitle
 import org.patternfly.cardToggle
 import org.patternfly.divider
 import org.patternfly.dropdown
-import org.patternfly.item
-import org.patternfly.items
-import org.patternfly.kebabToggle
 import org.patternfly.modifier
 import org.patternfly.notification
 import org.patternfly.pageSection
-import org.patternfly.separator
 
 object CardComponent {
     val content: RenderContext.() -> Unit = {
@@ -49,15 +45,13 @@ object CardComponent {
                         }
                         cardAction {
                             dropdown<String>(align = Align.RIGHT) {
-                                kebabToggle()
-                                items {
-                                    item("Item 1")
-                                    item("Disabled Item") {
-                                        disabled = true
-                                    }
-                                    separator()
-                                    item("Separated Item")
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
                                 }
+                                separator()
+                                item("Separated Item")
                             }
                             cardCheckbox()
                         }
@@ -72,15 +66,13 @@ object CardComponent {
                     cardHeader {
                         cardAction {
                             dropdown<String>(align = Align.RIGHT) {
-                                kebabToggle()
-                                items {
-                                    item("Action")
-                                    item("Disabled Action") {
-                                        disabled = true
-                                    }
-                                    separator()
-                                    item("Separated Action")
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
                                 }
+                                separator()
+                                item("Separated Item")
                             }
                             cardCheckbox()
                         }
@@ -97,15 +89,13 @@ object CardComponent {
                     cardHeader {
                         cardAction {
                             dropdown<String>(align = Align.RIGHT) {
-                                kebabToggle()
-                                items {
-                                    item("Action")
-                                    item("Disabled Action") {
-                                        disabled = true
-                                    }
-                                    separator()
-                                    item("Separated Action")
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
                                 }
+                                separator()
+                                item("Separated Item")
                             }
                             cardCheckbox()
                         }
@@ -188,15 +178,13 @@ object CardComponent {
                     cardHeader {
                         cardAction {
                             dropdown<String>(align = Align.RIGHT) {
-                                kebabToggle()
-                                items {
-                                    item("Action")
-                                    item("Disabled Action") {
-                                        disabled = true
-                                    }
-                                    separator()
-                                    item("Separated Action")
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
                                 }
+                                separator()
+                                item("Separated Item")
                             }
                         }
                         cardTitle { +"First card" }
@@ -246,15 +234,13 @@ object CardComponent {
                         cardToggle()
                         cardAction {
                             dropdown<String>(align = Align.RIGHT) {
-                                kebabToggle()
-                                items {
-                                    item("Action")
-                                    item("Disabled Action") {
-                                        disabled = true
-                                    }
-                                    separator()
-                                    item("Separated Action")
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
                                 }
+                                separator()
+                                item("Separated Item")
                             }
                             cardCheckbox()
                         }

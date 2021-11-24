@@ -2,11 +2,15 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.html.RenderContext
+import org.patternfly.ButtonVariation.primary
 import org.patternfly.Severity.INFO
 import org.patternfly.accordion
+import org.patternfly.clickButton
 import org.patternfly.notification
 import org.patternfly.pageSection
+import org.patternfly.util
 
 object AccordionComponent {
     val content: RenderContext.() -> Unit = {
@@ -25,7 +29,7 @@ object AccordionComponent {
                         }
                         events {
                             clicks handledBy notification(INFO, "Clicked")
-                            coexs handledBy notification(INFO) { expanded ->
+                            expos handledBy notification(INFO) { expanded ->
                                 title("Expanded: $expanded")
                             }
                         }
@@ -128,6 +132,41 @@ object AccordionComponent {
                         }
                     }
                 }
+            }
+            snippet("Reactive", "n/a") {
+                val items = object : RootStore<List<String>>(listOf("Item 1", "Item 2", "Item 3")) {
+                    var count = 3
+
+                    val addItem = handle { items ->
+                        count++
+                        items + "Item $count"
+                    }
+
+                    val deleteItem = handle<String> { items, item ->
+                        if (items.size > 1) {
+                            items.minus(item)
+                        } else {
+                            items
+                        }
+                    }
+                }
+
+                accordion(items) {
+                    display { item ->
+                        item(item) {
+                            content {
+                                p { +loremIpsum(3) }
+                                p {
+                                    a {
+                                        +"Remove item"
+                                        clicks.map { item } handledBy items.deleteItem
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                clickButton(primary, baseClass = "mt-md".util()) { +"Add item" } handledBy items.addItem
             }
         }
     }
