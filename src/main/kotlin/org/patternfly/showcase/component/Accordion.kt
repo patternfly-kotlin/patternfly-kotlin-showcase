@@ -21,9 +21,8 @@ object AccordionComponent {
         )
         pageSection {
             snippet("Basic", AccordionCode.BASIC) {
-                accordion {
-                    item {
-                        title("Item one")
+                accordion<String> {
+                    item("Item one") {
                         content {
                             p { +loremIpsum(2) }
                         }
@@ -34,27 +33,23 @@ object AccordionComponent {
                             }
                         }
                     }
-                    item {
+                    item("Item two") {
                         expanded(true)
-                        title("Item two")
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
-                        title("Item three")
+                    item("Item three") {
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
-                        title("Item four")
+                    item("Item four") {
                         content {
                             p { +loremIpsum(10) }
                         }
                     }
-                    item {
-                        title("Item five")
+                    item("Item five") {
                         content {
                             p { +loremIpsum(2) }
                         }
@@ -62,35 +57,30 @@ object AccordionComponent {
                 }
             }
             snippet("Single expand", AccordionCode.SINGLE_EXPAND) {
-                accordion {
+                accordion<String> {
                     singleExpand(true)
-                    item {
-                        title("Item one")
+                    item("Item one") {
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
+                    item("Item two") {
                         expanded(true)
-                        title("Item two")
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
-                        title("Item three")
+                    item("Item three") {
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
-                        title("Item four")
+                    item("Item four") {
                         content {
                             p { +loremIpsum(10) }
                         }
                     }
-                    item {
-                        title("Item five")
+                    item("Item five") {
                         content {
                             p { +loremIpsum(2) }
                         }
@@ -98,35 +88,30 @@ object AccordionComponent {
                 }
             }
             snippet("Fixed height", AccordionCode.FIXED_HEIGHT) {
-                accordion {
+                accordion<String> {
                     fixed(true)
-                    item {
-                        title("Item one")
+                    item("Item one") {
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
+                    item("Item two") {
                         expanded(true)
-                        title("Item two")
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
-                        title("Item three")
+                    item("Item three") {
                         content {
                             p { +loremIpsum(2) }
                         }
                     }
-                    item {
-                        title("Item four")
+                    item("Item four") {
                         content {
                             p { +loremIpsum(20) }
                         }
                     }
-                    item {
-                        title("Item five")
+                    item("Item five") {
                         content {
                             p { +loremIpsum(2) }
                         }
