@@ -1,19 +1,19 @@
 [versions]
 clipboard = "2.0.8"
 fileLoader = "6.2.0"
-fritz2 = "0.12"
+fritz2 = "0.13"
 highlight = "11.3.1"
 kotlin = "1.6.0"
 ksp = "1.6.0-1.0.1"
-mvp = "0.3.0"
-patternFly = "4.151.4"
+mvp = "0.3.0-SNAPSHOT"
+patternFly = "4.159.1"
 patternFlyFritz2 = "0.3.0-SNAPSHOT"
 serialization = "1.3.1"
 timeElements = "3.1.1"
 
 [libraries]
 fritz2-core = { module = "dev.fritz2:core", version.ref = "fritz2" }
-fritz2-mvp = { module = "dev.fritz2:mvp", version.ref = "mvp" }
+fritz2-mvp = { module = "org.patternfly:mvp", version.ref = "mvp" }
 fritz2-patternfly = { module = "org.patternfly:patternfly-fritz2", version.ref = "patternFlyFritz2" }
 serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 

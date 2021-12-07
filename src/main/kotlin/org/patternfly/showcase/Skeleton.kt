@@ -1,9 +1,9 @@
 package org.patternfly.showcase
 
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.mvp.PlaceManager
-import dev.fritz2.mvp.managedBy
-import dev.fritz2.mvp.placeRequest
+import org.patternfly.mvp.PlaceManager
+import org.patternfly.mvp.managedBy
+import org.patternfly.mvp.placeRequest
 import org.patternfly.navigation
 import org.patternfly.page
 import org.patternfly.showcase.component.components

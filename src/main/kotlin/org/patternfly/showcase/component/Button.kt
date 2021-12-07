@@ -1,13 +1,17 @@
 @file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+@file:OptIn(InternalCoroutinesApi::class)
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariation.control
@@ -23,6 +27,7 @@ import org.patternfly.IconPosition.ICON_LAST
 import org.patternfly.Severity.INFO
 import org.patternfly.Switch
 import org.patternfly.aria
+import org.patternfly.button2
 import org.patternfly.buttonIcon
 import org.patternfly.classes
 import org.patternfly.clickButton
@@ -203,6 +208,111 @@ object ButtonComponent {
                 pushButton(link, inline, baseClass = "display-lg".modifier()) {
                     +"Call to action"
                     buttonIcon(ICON_LAST, "arrow-right".fas())
+                }
+            }
+            snippet("Progress", "n/a") {
+                class OnOff : RootStore<Boolean>(false) {
+                    val toggle = handle { !it }
+                }
+
+                val download = object : RootStore<Unit>(Unit) {
+                    val state: MutableStateFlow<Int> = MutableStateFlow(0)
+                    val start = handle {
+                        state.value = 1
+                        for (i in 2..11) {
+                            delay(750)
+                            state.value = i
+                        }
+                    }
+                    val inProgress = state.map { it in 1..10 }
+                    val percent = state.map { "${it * 10}%" }
+                }
+
+                button2(primary) {
+                    val onOff = OnOff()
+                    +"Click to start loading"
+                    loading(onOff.data)
+                    loadingTitle("Click to stop loading")
+                    events {
+                        clicks handledBy onOff.toggle
+                    }
+                }
+                button2(secondary) {
+                    val onOff = OnOff()
+                    +"Click to start loading"
+                    loading(onOff.data)
+                    loadingTitle("Click to stop loading")
+                    events {
+                        clicks handledBy onOff.toggle
+                    }
+                }
+                br {}
+                br {}
+                button2(secondary) {
+                    +"Download"
+                    loading(download.inProgress)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                button2(secondary) {
+                    icon("download".fas())
+                    loading(download.inProgress)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                button2(secondary) {
+                    icon("download".fas())
+                    +"Download"
+                    loading(download.inProgress)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                button2(secondary) {
+                    +"Download"
+                    icon("download".fas())
+                    loading(download.inProgress)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                br {}
+                br {}
+                button2(secondary) {
+                    +"Download"
+                    loading(download.inProgress)
+                    loadingTitle(download.percent)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                button2(secondary) {
+                    icon("download".fas())
+                    loading(download.inProgress)
+                    loadingTitle(download.percent)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                button2(secondary) {
+                    icon("download".fas())
+                    +"Download"
+                    loading(download.inProgress)
+                    loadingTitle(download.percent)
+                    events {
+                        clicks handledBy download.start
+                    }
+                }
+                button2(secondary) {
+                    +"Download"
+                    icon("download".fas())
+                    loading(download.inProgress)
+                    loadingTitle(download.percent)
+                    events {
+                        clicks handledBy download.start
+                    }
                 }
             }
             snippet("Reactive", ButtonCode.REACTIVE) {

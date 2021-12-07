@@ -1,10 +1,10 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.mvp.PlaceRequest
-import dev.fritz2.mvp.Presenter
-import dev.fritz2.mvp.View
-import dev.fritz2.mvp.ViewContent
-import dev.fritz2.mvp.WithPresenter
+import org.patternfly.mvp.PlaceRequest
+import org.patternfly.mvp.Presenter
+import org.patternfly.mvp.View
+import org.patternfly.mvp.ViewContent
+import org.patternfly.mvp.WithPresenter
 import org.patternfly.pageSection
 import org.patternfly.title
 

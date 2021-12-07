@@ -1,8 +1,8 @@
 package org.patternfly.showcase
 
 import dev.fritz2.dom.html.render
-import dev.fritz2.mvp.PlaceManager
-import dev.fritz2.mvp.placeRequest
+import org.patternfly.mvp.PlaceManager
+import org.patternfly.mvp.placeRequest
 import org.patternfly.pageSection
 import org.patternfly.title
 

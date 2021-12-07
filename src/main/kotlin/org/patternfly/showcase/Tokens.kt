@@ -1,6 +1,6 @@
 package org.patternfly.showcase
 
-import dev.fritz2.mvp.Presenter
+import org.patternfly.mvp.Presenter
 import org.patternfly.showcase.component.ComponentPresenter
 import org.patternfly.showcase.demo.UserDemoPresenter
 
