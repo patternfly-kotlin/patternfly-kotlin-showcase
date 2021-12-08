@@ -31,28 +31,28 @@ object BadgeComponent {
         )
         pageSection(baseClass = "sc-component__badges") {
             snippet("Read", BadgeCode.READ) {
+                badge {
+                    count(7)
+                    read(true)
+                }
+                badge {
+                    count(24)
+                    read(true)
+                }
+                badge {
+                    count(240)
+                    read(true)
+                }
+                badge {
+                    count(999)
+                    read(true)
+                }
+            }
+            snippet("Unread", BadgeCode.UNREAD) {
                 badge { count(7) }
                 badge { count(24) }
                 badge { count(240) }
                 badge { count(999) }
-            }
-            snippet("Unread", BadgeCode.UNREAD) {
-                badge {
-                    count(7)
-                    read(false)
-                }
-                badge {
-                    count(24)
-                    read(false)
-                }
-                badge {
-                    count(240)
-                    read(false)
-                }
-                badge {
-                    count(999)
-                    read(false)
-                }
             }
             snippet("Reactive", BadgeCode.REACTIVE) {
                 lateinit var range: Input

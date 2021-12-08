@@ -197,8 +197,8 @@ object ButtonComponent {
                 pushButton(secondary, baseClass = "display-lg".modifier()) { +"Call to action" }
                 pushButton(tertiary, baseClass = "display-lg".modifier()) { +"Call to action" }
                 pushButton(link, baseClass = "display-lg".modifier()) {
-                    +"Call to action"
                     icon("arrow-right".fas())
+                    +"Call to action"
                 }
                 pushButton(link, inline, baseClass = "display-lg".modifier()) {
                     +"Call to action"
@@ -223,7 +223,7 @@ object ButtonComponent {
                     val percentage = state.map { "${it * 10}%" }
                 }
 
-                clickButton(primary) {
+                pushButton(primary) {
                     val onOff = OnOff()
                     +"Click to start loading"
                     loading(onOff.data, "Click to stop loading")
