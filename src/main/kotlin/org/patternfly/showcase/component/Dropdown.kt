@@ -5,7 +5,7 @@ package org.patternfly.showcase.component
 import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
 import org.patternfly.Align.RIGHT
-import org.patternfly.ButtonVariation.primary
+import org.patternfly.ButtonVariant.primary
 import org.patternfly.Severity.INFO
 import org.patternfly.dropdown
 import org.patternfly.fas
@@ -62,7 +62,7 @@ object DropdownComponent {
             snippet("Primary toggle", DropdownCode.PRIMARY) {
                 dropdown<String> {
                     toggle {
-                        text(variation = primary) {
+                        text(variant = primary) {
                             +"Dropdown"
                         }
                     }

@@ -14,26 +14,21 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.ButtonVariation.control
-import org.patternfly.ButtonVariation.danger
-import org.patternfly.ButtonVariation.inline
-import org.patternfly.ButtonVariation.link
-import org.patternfly.ButtonVariation.plain
-import org.patternfly.ButtonVariation.primary
-import org.patternfly.ButtonVariation.secondary
-import org.patternfly.ButtonVariation.tertiary
-import org.patternfly.IconPosition.ICON_FIRST
-import org.patternfly.IconPosition.ICON_LAST
+import org.patternfly.ButtonVariant.control
+import org.patternfly.ButtonVariant.danger
+import org.patternfly.ButtonVariant.inline
+import org.patternfly.ButtonVariant.link
+import org.patternfly.ButtonVariant.plain
+import org.patternfly.ButtonVariant.primary
+import org.patternfly.ButtonVariant.secondary
+import org.patternfly.ButtonVariant.tertiary
 import org.patternfly.Severity.INFO
 import org.patternfly.Switch
 import org.patternfly.aria
-import org.patternfly.button2
-import org.patternfly.buttonIcon
 import org.patternfly.classes
 import org.patternfly.clickButton
 import org.patternfly.component
 import org.patternfly.fas
-import org.patternfly.icon
 import org.patternfly.layout
 import org.patternfly.linkButton
 import org.patternfly.modifier
@@ -64,12 +59,12 @@ object ButtonComponent {
                 br {}
                 br {}
                 pushButton(link) {
-                    buttonIcon(ICON_FIRST, "plus-circle".fas())
+                    icon("plus-circle".fas())
                     +"Link"
                 }
                 pushButton(link) {
                     +"Link"
-                    buttonIcon(ICON_LAST, "plus-circle".fas())
+                    icon("plus-circle".fas())
                 }
                 pushButton(link, inline) { +"Inline link" }
                 br {}
@@ -86,7 +81,7 @@ object ButtonComponent {
                 pushButton(tertiary, baseClass = "small".modifier()) { +"Tertiary" }
                 pushButton(danger, baseClass = "small".modifier()) { +"Danger" }
                 pushButton(link, baseClass = "small".modifier()) {
-                    buttonIcon(ICON_FIRST, "plus-circle".fas())
+                    icon("plus-circle".fas())
                     +"Link"
                 }
                 pushButton(link, inline, baseClass = "small".modifier()) { +"Inline link" }
@@ -111,7 +106,7 @@ object ButtonComponent {
                 }
                 pushButton(link) {
                     disabled(true)
-                    buttonIcon(ICON_FIRST, "plus-circle".fas())
+                    icon("plus-circle".fas())
                     +"Link disabled"
                 }
                 pushButton(link, inline) {
@@ -146,7 +141,7 @@ object ButtonComponent {
                 }
                 pushButton(link, baseClass = "aria-disabled".modifier()) {
                     aria["disabled"] = true
-                    buttonIcon(ICON_FIRST, "plus-circle".fas())
+                    icon("plus-circle".fas())
                     +"Link disabled"
                 }
                 pushButton(link, inline, baseClass = "aria-disabled".modifier()) {
@@ -203,11 +198,11 @@ object ButtonComponent {
                 pushButton(tertiary, baseClass = "display-lg".modifier()) { +"Call to action" }
                 pushButton(link, baseClass = "display-lg".modifier()) {
                     +"Call to action"
-                    buttonIcon(ICON_LAST, "arrow-right".fas())
+                    icon("arrow-right".fas())
                 }
                 pushButton(link, inline, baseClass = "display-lg".modifier()) {
                     +"Call to action"
-                    buttonIcon(ICON_LAST, "arrow-right".fas())
+                    icon("arrow-right".fas())
                 }
             }
             snippet("Progress", "n/a") {
@@ -215,8 +210,8 @@ object ButtonComponent {
                     val toggle = handle { !it }
                 }
 
-                val download = object : RootStore<Unit>(Unit) {
-                    val state: MutableStateFlow<Int> = MutableStateFlow(0)
+                class Download : RootStore<Unit>(Unit) {
+                    val state = MutableStateFlow(0)
                     val start = handle {
                         state.value = 1
                         for (i in 2..11) {
@@ -225,44 +220,45 @@ object ButtonComponent {
                         }
                     }
                     val inProgress = state.map { it in 1..10 }
-                    val percent = state.map { "${it * 10}%" }
+                    val percentage = state.map { "${it * 10}%" }
                 }
 
-                button2(primary) {
+                clickButton(primary) {
                     val onOff = OnOff()
                     +"Click to start loading"
-                    loading(onOff.data)
-                    loadingTitle("Click to stop loading")
+                    loading(onOff.data, "Click to stop loading")
                     events {
                         clicks handledBy onOff.toggle
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
                     val onOff = OnOff()
                     +"Click to start loading"
-                    loading(onOff.data)
-                    loadingTitle("Click to stop loading")
+                    loading(onOff.data, "Click to stop loading")
                     events {
                         clicks handledBy onOff.toggle
                     }
                 }
                 br {}
                 br {}
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     +"Download"
                     loading(download.inProgress)
                     events {
                         clicks handledBy download.start
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     icon("download".fas())
                     loading(download.inProgress)
                     events {
                         clicks handledBy download.start
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     icon("download".fas())
                     +"Download"
                     loading(download.inProgress)
@@ -270,7 +266,8 @@ object ButtonComponent {
                         clicks handledBy download.start
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     +"Download"
                     icon("download".fas())
                     loading(download.inProgress)
@@ -280,36 +277,36 @@ object ButtonComponent {
                 }
                 br {}
                 br {}
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     +"Download"
-                    loading(download.inProgress)
-                    loadingTitle(download.percent)
+                    loading(download.inProgress, download.percentage)
                     events {
                         clicks handledBy download.start
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     icon("download".fas())
-                    loading(download.inProgress)
-                    loadingTitle(download.percent)
+                    loading(download.inProgress, download.percentage)
                     events {
                         clicks handledBy download.start
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     icon("download".fas())
                     +"Download"
-                    loading(download.inProgress)
-                    loadingTitle(download.percent)
+                    loading(download.inProgress, download.percentage)
                     events {
                         clicks handledBy download.start
                     }
                 }
-                button2(secondary) {
+                pushButton(secondary) {
+                    val download = Download()
                     +"Download"
                     icon("download".fas())
-                    loading(download.inProgress)
-                    loadingTitle(download.percent)
+                    loading(download.inProgress, download.percentage)
                     events {
                         clicks handledBy download.start
                     }

@@ -3,7 +3,8 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.ButtonVariation
+import org.patternfly.ButtonVariant.link
+import org.patternfly.ButtonVariant.primary
 import org.patternfly.Severity.INFO
 import org.patternfly.Size
 import org.patternfly.emptyState
@@ -30,17 +31,17 @@ object EmptyStateComponent {
                     emptyStateBody {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(ButtonVariation.primary) {
+                    pushButton(primary) {
                         +"Primary action"
                     }
                     emptyStateSecondary {
-                        pushButton(ButtonVariation.link) { +"Multiple" }
-                        pushButton(ButtonVariation.link) { +"Action buttons" }
-                        pushButton(ButtonVariation.link) { +"Can" }
-                        pushButton(ButtonVariation.link) { +"Go here" }
-                        pushButton(ButtonVariation.link) { +"In the" }
-                        pushButton(ButtonVariation.link) { +"Secondary" }
-                        pushButton(ButtonVariation.link) { +"Area" }
+                        pushButton(link) { +"Multiple" }
+                        pushButton(link) { +"Action buttons" }
+                        pushButton(link) { +"Can" }
+                        pushButton(link) { +"Go here" }
+                        pushButton(link) { +"In the" }
+                        pushButton(link) { +"Secondary" }
+                        pushButton(link) { +"Area" }
                     }
                 }
             }
@@ -49,17 +50,17 @@ object EmptyStateComponent {
                     emptyStateBody {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(ButtonVariation.primary) {
+                    pushButton(primary) {
                         +"Primary action"
                     }
                     emptyStateSecondary {
-                        pushButton(ButtonVariation.link) { +"Multiple" }
-                        pushButton(ButtonVariation.link) { +"Action buttons" }
-                        pushButton(ButtonVariation.link) { +"Can" }
-                        pushButton(ButtonVariation.link) { +"Go here" }
-                        pushButton(ButtonVariation.link) { +"In the" }
-                        pushButton(ButtonVariation.link) { +"Secondary" }
-                        pushButton(ButtonVariation.link) { +"Area" }
+                        pushButton(link) { +"Multiple" }
+                        pushButton(link) { +"Action buttons" }
+                        pushButton(link) { +"Can" }
+                        pushButton(link) { +"Go here" }
+                        pushButton(link) { +"In the" }
+                        pushButton(link) { +"Secondary" }
+                        pushButton(link) { +"Area" }
                     }
                 }
             }
@@ -68,17 +69,17 @@ object EmptyStateComponent {
                     emptyStateBody {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(ButtonVariation.primary) {
+                    pushButton(primary) {
                         +"Primary action"
                     }
                     emptyStateSecondary {
-                        pushButton(ButtonVariation.link) { +"Multiple" }
-                        pushButton(ButtonVariation.link) { +"Action buttons" }
-                        pushButton(ButtonVariation.link) { +"Can" }
-                        pushButton(ButtonVariation.link) { +"Go here" }
-                        pushButton(ButtonVariation.link) { +"In the" }
-                        pushButton(ButtonVariation.link) { +"Secondary" }
-                        pushButton(ButtonVariation.link) { +"Area" }
+                        pushButton(link) { +"Multiple" }
+                        pushButton(link) { +"Action buttons" }
+                        pushButton(link) { +"Can" }
+                        pushButton(link) { +"Go here" }
+                        pushButton(link) { +"In the" }
+                        pushButton(link) { +"Secondary" }
+                        pushButton(link) { +"Area" }
                     }
                 }
             }
@@ -87,17 +88,17 @@ object EmptyStateComponent {
                     emptyStateBody {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(ButtonVariation.primary) {
+                    pushButton(primary) {
                         +"Primary action"
                     }
                     emptyStateSecondary {
-                        pushButton(ButtonVariation.link) { +"Multiple" }
-                        pushButton(ButtonVariation.link) { +"Action buttons" }
-                        pushButton(ButtonVariation.link) { +"Can" }
-                        pushButton(ButtonVariation.link) { +"Go here" }
-                        pushButton(ButtonVariation.link) { +"In the" }
-                        pushButton(ButtonVariation.link) { +"Secondary" }
-                        pushButton(ButtonVariation.link) { +"Area" }
+                        pushButton(link) { +"Multiple" }
+                        pushButton(link) { +"Action buttons" }
+                        pushButton(link) { +"Can" }
+                        pushButton(link) { +"Go here" }
+                        pushButton(link) { +"In the" }
+                        pushButton(link) { +"Secondary" }
+                        pushButton(link) { +"Area" }
                     }
                 }
             }
@@ -106,17 +107,17 @@ object EmptyStateComponent {
                     emptyStateBody {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(ButtonVariation.primary) {
+                    pushButton(primary) {
                         +"Primary action"
                     }
                     emptyStateSecondary {
-                        pushButton(ButtonVariation.link) { +"Multiple" }
-                        pushButton(ButtonVariation.link) { +"Action buttons" }
-                        pushButton(ButtonVariation.link) { +"Can" }
-                        pushButton(ButtonVariation.link) { +"Go here" }
-                        pushButton(ButtonVariation.link) { +"In the" }
-                        pushButton(ButtonVariation.link) { +"Secondary" }
-                        pushButton(ButtonVariation.link) { +"Area" }
+                        pushButton(link) { +"Multiple" }
+                        pushButton(link) { +"Action buttons" }
+                        pushButton(link) { +"Can" }
+                        pushButton(link) { +"Go here" }
+                        pushButton(link) { +"In the" }
+                        pushButton(link) { +"Secondary" }
+                        pushButton(link) { +"Area" }
                     }
                 }
             }
@@ -126,7 +127,7 @@ object EmptyStateComponent {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
                     emptyStatePrimary {
-                        pushButton(ButtonVariation.link) { +"Primary action" }
+                        pushButton(link) { +"Primary action" }
                     }
                 }
             }

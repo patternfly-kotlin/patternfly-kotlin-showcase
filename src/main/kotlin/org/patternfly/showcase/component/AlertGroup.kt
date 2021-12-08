@@ -8,7 +8,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import org.patternfly.ButtonVariation.secondary
+import org.patternfly.ButtonVariant.secondary
 import org.patternfly.NotificationAlert
 import org.patternfly.NotificationStore
 import org.patternfly.Severity.DANGER

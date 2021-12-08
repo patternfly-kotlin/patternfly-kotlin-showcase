@@ -1,18 +1,14 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.ButtonVariation.link
+import org.patternfly.ButtonVariant.link
 import org.patternfly.ChipGroupStore
-import org.patternfly.IconPosition.ICON_FIRST
-import org.patternfly.Severity.INFO
-import org.patternfly.buttonIcon
 import org.patternfly.chip
 import org.patternfly.chipGroup
 import org.patternfly.chips
 import org.patternfly.clickButton
 import org.patternfly.fas
 import org.patternfly.modifier
-import org.patternfly.notification
 import org.patternfly.pageSection
 import kotlin.random.Random
 
@@ -54,7 +50,7 @@ object ChipGroupComponent {
             snippet("Closable", ChipGroupCode.CLOSABLE) {
                 chipGroup<String>(closable = true) {
                     +"Category"
-                    closes handledBy notification(INFO, "Chip group closed")
+//                    closes handledBy notification(INFO, "Chip group closed")
                     chips {
                         +"Chip one"
                         +listOf(
@@ -104,7 +100,7 @@ object ChipGroupComponent {
 
                 stores.forEach { (limit, store) ->
                     clickButton(link, baseClass =  "small".modifier()) {
-                        buttonIcon(ICON_FIRST, "plus-circle".fas())
+                        icon("plus-circle".fas())
                         +"Add chip"
                     }.map { randomString(Random.nextInt(10)) } handledBy store.add
                     chipGroup(store, limit) { +"Max $limit" }

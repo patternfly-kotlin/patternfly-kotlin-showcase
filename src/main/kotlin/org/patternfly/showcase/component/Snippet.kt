@@ -9,7 +9,7 @@ import hljs.highlightBlock
 import kotlinx.browser.window
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.map
-import org.patternfly.ButtonVariation.plain
+import org.patternfly.ButtonVariant.plain
 import org.patternfly.Level.H3
 import org.patternfly.Size
 import org.patternfly.component
@@ -19,7 +19,6 @@ import org.patternfly.dom.minusAssign
 import org.patternfly.dom.plusAssign
 import org.patternfly.dom.querySelector
 import org.patternfly.fas
-import org.patternfly.icon
 import org.patternfly.linkButton
 import org.patternfly.modifier
 import org.patternfly.pageSection

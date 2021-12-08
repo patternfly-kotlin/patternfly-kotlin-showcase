@@ -3,7 +3,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.ButtonVariation.primary
+import org.patternfly.ButtonVariant.primary
 import org.patternfly.DrawerPanelPosition.BOTTOM
 import org.patternfly.DrawerPanelPosition.LEFT
 import org.patternfly.drawer
@@ -30,7 +30,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)
@@ -51,7 +51,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer(panelPosition = LEFT) {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)
@@ -74,7 +74,7 @@ object DrawerComponent {
                 div {
                     inlineStyle("height: 400px")
                     drawer(panelPosition = BOTTOM) {
-                        button.clicks handledBy expanded.toggle
+//                        button.clicks handledBy expanded.toggle
                         drawerContent {
                             drawerBody {
                                 +loremIpsum(10)
@@ -96,7 +96,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer(inline = true) {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)
@@ -117,7 +117,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer(panelPosition = LEFT, inline = true) {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)
@@ -138,7 +138,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerSection {
                         title { +"Title" }
                         p {
@@ -183,7 +183,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer(resizable = true) {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)
@@ -204,7 +204,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer(resizable = true, panelPosition = LEFT) {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)
@@ -227,7 +227,7 @@ object DrawerComponent {
                 div {
                     inlineStyle("height: 400px")
                     drawer(resizable = true, panelPosition = BOTTOM) {
-                        button.clicks handledBy expanded.toggle
+//                        button.clicks handledBy expanded.toggle
                         drawerContent {
                             drawerBody {
                                 +loremIpsum(10)
@@ -249,7 +249,7 @@ object DrawerComponent {
                     +"Toggle"
                 }
                 drawer(resizable = true, inline = true) {
-                    button.clicks handledBy expanded.toggle
+//                    button.clicks handledBy expanded.toggle
                     drawerContent {
                         drawerBody {
                             +loremIpsum(10)

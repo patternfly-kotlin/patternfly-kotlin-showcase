@@ -4,7 +4,7 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.html.RenderContext
-import org.patternfly.ButtonVariation.primary
+import org.patternfly.ButtonVariant.primary
 import org.patternfly.Severity.INFO
 import org.patternfly.accordion
 import org.patternfly.clickButton

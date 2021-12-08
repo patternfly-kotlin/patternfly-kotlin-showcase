@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.patternfly.Align
-import org.patternfly.ButtonVariation.control
-import org.patternfly.ButtonVariation.plain
-import org.patternfly.ButtonVariation.secondary
+import org.patternfly.ButtonVariant.control
+import org.patternfly.ButtonVariant.plain
+import org.patternfly.ButtonVariant.secondary
 import org.patternfly.ItemsStore
 import org.patternfly.Severity
 import org.patternfly.SortInfo
