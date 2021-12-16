@@ -28,7 +28,7 @@ object AccordionComponent {
                         }
                         events {
                             clicks handledBy notification(INFO, "Clicked")
-                            expos handledBy notification(INFO) { expanded ->
+                            excos handledBy notification(INFO) { expanded ->
                                 title("Expanded: $expanded")
                             }
                         }
@@ -136,16 +136,15 @@ object AccordionComponent {
                     }
                 }
 
-                accordion(items) {
-                    display { item ->
-                        item(item) {
-                            content {
-                                p { +loremIpsum(3) }
-                                p {
-                                    a {
-                                        +"Remove item"
-                                        clicks.map { item } handledBy items.deleteItem
-                                    }
+                accordion<String> {
+                    items(items) { item ->
+                        title(item)
+                        content {
+                            p { +loremIpsum(3) }
+                            p {
+                                a {
+                                    +"Remove item"
+                                    clicks.map { item } handledBy items.deleteItem
                                 }
                             }
                         }

@@ -68,7 +68,7 @@ object NavigationComponent {
                             }
                             group("Group 2") {
                                 events {
-                                    expos handledBy notification(INFO) { expanded ->
+                                    excos handledBy notification(INFO) { expanded ->
                                         title("Group 2 expanded: $expanded")
                                     }
                                 }

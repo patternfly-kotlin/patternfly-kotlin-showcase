@@ -30,7 +30,7 @@ object DropdownComponent {
                         selections handledBy notification(INFO) { item ->
                             +"You've selected $item"
                         }
-                        expos handledBy notification(INFO) { expanded ->
+                        excos handledBy notification(INFO) { expanded ->
                             +if (expanded) "Expanded" else "Collapsed"
                         }
                     }
@@ -210,46 +210,25 @@ object DropdownComponent {
                 }
             }
             snippet("Store", "n/a") {
-                data class Color(val name: String, val code: String = "", val colors: List<Color> = emptyList())
+                data class Color(val name: String, val code: String = "")
 
                 val store = storeOf(
                     listOf(
                         Color("Blue", "blue-100"),
                         Color("Green", "green-100"),
                         Color("Purple", "purple-100"),
-                        Color(
-                            "Light",
-                            colors = listOf(
-                                Color("Light Blue", "light-blue-100"),
-                                Color("Light Green", "light-green-100")
-                            )
-                        ),
                         Color("Gold", "gold-100"),
                         Color("Orange", "orange-100"),
                         Color("Red", "red-100"),
                     )
                 )
-                dropdown(store) {
+                dropdown<Color> {
                     toggle { text("Colors") }
-                    display { color ->
-                        if (color.colors.isEmpty()) {
-                            item(color) {
-                                content {
-                                    +color.name
-                                    inlineStyle("background-color: var(--pf-global--palette--${color.code})")
-                                }
-                            }
-                        } else {
-                            group(color.name) {
-                                color.colors.forEach { subcolor ->
-                                    item(subcolor) {
-                                        content {
-                                            +subcolor.name
-                                            inlineStyle("background-color: var(--pf-global--palette--${subcolor.code})")
-                                        }
-                                    }
-                                }
-                            }
+                    items(store) { color ->
+                        +color.name
+                        content {
+                            +color.name
+                            inlineStyle("background-color: var(--pf-global--palette--${color.code})")
                         }
                     }
                 }
