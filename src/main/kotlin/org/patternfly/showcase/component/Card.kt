@@ -2,23 +2,20 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.html.RenderContext
-import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.map
 import org.patternfly.Align
-import org.patternfly.Severity
+import org.patternfly.CardVariant.compact
+import org.patternfly.CardVariant.expandable
+import org.patternfly.CardVariant.flat
+import org.patternfly.CardVariant.hoverable
+import org.patternfly.CardVariant.selectable
 import org.patternfly.card
-import org.patternfly.cardAction
-import org.patternfly.cardBody
-import org.patternfly.cardCheckbox
-import org.patternfly.cardExpandableContent
-import org.patternfly.cardFooter
-import org.patternfly.cardHeader
-import org.patternfly.cardTitle
-import org.patternfly.cardToggle
-import org.patternfly.divider
+import org.patternfly.checkbox
+import org.patternfly.dom.Id
 import org.patternfly.dropdown
 import org.patternfly.modifier
-import org.patternfly.notification
 import org.patternfly.pageSection
 
 object CardComponent {
@@ -31,20 +28,22 @@ object CardComponent {
         pageSection {
             snippet("Basic", CardCode.BASIC) {
                 card {
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                    title { +"Title" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("With image and action", CardCode.IMAGE_ACTION) {
                 card {
-                    cardHeader {
-                        img {
-                            src("./pf-logo.svg")
-                            domNode.style.width = "300px"
+                    header {
+                        content {
+                            img {
+                                src("./pf-logo.svg")
+                                inlineStyle("width: 300px")
+                            }
                         }
-                        cardAction {
-                            dropdown<String>(align = Align.RIGHT) {
+                        actions {
+                            dropdown(align = Align.RIGHT) {
                                 toggle { kebab() }
                                 item("Item 1")
                                 item("Disabled Item") {
@@ -53,19 +52,19 @@ object CardComponent {
                                 separator()
                                 item("Separated Item")
                             }
-                            cardCheckbox()
+                            checkbox(Id.unique("card-check"), standalone = true)
                         }
                     }
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                    title { +"Title" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Card title in card header", CardCode.TITLE_IN_HEADER) {
                 card {
-                    cardHeader {
-                        cardAction {
-                            dropdown<String>(align = Align.RIGHT) {
+                    header {
+                        actions {
+                            dropdown(align = Align.RIGHT) {
                                 toggle { kebab() }
                                 item("Item 1")
                                 item("Disabled Item") {
@@ -74,21 +73,21 @@ object CardComponent {
                                 separator()
                                 item("Separated Item")
                             }
-                            cardCheckbox()
+                            checkbox(Id.unique("card-check"), standalone = true)
                         }
-                        cardTitle {
+                        title {
                             +"This is a really really really really really really really really really really long title"
                         }
                     }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Only actions in card header (no title/footer)", CardCode.ONLY_ACTIONS) {
                 card {
-                    cardHeader {
-                        cardAction {
-                            dropdown<String>(align = Align.RIGHT) {
+                    header {
+                        actions {
+                            dropdown(align = Align.RIGHT) {
                                 toggle { kebab() }
                                 item("Item 1")
                                 item("Disabled Item") {
@@ -97,87 +96,95 @@ object CardComponent {
                                 separator()
                                 item("Separated Item")
                             }
-                            cardCheckbox()
+                            checkbox(Id.unique("card-check"), standalone = true)
                         }
                     }
-                    cardBody {
+                    body {
                         +"This is the card body, there are only actions in the card head."
                     }
                 }
             }
             snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
                 card {
-                    cardHeader {
-                        img {
-                            src("./pf-logo.svg")
-                            domNode.style.width = "300px"
+                    header {
+                        content {
+                            img {
+                                src("./pf-logo.svg")
+                                inlineStyle("width: 300px")
+                            }
                         }
                     }
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                    title { +"Title" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("With no footer", CardCode.NO_FOOTER) {
                 card {
-                    cardTitle { +"Title" }
-                    cardBody { +"This card has no footer" }
+                    title { +"Title" }
+                    body { +"This card has no footer" }
                 }
             }
             snippet("With no title", CardCode.NO_TITLE) {
                 card {
-                    cardBody { +"This card has no title" }
-                    cardFooter { +"Footer" }
+                    body { +"This card has no title" }
+                    footer { +"Footer" }
                 }
             }
             snippet("With only a body", CardCode.ONLY_BODY) {
                 card {
-                    cardBody { +"Body" }
+                    body { +"Body" }
                 }
             }
             snippet("With multiple body sections", CardCode.MULTIPLE_BODY) {
                 card {
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardBody { +"Body" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                    title { +"Title" }
+                    body { +"Body" }
+                    body { +"Body" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("With only one body that fills", CardCode.BODY_FILLS) {
                 card {
-                    domNode.style.minHeight = "30em"
-                    cardTitle { +"Title" }
-                    cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
-                    cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                    element {
+                        inlineStyle("min-height: 30em")
+                    }
+                    title { +"Title" }
+                    body { +"Body pf-m-no-fill" }
+                    body { +"Body pf-m-no-fill" }
+                    body(fill = true) { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Hover", CardCode.HOVER) {
-                card(baseClass = "hoverable".modifier()) {
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                card(hoverable) {
+                    title { +"Title" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Compact", CardCode.COMPACT) {
-                card(baseClass = "compact".modifier()) {
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                card(compact) {
+                    title { +"Title" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Selectable and selected", CardCode.SELECTABLE) {
-                card(selectable = true) {
-                    selected.data.drop(1) handledBy notification {
-                        severity(Severity.INFO)
-                        title("Card is ${if (it) "" else "not "} selected.")
-                    }
+                class OnOff : RootStore<Boolean>(false) {
+                    val toggle = handle { !it }
+                }
 
-                    cardHeader {
-                        cardAction {
-                            dropdown<String>(align = Align.RIGHT) {
+                card(selectable) {
+                    val onOff = OnOff()
+                    selected(onOff.data)
+                    events {
+                        clicks handledBy onOff.toggle
+                    }
+                    header {
+                        actions {
+                            dropdown(align = Align.RIGHT) {
                                 toggle { kebab() }
                                 item("Item 1")
                                 item("Disabled Item") {
@@ -187,53 +194,53 @@ object CardComponent {
                                 item("Separated Item")
                             }
                         }
-                        cardTitle { +"First card" }
                     }
-                    cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+                    title { +"First card" }
+                    body { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
-                card(selectable = true) {
-                    selected.data.drop(1) handledBy notification {
-                        severity(Severity.INFO)
-                        title("Card is ${if (it) "" else "not "} selected.")
+                card(selectable) {
+                    val onOff = OnOff()
+                    selected(onOff.data)
+                    events {
+                        clicks handledBy onOff.toggle
                     }
-
-                    cardTitle { +"Second card" }
-                    cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+                    title { +"Second card" }
+                    body { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
-                card(selectable = true) {
-                    selected.data.drop(1) handledBy notification {
-                        severity(Severity.INFO)
-                        title("Card is ${if (it) "" else "not "} selected.")
+                card(selectable) {
+                    val onOff = OnOff()
+                    selected(onOff.data)
+                    events {
+                        clicks handledBy onOff.toggle
                     }
-
-                    cardHeader {
-                        cardAction {
-                            cardCheckbox()
+                    header {
+                        actions {
+                            checkbox("card-check", standalone = true) {
+                                checked(onOff.data)
+                                events {
+                                    changes handledBy onOff.toggle
+                                }
+                            }
                         }
-                        cardTitle { +"Third card" }
+                        title { +"Third card" }
                     }
-                    cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
+                    body { +"This is a selectable card. Click the card or the checkbox to select me." }
                 }
             }
             snippet("Flat", CardCode.FLAT) {
-                card(baseClass = "flat".modifier()) {
-                    cardTitle { +"Title" }
-                    cardBody { +"Body" }
-                    cardFooter { +"Footer" }
+                card(flat) {
+                    title { +"Title" }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Expandable", CardCode.EXPANDABLE) {
-                card {
-                    expanded.expanded handledBy notification { expanded ->
-                        severity(Severity.INFO)
-                        title("Expanded state of card: $expanded.")
-                    }
-                    cardHeader {
-                        cardToggle()
-                        cardAction {
-                            dropdown<String>(align = Align.RIGHT) {
+                card(expandable) {
+                    header {
+                        actions {
+                            dropdown(align = Align.RIGHT) {
                                 toggle { kebab() }
                                 item("Item 1")
                                 item("Disabled Item") {
@@ -242,25 +249,25 @@ object CardComponent {
                                 separator()
                                 item("Separated Item")
                             }
-                            cardCheckbox()
+                            checkbox(Id.unique("card-check"), standalone = true)
                         }
-                        cardTitle { +"Title" }
+                        title {
+                            expandedStore.data.map { "Expanded state: $it" }.asText()
+                        }
                     }
-                    cardExpandableContent {
-                        cardBody { +"Body" }
-                        cardFooter { +"Footer" }
-                    }
+                    body { +"Body" }
+                    footer { +"Footer" }
                 }
             }
             snippet("Card with dividers between sections", CardCode.DIVIDERS) {
                 card(baseClass = "flat".modifier()) {
-                    cardTitle { +"Title" }
+                    title { +"Title" }
                     divider()
-                    cardBody { +"Body" }
+                    body { +"Body" }
                     divider()
-                    cardBody { +"Body" }
+                    body { +"Body" }
                     divider()
-                    cardFooter { +"Footer" }
+                    footer { +"Footer" }
                 }
             }
         }
@@ -273,9 +280,9 @@ object CardCode {
     const val BASIC: String = """fun main() {
     render {
         card {
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -285,12 +292,12 @@ object CardCode {
     const val IMAGE_ACTION: String = """fun main() {
     render {
         card {
-            cardHeader {
+            header {
                 img {
                     src("./pf-logo.svg")
                     domNode.style.width = "300px"
                 }
-                cardAction {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -305,9 +312,9 @@ object CardCode {
                     cardCheckbox()
                 }
             }
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -317,8 +324,8 @@ object CardCode {
     const val TITLE_IN_HEADER: String = """fun main() {
     render {
         card {
-            cardHeader {
-                cardAction {
+            header {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -332,12 +339,12 @@ object CardCode {
                     }
                     cardCheckbox()
                 }
-                cardTitle {
+                title {
                     +"This is a really really really really really really really really really really long title"
                 }
             }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -347,8 +354,8 @@ object CardCode {
     const val ONLY_ACTIONS: String = """fun main() {
     render {
         card {
-            cardHeader {
-                cardAction {
+            header {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -363,7 +370,7 @@ object CardCode {
                     cardCheckbox()
                 }
             }
-            cardBody {
+            body {
                 +"This is the card body, there are only actions in the card head."
             }
         }
@@ -375,15 +382,15 @@ object CardCode {
     const val ONLY_IMAGE: String = """fun main() {
     render {
         card {
-            cardHeader {
+            header {
                 img {
                     src("./pf-logo.svg")
                     domNode.style.width = "300px"
                 }
             }
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -393,8 +400,8 @@ object CardCode {
     const val NO_FOOTER: String = """fun main() {
     render {
         card {
-            cardTitle { +"Title" }
-            cardBody { +"This card has no footer" }
+            title { +"Title" }
+            body { +"This card has no footer" }
         }
     }
 }
@@ -404,8 +411,8 @@ object CardCode {
     const val NO_TITLE: String = """fun main() {
     render {
         card {
-            cardBody { +"This card has no title" }
-            cardFooter { +"Footer" }
+            body { +"This card has no title" }
+            footer { +"Footer" }
         }
     }
 }
@@ -415,7 +422,7 @@ object CardCode {
     const val ONLY_BODY: String = """fun main() {
     render {
         card {
-            cardBody { +"Body" }
+            body { +"Body" }
         }
     }
 }
@@ -425,11 +432,11 @@ object CardCode {
     const val MULTIPLE_BODY: String = """fun main() {
     render {
         card {
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardBody { +"Body" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            body { +"Body" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -440,11 +447,11 @@ object CardCode {
     render {
         card {
             domNode.style.minHeight = "30em"
-            cardTitle { +"Title" }
-            cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
-            cardBody(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
+            body(baseClass = "no-fill".modifier()) { +"Body pf-m-no-fill" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -454,9 +461,9 @@ object CardCode {
     const val HOVER: String = """fun main() {
     render {
         card(baseClass = "hoverable".modifier()) {
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -466,9 +473,9 @@ object CardCode {
     const val COMPACT: String = """fun main() {
     render {
         card(baseClass = "compact".modifier()) {
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -483,8 +490,8 @@ object CardCode {
                 title("Card is ${'$'}{if (it) "" else "not "} selected.")
             }
 
-            cardHeader {
-                cardAction {
+            header {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -497,9 +504,9 @@ object CardCode {
                         }
                     }
                 }
-                cardTitle { +"First card" }
+                title { +"First card" }
             }
-            cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+            body { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
         br {}
         card(selectable = true) {
@@ -508,8 +515,8 @@ object CardCode {
                 title("Card is ${'$'}{if (it) "" else "not "} selected.")
             }
 
-            cardTitle { +"Second card" }
-            cardBody { +"This is a selectable card. Click me to select me. Click again to deselect me." }
+            title { +"Second card" }
+            body { +"This is a selectable card. Click me to select me. Click again to deselect me." }
         }
         br {}
         card(selectable = true) {
@@ -518,13 +525,13 @@ object CardCode {
                 title("Card is ${'$'}{if (it) "" else "not "} selected.")
             }
 
-            cardHeader {
-                cardAction {
+            header {
+                actions {
                     cardCheckbox()
                 }
-                cardTitle { +"Third card" }
+                title { +"Third card" }
             }
-            cardBody { +"This is a selectable card. Click the card or the checkbox to select me." }
+            body { +"This is a selectable card. Click the card or the checkbox to select me." }
         }
     }
 }
@@ -534,9 +541,9 @@ object CardCode {
     const val FLAT: String = """fun main() {
     render {
         card(baseClass = "flat".modifier()) {
-            cardTitle { +"Title" }
-            cardBody { +"Body" }
-            cardFooter { +"Footer" }
+            title { +"Title" }
+            body { +"Body" }
+            footer { +"Footer" }
         }
     }
 }
@@ -550,9 +557,9 @@ object CardCode {
                 severity(Severity.INFO)
                 title("Expanded state of card: ${'$'}expanded.")
             }
-            cardHeader {
+            header {
                 cardToggle()
-                cardAction {
+                actions {
                     dropdown<String>(align = Align.RIGHT) {
                         kebabToggle()
                         items {
@@ -566,11 +573,11 @@ object CardCode {
                     }
                     cardCheckbox()
                 }
-                cardTitle { +"Title" }
+                title { +"Title" }
             }
             cardExpandableContent {
-                cardBody { +"Body" }
-                cardFooter { +"Footer" }
+                body { +"Body" }
+                footer { +"Footer" }
             }
         }
     }
@@ -581,13 +588,13 @@ object CardCode {
     const val DIVIDERS: String = """fun main() {
     render {
         card(baseClass = "flat".modifier()) {
-            cardTitle { +"Title" }
+            title { +"Title" }
             divider()
-            cardBody { +"Body" }
+            body { +"Body" }
             divider()
-            cardBody { +"Body" }
+            body { +"Body" }
             divider()
-            cardFooter { +"Footer" }
+            footer { +"Footer" }
         }
     }
 }

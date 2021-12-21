@@ -70,10 +70,13 @@ object ChipGroupComponent {
 
                 chipGroup {
                     +"Letters"
+                    chip("First")
                     chips(store) { word ->
-                        +word.text
-                        badge(word.letters)
+                        chip(word.text) {
+                            badge(word.letters)
+                        }
                     }
+                    chip("Last")
                 }
             }
             snippet("Reactive", ChipGroupCode.REACTIVE) {
@@ -97,7 +100,7 @@ object ChipGroupComponent {
                     }.map { randomString(Random.nextInt(10)) } handledBy store.add
                     chipGroup(limit) {
                         +"Max $limit"
-                        chips(store) { +it }
+                        chips(store) { chip(it) }
                     }
                     br {}
                 }

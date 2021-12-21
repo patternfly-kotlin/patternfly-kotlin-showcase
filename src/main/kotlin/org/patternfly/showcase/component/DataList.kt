@@ -135,7 +135,7 @@ object DataListComponent {
                             }
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
-                                    dropdown<String>(align = Align.RIGHT) {
+                                    dropdown(align = Align.RIGHT) {
                                         toggle { kebab() }
                                         item("Item 1")
                                         item("Disabled Item") {
@@ -161,7 +161,7 @@ object DataListComponent {
                             }
                             dataListAction("hidden-on-lg".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
-                                    dropdown<String>(align = Align.RIGHT) {
+                                    dropdown(align = Align.RIGHT) {
                                         toggle { kebab() }
                                         item("Item 1")
                                         item("Disabled Item") {
@@ -191,7 +191,7 @@ object DataListComponent {
                             }
                             dataListAction("hidden-on-xl".modifier()) {
                                 div(baseClass = "data-list".component("action")) {
-                                    dropdown<String>(align = Align.RIGHT) {
+                                    dropdown(align = Align.RIGHT) {
                                         toggle { kebab() }
                                         item("Item 1")
                                         item("Disabled Item") {
@@ -248,7 +248,7 @@ object DataListComponent {
                             }
                             dataListAction {
                                 div(baseClass = "data-list".component("action")) {
-                                    dropdown<String>(align = Align.RIGHT) {
+                                    dropdown(align = Align.RIGHT) {
                                         toggle { kebab() }
                                         item("Item 1")
                                         item("Disabled Item") {
@@ -299,7 +299,7 @@ object DataListComponent {
                                 }
                                 dataListAction {
                                     div(baseClass = "data-list".component("action")) {
-                                        dropdown<String>(align = Align.RIGHT) {
+                                        dropdown(align = Align.RIGHT) {
                                             toggle { kebab() }
                                             item("Item 1")
                                             item("Disabled Item") {
@@ -341,7 +341,7 @@ object DataListComponent {
                                 }
                                 dataListAction {
                                     div(baseClass = "data-list".component("action")) {
-                                        dropdown<String>(align = Align.RIGHT) {
+                                        dropdown(align = Align.RIGHT) {
                                             toggle { kebab() }
                                             item("Item 1")
                                             item("Disabled Item") {
@@ -384,7 +384,7 @@ object DataListComponent {
                                     }
                                     dataListAction {
                                         div(baseClass = "data-list".component("action")) {
-                                            dropdown<String>(align = Align.RIGHT) {
+                                            dropdown(align = Align.RIGHT) {
                                                 toggle { kebab() }
                                                 item("Item 1")
                                                 item("Disabled Item") {

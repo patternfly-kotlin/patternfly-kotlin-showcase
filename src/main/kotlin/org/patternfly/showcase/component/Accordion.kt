@@ -21,7 +21,7 @@ object AccordionComponent {
         )
         pageSection {
             snippet("Basic", AccordionCode.BASIC) {
-                accordion<String> {
+                accordion {
                     item("Item one") {
                         content {
                             p { +loremIpsum(2) }
@@ -57,7 +57,7 @@ object AccordionComponent {
                 }
             }
             snippet("Single expand", AccordionCode.SINGLE_EXPAND) {
-                accordion<String> {
+                accordion {
                     singleExpand(true)
                     item("Item one") {
                         content {
@@ -88,7 +88,7 @@ object AccordionComponent {
                 }
             }
             snippet("Fixed height", AccordionCode.FIXED_HEIGHT) {
-                accordion<String> {
+                accordion {
                     fixed(true)
                     item("Item one") {
                         content {
@@ -119,38 +119,50 @@ object AccordionComponent {
                 }
             }
             snippet("Reactive", "n/a") {
-                val items = object : RootStore<List<String>>(listOf("Item 1", "Item 2", "Item 3")) {
+                val paragraphs = object : RootStore<List<String>>(listOf("Paragraph 1", "Paragraph 2", "Paragraph 3")) {
                     var count = 3
 
-                    val addItem = handle { items ->
+                    val addParagraph = handle { paragraphs ->
                         count++
-                        items + "Item $count"
+                        paragraphs + "Paragraph $count"
                     }
 
-                    val deleteItem = handle<String> { items, item ->
-                        if (items.size > 1) {
-                            items.minus(item)
+                    val removeParagraph = handle<String> { paragraphs, paragraph ->
+                        if (paragraphs.isNotEmpty()) {
+                            paragraphs.minus(paragraph)
                         } else {
-                            items
+                            paragraphs
                         }
                     }
                 }
 
-                accordion<String> {
-                    items(items) { item ->
-                        title(item)
+                accordion {
+                    item("First paragraph") {
                         content {
-                            p { +loremIpsum(3) }
-                            p {
-                                a {
-                                    +"Remove item"
-                                    clicks.map { item } handledBy items.deleteItem
+                            p { +"Static, non-removable paragraph" }
+                        }
+                    }
+                    items(paragraphs) { paragraph ->
+                        item(paragraph) {
+                            title(paragraph)
+                            content {
+                                p { +loremIpsum(3) }
+                                p {
+                                    a {
+                                        +"Remove paragraph"
+                                        clicks.map { paragraph } handledBy paragraphs.removeParagraph
+                                    }
                                 }
                             }
                         }
                     }
+                    item("Last paragraph") {
+                        content {
+                            p { +"Static, non-removable paragraph" }
+                        }
+                    }
                 }
-                clickButton(primary, baseClass = "mt-md".util()) { +"Add item" } handledBy items.addItem
+                clickButton(primary, baseClass = "mt-md".util()) { +"Add paragraph" } handledBy paragraphs.addParagraph
             }
         }
     }

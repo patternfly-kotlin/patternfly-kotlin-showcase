@@ -22,12 +22,6 @@ import org.patternfly.Severity
 import org.patternfly.SortInfo
 import org.patternfly.aria
 import org.patternfly.bulkSelect
-import org.patternfly.card
-import org.patternfly.cardAction
-import org.patternfly.cardBody
-import org.patternfly.cardCheckbox
-import org.patternfly.cardFooter
-import org.patternfly.cardHeader
 import org.patternfly.cardView
 import org.patternfly.classes
 import org.patternfly.clickButton
@@ -55,6 +49,12 @@ import org.patternfly.icon
 import org.patternfly.inputFormControl
 import org.patternfly.inputGroup
 import org.patternfly.layout
+import org.patternfly.legacyCard
+import org.patternfly.legacyCardAction
+import org.patternfly.legacyCardBody
+import org.patternfly.legacyCardCheckbox
+import org.patternfly.legacyCardFooter
+import org.patternfly.legacyCardHeader
 import org.patternfly.modifier
 import org.patternfly.mvp.Presenter
 import org.patternfly.mvp.View
@@ -184,33 +184,27 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
             cardView(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it != CARD)) })
                 display { user ->
-                    card(user, baseClass = classes {
+                    legacyCard(user, baseClass = classes {
                         +"hoverable".modifier()
                         +"compact".modifier()
                         +"flat".modifier()
                         +"sc-user-card"
                     }) {
-                        cardHeader {
+                        legacyCardHeader {
                             nat(user)
                             span(baseClass = classes("ml-sm".util(), "sc-user-card__title")) {
                                 +user.name.toString()
                             }
-                            cardAction {
-                                dropdown<String>(align = Align.RIGHT) {
+                            legacyCardAction {
+                                dropdown(align = Align.RIGHT) {
                                     toggle { kebab() }
                                     item("Edit")
                                     item("Remove")
-                                    events {
-                                        selections handledBy notification {
-                                            severity(Severity.INFO)
-                                            title("$it ${user.name} not yet implemented")
-                                        }
-                                    }
                                 }
-                                cardCheckbox()
+                                legacyCardCheckbox()
                             }
                         }
-                        cardBody(baseClass = classes {
+                        legacyCardBody(baseClass = classes {
                             +"flex".layout()
                             +"nowrap".modifier()
                             +"align-items-center".modifier()
@@ -220,7 +214,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                                 domNode.classList += "sc-user-card__address"
                             }
                         }
-                        cardFooter {
+                        legacyCardFooter {
                             icon(iconClass = "user-alt".fas(), baseClass = "mr-sm".util())
                             +user.login.username
                         }
@@ -309,17 +303,11 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             }
                         }
                     }
-                    dataTableActionColumn { user ->
-                        dropdown<String>(align = Align.RIGHT) {
+                    dataTableActionColumn {
+                        dropdown(align = Align.RIGHT) {
                             toggle { kebab() }
                             item("Edit")
                             item("Remove")
-                            events {
-                                selections handledBy notification {
-                                    severity(Severity.INFO)
-                                    title("$it ${user.name} not yet implemented")
-                                }
-                            }
                         }
                     }
                 }

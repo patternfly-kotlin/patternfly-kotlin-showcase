@@ -25,15 +25,7 @@ object DropdownComponent {
         )
         pageSection {
             snippet("Basic", DropdownCode.BASIC) {
-                dropdown<String> {
-                    events {
-                        selections handledBy notification(INFO) { item ->
-                            +"You've selected $item"
-                        }
-                        excos handledBy notification(INFO) { expanded ->
-                            +if (expanded) "Expanded" else "Collapsed"
-                        }
-                    }
+                dropdown {
                     toggle { text("Dropdown") }
                     item("Action")
                     item("Disabled Action") {
@@ -45,10 +37,15 @@ object DropdownComponent {
                             clicks handledBy notification(INFO, "Click!")
                         }
                     }
+                    events {
+                        excos handledBy notification(INFO) { expanded ->
+                            +if (expanded) "Expanded" else "Collapsed"
+                        }
+                    }
                 }
             }
             snippet("Disabled", DropdownCode.DISABLED) {
-                dropdown<String> {
+                dropdown {
                     disabled(true)
                     toggle { text("Dropdown") }
                     item("Action")
@@ -60,7 +57,7 @@ object DropdownComponent {
                 }
             }
             snippet("Primary toggle", DropdownCode.PRIMARY) {
-                dropdown<String> {
+                dropdown {
                     toggle {
                         text(variant = primary) {
                             +"Dropdown"
@@ -75,7 +72,7 @@ object DropdownComponent {
                 }
             }
             snippet("Position right", DropdownCode.RIGHT) {
-                dropdown<String>(align = RIGHT) {
+                dropdown(align = RIGHT) {
                     toggle { text("Dropdown") }
                     item("Action")
                     item("Disabled Action") {
@@ -86,7 +83,7 @@ object DropdownComponent {
                 }
             }
             snippet("Direction up", DropdownCode.UP) {
-                dropdown<String>(up = true) {
+                dropdown(up = true) {
                     toggle { text("Dropdown") }
                     item("Action")
                     item("Disabled Action") {
@@ -97,7 +94,7 @@ object DropdownComponent {
                 }
             }
             snippet("With kebab", DropdownCode.KEBAB) {
-                dropdown<String> {
+                dropdown {
                     toggle { kebab() }
                     item("Action")
                     item("Disabled Action") {
@@ -108,7 +105,7 @@ object DropdownComponent {
                 }
             }
             snippet("Icon only", DropdownCode.ICON) {
-                dropdown<String> {
+                dropdown {
                     toggle { icon("th".fas()) }
                     item("Action")
                     item("Disabled Action") {
@@ -119,7 +116,7 @@ object DropdownComponent {
                 }
             }
             snippet("Icons and descriptions", DropdownCode.DESCRIPTION) {
-                dropdown<String> {
+                dropdown {
                     toggle { text("Dropdown") }
                     item("Action 1") {
                         icon("cog".fas())
@@ -144,7 +141,7 @@ object DropdownComponent {
                 }
             }
             snippet("Split button", DropdownCode.CHECKBOX_TOGGLE) {
-                dropdown<String> {
+                dropdown {
                     toggle { checkbox() }
                     item("Action")
                     item("Disabled Action") {
@@ -153,7 +150,7 @@ object DropdownComponent {
                     separator()
                     item("Separated Action")
                 }
-                dropdown<String>(baseClass = "ml-sm".util()) {
+                dropdown(baseClass = "ml-sm".util()) {
                     toggle { checkbox("10 selected") }
                     item("Action")
                     item("Disabled Action") {
@@ -164,7 +161,7 @@ object DropdownComponent {
                 }
             }
             snippet("Split button action", DropdownCode.ACTION_TOGGLE) {
-                dropdown<String> {
+                dropdown {
                     toggle {
                         action { +"Action" }
                     }
@@ -175,7 +172,7 @@ object DropdownComponent {
                     separator()
                     item("Separated Action")
                 }
-                dropdown<String>(baseClass = "ml-sm".util()) {
+                dropdown(baseClass = "ml-sm".util()) {
                     toggle {
                         action { icon("cog".fas()) }
                     }
@@ -193,7 +190,7 @@ object DropdownComponent {
                 }
             }
             snippet("Groups", DropdownCode.GROUPS) {
-                dropdown<String> {
+                dropdown {
                     toggle { text("Dropdown") }
                     item("Action 1")
                     item("Action 2")
@@ -207,10 +204,12 @@ object DropdownComponent {
                         item("Action 1")
                         item("Action 2")
                     }
+                    separator()
+                    item("Final action")
                 }
             }
             snippet("Store", "n/a") {
-                data class Color(val name: String, val code: String = "")
+                data class Color(val name: String, val code: String = "", val colors: List<Color> = emptyList())
 
                 val store = storeOf(
                     listOf(
@@ -220,15 +219,36 @@ object DropdownComponent {
                         Color("Gold", "gold-100"),
                         Color("Orange", "orange-100"),
                         Color("Red", "red-100"),
+                        Color(
+                            "Light",
+                            colors = listOf(
+                                Color("Light Blue", "light-blue-100"),
+                                Color("Light Green", "light-green-100")
+                            )
+                        ),
                     )
                 )
-                dropdown<Color> {
+                dropdown(grouped = true) {
                     toggle { text("Colors") }
                     items(store) { color ->
-                        +color.name
-                        content {
-                            +color.name
-                            inlineStyle("background-color: var(--pf-global--palette--${color.code})")
+                        if (color.colors.isEmpty()) {
+                            item {
+                                content {
+                                    +color.name
+                                    inlineStyle("background-color: var(--pf-global--palette--${color.code})")
+                                }
+                            }
+                        } else {
+                            group(color.name) {
+                                color.colors.forEach { subcolor ->
+                                    item {
+                                        content {
+                                            +subcolor.name
+                                            inlineStyle("background-color: var(--pf-global--palette--${subcolor.code})")
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
