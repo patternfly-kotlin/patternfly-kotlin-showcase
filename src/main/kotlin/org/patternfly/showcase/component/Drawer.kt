@@ -2,22 +2,25 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.dom.DomListener
 import dev.fritz2.dom.html.RenderContext
 import org.patternfly.ButtonVariant.primary
-import org.patternfly.DrawerPanelPosition.BOTTOM
-import org.patternfly.DrawerPanelPosition.LEFT
-import org.patternfly.drawer
-import org.patternfly.drawerBody
-import org.patternfly.drawerBodyWithClose
-import org.patternfly.drawerContent
-import org.patternfly.drawerPanel
-import org.patternfly.drawerSection
+import org.patternfly.DrawerVariant.bottom
+import org.patternfly.DrawerVariant.inline
+import org.patternfly.DrawerVariant.left
+import org.patternfly.DrawerVariant.resizable
+import org.patternfly.DrawerVariant.static
+import org.patternfly.clickButton
+import org.patternfly.drawer2
 import org.patternfly.pageSection
-import org.patternfly.pushButton
 import org.patternfly.title
 import org.patternfly.util
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.events.MouseEvent
 
 object DrawerComponent {
+    private const val HEIGHT: String = "height: 400px"
+
     val content: RenderContext.() -> Unit = {
         intro(
             title = "Drawer",
@@ -26,247 +29,163 @@ object DrawerComponent {
         )
         pageSection {
             snippet("Basic", DrawerCode.BASIC) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2 {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Panel on left", DrawerCode.LEFT) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer(panelPosition = LEFT) {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2(left) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Panel on bottom", DrawerCode.BOTTOM) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
+                val toggle = toggle()
                 div {
-                    inlineStyle("height: 400px")
-                    drawer(panelPosition = BOTTOM) {
-//                        button.clicks handledBy expanded.toggle
-                        drawerContent {
-                            drawerBody {
-                                +loremIpsum(10)
-                            }
+                    inlineStyle(HEIGHT)
+                    drawer2(bottom) {
+                        primary {
+                            content { +loremIpsum(10) }
                         }
-                        drawerPanel {
-                            drawerBodyWithClose {
-                                +"Drawer panel"
-                            }
-                            drawerBody {
-                                +loremIpsum()
-                            }
+                        detail {
+                            head {  +"Drawer panel" }
+                            content { +loremIpsum() }
                         }
+                        toggle handledBy expandedStore.toggle
                     }
                 }
             }
             snippet("Inline", DrawerCode.INLINE) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer(inline = true) {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2(inline) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Inline left", DrawerCode.INLINE_LEFT) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer(panelPosition = LEFT, inline = true) {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2(inline, left) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Additional section above drawer content", DrawerCode.SECTION) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer {
-//                    button.clicks handledBy expanded.toggle
-                    drawerSection {
-                        title { +"Title" }
-                        p {
-                            +loremIpsum(2)
+                val toggle = toggle()
+                drawer2 {
+                    primary {
+                        content(fullWidth = true) {
+                            title { +"Title" }
+                            p {
+                                +loremIpsum(2)
+                            }
                         }
+                        content { +loremIpsum(10) }
                     }
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
-                    }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Static", DrawerCode.STATIC) {
-                drawer(static = true) {
-                    expanded.expand(Unit)
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                drawer2(static) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
                 }
             }
             snippet("Resizable", DrawerCode.RESIZABLE) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer(resizable = true) {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2(resizable) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Resizable on left", DrawerCode.RESIZABLE_LEFT) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer(resizable = true, panelPosition = LEFT) {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2(resizable, left) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
             snippet("Resizable on bottom", DrawerCode.RESIZABLE_BOTTOM) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
+                val toggle = toggle()
                 div {
-                    inlineStyle("height: 400px")
-                    drawer(resizable = true, panelPosition = BOTTOM) {
-//                        button.clicks handledBy expanded.toggle
-                        drawerContent {
-                            drawerBody {
-                                +loremIpsum(10)
-                            }
+                    inlineStyle(HEIGHT)
+                    drawer2(resizable, bottom) {
+                        primary {
+                            content { +loremIpsum(10) }
                         }
-                        drawerPanel {
-                            drawerBodyWithClose {
-                                +"Drawer panel"
-                            }
-                            drawerBody {
-                                +loremIpsum()
-                            }
+                        detail {
+                            head {  +"Drawer panel" }
+                            content { +loremIpsum() }
                         }
+                        toggle handledBy expandedStore.toggle
                     }
                 }
             }
             snippet("Resizable on inline", DrawerCode.RESIZABLE_INLINE) {
-                val button = pushButton(primary, baseClass = "mb-md".util()) {
-                    +"Toggle"
-                }
-                drawer(resizable = true, inline = true) {
-//                    button.clicks handledBy expanded.toggle
-                    drawerContent {
-                        drawerBody {
-                            +loremIpsum(10)
-                        }
+                val toggle = toggle()
+                drawer2(resizable, inline) {
+                    primary {
+                        content { +loremIpsum(10) }
                     }
-                    drawerPanel {
-                        drawerBodyWithClose {
-                            +"Drawer panel"
-                        }
-                        drawerBody {
-                            +loremIpsum()
-                        }
+                    detail {
+                        head {  +"Drawer panel" }
+                        content { +loremIpsum() }
                     }
+                    toggle handledBy expandedStore.toggle
                 }
             }
         }
     }
+
+    private fun RenderContext.toggle(): DomListener<MouseEvent, HTMLElement> =
+        clickButton(primary, baseClass = "mb-md".util()) { +"Toggle" }
 }
 
 object DrawerCode {
