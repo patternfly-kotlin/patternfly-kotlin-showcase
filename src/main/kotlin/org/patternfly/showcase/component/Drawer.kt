@@ -11,7 +11,7 @@ import org.patternfly.DrawerVariant.left
 import org.patternfly.DrawerVariant.resizable
 import org.patternfly.DrawerVariant.static
 import org.patternfly.clickButton
-import org.patternfly.drawer2
+import org.patternfly.drawer
 import org.patternfly.pageSection
 import org.patternfly.title
 import org.patternfly.util
@@ -30,7 +30,7 @@ object DrawerComponent {
         pageSection {
             snippet("Basic", DrawerCode.BASIC) {
                 val toggle = toggle()
-                drawer2 {
+                drawer {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -43,7 +43,7 @@ object DrawerComponent {
             }
             snippet("Panel on left", DrawerCode.LEFT) {
                 val toggle = toggle()
-                drawer2(left) {
+                drawer(left) {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -58,7 +58,7 @@ object DrawerComponent {
                 val toggle = toggle()
                 div {
                     inlineStyle(HEIGHT)
-                    drawer2(bottom) {
+                    drawer(bottom) {
                         primary {
                             content { +loremIpsum(10) }
                         }
@@ -72,7 +72,7 @@ object DrawerComponent {
             }
             snippet("Inline", DrawerCode.INLINE) {
                 val toggle = toggle()
-                drawer2(inline) {
+                drawer(inline) {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -85,7 +85,7 @@ object DrawerComponent {
             }
             snippet("Inline left", DrawerCode.INLINE_LEFT) {
                 val toggle = toggle()
-                drawer2(inline, left) {
+                drawer(inline, left) {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -98,7 +98,7 @@ object DrawerComponent {
             }
             snippet("Additional section above drawer content", DrawerCode.SECTION) {
                 val toggle = toggle()
-                drawer2 {
+                drawer {
                     primary {
                         content(fullWidth = true) {
                             title { +"Title" }
@@ -116,7 +116,7 @@ object DrawerComponent {
                 }
             }
             snippet("Static", DrawerCode.STATIC) {
-                drawer2(static) {
+                drawer(static) {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -128,7 +128,7 @@ object DrawerComponent {
             }
             snippet("Resizable", DrawerCode.RESIZABLE) {
                 val toggle = toggle()
-                drawer2(resizable) {
+                drawer(resizable) {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -141,7 +141,7 @@ object DrawerComponent {
             }
             snippet("Resizable on left", DrawerCode.RESIZABLE_LEFT) {
                 val toggle = toggle()
-                drawer2(resizable, left) {
+                drawer(resizable, left) {
                     primary {
                         content { +loremIpsum(10) }
                     }
@@ -156,7 +156,7 @@ object DrawerComponent {
                 val toggle = toggle()
                 div {
                     inlineStyle(HEIGHT)
-                    drawer2(resizable, bottom) {
+                    drawer(resizable, bottom) {
                         primary {
                             content { +loremIpsum(10) }
                         }
@@ -170,7 +170,7 @@ object DrawerComponent {
             }
             snippet("Resizable on inline", DrawerCode.RESIZABLE_INLINE) {
                 val toggle = toggle()
-                drawer2(resizable, inline) {
+                drawer(resizable, inline) {
                     primary {
                         content { +loremIpsum(10) }
                     }
