@@ -3,20 +3,14 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
+import kotlinx.coroutines.flow.flowOf
 import org.patternfly.ButtonVariant.link
-import org.patternfly.ButtonVariant.primary
 import org.patternfly.Severity.INFO
 import org.patternfly.Size
 import org.patternfly.emptyState
-import org.patternfly.emptyStateBody
-import org.patternfly.emptyStateNoResults
-import org.patternfly.emptyStatePrimary
-import org.patternfly.emptyStateSecondary
-import org.patternfly.emptyStateSpinner
 import org.patternfly.fas
 import org.patternfly.notification
 import org.patternfly.pageSection
-import org.patternfly.pushButton
 
 object EmptyStateComponent {
     val content: RenderContext.() -> Unit = {
@@ -28,114 +22,111 @@ object EmptyStateComponent {
         pageSection {
             snippet("Basic", EmptyStateCode.BASIC) {
                 emptyState(iconClass = "cubes".fas(), title = "Empty State") {
-                    emptyStateBody {
+                    content {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(primary) {
+                    primaryAction {
                         +"Primary action"
+                        events {
+                            clicks handledBy notification(INFO, "Primary action clicked")
+                        }
                     }
-                    emptyStateSecondary {
-                        pushButton(link) { +"Multiple" }
-                        pushButton(link) { +"Action buttons" }
-                        pushButton(link) { +"Can" }
-                        pushButton(link) { +"Go here" }
-                        pushButton(link) { +"In the" }
-                        pushButton(link) { +"Secondary" }
-                        pushButton(link) { +"Area" }
+                    secondaryAction {
+                        +"Multiple"
+                        events {
+                            clicks handledBy notification(INFO, "Secondary action clicked")
+                        }
                     }
+                    secondaryAction { +"Action buttons" }
+                    secondaryAction { +"Can" }
+                    secondaryAction { +"Go here" }
+                    secondaryAction { +"In the" }
+                    secondaryAction { +"Secondary" }
+                    secondaryAction { +"Area" }
                 }
             }
             snippet("Extra small", EmptyStateCode.EXTRA_SMALL) {
                 emptyState(size = Size.XS, title = "Empty State") {
-                    emptyStateBody {
+                    content {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(primary) {
-                        +"Primary action"
-                    }
-                    emptyStateSecondary {
-                        pushButton(link) { +"Multiple" }
-                        pushButton(link) { +"Action buttons" }
-                        pushButton(link) { +"Can" }
-                        pushButton(link) { +"Go here" }
-                        pushButton(link) { +"In the" }
-                        pushButton(link) { +"Secondary" }
-                        pushButton(link) { +"Area" }
-                    }
+                    primaryAction { +"Primary action" }
+                    secondaryAction { +"Multiple" }
+                    secondaryAction { +"Action buttons" }
+                    secondaryAction { +"Can" }
+                    secondaryAction { +"Go here" }
+                    secondaryAction { +"In the" }
+                    secondaryAction { +"Secondary" }
+                    secondaryAction { +"Area" }
                 }
             }
             snippet("Small", EmptyStateCode.SMALL) {
                 emptyState(size = Size.SM, iconClass = "cubes".fas(), title = "Empty State") {
-                    emptyStateBody {
+                    content {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(primary) {
-                        +"Primary action"
-                    }
-                    emptyStateSecondary {
-                        pushButton(link) { +"Multiple" }
-                        pushButton(link) { +"Action buttons" }
-                        pushButton(link) { +"Can" }
-                        pushButton(link) { +"Go here" }
-                        pushButton(link) { +"In the" }
-                        pushButton(link) { +"Secondary" }
-                        pushButton(link) { +"Area" }
-                    }
+                    primaryAction { +"Primary action" }
+                    secondaryAction { +"Multiple" }
+                    secondaryAction { +"Action buttons" }
+                    secondaryAction { +"Can" }
+                    secondaryAction { +"Go here" }
+                    secondaryAction { +"In the" }
+                    secondaryAction { +"Secondary" }
+                    secondaryAction { +"Area" }
                 }
             }
             snippet("Large", EmptyStateCode.LARGE) {
                 emptyState(size = Size.LG, iconClass = "cubes".fas(), title = "Empty State") {
-                    emptyStateBody {
+                    content {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(primary) {
-                        +"Primary action"
-                    }
-                    emptyStateSecondary {
-                        pushButton(link) { +"Multiple" }
-                        pushButton(link) { +"Action buttons" }
-                        pushButton(link) { +"Can" }
-                        pushButton(link) { +"Go here" }
-                        pushButton(link) { +"In the" }
-                        pushButton(link) { +"Secondary" }
-                        pushButton(link) { +"Area" }
-                    }
+                    primaryAction { +"Primary action" }
+                    secondaryAction { +"Multiple" }
+                    secondaryAction { +"Action buttons" }
+                    secondaryAction { +"Can" }
+                    secondaryAction { +"Go here" }
+                    secondaryAction { +"In the" }
+                    secondaryAction { +"Secondary" }
+                    secondaryAction { +"Area" }
                 }
             }
             snippet("Extra large", EmptyStateCode.EXTRA_LARGE) {
                 emptyState(size = Size.XL, iconClass = "cubes".fas(), title = "Empty State") {
-                    emptyStateBody {
+                    content {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    pushButton(primary) {
-                        +"Primary action"
-                    }
-                    emptyStateSecondary {
-                        pushButton(link) { +"Multiple" }
-                        pushButton(link) { +"Action buttons" }
-                        pushButton(link) { +"Can" }
-                        pushButton(link) { +"Go here" }
-                        pushButton(link) { +"In the" }
-                        pushButton(link) { +"Secondary" }
-                        pushButton(link) { +"Area" }
-                    }
+                    primaryAction { +"Primary action" }
+                    secondaryAction { +"Multiple" }
+                    secondaryAction { +"Action buttons" }
+                    secondaryAction { +"Can" }
+                    secondaryAction { +"Go here" }
+                    secondaryAction { +"In the" }
+                    secondaryAction { +"Secondary" }
+                    secondaryAction { +"Area" }
                 }
             }
             snippet("With primary element", EmptyStateCode.PRIMARY_ELEMENT) {
                 emptyState(iconClass = "cubes".fas(), title = "Empty State") {
-                    emptyStateBody {
+                    content {
                         +"This represents an the empty state pattern in Patternfly 4. Hopefully it's simple enough to use but flexible enough to meet a variety of needs."
                     }
-                    emptyStatePrimary {
-                        pushButton(link) { +"Primary action" }
-                    }
+                    primaryAction(link) { +"Primary action" }
                 }
             }
             snippet("Spinner", EmptyStateCode.SPINNER) {
-                emptyStateSpinner()
+                emptyState(title = "Loading") {
+                    loading(flowOf(true))
+                }
             }
             snippet("No match found", EmptyStateCode.NO_RESULTS) {
-                emptyStateNoResults(action = Pair("Clear filter", notification(INFO, "This should clear all filters.")))
+                emptyState {
+                    icon("search".fas())
+                    +"No results found"
+                    content {
+                        +"No results match the filter criteria. Remove all filters or clear all filters to show results."
+                    }
+                    primaryAction(link) { +"Clear all filters" }
+                }
             }
         }
     }
