@@ -22,34 +22,20 @@ object OptionsMenuComponent {
         )
         pageSection {
             snippet("Single option", OptionsMenuCode.SINGLE_OPTION) {
-                val options = listOf("Option 1", "Option 2", "Option 3")
-                val selection = storeOf(options[0])
                 optionsMenu {
                     toggle { text("Options menu") }
-                    options.forEach { option ->
-                        item(option) {
-                            selected(selection.data.map { it == option })
-                            events {
-                                clicks.map { option } handledBy selection.update
-                            }
-                        }
-                    }
+                    item("Option 1")
+                    item("Option 2")
+                    item("Option 3")
                 }
             }
             snippet("Disabled", OptionsMenuCode.DISABLED) {
-                val options = listOf("Option 1", "Option 2", "Option 3")
-                val selection = storeOf(options[0])
                 optionsMenu {
                     disabled(true)
                     toggle { text("Disabled options menu") }
-                    options.forEach { option ->
-                        item(option) {
-                            selected(selection.data.map { it == option })
-                            events {
-                                clicks.map { option } handledBy selection.update
-                            }
-                        }
-                    }
+                    item("Option 1")
+                    item("Option 2")
+                    item("Option 3")
                 }
             }
             snippet("Multiple options", "n/a") {
@@ -83,86 +69,49 @@ object OptionsMenuComponent {
                 }
             }
             snippet("Grouped", "n/a") {
-                val groups = mapOf(
-                    ("0" to null) to listOf(("00" to "Option 1"), ("01" to "Option 2"), ("02" to "Option 3")),
-                    ("1" to "Named Group") to listOf(("10" to "Option 1"), ("11" to "Option 2")),
-                )
-                val selection = storeOf("01")
                 optionsMenu {
                     toggle { text("Options menu") }
-                    groups.forEach { (group, items) ->
-                        val (groupId, groupTitle) = group
-                        group(id = groupId, title = groupTitle) {
-                            items.forEach { (itemId, itemTitle) ->
-                                item(id = itemId, title = itemTitle) {
-                                    selected(selection.data.map { it == itemId })
-                                    events {
-                                        clicks.map { itemId } handledBy selection.update
-                                    }
-                                }
-                            }
-                        }
+                    group {
+                        item("Option 1")
+                        item("Option 2")
+                        item("Option 3")
+                    }
+                    group("Named group") {
+                        item("Option 1")
+                        item("Option 2")
                     }
                 }
             }
             snippet("Plain", OptionsMenuCode.ICON) {
-                val options = listOf("Option 1", "Option 2", "Option 3")
-                val selection = storeOf(options[0])
                 optionsMenu {
                     toggle { icon("sort-amount-down".fas()) }
-                    options.forEach { option ->
-                        item(option) {
-                            selected(selection.data.map { it == option })
-                            events {
-                                clicks.map { option } handledBy selection.update
-                            }
-                        }
-                    }
+                    item("Option 1")
+                    item("Option 2")
+                    item("Option 3")
                 }
             }
             snippet("Align top", OptionsMenuCode.UP) {
-                val options = listOf("Option 1", "Option 2", "Option 3")
-                val selection = storeOf(options[0])
                 optionsMenu(up = true) {
                     toggle { text("Options menu") }
-                    options.forEach { option ->
-                        item(option) {
-                            selected(selection.data.map { it == option })
-                            events {
-                                clicks.map { option } handledBy selection.update
-                            }
-                        }
-                    }
+                    item("Option 1")
+                    item("Option 2")
+                    item("Option 3")
                 }
             }
             snippet("Align right", OptionsMenuCode.RIGHT) {
-                val options = listOf("Right option 1", "Right option 2", "Right option 3")
-                val selection = storeOf(options[0])
                 optionsMenu(align = RIGHT) {
                     toggle { text("Options menu") }
-                    options.forEach { option ->
-                        item(option) {
-                            selected(selection.data.map { it == option })
-                            events {
-                                clicks.map { option } handledBy selection.update
-                            }
-                        }
-                    }
+                    item("Option 1")
+                    item("Option 2")
+                    item("Option 3")
                 }
             }
             snippet("Plain with text", OptionsMenuCode.PLAIN) {
-                val options = listOf("Option 1", "Option 2", "Option 3")
-                val selection = storeOf(options[0])
                 optionsMenu {
                     toggle { text("Options menu", plain) }
-                    options.forEach { option ->
-                        item(option) {
-                            selected(selection.data.map { it == option })
-                            events {
-                                clicks.map { option } handledBy selection.update
-                            }
-                        }
-                    }
+                    item("Option 1")
+                    item("Option 2")
+                    item("Option 3")
                 }
             }
             snippet("Store", "n/a") {
