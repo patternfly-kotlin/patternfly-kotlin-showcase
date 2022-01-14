@@ -40,7 +40,7 @@ object PaginationComponent {
                 }
             }
             snippet("No items", PaginationCode.NO_ITEMS) {
-                pagination()
+                pagination(PageInfo())
             }
             snippet("One page", PaginationCode.ONE_PAGE) {
                 pagination(PageInfo(10, 0, 8))
@@ -51,6 +51,8 @@ object PaginationComponent {
             snippet("Reactive", PaginationCode.REACTIVE) {
                 lateinit var range: Input
                 lateinit var enabled: Switch
+                val total = 123
+                val pageInfo = PageInfo(total = total)
 
                 div(baseClass = classes {
                     +"flex".layout()
@@ -65,7 +67,7 @@ object PaginationComponent {
                         type("range")
                         min("0")
                         max("200")
-                        value("123")
+                        value(total.toString())
                     }
                     enabled = switch("ml-md".util()) {
                         label("Enabled")
@@ -73,13 +75,13 @@ object PaginationComponent {
                         input.checked(true)
                     }
                 }
-                pagination {
+                pagination(pageInfo) {
                     disabled(enabled.input.changes.states().map { !it })
                     range.inputs.events
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
                         .handledBy(pageInfoHandler.total)
                 }
-                pagination(compact = true, baseClass = "mt-sm".util()) {
+                pagination(pageInfo = pageInfo, compact = true, baseClass = "mt-sm".util()) {
                     disabled(enabled.input.changes.states().map { !it })
                     range.inputs.events
                         .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }

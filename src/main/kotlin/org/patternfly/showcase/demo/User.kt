@@ -175,7 +175,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                             }
                         }
                         toolbarItem {
-                            pagination(store = presenter.userStore, compact = true)
+//                            pagination(store = presenter.userStore, compact = true)
                         }
                     }
                 }
