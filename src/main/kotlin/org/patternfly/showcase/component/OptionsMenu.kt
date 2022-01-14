@@ -84,19 +84,20 @@ object OptionsMenuComponent {
             }
             snippet("Grouped", "n/a") {
                 val groups = mapOf(
-                    "" to listOf("Option 1", "Option 2", "Option 3"),
-                    "Named Group" to listOf("Option 4", "Option 5"),
+                    ("0" to null) to listOf(("00" to "Option 1"), ("01" to "Option 2"), ("02" to "Option 3")),
+                    ("1" to "Named Group") to listOf(("10" to "Option 1"), ("11" to "Option 2")),
                 )
-                val selection = storeOf(groups.getValue("Named Group")[0])
+                val selection = storeOf("01")
                 optionsMenu {
                     toggle { text("Options menu") }
                     groups.forEach { (group, items) ->
-                        group(group) {
-                            items.forEach { item ->
-                                item(item) {
-                                    selected(selection.data.map { it == item })
+                        val (groupId, groupTitle) = group
+                        group(id = groupId, title = groupTitle) {
+                            items.forEach { (itemId, itemTitle) ->
+                                item(id = itemId, title = itemTitle) {
+                                    selected(selection.data.map { it == itemId })
                                     events {
-                                        clicks.map { item } handledBy selection.update
+                                        clicks.map { itemId } handledBy selection.update
                                     }
                                 }
                             }
