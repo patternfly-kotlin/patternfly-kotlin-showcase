@@ -70,7 +70,6 @@ import org.patternfly.showcase.data.randomUsers
 import org.patternfly.showcase.demo.UserDemoView.DataComponent.CARD
 import org.patternfly.showcase.demo.UserDemoView.DataComponent.LIST
 import org.patternfly.showcase.demo.UserDemoView.DataComponent.TABLE
-import org.patternfly.sortOptions
 import org.patternfly.title
 import org.patternfly.toolbar
 import org.patternfly.toolbarContent
@@ -155,9 +154,9 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                                 }
                             }
                         }
-                        toolbarItem {
-                            sortOptions(presenter.userStore, sortInfos.values.toList())
-                        }
+//                        toolbarItem {
+//                            sortOptions(presenter.userStore, sortInfos.values.toList())
+//                        }
                         toolbarGroup("icon-button-group".modifier()) {
                             toolbarItem {
                                 clickButton(plain) {

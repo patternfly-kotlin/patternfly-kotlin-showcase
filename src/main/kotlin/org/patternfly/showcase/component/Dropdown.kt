@@ -192,24 +192,29 @@ object DropdownComponent {
             snippet("Groups", DropdownCode.GROUPS) {
                 dropdown {
                     toggle { text("Dropdown") }
-                    item("Action 1")
-                    item("Action 2")
+                    group {
+                        item("Action 1")
+                        item("Action 2")
+                    }
                     separator()
                     group("Group 1") {
                         item("Action 1")
                         item("Action 2")
                     }
                     separator()
-                    group("Group 2") {
+                    group("Group with separator") {
                         item("Action 1")
+                        separator()
                         item("Action 2")
                     }
                     separator()
-                    item("Final action")
+                    group {
+                        item("Final action")
+                    }
                 }
             }
             snippet("Store", "n/a") {
-                data class Color(val name: String, val code: String = "", val colors: List<Color> = emptyList())
+                data class Color(val name: String, val code: String)
 
                 val store = storeOf(
                     listOf(
@@ -219,35 +224,15 @@ object DropdownComponent {
                         Color("Gold", "gold-100"),
                         Color("Orange", "orange-100"),
                         Color("Red", "red-100"),
-                        Color(
-                            "Light",
-                            colors = listOf(
-                                Color("Light Blue", "light-blue-100"),
-                                Color("Light Green", "light-green-100")
-                            )
-                        ),
                     )
                 )
-                dropdown(grouped = true) {
+                dropdown {
                     toggle { text("Colors") }
                     items(store) { color ->
-                        if (color.colors.isEmpty()) {
-                            item {
-                                content {
-                                    +color.name
-                                    inlineStyle("background-color: var(--pf-global--palette--${color.code})")
-                                }
-                            }
-                        } else {
-                            group(color.name) {
-                                color.colors.forEach { subcolor ->
-                                    item {
-                                        content {
-                                            +subcolor.name
-                                            inlineStyle("background-color: var(--pf-global--palette--${subcolor.code})")
-                                        }
-                                    }
-                                }
+                        item {
+                            content {
+                                +color.name
+                                inlineStyle("background-color: var(--pf-global--palette--${color.code})")
                             }
                         }
                     }
