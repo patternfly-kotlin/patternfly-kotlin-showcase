@@ -2,23 +2,14 @@
 
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import org.patternfly.Align
-import org.patternfly.DataListItem
-import org.patternfly.ItemsStore
 import org.patternfly.classes
 import org.patternfly.component
-import org.patternfly.dataList
-import org.patternfly.dataListAction
-import org.patternfly.dataListCell
-import org.patternfly.dataListCheckbox
-import org.patternfly.dataListContent
-import org.patternfly.dataListControl
-import org.patternfly.dataListExpandableContent
-import org.patternfly.dataListItem
-import org.patternfly.dataListRow
-import org.patternfly.dataListToggle
-import org.patternfly.dom.Id
+import org.patternfly.dataList2
 import org.patternfly.dropdown
 import org.patternfly.fas
 import org.patternfly.icon
@@ -35,382 +26,227 @@ object DataListComponent {
         )
         pageSection {
             snippet("Basic", DataListCode.BASIC) {
-                // Just a fake item w/ a display function
-                data class DisplayData(
-                    val id: String = Id.unique(),
-                    val content: DataListItem<DisplayData>.() -> Unit
-                )
-
-                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
-                store.addAll(listOf(
-                    DisplayData {
-                        dataListRow {
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Primary content" }
-                                }
-                                dataListCell { +"Secondary content" }
-                            }
-                        }
-                    },
-                    DisplayData {
-                        dataListRow {
-                            dataListContent {
-                                dataListCell("no-fill".modifier()) {
-                                    span { +"Secondary content (pf-m-no-fill)" }
-                                }
-                                dataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
-                                    +"Secondary content (pf-m-align-right pf-m-no-fill)"
-                                }
-                            }
-                        }
+                dataList2 {
+                    item {
+                        cell { span(id = this@item.id) { +"Primary content" } }
+                        cell { +"Secondary content" }
                     }
-                ))
-
-                dataList(store) {
-                    display {
-                        dataListItem(item = it, content = it.content)
+                    item {
+                        cell(baseClass = "no-fill".modifier()) {
+                            span(id = this@item.id) {
+                                +"Secondary content (pf-m-no-fill)"
+                            }
+                        }
+                        cell(baseClass = classes("no-fill".modifier(), "align-right".modifier())) {
+                            +"Secondary content (pf-m-align-right pf-m-no-fill)"
+                        }
                     }
                 }
             }
             snippet("Compact", DataListCode.COMPACT) {
-                // Just a fake item w/ a display function
-                data class DisplayData(
-                    val id: String = Id.unique(),
-                    val content: DataListItem<DisplayData>.() -> Unit
-                )
-
-                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
-                store.addAll(listOf(
-                    DisplayData {
-                        dataListRow {
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Primary content" }
-                                }
-                                dataListCell { +"Secondary content" }
+                dataList2(compact = true) {
+                    item {
+                        cell { span(id = this@item.id) { +"Primary content" } }
+                        cell { +"Secondary content" }
+                    }
+                    item {
+                        cell(baseClass = "no-fill".modifier()) {
+                            span(id = this@item.id) {
+                                +"Secondary content (pf-m-no-fill)"
                             }
                         }
-                    },
-                    DisplayData {
-                        dataListRow {
-                            dataListContent {
-                                dataListCell("no-fill".modifier()) {
-                                    span { +"Secondary content (pf-m-no-fill)" }
-                                }
-                                dataListCell(classes("no-fill".modifier(), "align-right".modifier())) {
-                                    +"Secondary content (pf-m-align-right pf-m-no-fill)"
-                                }
-                            }
+                        cell(baseClass = classes("no-fill".modifier(), "align-right".modifier())) {
+                            +"Secondary content (pf-m-align-right pf-m-no-fill)"
                         }
                     }
-                ))
-
-                dataList(store) {
-                    display { dataListItem(item = it, content = it.content) }
                 }
             }
             snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
-                // Just a fake item w/ a display function
-                data class DisplayData(
-                    val id: String = Id.unique(),
-                    val content: DataListItem<DisplayData>.() -> Unit
-                )
-
-                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
-                store.addAll(listOf(
-                    DisplayData {
-                        dataListRow {
-                            dataListControl {
-                                dataListCheckbox()
-                            }
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                }
-                                dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                dataListCell { +"Tertiary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                dataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                dataListCell { +"More content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                            }
-                            dataListAction {
-                                div(baseClass = "data-list".component("action")) {
-                                    dropdown(align = Align.RIGHT) {
-                                        toggle { kebab() }
-                                        item("Item 1")
-                                        item("Disabled Item") {
-                                            disabled(true)
-                                        }
-                                        separator()
-                                        item("Separated Item")
+                dataList2 {
+                    item {
+                        check()
+                        cell { span(id = this@item.id) { +loremIpsum() } }
+                        cell { +loremIpsum() }
+                        cell { +loremIpsum() }
+                        cell { +loremIpsum() }
+                        cell { +loremIpsum() }
+                        actionWrapper {
+                            div(baseClass = "data-list".component("action")) {
+                                dropdown(align = Align.RIGHT) {
+                                    toggle { kebab() }
+                                    item("Item 1")
+                                    item("Disabled Item") {
+                                        disabled(true)
                                     }
+                                    separator()
+                                    item("Separated Item")
                                 }
-                            }
-                        }
-                    },
-                    DisplayData {
-                        dataListRow {
-                            dataListControl {
-                                dataListCheckbox()
-                            }
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                }
-                                dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                            }
-                            dataListAction("hidden-on-lg".modifier()) {
-                                div(baseClass = "data-list".component("action")) {
-                                    dropdown(align = Align.RIGHT) {
-                                        toggle { kebab() }
-                                        item("Item 1")
-                                        item("Disabled Item") {
-                                            disabled(true)
-                                        }
-                                        separator()
-                                        item("Separated Item")
-                                    }
-                                }
-                            }
-                            dataListAction(classes("hidden".modifier(), "visible-on-lg".modifier())) {
-                                pushButton(baseClass = "primary".modifier()) { +"Primary" }
-                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                            }
-                        }
-                    },
-                    DisplayData {
-                        dataListRow {
-                            dataListControl {
-                                dataListCheckbox()
-                            }
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Primary content Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                                }
-                                dataListCell { +"Secondary content. Dolor sit amet, consectetur adipisicing elit, sed do eiusmod." }
-                            }
-                            dataListAction("hidden-on-xl".modifier()) {
-                                div(baseClass = "data-list".component("action")) {
-                                    dropdown(align = Align.RIGHT) {
-                                        toggle { kebab() }
-                                        item("Item 1")
-                                        item("Disabled Item") {
-                                            disabled(true)
-                                        }
-                                        separator()
-                                        item("Separated Item")
-                                    }
-                                }
-                            }
-                            dataListAction(classes("hidden".modifier(), "visible-on-xl".modifier())) {
-                                pushButton(baseClass = "primary".modifier()) { +"Primary" }
-                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                                pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                             }
                         }
                     }
-                ))
-
-                dataList(store) {
-                    display { dataListItem(item = it, content = it.content) }
+                    item {
+                        check()
+                        cell { span(id = this@item.id) { +loremIpsum() } }
+                        cell { +loremIpsum() }
+                        actionWrapper(baseClass = "hidden-on-lg".modifier()) {
+                            dropdown(align = Align.RIGHT) {
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
+                                }
+                                separator()
+                                item("Separated Item")
+                            }
+                        }
+                        action(baseClass = classes("hidden".modifier(), "visible-on-lg".modifier())) {
+                            pushButton(baseClass = "primary".modifier()) { +"Primary" }
+                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                        }
+                    }
+                    item {
+                        check()
+                        cell { span(id = this@item.id) { +loremIpsum() } }
+                        cell { +loremIpsum() }
+                        actionWrapper(baseClass = "hidden-on-xl".modifier()) {
+                            dropdown(align = Align.RIGHT) {
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
+                                }
+                                separator()
+                                item("Separated Item")
+                            }
+                        }
+                        action(baseClass = classes("hidden".modifier(), "visible-on-xl".modifier())) {
+                            pushButton(baseClass = "primary".modifier()) { +"Primary" }
+                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                        }
+                    }
                 }
             }
             snippet("Actions: single and multiple", DataListCode.ACTIONS) {
-                // Just a fake item w/ a display function
-                data class DisplayData(
-                    val id: String = Id.unique(),
-                    val content: DataListItem<DisplayData>.() -> Unit
-                )
-
-                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
-                store.addAll(listOf(
-                    DisplayData {
-                        dataListRow {
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Single actionable Primary content" }
+                dataList2 {
+                    item {
+                        cell { span(id = this@item.id) { +"Single actionable - primary content" } }
+                        cell { +"Single actionable - secondary content" }
+                        action {
+                            pushButton(baseClass = "primary".modifier()) { +"Delete" }
+                        }
+                    }
+                    item {
+                        cell { span(id = this@item.id) { +"Multi actions - primary content" } }
+                        cell { +"Multi actions - secondary content" }
+                        actionWrapper {
+                            dropdown(align = Align.RIGHT) {
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
                                 }
-                                dataListCell { +"Single actionable Secondary content" }
-                            }
-                            dataListAction {
-                                pushButton(baseClass = "primary".modifier()) { +"Delete" }
+                                separator()
+                                item("Separated Item")
                             }
                         }
-                    },
-                    DisplayData {
-                        dataListRow {
-                            dataListContent {
-                                dataListCell {
-                                    span { +"Multi actions Primary content" }
-                                }
-                                dataListCell { +"Multi actions Secondary content" }
+                    }
+                }
+            }
+            snippet("Expandable", DataListCode.EXPANDABLE) {
+                dataList2 {
+                    arrayOf("Primary", "Secondary", "Tertiary").forEachIndexed { index, kind ->
+                        item {
+                            toggle()
+                            cellIcon { icon("code-branch".fas()) }
+                            cell {
+                                div(id = this@item.id) { +"$kind content" }
+                                span { +loremIpsum() }
                             }
-                            dataListAction {
-                                div(baseClass = "data-list".component("action")) {
-                                    dropdown(align = Align.RIGHT) {
-                                        toggle { kebab() }
-                                        item("Item 1")
-                                        item("Disabled Item") {
-                                            disabled(true)
-                                        }
-                                        separator()
-                                        item("Separated Item")
+                            cell { span { +loremIpsum() } }
+                            cell { span { +loremIpsum() } }
+                            actionWrapper {
+                                dropdown(align = Align.RIGHT) {
+                                    toggle { kebab() }
+                                    item("Item 1")
+                                    item("Disabled Item") {
+                                        disabled(true)
                                     }
+                                    separator()
+                                    item("Separated Item")
+                                }
+                            }
+                            content(baseClass = classes {
+                                +("no-padding".modifier() `when` (index == 2))
+                            }) {
+                                +loremIpsum(3)
+                            }
+                        }
+                    }
+                }
+            }
+            snippet("Selectable", "n/a") {
+                dataList2(selectable = true){
+                    item {
+                        cell { span(id = this@item.id) { +"Single actionable - primary content" } }
+                        cell { +"Single actionable - secondary content" }
+                        action {
+                            pushButton(baseClass = "primary".modifier()) { +"Delete" }
+                        }
+                    }
+                    item {
+                        cell { span(id = this@item.id) { +"Multi actions - primary content" } }
+                        cell { +"Multi actions - secondary content" }
+                        actionWrapper {
+                            dropdown(align = Align.RIGHT) {
+                                toggle { kebab() }
+                                item("Item 1")
+                                item("Disabled Item") {
+                                    disabled(true)
+                                }
+                                separator()
+                                item("Separated Item")
+                            }
+                        }
+                    }
+                }
+            }
+            snippet("Store", "n/a") {
+                data class Demo(val id: String, val name: String)
+
+                val demos = listOf(
+                    Demo("foo", "Foo"),
+                    Demo("bar", "Bar")
+                )
+                val store = storeOf(demos)
+                val selection = storeOf<Demo?>(null)
+
+                dataList2 {
+                    items(store, selection, { it.id }) { demo ->
+                        item {
+                            cell {
+                                span(id = demo.id) { +demo.name }
+                            }
+                            cell { +loremIpsum() }
+                            actionWrapper {
+                                dropdown(align = Align.RIGHT) {
+                                    toggle { kebab() }
+                                    item("Item 1")
+                                    item("Disabled Item") {
+                                        disabled(true)
+                                    }
+                                    separator()
+                                    item("Separated Item")
                                 }
                             }
                         }
                     }
-                ))
-
-                dataList(store) {
-                    display { dataListItem(item = it, content = it.content) }
                 }
-            }
-            snippet("Expandable", DataListCode.EXPANDABLE) {
-                // Just a fake item w/ two display function
-                data class DisplayData(
-                    val id: String = Id.unique(),
-                    val content: List<DataListItem<DisplayData>.() -> Unit>
-                )
-
-                val store: ItemsStore<DisplayData> = ItemsStore { it.id }
-                store.addAll(listOf(
-                    DisplayData(content = listOf(
-                        {
-                            dataListRow {
-                                dataListControl {
-                                    dataListToggle()
-                                }
-                                dataListContent {
-                                    dataListCell("icon".modifier()) {
-                                        icon("code-branch".fas())
-                                    }
-                                    dataListCell {
-                                        div { +"Primary content" }
-                                        span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                    }
-                                    dataListCell {
-                                        span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                    }
-                                    dataListCell {
-                                        span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                    }
-                                }
-                                dataListAction {
-                                    div(baseClass = "data-list".component("action")) {
-                                        dropdown(align = Align.RIGHT) {
-                                            toggle { kebab() }
-                                            item("Item 1")
-                                            item("Disabled Item") {
-                                                disabled(true)
-                                            }
-                                            separator()
-                                            item("Separated Item")
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            dataListExpandableContent {
-                                +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            }
-                        }
-                    )),
-                    DisplayData(content = listOf(
-                        {
-                            dataListRow {
-                                dataListControl {
-                                    dataListToggle()
-                                }
-                                dataListContent {
-                                    dataListCell("icon".modifier()) {
-                                        icon("code-branch".fas())
-                                    }
-                                    dataListCell {
-                                        div { +"Secondary content" }
-                                        span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                    }
-                                    dataListCell {
-                                        span { +"Lorem ipsum dolor sit amet." }
-                                    }
-                                    dataListCell {
-                                        span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                    }
-                                }
-                                dataListAction {
-                                    div(baseClass = "data-list".component("action")) {
-                                        dropdown(align = Align.RIGHT) {
-                                            toggle { kebab() }
-                                            item("Item 1")
-                                            item("Disabled Item") {
-                                                disabled(true)
-                                            }
-                                            separator()
-                                            item("Separated Item")
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            dataListExpandableContent {
-                                +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                            }
-                        }
-                    )),
-                    DisplayData(
-                        content = listOf(
-                            {
-                                dataListRow {
-                                    dataListControl {
-                                        dataListToggle()
-                                    }
-                                    dataListContent {
-                                        dataListCell("icon".modifier()) {
-                                            icon("code-branch".fas())
-                                        }
-                                        dataListCell {
-                                            div { +"Tertiary content" }
-                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                        }
-                                        dataListCell {
-                                            span { +"Lorem ipsum dolor sit amet." }
-                                        }
-                                        dataListCell {
-                                            span { +"Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
-                                        }
-                                    }
-                                    dataListAction {
-                                        div(baseClass = "data-list".component("action")) {
-                                            dropdown(align = Align.RIGHT) {
-                                                toggle { kebab() }
-                                                item("Item 1")
-                                                item("Disabled Item") {
-                                                    disabled(true)
-                                                }
-                                                separator()
-                                                item("Separated Item")
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                dataListExpandableContent {
-                                    +"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                                }
-                            }
-                        ))))
-
-                dataList(store) {
-                    display {
-                        dataListItem(it) {
-                            it.content.forEach { content ->
-                                content(this)
-                            }
-                        }
+                section {
+                    p {
+                        +"Selected item: "
+                        selection.data.filterNotNull().map { it.name }.asText()
                     }
                 }
             }
