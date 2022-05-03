@@ -4,18 +4,21 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import org.patternfly.Align
+import org.patternfly.ButtonVariant.link
+import org.patternfly.actionList
 import org.patternfly.classes
+import org.patternfly.clickButton
 import org.patternfly.component
 import org.patternfly.dataList2
-import org.patternfly.dropdown
 import org.patternfly.fas
 import org.patternfly.icon
+import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.pushButton
+import org.patternfly.showcase.fixture.DropdownFixture.defaultDropdown
+import org.patternfly.util
 
 object DataListComponent {
     val content: RenderContext.() -> Unit = {
@@ -62,7 +65,7 @@ object DataListComponent {
                 }
             }
             snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
-                dataList2 {
+                val dl = dataList2 {
                     item {
                         check()
                         cell { span(id = this@item.id) { +loremIpsum() } }
@@ -72,15 +75,7 @@ object DataListComponent {
                         cell { +loremIpsum() }
                         actionWrapper {
                             div(baseClass = "data-list".component("action")) {
-                                dropdown(align = Align.RIGHT) {
-                                    toggle { kebab() }
-                                    item("Item 1")
-                                    item("Disabled Item") {
-                                        disabled(true)
-                                    }
-                                    separator()
-                                    item("Separated Item")
-                                }
+                                defaultDropdown()
                             }
                         }
                     }
@@ -89,15 +84,7 @@ object DataListComponent {
                         cell { span(id = this@item.id) { +loremIpsum() } }
                         cell { +loremIpsum() }
                         actionWrapper(baseClass = "hidden-on-lg".modifier()) {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                         }
                         action(baseClass = classes("hidden".modifier(), "visible-on-lg".modifier())) {
                             pushButton(baseClass = "primary".modifier()) { +"Primary" }
@@ -109,15 +96,7 @@ object DataListComponent {
                         cell { span(id = this@item.id) { +loremIpsum() } }
                         cell { +loremIpsum() }
                         actionWrapper(baseClass = "hidden-on-xl".modifier()) {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                         }
                         action(baseClass = classes("hidden".modifier(), "visible-on-xl".modifier())) {
                             pushButton(baseClass = "primary".modifier()) { +"Primary" }
@@ -125,6 +104,12 @@ object DataListComponent {
                             pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                             pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
                         }
+                    }
+                }
+                section(baseClass = "mt-lg".util()) {
+                    p {
+                        +"Selected ids: "
+                        dl.selectedIds.renderText()
                     }
                 }
             }
@@ -141,15 +126,7 @@ object DataListComponent {
                         cell { span(id = this@item.id) { +"Multi actions - primary content" } }
                         cell { +"Multi actions - secondary content" }
                         actionWrapper {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                         }
                     }
                 }
@@ -167,15 +144,7 @@ object DataListComponent {
                             cell { span { +loremIpsum() } }
                             cell { span { +loremIpsum() } }
                             actionWrapper {
-                                dropdown(align = Align.RIGHT) {
-                                    toggle { kebab() }
-                                    item("Item 1")
-                                    item("Disabled Item") {
-                                        disabled(true)
-                                    }
-                                    separator()
-                                    item("Separated Item")
-                                }
+                                defaultDropdown()
                             }
                             content(baseClass = classes {
                                 +("no-padding".modifier() `when` (index == 2))
@@ -187,7 +156,7 @@ object DataListComponent {
                 }
             }
             snippet("Selectable", "n/a") {
-                dataList2(selectable = true){
+                dataList2(selectable = true) {
                     item {
                         cell { span(id = this@item.id) { +"Single actionable - primary content" } }
                         cell { +"Single actionable - secondary content" }
@@ -199,20 +168,12 @@ object DataListComponent {
                         cell { span(id = this@item.id) { +"Multi actions - primary content" } }
                         cell { +"Multi actions - secondary content" }
                         actionWrapper {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                         }
                     }
                 }
             }
-            snippet("Store", "n/a") {
+            snippet("Store (single selection)", "n/a") {
                 data class Demo(val id: String, val name: String)
 
                 val demos = listOf(
@@ -222,7 +183,7 @@ object DataListComponent {
                 val store = storeOf(demos)
                 val selection = storeOf<Demo?>(null)
 
-                dataList2 {
+                dataList2(selectable = true) {
                     items(store, selection, { it.id }) { demo ->
                         item {
                             cell {
@@ -230,23 +191,69 @@ object DataListComponent {
                             }
                             cell { +loremIpsum() }
                             actionWrapper {
-                                dropdown(align = Align.RIGHT) {
-                                    toggle { kebab() }
-                                    item("Item 1")
-                                    item("Disabled Item") {
-                                        disabled(true)
-                                    }
-                                    separator()
-                                    item("Separated Item")
-                                }
+                                defaultDropdown()
                             }
                         }
                     }
                 }
-                section {
-                    p {
+                section(baseClass = classes("flex".layout(), "mt-lg".util())) {
+                    actionList {
+                        for (demo in demos) {
+                            item {
+                                clickButton(link) { +"Select ${demo.name}" }.map { demo } handledBy selection.update
+                            }
+                        }
+                        item {
+                            clickButton(link) { +"Select none" }.map { null } handledBy selection.update
+                        }
+                    }
+                    div(baseClass = "align-right".modifier()) {
                         +"Selected item: "
-                        selection.data.filterNotNull().map { it.name }.asText()
+                        selection.data.map { it?.name ?: "Nothing" }.renderText()
+                    }
+                }
+            }
+            snippet("Store (multiple selections)", "n/a") {
+                data class Demo(val id: String, val name: String)
+
+                val demos = listOf(
+                    Demo("foo", "Foo"),
+                    Demo("bar", "Bar")
+                )
+                val store = storeOf(demos)
+                val selection = storeOf<List<Demo>>(emptyList())
+
+                dataList2 {
+                    items(store, selection, { it.id }) { demo ->
+                        item {
+                            check()
+                            cell {
+                                span(id = demo.id) { +demo.name }
+                            }
+                            cell { +loremIpsum() }
+                            actionWrapper {
+                                defaultDropdown()
+                            }
+                        }
+                    }
+                }
+                section(baseClass = classes("flex".layout(), "mt-lg".util())) {
+                    actionList {
+                        for (demo in demos) {
+                            item {
+                                clickButton(link) { +"Select ${demo.name}" }.map { selection.current + demo } handledBy selection.update
+                            }
+                        }
+                        item {
+                            clickButton(link) { +"Select all" }.map { demos } handledBy selection.update
+                        }
+                        item {
+                            clickButton(link) { +"Select none" }.map { emptyList<Demo>() } handledBy selection.update
+                        }
+                    }
+                    div(baseClass = "align-right".modifier()) {
+                        +"Selected items: "
+                        selection.data.map { demos -> demos.joinToString { it.name }.ifEmpty { "None" } }.renderText()
                     }
                 }
             }

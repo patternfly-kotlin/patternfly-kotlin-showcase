@@ -1,3 +1,8 @@
+@file:Suppress("UnstableApiUsage")
+
+group = "org.patternfly"
+version = "0.1.0"
+
 // https://youtrack.jetbrains.com/issue/KTIJ-19369#focus=Comments-27-5181027.0-0
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -9,9 +14,6 @@ plugins {
     // alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
 }
-
-group = "org.patternfly"
-version = "0.1.0"
 
 val repositories = arrayOf(
     "https://oss.sonatype.org/content/repositories/snapshots/",
@@ -25,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.bundles.fritz2)
+    implementation(libs.bundles.pfk)
     implementation(libs.serialization.json)
     implementation(npm("@github/time-elements", libs.versions.timeElements.get()))
     implementation(npm("@patternfly/patternfly", libs.versions.patternFly.get()))

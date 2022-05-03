@@ -10,6 +10,7 @@ import org.patternfly.title
 
 val components = listOf(
     Component("accordion", "Accordion", AccordionComponent.content),
+    Component("action-list", "Action list", ActionListComponent.content),
     Component("alert", "Alert", AlertComponent.content),
     Component("alert-group", "Alert group", AlertGroupComponent.content),
     Component("badge", "Badge", BadgeComponent.content),
@@ -22,6 +23,8 @@ val components = listOf(
     Component("drawer", "Drawer", DrawerComponent.content),
     Component("dropdown", "Dropdown", DropdownComponent.content),
     Component("empty-state", "Empty state", EmptyStateComponent.content),
+    Component("label", "Label", LabelComponent.content),
+    Component("label-group", "Label group", LabelGroupComponent.content),
     Component("navigation", "Navigation", NavigationComponent.content),
     Component("options-menu", "Options menu", OptionsMenuComponent.content),
     Component("pagination", "Pagination", PaginationComponent.content),

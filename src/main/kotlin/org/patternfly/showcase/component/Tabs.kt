@@ -174,7 +174,7 @@ object TabsComponent {
                     }
                     span {
                         range.inputs.events
-                            .map { it.target.unsafeCast<HTMLInputElement>().value }.asText()
+                            .map { it.target.unsafeCast<HTMLInputElement>().value }.renderText(into = this)
                     }
                 }
                 tabs(store) {

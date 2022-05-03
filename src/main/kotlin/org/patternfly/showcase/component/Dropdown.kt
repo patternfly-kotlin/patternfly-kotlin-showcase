@@ -15,7 +15,6 @@ import org.patternfly.pageSection
 import org.patternfly.util
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object DropdownComponent {
     val content: RenderContext.() -> Unit = {
         intro(

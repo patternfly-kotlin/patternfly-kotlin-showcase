@@ -85,8 +85,7 @@ suspend fun randomUsers(size: Int = 123): List<User> {
     val payload = http("https://randomuser.me/api/?exc=id&results=$size")
         .acceptJson()
         .get()
-        .text()
-        .await()
+        .body()
     val json = Json { isLenient = true }
     val randomUsers = json.decodeFromString<RandomUsers>(payload)
     return randomUsers.results

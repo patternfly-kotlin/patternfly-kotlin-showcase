@@ -4,6 +4,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.RootStore
+import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
@@ -14,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.patternfly.Button
 import org.patternfly.ButtonVariant.control
 import org.patternfly.ButtonVariant.danger
 import org.patternfly.ButtonVariant.inline
@@ -38,6 +40,7 @@ import org.patternfly.pushButton
 import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
 import org.patternfly.util
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
@@ -124,36 +127,36 @@ object ButtonComponent {
             }
             snippet("Aria-disabled", ButtonCode.ARIA_DISABLED) {
                 pushButton(primary, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     +"Primary disabled"
                 }
                 pushButton(secondary, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     +"Secondary disabled"
                 }
                 pushButton(tertiary, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     +"Tertiary disabled"
                 }
                 pushButton(danger, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     +"Danger disabled"
                 }
                 pushButton(link, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     icon("plus-circle".fas())
                     +"Link disabled"
                 }
                 pushButton(link, inline, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     +"Inline link disabled"
                 }
                 pushButton(plain, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     icon("times".fas())
                 }
                 pushButton(control, baseClass = "aria-disabled".modifier()) {
-                    aria["disabled"] = true
+                    element { aria["disabled"] = true }
                     +"Control disabled"
                 }
             }
@@ -169,8 +172,10 @@ object ButtonComponent {
                     +"Secondary link to PatternFly"
                 }
                 linkButton(tertiary, baseClass = "disabled".modifier()) {
-                    aria["disabled"] = true
-                    domNode.tabIndex = -1
+                    element {
+                        domNode.tabIndex = -1
+                    }
+                    element { aria["disabled"] = true }
                     href("https://www.patternfly.org")
                     target("_blank")
                     +"Tertiary link to W3.org"

@@ -6,9 +6,13 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.patternfly.Color
+import org.patternfly.Color.GREY
 import org.patternfly.Severity.INFO
 import org.patternfly.chip
 import org.patternfly.component
+import org.patternfly.fas
+import org.patternfly.label
 import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.showcase.EVENT_DELAY
@@ -16,7 +20,6 @@ import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
 import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object ChipComponent {
     val content: RenderContext.() -> Unit = {
         intro(

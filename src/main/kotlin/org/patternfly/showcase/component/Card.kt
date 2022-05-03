@@ -17,6 +17,7 @@ import org.patternfly.dom.Id
 import org.patternfly.dropdown
 import org.patternfly.modifier
 import org.patternfly.pageSection
+import org.patternfly.showcase.fixture.DropdownFixture.defaultDropdown
 
 object CardComponent {
     val content: RenderContext.() -> Unit = {
@@ -43,15 +44,7 @@ object CardComponent {
                             }
                         }
                         actions {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                             checkbox(Id.unique("card-check"), standalone = true)
                         }
                     }
@@ -64,15 +57,7 @@ object CardComponent {
                 card {
                     header {
                         actions {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                             checkbox(Id.unique("card-check"), standalone = true)
                         }
                         title {
@@ -87,15 +72,7 @@ object CardComponent {
                 card {
                     header {
                         actions {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                             checkbox(Id.unique("card-check"), standalone = true)
                         }
                     }
@@ -184,15 +161,7 @@ object CardComponent {
                     }
                     header {
                         actions {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                         }
                     }
                     title { +"First card" }
@@ -240,19 +209,11 @@ object CardComponent {
                 card(expandable) {
                     header {
                         actions {
-                            dropdown(align = Align.RIGHT) {
-                                toggle { kebab() }
-                                item("Item 1")
-                                item("Disabled Item") {
-                                    disabled(true)
-                                }
-                                separator()
-                                item("Separated Item")
-                            }
+                            defaultDropdown()
                             checkbox(Id.unique("card-check"), standalone = true)
                         }
                         title {
-                            expandedStore.data.map { "Expanded state: $it" }.asText()
+                            expandedStore.data.map { "Expanded state: $it" }.renderText(into = this)
                         }
                     }
                     body { +"Body" }

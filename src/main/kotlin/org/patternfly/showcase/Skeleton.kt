@@ -19,7 +19,7 @@ fun RenderContext.skeleton(placeManager: PlaceManager) {
 //            }
         }
         sidebar {
-            navigation(placeManager.router, expandable = true) {
+            navigation(placeManager, expandable = true) {
                 item(placeRequest(GET_STARTED), "Get Started")
                 item(placeRequest(GET_IN_TOUCH), "Get in Touch")
                 group("Components") {

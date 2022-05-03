@@ -3,7 +3,7 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.routing.router
+import dev.fritz2.routing.routerOf
 import org.patternfly.Severity.INFO
 import org.patternfly.navigation
 import org.patternfly.notification
@@ -20,7 +20,7 @@ object NavigationComponent {
         )
         pageSection {
             snippet("Default", NavigationCode.DEFAULT) {
-                val router = router("home")
+                val router = routerOf("home")
                 page {
                     sidebar {
                         navigation(router) {
@@ -37,7 +37,7 @@ object NavigationComponent {
                 }
             }
             snippet("Grouped", NavigationCode.GROUPED) {
-                val router = router("home")
+                val router = routerOf("home")
                 page {
                     sidebar {
                         navigation(router) {
@@ -56,7 +56,7 @@ object NavigationComponent {
                 }
             }
             snippet("Expandable", NavigationCode.EXPANDABLE) {
-                val router = router("home")
+                val router = routerOf("home")
                 page {
                     sidebar {
                         navigation(router, expandable = true) {
@@ -81,7 +81,7 @@ object NavigationComponent {
                 }
             }
             snippet("Mixed", NavigationCode.MIXED) {
-                val router = router("home")
+                val router = routerOf("home")
                 page {
                     sidebar {
                         navigation(router, expandable = true) {
@@ -104,7 +104,7 @@ object NavigationComponent {
             }
         }
         snippet("Horizontal", NavigationCode.HORIZONTAL) {
-            val router = router("home")
+            val router = routerOf("home")
             page {
                 masthead {
                     content {
@@ -119,7 +119,7 @@ object NavigationComponent {
             }
         }
         snippet("Subnav", NavigationCode.TERTIARY) {
-            val router = router("home")
+            val router = routerOf("home")
             page {
                 main {
                     pageSubNav {
