@@ -7,7 +7,6 @@ import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +38,7 @@ import org.patternfly.switch
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.KeyboardEvent
 
 object ButtonComponent {
     val content: RenderContext.() -> Unit = {
@@ -312,10 +312,12 @@ object ButtonComponent {
                 }
             }
             snippet("Reactive", ButtonCode.REACTIVE) {
+                val initialTitle = "Click me"
                 lateinit var text: Input
                 lateinit var enabled: Switch
 
-                fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+                fun currentValue(event: Event) =
+                    event.target.unsafeCast<HTMLInputElement>().value.ifEmpty { initialTitle }
 
                 div(baseClass = classes {
                     +"flex".layout()
@@ -324,8 +326,7 @@ object ButtonComponent {
                 }) {
                     text = input(baseClass = classes("form-control".component(), "w-50".util())) {
                         type("text")
-                        value("Click me")
-                        placeholder("Button text")
+                        placeholder(initialTitle)
                     }
                     enabled = switch("ml-md".util()) {
                         label("Enabled")
@@ -335,13 +336,13 @@ object ButtonComponent {
                 }
                 br {}
                 clickButton(baseClass = "primary".modifier()) {
+                    text.keyups.map { currentValue(it) }.renderText()
                     disabled(enabled.input.changes.states().map { !it })
-                    text.keyups.map { currentValue(it) }.asText()
                 } handledBy notification(INFO, "Button clicked")
 
                 MainScope().launch {
                     delay(EVENT_DELAY)
-                    text.domNode.dispatchEvent(Event(Events.keyup.name))
+                    text.domNode.dispatchEvent(KeyboardEvent(Events.keyup.name))
                 }
             }
         }

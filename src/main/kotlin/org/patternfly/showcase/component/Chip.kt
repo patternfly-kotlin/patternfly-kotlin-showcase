@@ -6,19 +6,15 @@ import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.patternfly.Color
-import org.patternfly.Color.GREY
 import org.patternfly.Severity.INFO
 import org.patternfly.chip
 import org.patternfly.component
-import org.patternfly.fas
-import org.patternfly.label
 import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.showcase.EVENT_DELAY
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import kotlin.time.ExperimentalTime
+import org.w3c.dom.events.KeyboardEvent
 
 object ChipComponent {
     val content: RenderContext.() -> Unit = {
@@ -55,34 +51,37 @@ object ChipComponent {
                 }
             }
             snippet("Reactive", ChipCode.REACTIVE) {
-                fun currentValue(event: Event) = event.target.unsafeCast<HTMLInputElement>().value
+                val initialTitle = "Chip text"
+                fun currentValue(event: Event) =
+                    event.target.unsafeCast<HTMLInputElement>().value.ifEmpty { initialTitle }
 
                 val text: Input = input(baseClass = "form-control".component()) {
                     type("text")
-                    value("Chip")
-                    placeholder("Chip text")
+                    placeholder(initialTitle)
                 }
                 br {}
                 br {}
                 chip {
                     readOnly(true)
-                    text.keyups.map { currentValue(it) }.asText()
+                    text.keyups.map { currentValue(it) }.renderText()
                 }
                 br {}
                 chip {
-                    text.keyups.map { currentValue(it) }.asText()
+                    closable(true)
+                    text.keyups.map { currentValue(it) }.renderText()
                 }
                 br {}
                 chip {
                     readOnly(true)
-                    text.keyups.map { currentValue(it) }.asText()
+                    text.keyups.map { currentValue(it) }.renderText()
                     badge {
                         count(text.keyups.map { currentValue(it).length })
                     }
                 }
                 br {}
                 chip {
-                    text.keyups.map { currentValue(it) }.asText()
+                    closable(true)
+                    text.keyups.map { currentValue(it) }.renderText()
                     badge {
                         count(text.keyups.map { currentValue(it).length })
                     }
@@ -90,7 +89,7 @@ object ChipComponent {
 
                 MainScope().launch {
                     delay(EVENT_DELAY)
-                    text.domNode.dispatchEvent(Event(Events.keyup.name))
+                    text.domNode.dispatchEvent(KeyboardEvent(Events.keyup.name))
                 }
             }
         }

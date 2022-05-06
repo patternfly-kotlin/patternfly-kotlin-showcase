@@ -9,11 +9,6 @@ version = "0.1.0"
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.js)
-    // Activate as soon as
-    // https://github.com/google/ksp/issues/33 and
-    // https://github.com/varabyte/kobweb/issues/4
-    // have been fixed
-    // alias(libs.plugins.ksp)
     alias(libs.plugins.serialization)
 }
 
@@ -42,7 +37,6 @@ dependencies {
 }
 
 val webDir = file("src/main/web")
-
 kotlin {
     js {
         browser {
@@ -50,7 +44,7 @@ kotlin {
                 outputFileName = "main.bundle.js"
                 sourceMaps = true
                 devServer = KotlinWebpackConfig.DevServer(
-                    open = false,
+                    open = true,
                     port = 3000,
                     static = mutableListOf("$buildDir/processedResources/js/main")
                 )

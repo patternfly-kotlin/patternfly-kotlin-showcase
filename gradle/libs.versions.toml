@@ -4,7 +4,6 @@ cssLoader = "6.7.1"
 fritz2 = "0.14.2"
 highlight = "11.3.1"
 kotlin = "1.6.21"
-ksp = "1.6.0-1.0.1"
 mvp = "0.3.0-SNAPSHOT"
 patternFly = "4.192.1"
 patternFlyKotlin = "0.3.0-SNAPSHOT"
@@ -25,5 +24,4 @@ pfk = ["fritz2-core", "patternfly-mvp", "patternfly-kotlin"]
 
 [plugins]
 js = { id = "org.jetbrains.kotlin.js", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
