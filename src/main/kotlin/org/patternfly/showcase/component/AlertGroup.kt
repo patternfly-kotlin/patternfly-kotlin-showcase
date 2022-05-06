@@ -6,7 +6,6 @@ import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariant.secondary
 import org.patternfly.NotificationAlert
@@ -21,9 +20,7 @@ import org.patternfly.clickButton
 import org.patternfly.notification
 import org.patternfly.pageSection
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object AlertGroupComponent {
     val content: RenderContext.() -> Unit = {
         intro(

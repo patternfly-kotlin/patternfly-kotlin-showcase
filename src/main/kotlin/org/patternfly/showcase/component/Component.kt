@@ -25,6 +25,7 @@ val components = listOf(
     Component("empty-state", "Empty state", EmptyStateComponent.content),
     Component("label", "Label", LabelComponent.content),
     Component("label-group", "Label group", LabelGroupComponent.content),
+    Component("list", "List", ListComponent.content),
     Component("navigation", "Navigation", NavigationComponent.content),
     Component("options-menu", "Options menu", OptionsMenuComponent.content),
     Component("pagination", "Pagination", PaginationComponent.content),

@@ -6,6 +6,7 @@ import dev.fritz2.binding.Handler
 import dev.fritz2.binding.RootStore
 import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
+import kotlinx.coroutines.flow.map
 import org.patternfly.ButtonVariant.link
 import org.patternfly.Severity.INFO
 import org.patternfly.chipGroup
@@ -82,6 +83,7 @@ object ChipGroupComponent {
             snippet("Reactive", ChipGroupCode.REACTIVE) {
                 class Strings : RootStore<List<String>>(emptyList()) {
                     val add: Handler<String> = handle { strings, string -> strings + string }
+                    val remove: Handler<String> = handle { strings, string -> strings - string }
                 }
 
                 val stores: Array<Pair<Int, Strings>> = arrayOf(
@@ -100,7 +102,11 @@ object ChipGroupComponent {
                     }.map { randomString(Random.nextInt(10)) } handledBy store.add
                     chipGroup(limit) {
                         +"Max $limit"
-                        chips(store) { chip(it) }
+                        chips(store) { title ->
+                            chip(title) {
+                                closes.map { title } handledBy store.remove
+                            }
+                        }
                     }
                     br {}
                 }

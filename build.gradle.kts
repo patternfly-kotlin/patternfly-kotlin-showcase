@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+
 group = "org.patternfly"
 version = "0.1.0"
 
@@ -33,23 +35,31 @@ dependencies {
     implementation(npm("@patternfly/patternfly", libs.versions.patternFly.get()))
     implementation(npm("clipboard", libs.versions.clipboard.get()))
     implementation(npm("highlight.js", libs.versions.highlight.get()))
-    implementation(devNpm("file-loader", libs.versions.fileLoader.get()))
+    implementation(devNpm("css-loader", libs.versions.cssLoader.get()))
+    implementation(devNpm("sass", libs.versions.sass.get()))
+    implementation(devNpm("sass-loader", libs.versions.sassLoader.get()))
+    implementation(devNpm("style-loader", libs.versions.styleLoader.get()))
 }
 
+val webDir = file("src/main/web")
+
 kotlin {
-    js(IR) {
-        sourceSets {
-            named("main") {
-                languageSettings.apply {
-                    optIn("kotlin.RequiresOptIn")
-                }
-            }
-        }
+    js {
         browser {
-            commonWebpackConfig {
-                cssSupport.enabled = true
+            runTask {
+                outputFileName = "main.bundle.js"
+                sourceMaps = true
+                devServer = KotlinWebpackConfig.DevServer(
+                    open = false,
+                    port = 3000,
+                    static = mutableListOf("$buildDir/processedResources/js/main")
+                )
+            }
+            webpackTask {
+                outputFileName = "main.bundle.js"
             }
         }
         binaries.executable()
     }
+    sourceSets["main"].resources.srcDir(webDir)
 }

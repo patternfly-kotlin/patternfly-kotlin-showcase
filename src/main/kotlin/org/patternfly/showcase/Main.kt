@@ -9,9 +9,10 @@ import org.patternfly.title
 external fun require(name: String): dynamic
 
 fun main() {
+    require("showcase.scss")
     require("@github/time-elements/dist/time-elements")
-    require("@patternfly/patternfly/patternfly.css")
-    require("@patternfly/patternfly/patternfly-addons.css")
+    require("@patternfly/patternfly/patternfly.scss")
+    require("@patternfly/patternfly/patternfly-addons.scss")
     require("clipboard/dist/clipboard")
     require("highlight.js/lib/core")
     require("highlight.js/lib/languages/kotlin")

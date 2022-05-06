@@ -12,7 +12,7 @@ fun RenderContext.skeleton(placeManager: PlaceManager) {
     page {
         masthead {
             brand("#home") {
-                src("./header-logo.svg")
+                src(require("header-logo.svg") as String)
             }
 //            toolbar {
 //                notificationBadge()

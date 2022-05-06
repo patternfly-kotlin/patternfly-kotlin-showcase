@@ -1,10 +1,8 @@
 @file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
-@file:OptIn(InternalCoroutinesApi::class)
 
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.RootStore
-import dev.fritz2.dom.Tag
 import dev.fritz2.dom.html.Events
 import dev.fritz2.dom.html.Input
 import dev.fritz2.dom.html.RenderContext
@@ -15,7 +13,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.patternfly.Button
 import org.patternfly.ButtonVariant.control
 import org.patternfly.ButtonVariant.danger
 import org.patternfly.ButtonVariant.inline
@@ -40,12 +37,9 @@ import org.patternfly.pushButton
 import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
 import org.patternfly.util
-import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.events.Event
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object ButtonComponent {
     val content: RenderContext.() -> Unit = {
         intro(

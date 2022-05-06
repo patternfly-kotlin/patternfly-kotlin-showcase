@@ -10,9 +10,7 @@ import org.patternfly.ButtonVariant.plain
 import org.patternfly.fas
 import org.patternfly.optionsMenu
 import org.patternfly.pageSection
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 object OptionsMenuComponent {
     val content: RenderContext.() -> Unit = {
         intro(

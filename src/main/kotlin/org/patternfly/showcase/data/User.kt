@@ -1,8 +1,6 @@
 package org.patternfly.showcase.data
 
 import dev.fritz2.remote.http
-import kotlinx.coroutines.await
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -80,7 +78,6 @@ internal data class RandomUsers(val results: List<User>, val info: Info)
 @Serializable
 internal data class Info(val seed: String, val results: Int, val page: Int, val version: String)
 
-@OptIn(ExperimentalSerializationApi::class)
 suspend fun randomUsers(size: Int = 123): List<User> {
     val payload = http("https://randomuser.me/api/?exc=id&results=$size")
         .acceptJson()

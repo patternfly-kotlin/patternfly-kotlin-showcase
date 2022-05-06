@@ -1,3 +1,8 @@
+$pf-global--font-path: "/node_modules/@patternfly/patternfly/assets/fonts";
+$fa-font-path: "/node_modules/@patternfly/patternfly/assets/fonts/webfonts";
+$pf-global--fonticon-path: "/node_modules/@patternfly/patternfly/assets/pficon";
+$pf-global--image-path: "/node_modules/@patternfly/patternfly/assets/images";
+
 code {
     font-family: var(--pf-global--FontFamily--monospace) !important;
     font-size: 14px;

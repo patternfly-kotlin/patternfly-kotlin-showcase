@@ -5,19 +5,33 @@ package org.patternfly.showcase.component
 import dev.fritz2.binding.RootStore
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.map
-import org.patternfly.Align
+import org.patternfly.ButtonVariant.inline
+import org.patternfly.ButtonVariant.link
 import org.patternfly.CardVariant.compact
 import org.patternfly.CardVariant.expandable
 import org.patternfly.CardVariant.flat
 import org.patternfly.CardVariant.hoverable
 import org.patternfly.CardVariant.selectable
+import org.patternfly.Color.BLUE
+import org.patternfly.Color.GREEN
+import org.patternfly.Color.ORANGE
+import org.patternfly.Color.PURPLE
 import org.patternfly.card
 import org.patternfly.checkbox
+import org.patternfly.classes
+import org.patternfly.component
 import org.patternfly.dom.Id
-import org.patternfly.dropdown
+import org.patternfly.dom.hideIf
+import org.patternfly.fas
+import org.patternfly.icon
+import org.patternfly.label
+import org.patternfly.labelGroup
+import org.patternfly.layout
+import org.patternfly.linkButton
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.showcase.fixture.DropdownFixture.defaultDropdown
+import org.patternfly.showcase.require
 
 object CardComponent {
     val content: RenderContext.() -> Unit = {
@@ -37,9 +51,9 @@ object CardComponent {
             snippet("With image and action", CardCode.IMAGE_ACTION) {
                 card {
                     header {
-                        content {
+                        main {
                             img {
-                                src("./pf-logo.svg")
+                                src(require("pf-logo.svg") as String)
                                 inlineStyle("width: 300px")
                             }
                         }
@@ -84,9 +98,9 @@ object CardComponent {
             snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
                 card {
                     header {
-                        content {
+                        main {
                             img {
-                                src("./pf-logo.svg")
+                                src(require("pf-logo.svg") as String)
                                 inlineStyle("width: 300px")
                             }
                         }
@@ -231,6 +245,189 @@ object CardComponent {
                     footer { +"Footer" }
                 }
             }
+            snippet("Horizontal card grid", "n/a") {
+                card(expandable) {
+                    header {
+                        actions {
+                            defaultDropdown()
+                        }
+                        content {
+                            div(baseClass = classes("level".layout(), "gutter".modifier())) {
+                                expandedStore.data.render(into = this) { expanded ->
+                                    div(baseClass = "card".component("title")) { +"Getting started" }
+                                    labelGroup(compact = true) {
+                                        element { hideIf(expanded) }
+                                        label(BLUE, "Setup your cluster") { icon("info-circle".fas()) }
+                                        label(PURPLE, "Guided tours") { icon("info-circle".fas()) }
+                                        label(GREEN, "Quick starts") { icon("info-circle".fas()) }
+                                        label(ORANGE, "Learning resources") { icon("info-circle".fas()) }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    body {
+                        div(
+                            baseClass = classes(
+                                "grid".layout(),
+                                "gutter".modifier(),
+                                "all-6-col-on-md".modifier(),
+                                "all-3-col-on-lg".modifier()
+                            )
+                        ) {
+                            div(
+                                baseClass = classes(
+                                    "flex".layout(),
+                                    "column".modifier(),
+                                    "space-items-lg".modifier(),
+                                    "align-items-flex-start".modifier()
+                                )
+                            ) {
+                                div(
+                                    baseClass = classes(
+                                        "flex".layout(),
+                                        "column".modifier(),
+                                        "grow".modifier(),
+                                        "align-items-flex-start".modifier(),
+                                        "space-items-sm".modifier()
+                                    )
+                                ) {
+                                    label(BLUE, "Setup your cluster")
+                                    p { +"Continue setting up your cluster to access all you cain in the Console" }
+                                    // TODO use list component
+                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Add identity provider" }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Configure alert receivers" }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Configure default ingress certificate" }
+                                        }
+                                    }
+                                }
+                                linkButton(inline, link) {
+                                    +"View all set up cluster steps"
+                                    icon("arrow-right".fas())
+                                }
+                            }
+                            div(
+                                baseClass = classes(
+                                    "flex".layout(),
+                                    "column".modifier(),
+                                    "space-items-lg".modifier(),
+                                    "align-items-flex-start".modifier()
+                                )
+                            ) {
+                                div(
+                                    baseClass = classes(
+                                        "flex".layout(),
+                                        "column".modifier(),
+                                        "grow".modifier(),
+                                        "align-items-flex-start".modifier(),
+                                        "space-items-sm".modifier()
+                                    )
+                                ) {
+                                    label(PURPLE, "Guided tours")
+                                    p { +"Tour some of the key features around the console" }
+                                    // TODO use list component
+                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Tour the console" }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Explore the Developer perspective" }
+                                        }
+                                    }
+                                }
+                                linkButton(inline, link) {
+                                    +"View all guided tours"
+                                    icon("arrow-right".fas())
+                                }
+                            }
+                            div(
+                                baseClass = classes(
+                                    "flex".layout(),
+                                    "column".modifier(),
+                                    "space-items-lg".modifier(),
+                                    "align-items-flex-start".modifier()
+                                )
+                            ) {
+                                div(
+                                    baseClass = classes(
+                                        "flex".layout(),
+                                        "column".modifier(),
+                                        "grow".modifier(),
+                                        "align-items-flex-start".modifier(),
+                                        "space-items-sm".modifier()
+                                    )
+                                ) {
+                                    label(GREEN, "Quick starts")
+                                    p { +"Get started with features using our step-by-step documentation" }
+                                    // TODO use list component
+                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Getting started with Serverless" }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Explore virtualization" }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Build pipelines" }
+                                        }
+                                    }
+                                }
+                                linkButton(inline, link) {
+                                    +"View all quickstarts"
+                                    icon("arrow-right".fas())
+                                }
+                            }
+                            div(
+                                baseClass = classes(
+                                    "flex".layout(),
+                                    "column".modifier(),
+                                    "space-items-lg".modifier(),
+                                    "align-items-flex-start".modifier()
+                                )
+                            ) {
+                                div(
+                                    baseClass = classes(
+                                        "flex".layout(),
+                                        "column".modifier(),
+                                        "grow".modifier(),
+                                        "align-items-flex-start".modifier(),
+                                        "space-items-sm".modifier()
+                                    )
+                                ) {
+                                    label(ORANGE, "Learning resources")
+                                    p { +"Learn about new features within the Console and get started with demo apps" }
+                                    // TODO use list component
+                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"See what's possible with the Explore page" }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a {
+                                                href("#")
+                                                +"OpenShift 4.5: Top Tasks "
+                                                icon("external-link-alt".fas())
+                                            }
+                                        }
+                                        li(baseClass = "list".component("item")) {
+                                            a { href("#"); +"Try a demo app" }
+                                        }
+                                    }
+                                }
+                                linkButton(inline, link) {
+                                    +"View all learning resources"
+                                    icon("arrow-right".fas())
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -238,7 +435,8 @@ object CardComponent {
 object CardCode {
 
     //language=kotlin
-    const val BASIC: String = """fun main() {
+    const val BASIC: String = """
+fun main() {
     render {
         card {
             title { +"Title" }
@@ -250,7 +448,8 @@ object CardCode {
 """
 
     //language=kotlin
-    const val IMAGE_ACTION: String = """fun main() {
+    const val IMAGE_ACTION: String = """
+fun main() {
     render {
         card {
             header {
