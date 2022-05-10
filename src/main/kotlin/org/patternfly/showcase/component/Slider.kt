@@ -20,7 +20,7 @@ object SliderComponent {
                 h3 { +"Slider value is: "; span { store0.data.renderText() } }
                 small { +"(min = 0, max = 8, show boundaries, show even steps, show ticks)" }
                 slider(store0, Step(0, "0")..Step(8, "8")) {
-                    steps { it % 2 == 0 }
+                    showSteps { it % 2 == 0 }
                     showTicks()
                 }
                 br { }
@@ -33,10 +33,10 @@ object SliderComponent {
                 }
                 br { }
 
-                val store2 = storeOf(25)
+                val store2 = storeOf(35)
                 h3 { +"Slider value is: "; span { store2.data.renderText() } }
-                small { +"(min = -25, max = 75, step = 10, hide boundaries, hide steps, show ticks)" }
-                slider(store2, -25..75 step 10) {
+                small { +"(min = 25, max = 75, step = 10, hide boundaries, hide steps, show ticks)" }
+                slider(store2, 25..75 step 10) {
                     hideBoundaries()
                     showTicks()
                 }
@@ -50,14 +50,13 @@ object SliderComponent {
 
                 val store4 = storeOf(3)
                 h3 { +"Slider value is: "; span { store4.data.renderText() } }
-                small { +"(custom steps: A, B, C, D, E, F, show boundaries, show steps, show ticks)" }
+                small { +"(custom steps: A(1), B(2), C(3), D(4), F(5), show boundaries, show steps, show ticks)" }
                 slider(
                     store4, listOf(
-                        Step(0, "A"),
-                        Step(1, "B"),
-                        Step(2, "C"),
-                        Step(3, "D"),
-                        Step(4, "E"),
+                        Step(1, "A"),
+                        Step(2, "B"),
+                        Step(3, "C"),
+                        Step(4, "D"),
                         Step(5, "F"),
                     )
                 )
@@ -74,7 +73,7 @@ object SliderComponent {
             }
             snippet("Value input", SliderCode.VALUE_INPUT) {
                 slider(storeOf(5), Step(0, "0")..Step(8, "8")) {
-                    steps { it % 2 == 0 }
+                    showSteps { it % 2 == 0 }
                     showTicks()
                     valueInput()
                 }
@@ -89,32 +88,30 @@ object SliderComponent {
                         Step(100, "100%"),
                     )
                 ) {
-                    valueInput()
-                    valueLabel { "%" }
+                    valueInput(label = "%")
                 }
                 br { }
 
                 slider(storeOf(60), 0..100) {
-                    valueInput()
-                    valueLabel("%")
+                    valueInput(label = "%")
                 }
             }
             snippet("Thumb value input", SliderCode.THUMP_VALUE_INPUT) {
                 slider(storeOf(66), 0..100) {
-                    valueInput(floating = true)
-                    valueLabel("%")
+                    valueInput(floating = true, label = "%")
                 }
             }
             snippet("Actions", SliderCode.ACTIONS) {
                 slider(storeOf(50), 0..100) {
-                    headAction { decrease() }
-                    tailAction { increase() }
+                    leftActions { decrease() }
+                    rightActions { increase() }
                 }
                 br { }
+                val disabled = storeOf(false)
                 slider(storeOf(50), 0..100) {
-                    valueInput()
-                    valueLabel("%")
-                    tailAction { lock() }
+                    disabled(disabled.data)
+                    valueInput(label = "%")
+                    rightActions { lock(disabled) }
                 }
             }
         }
@@ -126,57 +123,47 @@ object SliderCode {
     //language=kotlin
     const val DISCRETE: String = """fun main() {
     render {
-        var index = 0
-        val values = arrayOf(
-            storeOf(2),
-            storeOf(50),
-            storeOf(25),
-            storeOf(50),
-            storeOf(3),
-        )
-        
-        h3 { +"Slider value is: "; span { values[index].data.renderText() } }
+        val store0 = storeOf(2)
+        h3 { +"Slider value is: "; span { store0.data.renderText() } }
         small { +"(min = 0, max = 8, show boundaries, show even steps, show ticks)" }
-        slider(values[index], Step(0, "0")..Step(8, "8")) {
-            steps { it % 2 == 0 }
+        slider(store0, Step(0, "0")..Step(8, "8")) {
+            showSteps { it % 2 == 0 }
             showTicks()
         }
         br { }
-        index++
-        
-        h3 { +"Slider value is: "; span { values[index].data.renderText() } }
+
+        val store1 = storeOf(50)
+        h3 { +"Slider value is: "; span { store1.data.renderText() } }
         small { +"(min = 0, max = 200, step = 50, show boundaries, hide steps, show ticks)" }
-        slider(value = values[index], steps = 0..200 step 50) {
+        slider(store1, 0..200 step 50) {
             showTicks()
         }
         br { }
-        index++
-        
-        h3 { +"Slider value is: "; span { values[index].data.renderText() } }
-        small { +"(min = -25, max = 75, step = 10, hide boundaries, hide steps, show ticks)" }
-        slider(value = values[index], steps = -25..75 step 10) {
+
+        val store2 = storeOf(35)
+        h3 { +"Slider value is: "; span { store2.data.renderText() } }
+        small { +"(min = 25, max = 75, step = 10, hide boundaries, hide steps, show ticks)" }
+        slider(store2, 25..75 step 10) {
             hideBoundaries()
             showTicks()
         }
         br { }
-        index++
-        
-        h3 { +"Slider value is: "; span { values[index].data.renderText() } }
+
+        val store3 = storeOf(50)
+        h3 { +"Slider value is: "; span { store3.data.renderText() } }
         small { +"(min = -25, max = 75, step = 10, show boundaries, hide steps, hide ticks)" }
-        slider(value = values[index], steps = -25..75 step 10)
+        slider(store3, -25..75 step 10)
         br { }
-        index++
-        
-        h3 { +"Slider value is: "; span { values[index].data.renderText() } }
-        small { +"(custom steps: A, B, C, D, E, F, show boundaries, show steps, show ticks)" }
+
+        val store4 = storeOf(3)
+        h3 { +"Slider value is: "; span { store4.data.renderText() } }
+        small { +"(custom steps: A(1), B(2), C(3), D(4), F(5), show boundaries, show steps, show ticks)" }
         slider(
-            value = values[index],
-            steps = listOf(
-                Step(0, "A"),
-                Step(1, "B"),
-                Step(2, "C"),
-                Step(3, "D"),
-                Step(4, "E"),
+            store4, listOf(
+                Step(1, "A"),
+                Step(2, "B"),
+                Step(3, "C"),
+                Step(4, "D"),
                 Step(5, "F"),
             )
         )
@@ -186,42 +173,29 @@ object SliderCode {
     //language=kotlin
     const val CONTINUOUS: String = """fun main() {
     render {
-        var index = 0
-        val values = arrayOf(
-            storeOf(77),
-            storeOf(23),
-        )
-
-        h3 { +"Slider value is: "; span { values[index].data.renderText() } }
-        slider(value = values[index], steps = 0..100)
+        val store0 = storeOf(77)
+        h3 { +"Slider value is: "; span { store0.data.renderText() } }
+        slider(store0, 0..100)
         br { }
-        index++
 
-        h3 { +"Slider value is: "; span { values[index].data.map { "${'$'}it%" }.renderText() } }
-        slider(value = values[index], steps = Step(0, "0%")..Step(100, "100%"))
+        val store1 = storeOf(23)
+        h3 { +"Slider value is: "; span { store1.data.map { "${'$'}it%" }.renderText() } }
+        slider(store1, Step(0, "0%")..Step(100, "100%"))
     }
 }"""
 
     //language=kotlin
     const val VALUE_INPUT: String = """fun main() {
     render {
-        var index = 0
-        val values = arrayOf(
-            storeOf(5),
-            storeOf(30),
-            storeOf(60),
-        )
-
-        slider(values[index], Step(0, "0")..Step(8, "8")) {
-            steps { it % 2 == 0 }
+        slider(storeOf(5), Step(0, "0")..Step(8, "8")) {
+            showSteps { it % 2 == 0 }
             showTicks()
             valueInput()
         }
         br { }
-        index++
 
         slider(
-            values[index], listOf(
+            storeOf(30), listOf(
                 Step(0, "0%"),
                 Step(25),
                 Step(50, "50%"),
@@ -229,15 +203,12 @@ object SliderCode {
                 Step(100, "100%"),
             )
         ) {
-            valueInput()
-            valueLabel { "%" }
+            valueInput(label = "%")
         }
         br { }
-        index++
 
-        slider(values[index], 0..100) {
-            valueInput()
-            valueLabel { "%" }
+        slider(storeOf(60), 0..100) {
+            valueInput(label = "%")
         }
     }
 }"""
@@ -246,15 +217,25 @@ object SliderCode {
     const val THUMP_VALUE_INPUT: String = """fun main() {
     render {
         slider(storeOf(66), 0..100) {
-            valueInput(floating = true)
-            valueLabel { "%" }
+            valueInput(floating = true, label = "%")
         }
     }
 }"""
 
     //language=kotlin
-    const val ACTIONS: String = """"""
-
-    //language=kotlin
-    const val DISABLED: String = """"""
+    const val ACTIONS: String = """fun main() {
+    render {
+        slider(storeOf(50), 0..100) {
+            leftActions { decrease() }
+            rightActions { increase() }
+        }
+        br { }
+        val disabled = storeOf(false)
+        slider(storeOf(50), 0..100) {
+            disabled(disabled.data)
+            valueInput(label = "%")
+            rightActions { lock(disabled) }
+        }
+    }   
+}"""
 }
