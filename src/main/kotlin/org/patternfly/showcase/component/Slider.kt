@@ -1,9 +1,11 @@
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.RootStore
 import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.map
 import org.patternfly.Step
+import org.patternfly.fas
 import org.patternfly.pageSection
 import org.patternfly.slider
 
@@ -112,6 +114,38 @@ object SliderComponent {
                     disabled(disabled.data)
                     valueInput(label = "%")
                     rightActions { lock(disabled) }
+                }
+            }
+            snippet("Custom actions", SliderCode.CUSTOM_ACTIONS) {
+                val value = object : RootStore<Int>(4) {
+                    val dec = handle { if (it == 1) 6 else it - 1 }
+                    val inc = handle { if (it == 6) 1 else it + 1 }
+                }
+                slider(value, 1..6) {
+                    showTicks()
+                    showSteps()
+                    leftActions {
+                        action {
+                            icon("undo".fas())
+                            events {
+                                clicks handledBy value.dec
+                            }
+                        }
+                    }
+                    rightActions {
+                        action {
+                            icon("redo".fas())
+                            events {
+                                clicks handledBy value.inc
+                            }
+                        }
+                        action {
+                            icon("dice".fas())
+                            events {
+                                clicks.map { (1..6).random() } handledBy value.update
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -235,6 +269,42 @@ object SliderCode {
             disabled(disabled.data)
             valueInput(label = "%")
             rightActions { lock(disabled) }
+        }
+    }   
+}"""
+
+    //language=kotlin
+    const val CUSTOM_ACTIONS: String = """fun main() {
+    render {
+        val value = object : RootStore<Int>(4) {
+            val dec = handle { if (it == 1) 6 else it - 1 }
+            val inc = handle { if (it == 6) 1 else it + 1 }
+        }
+        slider(value, 1..6) {
+            showTicks()
+            showSteps()
+            leftActions {
+                action {
+                    icon("undo".fas())
+                    events {
+                        clicks handledBy value.dec
+                    }
+                }
+            }
+            rightActions {
+                action {
+                    icon("redo".fas())
+                    events {
+                        clicks handledBy value.inc
+                    }
+                }
+                action {
+                    icon("dice".fas())
+                    events {
+                        clicks.map { (1..6).random() } handledBy value.update
+                    }
+                }
+            }
         }
     }   
 }"""

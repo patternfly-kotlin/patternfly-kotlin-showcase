@@ -1,25 +1,17 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.dom.html.Events
-import dev.fritz2.dom.html.Input
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.dom.states
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.patternfly.PageInfo
-import org.patternfly.Switch
 import org.patternfly.classes
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.pagination
-import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.slider
 import org.patternfly.switch
 import org.patternfly.util
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
 
 object PaginationComponent {
     val content: RenderContext.() -> Unit = {
@@ -47,9 +39,9 @@ object PaginationComponent {
                 pagination(PageInfo(10, 0, 73), compact = true)
             }
             snippet("Reactive", PaginationCode.REACTIVE) {
-                lateinit var range: Input
-                lateinit var enabled: Switch
                 val total = 123
+                val range = storeOf(total)
+                val enabled = storeOf(true)
                 val pageInfo = PageInfo(total = total)
 
                 div(baseClass = classes {
@@ -57,38 +49,25 @@ object PaginationComponent {
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    label {
-                        `for`("total")
-                        +"Total: "
+                    slider(range, 0..200, baseClass = "w-50".util()) {
+                        valueInput()
                     }
-                    range = input(id = "total", baseClass = "w-50".util()) {
-                        type("range")
-                        min("0")
-                        max("200")
-                        value(total.toString())
-                    }
-                    enabled = switch("ml-md".util()) {
-                        label("Enabled")
-                        labelOff("Disabled")
-                        input.checked(true)
+                    switch(enabled, baseClass = "ml-md".util()) {
+                        label { +"Enabled" }
+                        labelOff { +"Disabled" }
                     }
                 }
                 pagination(pageInfo) {
-                    disabled(enabled.input.changes.states().map { !it })
-                    range.inputs.events
-                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                        .handledBy(pageInfoHandler.total)
+                    disabled(enabled.data.map { !it })
+//                    range.inputs.events
+//                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+//                        .handledBy(pageInfoHandler.total)
                 }
                 pagination(pageInfo = pageInfo, compact = true, baseClass = "mt-sm".util()) {
-                    disabled(enabled.input.changes.states().map { !it })
-                    range.inputs.events
-                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
-                        .handledBy(pageInfoHandler.total)
-                }
-
-                MainScope().launch {
-                    delay(EVENT_DELAY)
-                    range.domNode.dispatchEvent(Event(Events.input.name))
+                    disabled(enabled.data.map { !it })
+//                    range.inputs.events
+//                        .map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() }
+//                        .handledBy(pageInfoHandler.total)
                 }
             }
         }

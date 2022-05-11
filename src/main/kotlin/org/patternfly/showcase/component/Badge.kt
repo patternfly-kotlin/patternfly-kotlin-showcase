@@ -1,24 +1,19 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.dom.html.Events
-import dev.fritz2.dom.html.Input
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.dom.states
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
+import dev.fritz2.dom.values
+import dev.fritz2.dom.valuesAsNumber
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import org.patternfly.Switch
 import org.patternfly.badge
 import org.patternfly.classes
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
-import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.slider
 import org.patternfly.switch
 import org.patternfly.util
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
 
 object BadgeComponent {
     val content: RenderContext.() -> Unit = {
@@ -53,39 +48,27 @@ object BadgeComponent {
                 badge { count(999) }
             }
             snippet("Reactive", BadgeCode.REACTIVE) {
-                lateinit var range: Input
-                lateinit var state: Switch
+                val range = storeOf(240)
+                val state = storeOf(true)
 
                 div(baseClass = classes {
                     +"flex".layout()
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    label {
-                        `for`("range")
-                        +"Value: "
+                    slider(range, 0..500 step 25, baseClass = "w-50".util()) {
+                        showSteps() { it % 100 == 0 }
+                        showTicks()
                     }
-                    range = input(id = "range", baseClass = "w-50".util()) {
-                        type("range")
-                        min("0")
-                        max("500")
-                        value("240")
-                    }
-                    state = switch("ml-md".util()) {
-                        label("Read")
-                        labelOff("Unread")
-                        input.checked(true)
+                    switch(state, baseClass = "ml-md".util()) {
+                        label { +"Read" }
+                        labelOff { +"Unread" }
                     }
                 }
                 badge {
-                    bounds(100, 400)
-                    read(state.input.changes.states())
-                    count(range.inputs.events.map { it.target.unsafeCast<HTMLInputElement>().valueAsNumber.toInt() })
-                }
-
-                MainScope().launch {
-                    delay(EVENT_DELAY)
-                    range.domNode.dispatchEvent(Event(Events.input.name))
+                    bounds(100..400)
+                    read(state.data)
+                    count(range.data)
                 }
             }
         }

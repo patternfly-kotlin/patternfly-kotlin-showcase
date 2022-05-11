@@ -3,15 +3,11 @@
 package org.patternfly.showcase.component
 
 import dev.fritz2.binding.RootStore
-import dev.fritz2.dom.html.Events
-import dev.fritz2.dom.html.Input
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.dom.states
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.patternfly.ButtonVariant.control
 import org.patternfly.ButtonVariant.danger
 import org.patternfly.ButtonVariant.inline
@@ -21,7 +17,6 @@ import org.patternfly.ButtonVariant.primary
 import org.patternfly.ButtonVariant.secondary
 import org.patternfly.ButtonVariant.tertiary
 import org.patternfly.Severity.INFO
-import org.patternfly.Switch
 import org.patternfly.aria
 import org.patternfly.classes
 import org.patternfly.clickButton
@@ -33,12 +28,9 @@ import org.patternfly.modifier
 import org.patternfly.notification
 import org.patternfly.pageSection
 import org.patternfly.pushButton
-import org.patternfly.showcase.EVENT_DELAY
 import org.patternfly.switch
 import org.patternfly.util
 import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
-import org.w3c.dom.events.KeyboardEvent
 
 object ButtonComponent {
     val content: RenderContext.() -> Unit = {
@@ -312,38 +304,29 @@ object ButtonComponent {
                 }
             }
             snippet("Reactive", ButtonCode.REACTIVE) {
-                val initialTitle = "Click me"
-                lateinit var text: Input
-                lateinit var enabled: Switch
-
-                fun currentValue(event: Event) =
-                    event.target.unsafeCast<HTMLInputElement>().value.ifEmpty { initialTitle }
+                val title = storeOf("Click me")
+                val enabled = storeOf(true)
 
                 div(baseClass = classes {
                     +"flex".layout()
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    text = input(baseClass = classes("form-control".component(), "w-50".util())) {
+                    input(baseClass = classes("form-control".component(), "w-50".util())) {
                         type("text")
-                        placeholder(initialTitle)
+                        value(title.data)
+                        keyups.map { it.target.unsafeCast<HTMLInputElement>().value } handledBy title.update
                     }
-                    enabled = switch("ml-md".util()) {
-                        label("Enabled")
-                        labelOff("Disabled")
-                        input.checked(true)
+                    switch(enabled, baseClass = "ml-md".util()) {
+                        label { +"Enabled" }
+                        labelOff { +"Disabled" }
                     }
                 }
                 br {}
                 clickButton(baseClass = "primary".modifier()) {
-                    text.keyups.map { currentValue(it) }.renderText()
-                    disabled(enabled.input.changes.states().map { !it })
+                    title(title.data)
+                    disabled(enabled.data.map { !it })
                 } handledBy notification(INFO, "Button clicked")
-
-                MainScope().launch {
-                    delay(EVENT_DELAY)
-                    text.domNode.dispatchEvent(KeyboardEvent(Events.keyup.name))
-                }
             }
         }
     }

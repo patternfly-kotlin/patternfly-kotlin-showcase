@@ -2,14 +2,9 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.dom.html.Events
-import dev.fritz2.dom.html.Input
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import dev.fritz2.dom.valuesAsNumber
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.patternfly.TabItem
 import org.patternfly.TabStore
 import org.patternfly.classes
@@ -20,11 +15,9 @@ import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
-import org.patternfly.showcase.EVENT_DELAY
+import org.patternfly.slider
 import org.patternfly.tabs
 import org.patternfly.util
-import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
 
 object TabsComponent {
     val content: RenderContext.() -> Unit = {
@@ -118,12 +111,12 @@ object TabsComponent {
             snippet("Vertical", TabsCode.VERTICAL) {
                 tabs<String>(vertical = true) {
                     items {
-                    item("Users") { +"Users" }
-                    item("Containers") { +"Containers" }
-                    item("Database") { +"Database" }
-                    item("Server") { +"Server" }
-                    item("System") { +"System" }
-                    item("Network") { +"Network" }
+                        item("Users") { +"Users" }
+                        item("Containers") { +"Containers" }
+                        item("Database") { +"Database" }
+                        item("Server") { +"Server" }
+                        item("System") { +"System" }
+                        item("Network") { +"Network" }
                     }
                 }
             }
@@ -152,7 +145,7 @@ object TabsComponent {
                 }
             }
             snippet("Reactive", TabsCode.REACTIVE) {
-                lateinit var range: Input
+                val range = storeOf(5)
                 val store = TabStore<Int>()
 
                 div(baseClass = classes {
@@ -160,37 +153,19 @@ object TabsComponent {
                     +"align-items-center".modifier()
                     +"mb-md".util()
                 }) {
-                    label {
-                        +"Tabs: "
-                        `for`("range")
-                    }
-                    range = input(id = "range", baseClass = "w-50".util()) {
-                        type("range")
-                        min("1")
-                        max("12")
-                        value("5")
-                    }
-                    span {
-                        range.inputs.events
-                            .map { it.target.unsafeCast<HTMLInputElement>().value }.renderText(into = this)
+                    slider(range, 2..12, baseClass = "w-50".util()) {
+                        leftActions { decrease() }
+                        showTicks()
+                        rightActions { increase() }
                     }
                 }
                 tabs(store) {
                     tabDisplay { +"Tab item $it" }
                     contentDisplay { +"Content $it" }
                 }
-
-                range.changes.valuesAsNumber()
-                    .map { it.toInt() }
-                    .map { tabs ->
-                        (1..tabs).map { number -> TabItem(number, selected = number == 1) }
-                    } handledBy store.update
-
-                MainScope().launch {
-                    delay(EVENT_DELAY)
-                    range.domNode.dispatchEvent(Event(Events.input.name))
-                    range.domNode.dispatchEvent(Event(Events.change.name))
-                }
+                range.data.map { tabs ->
+                    (1..tabs).map { number -> TabItem(number, selected = number == 1) }
+                } handledBy store.update
             }
         }
     }

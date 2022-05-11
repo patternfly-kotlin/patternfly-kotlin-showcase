@@ -72,15 +72,19 @@ class Snippet(header: String, code: String, job: Job, val content: RenderContext
         div("sc-snippet__toolbar") {
             pushButton(baseClass = "plain".modifier()) {
                 icon("code".fas())
-                clicks handledBy this@Snippet.codeStore.toggle
+                events {
+                    clicks handledBy this@Snippet.codeStore.toggle
+                }
             }
             pushButton(baseClass = "plain".modifier()) {
                 icon("copy".fas())
-                val clipboard = ClipboardJS(domNode, object : ClipboardJS.Options {
-                    override val text: (Element) -> String = { code }
-                })
-                clipboard.on("success") {
-                    this@Snippet.showCopied()
+                element {
+                    val clipboard = ClipboardJS(domNode, object : ClipboardJS.Options {
+                        override val text: (Element) -> String = { code }
+                    })
+                    clipboard.on("success") {
+                        this@Snippet.showCopied()
+                    }
                 }
             }
             div(baseClass = "display-none".util(), id = this@Snippet.copiedId) {

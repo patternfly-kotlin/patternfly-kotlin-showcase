@@ -1,5 +1,6 @@
 package org.patternfly.showcase.component
 
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
 import dev.fritz2.dom.states
 import org.patternfly.Severity
@@ -16,28 +17,50 @@ object SwitchComponent {
         )
         pageSection {
             snippet("Basic", SwitchCode.BASIC) {
-                switch {
-                    label("Message when on")
-                    labelOff("Message when off")
+                switch(storeOf(true)) {
+                    label { +"Message when on" }
+                    labelOff { +"Message when off" }
+                }
+            }
+            snippet("Reversed layout", SwitchCode.REVERSED) {
+                switch(storeOf(true), reversed = true) {
+                    label { +"Message when on" }
+                    labelOff { +"Message when off" }
                 }
             }
             snippet("Without label", SwitchCode.WITHOUT_LABEL) {
-                switch()
+                switch(storeOf(true), withCheckIcon = true)
             }
             snippet("Disabled", SwitchCode.DISABLED) {
-                switch {
-                    label("Message when on")
-                    labelOff("Message when off")
+                switch(storeOf(true)) {
+                    label { +"Message when on" }
+                    labelOff { +"Message when off" }
+                    disabled(true)
+                }
+                br { }
+                switch(storeOf(false)) {
+                    label { +"Message when on" }
+                    labelOff { +"Message when off" }
+                    disabled(true)
+                }
+                br { }
+                switch(storeOf(true), withCheckIcon = true) {
+                    disabled(true)
+                }
+                br { }
+                switch(storeOf(false), withCheckIcon = true) {
                     disabled(true)
                 }
             }
             snippet("Reactive", SwitchCode.REACTIVE) {
-                switch {
-                    label("Message when on")
-                    labelOff("Message when off")
-                    input.changes.states() handledBy notification {
-                        severity(Severity.INFO)
-                        title("Switch is ${if (it) "" else "not"} checked")
+                switch(storeOf(true)) {
+                    label { +"Message when on" }
+                    labelOff { +"Message when off" }
+                    input {
+                        changes.states() handledBy notification {
+                            severity(Severity.INFO)
+                            title("Switch is ${if (it) "" else "not"} checked")
+                        }
                     }
                 }
             }
@@ -50,9 +73,20 @@ object SwitchCode {
     //language=kotlin
     const val BASIC: String = """fun main() {
     render {
-        switch {
-            label("Message when on")
-            labelOff("Message when off")
+        switch(storeOf(true)) {
+            label { +"Message when on" }
+            labelOff { +"Message when off" }
+        }
+    }
+}
+"""
+
+    //language=kotlin
+    const val REVERSED: String = """fun main() {
+    render {
+        switch(storeOf(true), reversed = true) {
+            label { +"Message when on" }
+            labelOff { +"Message when off" }
         }
     }
 }
@@ -61,7 +95,7 @@ object SwitchCode {
     //language=kotlin
     const val WITHOUT_LABEL: String = """fun main() {
     render {
-        switch()
+        switch(storeOf(true), withCheckIcon = true)
     }
 }
 """
@@ -69,9 +103,23 @@ object SwitchCode {
     //language=kotlin
     const val DISABLED: String = """fun main() {
     render {
-        switch {
-            label("Message when on")
-            labelOff("Message when off")
+        switch(storeOf(true)) {
+            label { +"Message when on" }
+            labelOff { +"Message when off" }
+            disabled(true)
+        }
+        br { }
+        switch(storeOf(false)) {
+            label { +"Message when on" }
+            labelOff { +"Message when off" }
+            disabled(true)
+        }
+        br { }
+        switch(storeOf(true), withCheckIcon = true) {
+            disabled(true)
+        }
+        br { }
+        switch(storeOf(false), withCheckIcon = true) {
             disabled(true)
         }
     }
@@ -81,12 +129,14 @@ object SwitchCode {
     //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        switch {
+        switch(storeOf(true)) {
             label("Message when on")
             labelOff("Message when off")
-            input.changes.states() handledBy Notification.add {
-                severity(Severity.INFO)
-                title("Switch is ${'$'}{if (it) "" else "not"} checked")
+            input {
+                changes.states() handledBy notification {
+                    severity(Severity.INFO)
+                    title("Switch is ${'$'}{if (it) "" else "not"} checked")
+                }
             }
         }
     }

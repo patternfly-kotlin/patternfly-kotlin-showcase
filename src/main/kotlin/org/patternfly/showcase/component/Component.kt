@@ -30,6 +30,7 @@ val components = listOf(
     Component("options-menu", "Options menu", OptionsMenuComponent.content),
     Component("pagination", "Pagination", PaginationComponent.content),
     Component("slider", "Slider", SliderComponent.content),
+    Component("skeleton", "Skeleton", SkeletonComponent.content),
     Component("spinner", "Spinner", SpinnerComponent.content),
     Component("switch", "Switch", SwitchComponent.content),
     Component("tabs", "Tabs", TabsComponent.content),

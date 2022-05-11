@@ -1,20 +1,14 @@
 package org.patternfly.showcase.component
 
-import dev.fritz2.dom.html.Events
-import dev.fritz2.dom.html.Input
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import org.patternfly.Severity.INFO
 import org.patternfly.chip
 import org.patternfly.component
 import org.patternfly.notification
 import org.patternfly.pageSection
-import org.patternfly.showcase.EVENT_DELAY
 import org.w3c.dom.HTMLInputElement
-import org.w3c.dom.events.Event
-import org.w3c.dom.events.KeyboardEvent
 
 object ChipComponent {
     val content: RenderContext.() -> Unit = {
@@ -51,45 +45,39 @@ object ChipComponent {
                 }
             }
             snippet("Reactive", ChipCode.REACTIVE) {
-                val initialTitle = "Chip text"
-                fun currentValue(event: Event) =
-                    event.target.unsafeCast<HTMLInputElement>().value.ifEmpty { initialTitle }
+                val title = storeOf("Chip text")
 
-                val text: Input = input(baseClass = "form-control".component()) {
+                input(baseClass = "form-control".component()) {
                     type("text")
-                    placeholder(initialTitle)
+                    value(title.data)
+                    keyups.map { it.target.unsafeCast<HTMLInputElement>().value } handledBy title.update
                 }
                 br {}
                 br {}
                 chip {
                     readOnly(true)
-                    text.keyups.map { currentValue(it) }.renderText()
+                    title(title.data)
                 }
                 br {}
                 chip {
                     closable(true)
-                    text.keyups.map { currentValue(it) }.renderText()
+                    title(title.data)
                 }
                 br {}
                 chip {
                     readOnly(true)
-                    text.keyups.map { currentValue(it) }.renderText()
+                    title(title.data)
                     badge {
-                        count(text.keyups.map { currentValue(it).length })
+                        count(title.data.map { it.length })
                     }
                 }
                 br {}
                 chip {
                     closable(true)
-                    text.keyups.map { currentValue(it) }.renderText()
+                    title(title.data)
                     badge {
-                        count(text.keyups.map { currentValue(it).length })
+                        count(title.data.map { it.length })
                     }
-                }
-
-                MainScope().launch {
-                    delay(EVENT_DELAY)
-                    text.domNode.dispatchEvent(KeyboardEvent(Events.keyup.name))
                 }
             }
         }
