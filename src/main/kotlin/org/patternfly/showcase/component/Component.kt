@@ -36,6 +36,7 @@ val components = listOf(
     Component("tabs", "Tabs", TabsComponent.content),
     Component("text", "Text", TextContentComponent.content),
     Component("title", "Title", TitleComponent.content),
+    Component("toggle-group", "Toggle group", ToggleGroupComponent.content),
     Component("tree-view", "Tree view", TreeViewComponent.content),
 )
 

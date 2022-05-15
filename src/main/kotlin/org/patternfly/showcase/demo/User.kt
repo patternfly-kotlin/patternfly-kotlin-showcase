@@ -16,25 +16,13 @@ import kotlinx.coroutines.launch
 import org.patternfly.Align
 import org.patternfly.ButtonVariant.control
 import org.patternfly.ButtonVariant.plain
-import org.patternfly.ButtonVariant.secondary
 import org.patternfly.ItemsStore
-import org.patternfly.Severity
 import org.patternfly.SortInfo
 import org.patternfly.aria
 import org.patternfly.bulkSelect
 import org.patternfly.cardView
 import org.patternfly.classes
 import org.patternfly.clickButton
-import org.patternfly.dataList
-import org.patternfly.dataListAction
-import org.patternfly.dataListCell
-import org.patternfly.dataListCheckbox
-import org.patternfly.dataListContent
-import org.patternfly.dataListControl
-import org.patternfly.dataListExpandableContent
-import org.patternfly.dataListItem
-import org.patternfly.dataListRow
-import org.patternfly.dataListToggle
 import org.patternfly.dataTable
 import org.patternfly.dataTableActionColumn
 import org.patternfly.dataTableColumn
@@ -60,9 +48,7 @@ import org.patternfly.mvp.Presenter
 import org.patternfly.mvp.View
 import org.patternfly.mvp.ViewContent
 import org.patternfly.mvp.WithPresenter
-import org.patternfly.notification
 import org.patternfly.pageSection
-import org.patternfly.pagination
 import org.patternfly.pushButton
 import org.patternfly.showcase.data.Location
 import org.patternfly.showcase.data.User
@@ -220,6 +206,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                 }
             }
+/*
             dataList(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it != LIST)) })
                 display { user ->
@@ -268,6 +255,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                 }
             }
+*/
             dataTable(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it != TABLE)) })
                 dataTableColumns {

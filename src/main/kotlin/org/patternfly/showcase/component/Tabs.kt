@@ -4,20 +4,17 @@ package org.patternfly.showcase.component
 
 import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.lenses.IdProvider
 import kotlinx.coroutines.flow.map
-import org.patternfly.TabItem
-import org.patternfly.TabStore
 import org.patternfly.classes
+import org.patternfly.dom.Id
 import org.patternfly.fas
-import org.patternfly.icon
-import org.patternfly.item
-import org.patternfly.items
 import org.patternfly.layout
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.slider
 import org.patternfly.tabs
-import org.patternfly.util
+import org.patternfly.toggleGroup
 
 object TabsComponent {
     val content: RenderContext.() -> Unit = {
@@ -28,144 +25,389 @@ object TabsComponent {
         )
         pageSection {
             snippet("Default", TabsCode.DEFAULT) {
-                tabs<String> {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
+                tabs {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
                     }
                 }
             }
             snippet("Box", TabsCode.BOX) {
-                tabs<String>(box = true) {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
+                tabs(box = true) {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
                     }
                 }
             }
             snippet("Box light", TabsCode.BOX_LIGHT) {
-                tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
-                    contentDisplay {
-                        domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
+                tabs(box = true, baseClass = "color-scheme--light-300".modifier()) {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
                     }
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
                     }
                 }
             }
             snippet("Overflow", TabsCode.OVERFLOW) {
-                tabs<String> {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
-                        item("Tab item 7") { +"Tab content 7" }
-                        item("Tab item 8") { +"Tab content 8" }
-                        item("Tab item 9") { +"Tab content 9" }
-                        item("Tab item 10") { +"Tab content 10" }
-                        item("Tab item 11") { +"Tab content 11" }
+                tabs {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
                     }
-                }
-            }
-            snippet("Inset", TabsCode.INSET) {
-                tabs<String>(baseClass = classes {
-                    +"inset-sm-on-md".modifier()
-                    +"inset-lg-on-lg".modifier()
-                    +"inset-2xl-on-xl".modifier()
-                }) {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
                     }
-                }
-            }
-            snippet("Filled", TabsCode.FILLED) {
-                tabs<String>(filled = true) {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
+                    }
+                    for (i in 1..10) {
+                        item {
+                            tab("Tab item $i")
+                            content { +"Tab content $i" }
+                        }
                     }
                 }
             }
             snippet("Vertical", TabsCode.VERTICAL) {
-                tabs<String>(vertical = true) {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
+                tabs(vertical = true) {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
                     }
                 }
             }
             snippet("Vertical box", TabsCode.VERTICAL_BOX) {
-                tabs<String>(vertical = true, box = true) {
-                    items {
-                        item("Users") { +"Users" }
-                        item("Containers") { +"Containers" }
-                        item("Database") { +"Database" }
-                        item("Server") { +"Server" }
-                        item("System") { +"System" }
-                        item("Network") { +"Network" }
+                tabs(vertical = true, box = true) {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
+                    }
+                }
+            }
+            snippet("Inset", TabsCode.INSET) {
+                tabs(baseClass = classes {
+                    +"inset-sm-on-md".modifier()
+                    +"inset-lg-on-lg".modifier()
+                    +"inset-2xl-on-xl".modifier()
+                }) {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                    item {
+                        tab("Server")
+                        content { +"Server" }
+                    }
+                    item {
+                        tab("System")
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab("Network")
+                        content { +"Network" }
+                        disabled(true)
                     }
                 }
             }
             snippet("Icons", TabsCode.ICONS) {
-                tabs<String> {
-                    items {
-                        item("Users", icon = { icon("users".fas()) }) { +"Users" }
-                        item("Containers", icon = { icon("box".fas()) }) { +"Containers" }
-                        item("Database", icon = { icon("database".fas()) }) { +"Database" }
-                        item("Server", icon = { icon("server".fas()) }) { +"Server" }
-                        item("System", icon = { icon("laptop".fas()) }) { +"System" }
-                        item("Network", icon = { icon("project-diagram".fas()) }) { +"Network" }
+                tabs {
+                    item {
+                        tab {
+                            +"Users"
+                            icon("users".fas())
+                        }
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab {
+                            +"Containers"
+                            icon("box".fas())
+                        }
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab {
+                            +"Database"
+                            icon("database".fas())
+                        }
+                        content { +"Database" }
+                    }
+                    item {
+                        tab {
+                            +"Server"
+                            icon("server".fas())
+                        }
+                        content { +"Server" }
+                    }
+                    item {
+                        tab {
+                            +"System"
+                            icon("laptop".fas())
+                        }
+                        content { +"System" }
+                        disabled(true)
+                    }
+                    item {
+                        tab {
+                            +"Network"
+                            icon("project-diagram".fas())
+                        }
+                        content { +"Network" }
+                        disabled(true)
+                    }
+                }
+            }
+            snippet("Filled", TabsCode.FILLED) {
+                tabs(filled = true) {
+                    item {
+                        tab("Users")
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers")
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database")
+                        content { +"Database" }
+                    }
+                }
+            }
+            snippet("Filled", TabsCode.FILLED_ICONS) {
+                tabs(filled = true) {
+                    item {
+                        tab("Users") { icon("users".fas()) }
+                        content { +"Users" }
+                        selected(true)
+                    }
+                    item {
+                        tab("Containers") { icon("box".fas()) }
+                        content { +"Containers" }
+                    }
+                    item {
+                        tab("Database") { icon("database".fas()) }
+                        content { +"Database" }
+                    }
+                }
+            }
+            snippet("Store", TabsCode.STORE) {
+                data class Demo(val id: String, val name: String)
+
+                val demos = storeOf(
+                    listOf(
+                        Demo("foo", "Foo"),
+                        Demo("bar", "Bar")
+                    )
+                )
+                val idProvider: IdProvider<Demo, String> = { Id.build(it.id, "store") }
+
+                tabs {
+                    items(demos, idProvider) { demo ->
+                        item {
+                            tab(demo.name)
+                            content { +demo.name }
+                        }
                     }
                 }
             }
             snippet("Reactive", TabsCode.REACTIVE) {
-                val range = storeOf(5)
-                val store = TabStore<Int>()
+                val range = 2..20
+                val numberOfTabs = storeOf(5)
+                val values = storeOf(range.toList())
+                val selectedTab = storeOf<Int?>(null)
+                val disabledTabs = storeOf<List<Int>>(listOf())
+                val idProvider: IdProvider<Int, String> = { Id.build(it.toString(), "reactive") }
 
-                div(baseClass = classes {
-                    +"flex".layout()
-                    +"align-items-center".modifier()
-                    +"mb-md".util()
-                }) {
-                    slider(range, 2..12, baseClass = "w-50".util()) {
-                        leftActions { decrease() }
-                        showTicks()
-                        rightActions { increase() }
+                numberOfTabs.data.map { tabs -> (1..tabs).toList() } handledBy values.update
+
+                div(baseClass = classes("grid".layout(), "gutter".modifier())) {
+                    inlineStyle("align-items: center;")
+                    div(baseClass = classes("grid".layout("item"), "2-col".modifier())) {
+                        numberOfTabs.data.renderText()
+                        +" tabs"
+                    }
+                    div(baseClass = classes("grid".layout("item"), "10-col".modifier())) {
+                        slider(numberOfTabs, range) {
+                            leftActions { decrease() }
+                            showTicks()
+                            rightActions { increase() }
+                        }
+                    }
+                    div(baseClass = classes("grid".layout("item"), "2-col".modifier())) {
+                        +"Selected tab"
+                    }
+                    div(baseClass = classes("grid".layout("item"), "10-col".modifier())) {
+                        toggleGroup(singleSelect = true) {
+                            items(values, idProvider, singleSelection = selectedTab) {
+                                item { +"#$it" }
+                            }
+                        }
+                    }
+                    div(baseClass = classes("grid".layout("item"), "2-col".modifier())) {
+                        +"Disabled tabs"
+                    }
+                    div(baseClass = classes("grid".layout("item"), "10-col".modifier())) {
+                        toggleGroup {
+                            items(values, idProvider, multiSelection = disabledTabs) {
+                                item { +"#$it" }
+                            }
+                        }
+                    }
+                    div(baseClass = classes("grid".layout("item"), "12-col".modifier())) {
+                        tabs {
+                            items(values, idProvider, selectedTab, disabledTabs) { number ->
+                                item {
+                                    tab("Tab item $number")
+                                    content { +"Tab content $number" }
+                                }
+                            }
+                        }
                     }
                 }
-                tabs(store) {
-                    tabDisplay { +"Tab item $it" }
-                    contentDisplay { +"Content $it" }
-                }
-                range.data.map { tabs ->
-                    (1..tabs).map { number -> TabItem(number, selected = number == 1) }
-                } handledBy store.update
             }
         }
     }
@@ -176,14 +418,20 @@ object TabsCode {
     //language=kotlin
     const val DEFAULT: String = """fun main() {
     render {
-        tabs<String> {
-            item("Users") { +"Users" }
-            item("Containers") { +"Containers" }
-            item("Database") { +"Database" }
-            item("Server") { +"Server" }
-            item("System") { +"System" }
-            item("Network") { +"Network" }
+        tabs {
+            item(id = "users-dft", selected = true) { +"Users" }
+            item(id = "containers-dft") { +"Containers" }
+            item(id = "database-dft") { +"Database" }
+            item(id = "server-dft") { +"Server" }
+            item(id = "system-dft", disabled = true) { +"System" }
+            item(id = "network-dft", disabled = true) { +"Network" }
         }
+        tabContent("users-dft") { +"Users" }
+        tabContent("containers-dft") { +"Containers" }
+        tabContent("database-dft") { +"Database" }
+        tabContent("server-dft") { +"Server" }
+        tabContent("system-dft") { +"System" }
+        tabContent("network-dft") { +"Network" }
     }
 }
 """
@@ -191,14 +439,20 @@ object TabsCode {
     //language=kotlin
     const val BOX: String = """fun main() {
     render {
-        tabs<String>(box = true) {
-            item("Users") { +"Users" }
-            item("Containers") { +"Containers" }
-            item("Database") { +"Database" }
-            item("Server") { +"Server" }
-            item("System") { +"System" }
-            item("Network") { +"Network" }
+        tabs(box = true) {
+            item(id = "users-box", selected = true) { +"Users" }
+            item(id = "containers-box") { +"Containers" }
+            item(id = "database-box") { +"Database" }
+            item(id = "server-box") { +"Server" }
+            item(id = "system-box", disabled = true) { +"System" }
+            item(id = "network-box", disabled = true) { +"Network" }
         }
+        tabContent("users-box") { +"Users" }
+        tabContent("containers-box") { +"Containers" }
+        tabContent("database-box") { +"Database" }
+        tabContent("server-box") { +"Server" }
+        tabContent("system-box") { +"System" }
+        tabContent("network-box") { +"Network" }
     }
 }
 """
@@ -206,17 +460,20 @@ object TabsCode {
     //language=kotlin
     const val BOX_LIGHT: String = """fun main() {
     render {
-        tabs<String>(box = true, baseClass = "color-scheme--light-300".modifier()) {
-            contentDisplay = {
-                domNode.style.backgroundColor = "var(--pf-global--BackgroundColor--light-300)"
-            }
-            item("Users") { +"Users" }
-            item("Containers") { +"Containers" }
-            item("Database") { +"Database" }
-            item("Server") { +"Server" }
-            item("System") { +"System" }
-            item("Network") { +"Network" }
+        tabs(box = true, baseClass = "color-scheme--light-300".modifier()) {
+            item(id = "users-bl", selected = true) { +"Users" }
+            item(id = "containers-bl") { +"Containers" }
+            item(id = "database-bl") { +"Database" }
+            item(id = "server-bl") { +"Server" }
+            item(id = "system-bl", disabled = true) { +"System" }
+            item(id = "network-bl", disabled = true) { +"Network" }
         }
+        tabContent("users-bl") { +"Users" }
+        tabContent("containers-bl") { +"Containers" }
+        tabContent("database-bl") { +"Database" }
+        tabContent("server-bl") { +"Server" }
+        tabContent("system-bl") { +"System" }
+        tabContent("network-bl") { +"Network" }
     }
 }
 """
@@ -224,18 +481,25 @@ object TabsCode {
     //language=kotlin
     const val OVERFLOW: String = """fun main() {
     render {
-        tabs<String> {
-            item("Users") { +"Users" }
-            item("Containers") { +"Containers" }
-            item("Database") { +"Database" }
-            item("Server") { +"Server" }
-            item("System") { +"System" }
-            item("Network") { +"Network" }
-            item("Tab item 7") { +"Tab content 7" }
-            item("Tab item 8") { +"Tab content 8" }
-            item("Tab item 9") { +"Tab content 9" }
-            item("Tab item 10") { +"Tab content 10" }
-            item("Tab item 11") { +"Tab content 11" }
+        tabs(box = true, baseClass = "color-scheme--light-300".modifier()) {
+            item(id = "users-ofl", selected = true) { +"Users" }
+            item(id = "containers-ofl") { +"Containers" }
+            item(id = "database-ofl") { +"Database" }
+            item(id = "server-ofl") { +"Server" }
+            item(id = "system-ofl", disabled = true) { +"System" }
+            item(id = "network-ofl", disabled = true) { +"Network" }
+            for (i in 1..10) {
+                item(id = "tab-${'$'}i-ofl", title = "Tab item ${'$'}i")
+            }
+        }
+        tabContent("users-ofl") { +"Users" }
+        tabContent("containers-ofl") { +"Containers" }
+        tabContent("database-ofl") { +"Database" }
+        tabContent("server-ofl") { +"Server" }
+        tabContent("system-ofl") { +"System" }
+        tabContent("network-ofl") { +"Network" }
+        for (i in 1..10) {
+            tabContent("tab-${'$'}i-ofl") { +"Tab content ${'$'}i" }
         }
     }
 }
@@ -273,16 +537,34 @@ object TabsCode {
 """
 
     //language=kotlin
-    const val VERTICAL: String = """fun main() {
+    const val FILLED_ICONS: String = """fun main() {
     render {
-        tabs<String>(vertical = true) {
+        tabs<String>(filled = true) {
             item("Users") { +"Users" }
             item("Containers") { +"Containers" }
             item("Database") { +"Database" }
-            item("Server") { +"Server" }
-            item("System") { +"System" }
-            item("Network") { +"Network" }
         }
+    }
+}
+"""
+
+    //language=kotlin
+    const val VERTICAL: String = """fun main() {
+    render {
+        tabs(vertical = true) {
+            item(id = "users-vert", selected = true) { +"Users" }
+            item(id = "containers-vert") { +"Containers" }
+            item(id = "database-vert") { +"Database" }
+            item(id = "server-vert") { +"Server" }
+            item(id = "system-vert", disabled = true) { +"System" }
+            item(id = "network-vert", disabled = true) { +"Network" }
+        }
+        tabContent("users-vert") { +"Users" }
+        tabContent("containers-vert") { +"Containers" }
+        tabContent("database-vert") { +"Database" }
+        tabContent("server-vert") { +"Server" }
+        tabContent("system-vert") { +"System" }
+        tabContent("network-vert") { +"Network" }
     }
 }
 """
@@ -318,46 +600,70 @@ object TabsCode {
 """
 
     //language=kotlin
+    const val STORE: String = """fun main() {
+    render {
+    
+    }
+}
+"""
+
+    //language=kotlin
     const val REACTIVE: String = """fun main() {
     render {
-        lateinit var range: Input
-        val store = TabStore<Int>()
+        val range = 2..20
+        val numberOfTabs = storeOf(5)
+        val values = storeOf(range.toList())
+        val selectedTab = storeOf<Int?>(null)
+        val disabledTabs = storeOf<List<Int>>(listOf())
+        val idProvider: IdProvider<Int, String> = { Id.build(it.toString(), "reactive") }
 
-        div(baseClass = classes {
-            +"flex".layout()
-            +"align-items-center".modifier()
-            +"mb-md".util()
-        }) {
-            label {
-                +"Tabs: "
-                `for`("range")
-            }
-            range = input(id = "range", baseClass = "w-50".util()) {
-                type("range")
-                min("1")
-                max("12")
-                value("5")
-            }
-            span {
-                range.inputs.events
-                    .map { it.target.unsafeCast<HTMLInputElement>().value }.asText()
-            }
-        }
-        tabs(store) {
-            itemDisplay = { +"Tab item ${'$'}it" }
-            contentDisplay = { +"Content ${'$'}it" }
-        }
+        numberOfTabs.data.map { tabs -> (1..tabs).toList() } handledBy values.update
 
-        range.changes.valuesAsNumber()
-            .map { it.toInt() }
-            .map { tabs ->
-                (1..tabs).map { number -> item(number, selected = number == 1) }
-            } handledBy store.update
-
-        MainScope().launch {
-            delay(EVENT_DELAY)
-            range.domNode.dispatchEvent(Event(Events.input.name))
-            range.domNode.dispatchEvent(Event(Events.change.name))
+        div(baseClass = classes("grid".layout(), "gutter".modifier())) {
+            inlineStyle("align-items: center;")
+            div(baseClass = classes("grid".layout("item"), "2-col".modifier())) {
+                numberOfTabs.data.renderText()
+                +" tabs"
+            }
+            div(baseClass = classes("grid".layout("item"), "10-col".modifier())) {
+                slider(numberOfTabs, range) {
+                    leftActions { decrease() }
+                    showTicks()
+                    rightActions { increase() }
+                }
+            }
+            div(baseClass = classes("grid".layout("item"), "2-col".modifier())) {
+                +"Selected tab"
+            }
+            div(baseClass = classes("grid".layout("item"), "10-col".modifier())) {
+                toggleGroup(singleSelect = true) {
+                    items(values, idProvider, singleSelection = selectedTab) {
+                        item { +"#${'$'}it" }
+                    }
+                }
+            }
+            div(baseClass = classes("grid".layout("item"), "2-col".modifier())) {
+                +"Disabled tabs"
+            }
+            div(baseClass = classes("grid".layout("item"), "10-col".modifier())) {
+                toggleGroup {
+                    items(values, idProvider, multiSelection = disabledTabs) {
+                        item { +"#${'$'}it" }
+                    }
+                }
+            }
+            div(baseClass = classes("grid".layout("item"), "12-col".modifier())) {
+                tabs {
+                    items(values, idProvider, selectedTab, disabledTabs) { number ->
+                        item { +"Tab item ${'$'}number" }
+                    }
+                }
+                values.data.renderEach(idProvider) { number ->
+                    tabContent(number, idProvider) {
+                        +"Tab content ${'$'}number"
+                    }
+                }
+            }
         }
     }
 }

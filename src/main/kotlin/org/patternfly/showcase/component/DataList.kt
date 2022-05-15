@@ -10,7 +10,7 @@ import org.patternfly.actionList
 import org.patternfly.classes
 import org.patternfly.clickButton
 import org.patternfly.component
-import org.patternfly.dataList2
+import org.patternfly.dataList
 import org.patternfly.fas
 import org.patternfly.icon
 import org.patternfly.layout
@@ -29,7 +29,7 @@ object DataListComponent {
         )
         pageSection {
             snippet("Basic", DataListCode.BASIC) {
-                dataList2 {
+                dataList {
                     item {
                         cell { span(id = this@item.id) { +"Primary content" } }
                         cell { +"Secondary content" }
@@ -47,7 +47,7 @@ object DataListComponent {
                 }
             }
             snippet("Compact", DataListCode.COMPACT) {
-                dataList2(compact = true) {
+                dataList(compact = true) {
                     item {
                         cell { span(id = this@item.id) { +"Primary content" } }
                         cell { +"Secondary content" }
@@ -65,7 +65,7 @@ object DataListComponent {
                 }
             }
             snippet("Checkboxes, actions and additional cells", DataListCode.CHECKBOXES) {
-                val dl = dataList2 {
+                val dl = dataList {
                     item {
                         check()
                         cell { span(id = this@item.id) { +loremIpsum() } }
@@ -114,7 +114,7 @@ object DataListComponent {
                 }
             }
             snippet("Actions: single and multiple", DataListCode.ACTIONS) {
-                dataList2 {
+                dataList {
                     item {
                         cell { span(id = this@item.id) { +"Single actionable - primary content" } }
                         cell { +"Single actionable - secondary content" }
@@ -132,7 +132,7 @@ object DataListComponent {
                 }
             }
             snippet("Expandable", DataListCode.EXPANDABLE) {
-                dataList2 {
+                dataList {
                     arrayOf("Primary", "Secondary", "Tertiary").forEachIndexed { index, kind ->
                         item {
                             toggle()
@@ -156,7 +156,7 @@ object DataListComponent {
                 }
             }
             snippet("Selectable", "n/a") {
-                dataList2(selectable = true) {
+                dataList(selectable = true) {
                     item {
                         cell { span(id = this@item.id) { +"Single actionable - primary content" } }
                         cell { +"Single actionable - secondary content" }
@@ -183,8 +183,8 @@ object DataListComponent {
                 val store = storeOf(demos)
                 val selection = storeOf<Demo?>(null)
 
-                dataList2(selectable = true) {
-                    items(store, selection, { it.id }) { demo ->
+                dataList(selectable = true) {
+                    items(store, { it.id }, selection) { demo ->
                         item {
                             cell {
                                 span(id = demo.id) { +demo.name }
@@ -223,8 +223,8 @@ object DataListComponent {
                 val store = storeOf(demos)
                 val selection = storeOf<List<Demo>>(emptyList())
 
-                dataList2 {
-                    items(store, selection, { it.id }) { demo ->
+                dataList {
+                    items(store, { it.id }, selection) { demo ->
                         item {
                             check()
                             cell {
