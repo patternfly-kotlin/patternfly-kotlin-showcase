@@ -19,8 +19,6 @@ import org.patternfly.ButtonVariant.plain
 import org.patternfly.ItemsStore
 import org.patternfly.SortInfo
 import org.patternfly.aria
-import org.patternfly.bulkSelect
-import org.patternfly.cardView
 import org.patternfly.classes
 import org.patternfly.clickButton
 import org.patternfly.dataTable
@@ -43,6 +41,7 @@ import org.patternfly.legacyCardBody
 import org.patternfly.legacyCardCheckbox
 import org.patternfly.legacyCardFooter
 import org.patternfly.legacyCardHeader
+import org.patternfly.legacyCardView
 import org.patternfly.modifier
 import org.patternfly.mvp.Presenter
 import org.patternfly.mvp.View
@@ -118,9 +117,9 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
             toolbar {
                 toolbarContent {
                     toolbarContentSection {
-                        toolbarItem {
-                            bulkSelect(presenter.userStore)
-                        }
+//                        toolbarItem {
+//                            bulkSelect(presenter.userStore)
+//                        }
                         toolbarItem {
                             inputGroup {
                                 inputFormControl(id = Id.unique("usr", "flt")) {
@@ -166,7 +165,7 @@ class UserDemoView(override val presenter: UserDemoPresenter) : View, WithPresen
                     }
                 }
             }
-            cardView(presenter.userStore) {
+            legacyCardView(presenter.userStore) {
                 classMap(activeComponent.data.map { mapOf("display-none".util() to (it != CARD)) })
                 display { user ->
                     legacyCard(user, baseClass = classes {

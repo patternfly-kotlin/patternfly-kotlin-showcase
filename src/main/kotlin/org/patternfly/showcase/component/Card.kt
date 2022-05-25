@@ -2,13 +2,13 @@
 
 package org.patternfly.showcase.component
 
-import dev.fritz2.binding.RootStore
+import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
+import dev.fritz2.lenses.IdProvider
 import kotlinx.coroutines.flow.map
 import org.patternfly.ButtonVariant.inline
 import org.patternfly.ButtonVariant.link
 import org.patternfly.CardVariant.compact
-import org.patternfly.CardVariant.expandable
 import org.patternfly.CardVariant.flat
 import org.patternfly.CardVariant.hoverable
 import org.patternfly.CardVariant.selectable
@@ -16,8 +16,9 @@ import org.patternfly.Color.BLUE
 import org.patternfly.Color.GREEN
 import org.patternfly.Color.ORANGE
 import org.patternfly.Color.PURPLE
+import org.patternfly.SelectionMode
 import org.patternfly.card
-import org.patternfly.checkbox
+import org.patternfly.cardView
 import org.patternfly.classes
 import org.patternfly.component
 import org.patternfly.dom.Id
@@ -28,6 +29,7 @@ import org.patternfly.label
 import org.patternfly.labelGroup
 import org.patternfly.layout
 import org.patternfly.linkButton
+import org.patternfly.list
 import org.patternfly.modifier
 import org.patternfly.pageSection
 import org.patternfly.showcase.fixture.DropdownFixture.defaultDropdown
@@ -51,7 +53,7 @@ object CardComponent {
             snippet("With image and action", CardCode.IMAGE_ACTION) {
                 card {
                     header {
-                        main {
+                        content {
                             img {
                                 src(require("pf-logo.svg") as String)
                                 inlineStyle("width: 300px")
@@ -59,8 +61,8 @@ object CardComponent {
                         }
                         actions {
                             defaultDropdown()
-                            checkbox(Id.unique("card-check"), standalone = true)
                         }
+                        check()
                     }
                     title { +"Title" }
                     body { +"Body" }
@@ -72,11 +74,11 @@ object CardComponent {
                     header {
                         actions {
                             defaultDropdown()
-                            checkbox(Id.unique("card-check"), standalone = true)
                         }
                         title {
                             +"This is a really really really really really really really really really really long title"
                         }
+                        check()
                     }
                     body { +"Body" }
                     footer { +"Footer" }
@@ -87,8 +89,8 @@ object CardComponent {
                     header {
                         actions {
                             defaultDropdown()
-                            checkbox(Id.unique("card-check"), standalone = true)
                         }
+                        check()
                     }
                     body {
                         +"This is the card body, there are only actions in the card head."
@@ -98,7 +100,7 @@ object CardComponent {
             snippet("Only image in the card header", CardCode.ONLY_IMAGE) {
                 card {
                     header {
-                        main {
+                        content {
                             img {
                                 src(require("pf-logo.svg") as String)
                                 inlineStyle("width: 300px")
@@ -163,16 +165,11 @@ object CardComponent {
                 }
             }
             snippet("Selectable and selected", CardCode.SELECTABLE) {
-                class OnOff : RootStore<Boolean>(false) {
-                    val toggle = handle { !it }
-                }
+                val selection0 = storeOf(false)
+                val selection1 = storeOf(false)
+                val selection2 = storeOf(false)
 
-                card(selectable) {
-                    val onOff = OnOff()
-                    selected(onOff.data)
-                    events {
-                        clicks handledBy onOff.toggle
-                    }
+                card(selectable, selection = selection0) {
                     header {
                         actions {
                             defaultDropdown()
@@ -182,31 +179,14 @@ object CardComponent {
                     body { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
-                card(selectable) {
-                    val onOff = OnOff()
-                    selected(onOff.data)
-                    events {
-                        clicks handledBy onOff.toggle
-                    }
+                card(selectable, selection = selection1) {
                     title { +"Second card" }
                     body { +"This is a selectable card. Click me to select me. Click again to deselect me." }
                 }
                 br {}
-                card(selectable) {
-                    val onOff = OnOff()
-                    selected(onOff.data)
-                    events {
-                        clicks handledBy onOff.toggle
-                    }
+                card(selectable, selection = selection2) {
                     header {
-                        actions {
-                            checkbox("card-check", standalone = true) {
-                                checked(onOff.data)
-                                events {
-                                    changes handledBy onOff.toggle
-                                }
-                            }
-                        }
+                        check()
                         title { +"Third card" }
                     }
                     body { +"This is a selectable card. Click the card or the checkbox to select me." }
@@ -220,11 +200,11 @@ object CardComponent {
                 }
             }
             snippet("Expandable", CardCode.EXPANDABLE) {
-                card(expandable) {
+                card {
                     header {
+                        toggle()
                         actions {
                             defaultDropdown()
-                            checkbox(Id.unique("card-check"), standalone = true)
                         }
                         title {
                             expandedStore.data.map { "Expanded state: $it" }.renderText(into = this)
@@ -246,12 +226,13 @@ object CardComponent {
                 }
             }
             snippet("Horizontal card grid", "n/a") {
-                card(expandable) {
+                card {
                     header {
+                        toggle()
                         actions {
                             defaultDropdown()
                         }
-                        content {
+                        custom {
                             div(baseClass = classes("level".layout(), "gutter".modifier())) {
                                 expandedStore.data.render(into = this) { expanded ->
                                     div(baseClass = "card".component("title")) { +"Getting started" }
@@ -294,15 +275,14 @@ object CardComponent {
                                 ) {
                                     label(BLUE, "Setup your cluster")
                                     p { +"Continue setting up your cluster to access all you cain in the Console" }
-                                    // TODO use list component
-                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
-                                        li(baseClass = "list".component("item")) {
+                                    list {
+                                        item {
                                             a { href("#"); +"Add identity provider" }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a { href("#"); +"Configure alert receivers" }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a { href("#"); +"Configure default ingress certificate" }
                                         }
                                     }
@@ -331,12 +311,11 @@ object CardComponent {
                                 ) {
                                     label(PURPLE, "Guided tours")
                                     p { +"Tour some of the key features around the console" }
-                                    // TODO use list component
-                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
-                                        li(baseClass = "list".component("item")) {
+                                    list {
+                                        item {
                                             a { href("#"); +"Tour the console" }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a { href("#"); +"Explore the Developer perspective" }
                                         }
                                     }
@@ -365,15 +344,14 @@ object CardComponent {
                                 ) {
                                     label(GREEN, "Quick starts")
                                     p { +"Get started with features using our step-by-step documentation" }
-                                    // TODO use list component
-                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
-                                        li(baseClass = "list".component("item")) {
+                                    list {
+                                        item {
                                             a { href("#"); +"Getting started with Serverless" }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a { href("#"); +"Explore virtualization" }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a { href("#"); +"Build pipelines" }
                                         }
                                     }
@@ -402,19 +380,18 @@ object CardComponent {
                                 ) {
                                     label(ORANGE, "Learning resources")
                                     p { +"Learn about new features within the Console and get started with demo apps" }
-                                    // TODO use list component
-                                    ul(baseClass = classes("list".component(), "plain".modifier())) {
-                                        li(baseClass = "list".component("item")) {
+                                    list {
+                                        item {
                                             a { href("#"); +"See what's possible with the Explore page" }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a {
                                                 href("#")
                                                 +"OpenShift 4.5: Top Tasks "
                                                 icon("external-link-alt".fas())
                                             }
                                         }
-                                        li(baseClass = "list".component("item")) {
+                                        item {
                                             a { href("#"); +"Try a demo app" }
                                         }
                                     }
@@ -424,6 +401,52 @@ object CardComponent {
                                     icon("arrow-right".fas())
                                 }
                             }
+                        }
+                    }
+                }
+            }
+            snippet("Card view (single select)", "n/a") {
+                data class Demo(val id: String, val title: String)
+
+                val foo = Demo("foo", "Foo")
+                val bar = Demo("bar", "Bar")
+                val values = storeOf(listOf(foo, bar))
+                val selection = storeOf<Demo?>(foo)
+                val idProvider: IdProvider<Demo, String> = { Id.build(it.id, "single", "select", "demo") }
+
+                cardView(SelectionMode.SINGLE) {
+                    items(values, idProvider, singleSelection = selection) { demo ->
+                        card(selectable) {
+                            title { +demo.title }
+                            body { +loremIpsum(3) }
+                        }
+                    }
+                }
+            }
+            snippet("Card view (multi select)", "n/a") {
+                data class Demo(val id: String, val title: String)
+
+                val foo = Demo("foo", "Foo")
+                val bar = Demo("bar", "Bar")
+                val values = storeOf(listOf(foo, bar))
+                val selection = storeOf(listOf(foo))
+                val idProvider: IdProvider<Demo, String> = { Id.build(it.id, "multi", "select", "demo") }
+
+                cardView(SelectionMode.MULTI) {
+                    card {
+                        title { +"Static Card" }
+                        body { +loremIpsum(3) }
+                    }
+                    items(values, idProvider, multiSelection = selection) { demo ->
+                        card(selectable) {
+                            header {
+                                title { +demo.title }
+                                actions {
+                                    defaultDropdown()
+                                }
+                                check()
+                            }
+                            body { +loremIpsum(3) }
                         }
                     }
                 }

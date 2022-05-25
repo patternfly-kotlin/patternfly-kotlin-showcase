@@ -6,6 +6,8 @@ import dev.fritz2.binding.storeOf
 import dev.fritz2.dom.html.RenderContext
 import kotlinx.coroutines.flow.map
 import org.patternfly.ButtonVariant.link
+import org.patternfly.ButtonVariant.primary
+import org.patternfly.ButtonVariant.secondary
 import org.patternfly.actionList
 import org.patternfly.classes
 import org.patternfly.clickButton
@@ -87,8 +89,8 @@ object DataListComponent {
                             defaultDropdown()
                         }
                         action(baseClass = classes("hidden".modifier(), "visible-on-lg".modifier())) {
-                            pushButton(baseClass = "primary".modifier()) { +"Primary" }
-                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                            pushButton(primary) { +"Primary" }
+                            pushButton(secondary) { +"Secondary" }
                         }
                     }
                     item {
@@ -99,16 +101,16 @@ object DataListComponent {
                             defaultDropdown()
                         }
                         action(baseClass = classes("hidden".modifier(), "visible-on-xl".modifier())) {
-                            pushButton(baseClass = "primary".modifier()) { +"Primary" }
-                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
-                            pushButton(baseClass = "secondary".modifier()) { +"Secondary" }
+                            pushButton(primary) { +"Primary" }
+                            pushButton(secondary) { +"Secondary" }
+                            pushButton(secondary) { +"Secondary" }
+                            pushButton(secondary) { +"Secondary" }
                         }
                     }
                 }
                 section(baseClass = "mt-lg".util()) {
                     p {
-                        +"Selected ids: "
+                        +"Selected IDs: "
                         dl.selectedIds.renderText()
                     }
                 }
@@ -119,7 +121,7 @@ object DataListComponent {
                         cell { span(id = this@item.id) { +"Single actionable - primary content" } }
                         cell { +"Single actionable - secondary content" }
                         action {
-                            pushButton(baseClass = "primary".modifier()) { +"Delete" }
+                            pushButton(primary) { +"Delete" }
                         }
                     }
                     item {
@@ -161,7 +163,7 @@ object DataListComponent {
                         cell { span(id = this@item.id) { +"Single actionable - primary content" } }
                         cell { +"Single actionable - secondary content" }
                         action {
-                            pushButton(baseClass = "primary".modifier()) { +"Delete" }
+                            pushButton(primary) { +"Delete" }
                         }
                     }
                     item {
@@ -176,12 +178,11 @@ object DataListComponent {
             snippet("Store (single selection)", "n/a") {
                 data class Demo(val id: String, val name: String)
 
-                val demos = listOf(
-                    Demo("foo", "Foo"),
-                    Demo("bar", "Bar")
-                )
+                val foo = Demo("foo", "Foo")
+                val bar = Demo("bar", "Bar")
+                val demos = listOf(foo, bar)
                 val store = storeOf(demos)
-                val selection = storeOf<Demo?>(null)
+                val selection = storeOf<Demo?>(foo)
 
                 dataList(selectable = true) {
                     items(store, { it.id }, selection) { demo ->
@@ -216,15 +217,14 @@ object DataListComponent {
             snippet("Store (multiple selections)", "n/a") {
                 data class Demo(val id: String, val name: String)
 
-                val demos = listOf(
-                    Demo("foo", "Foo"),
-                    Demo("bar", "Bar")
-                )
+                val foo = Demo("foo", "Foo")
+                val bar = Demo("bar", "Bar")
+                val demos = listOf(foo, bar)
                 val store = storeOf(demos)
-                val selection = storeOf<List<Demo>>(emptyList())
+                val selection = storeOf(listOf(foo))
 
                 dataList {
-                    items(store, { it.id }, selection) { demo ->
+                    items(values = store, idProvider = { it.id }, multiSelection = selection) { demo ->
                         item {
                             check()
                             cell {

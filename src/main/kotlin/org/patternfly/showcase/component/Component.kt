@@ -16,6 +16,7 @@ val components = listOf(
     Component("badge", "Badge", BadgeComponent.content),
     Component("button", "Button", ButtonComponent.content),
     Component("card", "Card", CardComponent.content),
+    Component("card-view", "Card view", CardViewComponent.content),
     Component("chip", "Chip", ChipComponent.content),
     Component("chip-group", "Chip group", ChipGroupComponent.content),
     Component("data-list", "Data list", DataListComponent.content),
